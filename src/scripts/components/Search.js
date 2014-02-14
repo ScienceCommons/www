@@ -35,22 +35,41 @@ var Search = React.createClass({
   },
   runSearch: function() {
     var numResults = _.random(2, 8);
-    this.setState({
+    var _this = this;
+    if (_this.state.timeout)
+      clearTimeout(_this.state.timeout);
+
+    var timeout = setTimeout(function() {
+      _this.setState({
+        loading: false,
+        results: _.sample(SampleResults, numResults)
+      });
+    }, 1000);
+
+    _this.setState({
       currentSearch: this.state.newSearch,
-      results: _.sample(SampleResults, numResults)
+      loading: true,
+      timeout: timeout
     });
+
     return false;
   },
   /*jshint ignore:start */
   render: function() {
     var content;
     if (this.state.currentSearch) {
-      content = (
-        <div>
-          <h2 class="h2">{this.state.results.length} results match "{this.state.currentSearch}"</h2>
-          <SearchResults results={this.state.results}/>
-        </div>
-      );
+      if (this.state.loading) {
+        content = (
+          <div class="h2">Loading...</div>
+        );
+      } else {
+        content = (
+          <div>
+            <h2 class="h2">{this.state.results.length} results match "{this.state.currentSearch}"</h2>
+            <SearchResults results={this.state.results}/>
+          </div>
+        );
+      }
     }
 
     return (
