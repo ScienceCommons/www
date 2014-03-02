@@ -16,7 +16,7 @@ var Pages = require('./pages/index.js');
 require('../styles/reset.css');
 require('../styles/main.css');
 
-var AlexandriaApp = React.createClass({
+var App = React.createClass({
   /*jshint ignore:start */
   render: function() {
     return (
@@ -28,6 +28,6 @@ var AlexandriaApp = React.createClass({
   /*jshint ignore:end */
 });
 
-React.renderComponent(<AlexandriaApp />, document.getElementById('content')); // jshint ignore:line
+React.renderComponent(<App />, document.getElementById('content')); // jshint ignore:line
 
-module.exports = AlexandriaApp;
+module.exports = App;
