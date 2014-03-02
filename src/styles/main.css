@@ -1,31 +1,3 @@
-/* Stiziles */
-
-html, body {
-  height: 100%;
-}
-
-body {
-  background-image: require("../images/library_of_alexandria.jpg");
-  width: 80%;
-  min-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* main */
-
-.main {
-  width: 100%;
-  height: 100%;
-}
-
-.main img {
-  width: 103px;
-  height: 89px;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
 /* transitions */
 
 .fade-enter {
@@ -44,15 +16,6 @@ body {
 
 .fade-leave.fade-leave-active {
   opacity: 0.01;
-}
-
-.search-result {
-  background-color: #EEE;
-  color: #000;
-  border-radius: 5px;
-  border: 1px solid #CCC;
-  padding: 10px;
-  margin-top: 15px;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6 {
