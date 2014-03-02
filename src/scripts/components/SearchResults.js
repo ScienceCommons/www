@@ -24,7 +24,7 @@ var SearchResult = React.createClass({
             prefix = ", ";
           }
         }
-        return <span key={author.id}>{prefix}<Link href="/profile">{author.name}</Link></span>;
+        return <span key={author.id}>{prefix}<Link href={"/authors/"+author.id}>{author.name}</Link></span>;
       });
 
       return (

@@ -14,6 +14,27 @@ var Articles = [
   {id: "10", name: "How A Cockpit Remembers its Speeds", authors: [{name: "Hutchins E", id: "17"}], blurb: "Do systems larger than single individuals qualify as \"cognitive?\" In this article, Hutchins argued that they do. He supported his claim by analyzing remembering by commercial airline cockpits, considered as cognitive systems. He proposed \"that rather than trying to map the findings of cognitive psychological studies of individuals directly onto the individual pilots in the cockpit, we should map the conceptualization of the cognitive system onto a new unit of analysis: the cockpit as a whole.\" Hutchins provided such an analysis, identifying ways in which cockpit operations are organized to include use and construction of symbolic and indexical representations. Like standard analyses of individual human cognition, Hutchins explained successful remembering in terms of representations that are internal in the cognitive system. However, these internal representations are mainly observable in the cockpit, rather than entering the analysis through subjects' verbal reports and the theorist's hypotheses, as in analyses of individual human cognition. Hutchins's functional analysis of remembering by the cockpit as a system provides constraints on hypotheses about cognitive processes at the level of individuals, the pilots. \"The memory of the cockpit, however, is not made primarily of pilot memory.\" Instead, as Hutchins showed, remembering is a function of the system, achieved through interaction of the pilots with the structures of material and informational systems of their flying machine."}
 ];
 
+var Authors = [
+  {name: "Johnson-Laird, P. N.", id: "1"},
+  {name: "Chi, M. T. H.", id: "2"},
+  {name: "Feltovich, P.", id: "3"},
+  {name: "Glaser, R.", id: "4"},
+  {name: "Feldman, J. A.", id: "5"},
+  {name: "Ballard, D. H.", id: "6"},
+  {name: "Gentner, D.", id: "7"},
+  {name: "Rumelhart, D. E.", id: "8"},
+  {name: "Zipser, D.", id: "9"},
+  {name: "Larkin, J. H.", id: "10"},
+  {name: "Simon, H. A.", id: "11"},
+  {name: "Elman, J. L.", id: "12"},
+  {name: "Spelke, E. S.", id: "13"},
+  {name: "Jacobs, R. A.", id: "14"},
+  {name: "Jordan, M. I.", id: "15"},
+  {name: "Barto, A. G.", id: "16"},
+  {name: "Hutchins E", id: "17"}
+]
+
 module.exports = {
-  Articles: Articles
+  Articles: Articles,
+  Authors: Authors
 };
