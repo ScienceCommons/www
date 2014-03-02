@@ -10,6 +10,7 @@
     "underscore": "1.5.2",
     "react-router-component": "~0.6.0",
     "react-async": "~0.5.0",
+    "topcoat": "~0.7.0",
     "react-topcoat": "~0.1.0"
   },
   "devDependencies": {
@@ -22,6 +23,7 @@
     "jsx-loader": "petehunt/jsx-loader",
     "grunt-webpack": "~1.0.0",
     "style-loader": "~0.6.0",
+    "sass-loader": "~0.0.1",
     "url-loader": "~0.5.2",
     "css-loader": "~0.6.6",
     "karma-script-launcher": "~0.1.0",

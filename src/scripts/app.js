@@ -8,13 +8,15 @@ var React = require('react/addons');
 var Router = require('react-router-component');
 var Locations = Router.Locations;
 var Location = Router.Location;
+var NotFound = Router.NotFound;
 
 
 var Pages = require('./pages/index.js');
 
 // CSS
-require('../styles/reset.css');
+require('topcoat/css/topcoat-desktop-light.css');
 require('../styles/main.css');
+
 
 var App = React.createClass({
   /*jshint ignore:start */
@@ -22,6 +24,8 @@ var App = React.createClass({
     return (
       <Locations>
         <Location path="/" handler={Pages.Search} />
+        <Location path="/profile" handler={Pages.Profile} />
+        <NotFound handler={NotFound} />
       </Locations>
     );
   }

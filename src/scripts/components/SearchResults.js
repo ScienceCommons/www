@@ -6,6 +6,7 @@
 
 var React = require('react/addons');
 var ReactTransitionGroup = React.addons.CSSTransitionGroup;
+var Link = require('react-router-component').Link;
 
 var SearchResult = React.createClass({
   /*jshint ignore:start */
@@ -16,7 +17,7 @@ var SearchResult = React.createClass({
       return (
         <li className="search-result">
           <ReactTransitionGroup transitionName="fade">
-            <div><span className="h3">{data.name}</span><span className="h5"> by {data.author}</span></div>
+            <div><span className="h3">{data.name}</span><span className="h5"> by <Link href="/profile">{data.author}</Link></span></div>
             <p>{data.blurb}</p>
           </ReactTransitionGroup>
         </li>

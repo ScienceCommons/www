@@ -7,6 +7,7 @@
 var _ = require('underscore');
 var React = require('react/addons');
 var SearchResults = require('./SearchResults.js');
+var Spinner = require('./Spinner.js');
 
 // taken from http://cognitrn.psych.indiana.edu/rgoldsto/cogsci/classics.html
 var SampleResults = [
@@ -30,7 +31,8 @@ var Search = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
   getInitialState: function() {
     return {
-      newSearch: ""
+      newSearch: "",
+      loading: false
     };
   },
   runSearch: function() {
@@ -57,10 +59,13 @@ var Search = React.createClass({
   /*jshint ignore:start */
   render: function() {
     var content;
+
     if (this.state.currentSearch) {
       if (this.state.loading) {
         content = (
-          <div className="h2">Loading...</div>
+          <div>
+            <Spinner />
+          </div>
         );
       } else {
         content = (

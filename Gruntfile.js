@@ -18,6 +18,9 @@ module.exports = function (grunt) {
     test: /\.css$/,
     loader: 'style!css'
   }, {
+    test: /\.s[ac]ss$/,
+    loader: 'style!sass-loader'
+  }, {
     test: /\.gif/,
     loader: 'url-loader?limit=10000&minetype=image/gif'
   }, {
