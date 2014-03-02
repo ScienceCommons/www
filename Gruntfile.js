@@ -35,7 +35,7 @@ module.exports = function (grunt) {
     pkg: pkgConfig,
     webpack: {
       development: {
-        entry: './<%= pkg.src %>/scripts/components/<%= pkg.mainInput %>.js',
+        entry: './<%= pkg.src %>/scripts/app.js',
         output: {
           path: '<%= pkg.src %>/build/',
           filename: '<%= pkg.mainOutput %>.js'

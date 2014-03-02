@@ -10,11 +10,11 @@ var Locations = Router.Locations;
 var Location = Router.Location;
 
 
-var Pages = require('../pages/index.js');
+var Pages = require('./pages/index.js');
 
 // CSS
-require('../../styles/reset.css');
-require('../../styles/main.css');
+require('../styles/reset.css');
+require('../styles/main.css');
 
 var AlexandriaApp = React.createClass({
   /*jshint ignore:start */
