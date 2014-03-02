@@ -14,10 +14,26 @@ var SearchResult = React.createClass({
     var data = this.props.data;
 
     if (data) {
+      var len = data.authors.length;
+      var authorLinks = data.authors.map(function(author, i) {
+        var prefix;
+        if (i > 0) {
+          if (i === len-1) {
+            prefix = " & ";
+          } else {
+            prefix = ", ";
+          }
+        }
+        return <span key={author.id}>{prefix}<Link href="/profile">{author.name}</Link></span>;
+      });
+
       return (
-        <li className="search-result">
+        <li className="search-result" key={data.id}>
           <ReactTransitionGroup transitionName="fade">
-            <div><span className="h3">{data.name}</span><span className="h5"> by <Link href="/profile">{data.author}</Link></span></div>
+            <div>
+              <Link className="h3" href={"/articles/"+data.id}>{data.name}</Link>
+              <span className="h5"> by {authorLinks}</span>
+            </div>
             <p>{data.blurb}</p>
           </ReactTransitionGroup>
         </li>

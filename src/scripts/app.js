@@ -25,6 +25,7 @@ var App = React.createClass({
       <Locations>
         <Location path="/" handler={Pages.Search} />
         <Location path="/profile" handler={Pages.Profile} />
+        <Location path="/articles/:articleId" handler={Pages.Article} />
         <NotFound handler={NotFound} />
       </Locations>
     );
