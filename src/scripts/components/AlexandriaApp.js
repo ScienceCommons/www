@@ -5,7 +5,12 @@
 'use strict';
 
 var React = require('react/addons');
-var Search = require('./Search.js');
+var Router = require('react-router-component');
+var Locations = Router.Locations;
+var Location = Router.Location;
+
+
+var Pages = require('../pages/index.js');
 
 // CSS
 require('../../styles/reset.css');
@@ -15,10 +20,9 @@ var AlexandriaApp = React.createClass({
   /*jshint ignore:start */
   render: function() {
     return (
-      <div className='main'>
-        <h1 class="h1">Alexandria Search</h1>
-        <Search />
-      </div>
+      <Locations>
+        <Location path="/" handler={Pages.Search} />
+      </Locations>
     );
   }
   /*jshint ignore:end */

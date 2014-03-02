@@ -60,12 +60,12 @@ var Search = React.createClass({
     if (this.state.currentSearch) {
       if (this.state.loading) {
         content = (
-          <div class="h2">Loading...</div>
+          <div className="h2">Loading...</div>
         );
       } else {
         content = (
           <div>
-            <h2 class="h2">{this.state.results.length} results match "{this.state.currentSearch}"</h2>
+            <h2 className="h2">{this.state.results.length} results match "{this.state.currentSearch}"</h2>
             <SearchResults results={this.state.results}/>
           </div>
         );

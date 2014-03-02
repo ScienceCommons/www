@@ -5,11 +5,7 @@
 'use strict';
 
 var React = require('react/addons');
-var ReactTransitionGroup = React.addons.TransitionGroup;
-
-// CSS
-require('../../styles/reset.css');
-require('../../styles/main.css');
+var ReactTransitionGroup = React.addons.CSSTransitionGroup;
 
 var SearchResult = React.createClass({
   /*jshint ignore:start */
@@ -18,9 +14,9 @@ var SearchResult = React.createClass({
 
     if (data) {
       return (
-        <li class="search-result">
+        <li className="search-result">
           <ReactTransitionGroup transitionName="fade">
-            <div><span class="h3">{data.name}</span><span class="h5"> by {data.author}</span></div>
+            <div><span className="h3">{data.name}</span><span className="h5"> by {data.author}</span></div>
             <p>{data.blurb}</p>
           </ReactTransitionGroup>
         </li>
