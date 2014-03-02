@@ -2,6 +2,8 @@
  * @jsx React.DOM
  */
 
+// taken from: http://codepen.io/georgehastings/pen/skznp
+
 'use strict';
 
 var React = require('react/addons');
