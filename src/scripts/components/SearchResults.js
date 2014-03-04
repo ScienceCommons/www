@@ -67,18 +67,20 @@ var SearchResults = React.createClass({
   fetchResults: function() {
     // this will be an xhr to our search server
     var _this = this;
-    setTimeout(function() {
-      var numResults = _.random(2, 8);
+    var oReq = new XMLHttpRequest();
 
+    oReq.onload = function() {
+      var numResults = _.random(2, 8);
       _this.setState({
         loading: false,
         results: _.sample(SampleResults, numResults)
       });
-    }, 1000);
+    };
 
-    _this.setState({
-      loading: true
-    });
+    oReq.open("get", "http://localhost:8000", true);
+    oReq.send();
+
+    this.setState({ loading: true });
   },
   /*jshint ignore:start */
   render: function() {
