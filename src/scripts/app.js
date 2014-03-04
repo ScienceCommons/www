@@ -8,12 +8,12 @@ var React = require('react/addons');
 var Router = require('react-router-component');
 var Locations = Router.Locations;
 var Location = Router.Location;
-var NotFound = Router.NotFound;
 
 
 var Pages = require('./pages/index.js');
 
 // CSS
+require('../styles/reset.css');
 require('topcoat/css/topcoat-desktop-light.css');
 require('../styles/main.css');
 
@@ -24,10 +24,11 @@ var App = React.createClass({
     return (
       <Locations>
         <Location path="/" handler={Pages.Search} />
+        <Location path="/query/" handler={Pages.Search} />
+        <Location path="/query/:query" handler={Pages.Search} />
         <Location path="/profile" handler={Pages.Profile} />
         <Location path="/articles/:articleId" handler={Pages.Article} />
         <Location path="/authors/:authorId" handler={Pages.Author} />
-        <NotFound handler={NotFound} />
       </Locations>
     );
   }

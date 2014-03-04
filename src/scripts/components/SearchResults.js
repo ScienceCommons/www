@@ -7,6 +7,10 @@
 var React = require('react/addons');
 var ReactTransitionGroup = React.addons.CSSTransitionGroup;
 var Link = require('react-router-component').Link;
+var Spinner = require('./Spinner.js');
+
+var _ = require('underscore');
+var SampleResults = require("../data.js").Articles;
 
 var SearchResult = React.createClass({
   /*jshint ignore:start */
@@ -46,21 +50,48 @@ var SearchResult = React.createClass({
 });
 
 var SearchResults = React.createClass({
-  getDefaultProps: function() {
+  getInitialState: function() {
     return {
-      results: []
+      results: [],
+      loading: true
     };
+  },
+  componentWillMount: function() {
+    this.fetchResults();
+  },
+  componentWillReceiveProps: function(newProps) {
+    if (newProps.query !== this.props.query) {
+      this.fetchResults();
+    }
+  },
+  fetchResults: function() {
+    // this will be an xhr to our search server
+    var _this = this;
+    setTimeout(function() {
+      var numResults = _.random(2, 8);
+
+      _this.setState({
+        loading: false,
+        results: _.sample(SampleResults, numResults)
+      });
+    }, 1000);
+
+    _this.setState({
+      loading: true
+    });
   },
   /*jshint ignore:start */
   render: function() {
-    var results = this.props.results
-      , i = 0
-      , len = results.length
-      , content = [];
+    var content;
 
-    for (i = 0; i < len; i++) {
-      content.push(<SearchResult data={results[i]} />);
+    if (this.state.loading) {
+      content = <li><Spinner /></li>;
+    } else {
+      content = this.state.results.map(function(result) {
+        return <SearchResult data={result} />;
+      });
     }
+
     return (
       <ul>
         {content}
