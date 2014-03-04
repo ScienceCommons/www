@@ -18,27 +18,20 @@ var SearchResult = React.createClass({
     var data = this.props.data;
 
     if (data) {
-      var len = data.authors.length;
-      var authorLinks = data.authors.map(function(author, i) {
-        var prefix;
-        if (i > 0) {
-          if (i === len-1) {
-            prefix = " & ";
-          } else {
-            prefix = ", ";
-          }
-        }
-        return <span key={author.id}>{prefix}<Link href={"/authors/"+author.id}>{author.name}</Link></span>;
-      });
+      var doi;
+      if (data.doi) {
+        doi = " (doi: " + data.doi + ")";
+      }
 
       return (
         <li className="search-result" key={data.id}>
           <ReactTransitionGroup transitionName="fade">
             <div>
-              <Link className="h3" href={"/articles/"+data.id}>{data.name}</Link>
-              <span className="h5"> by {authorLinks}</span>
+              <div className="h5">{data.publication_date}</div>
+              <Link className="h3" href={"/articles/"+data.id}>{data.title}</Link>
+              {doi}
             </div>
-            <p>{data.blurb}</p>
+            <p>{data.abstract}</p>
           </ReactTransitionGroup>
         </li>
       );
@@ -59,28 +52,33 @@ var SearchResults = React.createClass({
   componentWillMount: function() {
     this.fetchResults();
   },
-  componentWillReceiveProps: function(newProps) {
-    if (newProps.query !== this.props.query) {
-      this.fetchResults();
+  componentWillUnmount: function() {
+    if (this.state.xhr) {
+      this.state.xhr.abort();
     }
   },
   fetchResults: function() {
     // this will be an xhr to our search server
     var _this = this;
-    var oReq = new XMLHttpRequest();
+    var query = _this.props.query;
+    if (!query) {
+      return
+    } else {
+      var xhr = new XMLHttpRequest();
 
-    oReq.onload = function() {
-      var numResults = _.random(2, 8);
-      _this.setState({
-        loading: false,
-        results: _.sample(SampleResults, numResults)
-      });
-    };
+      xhr.onload = function() {
+        _this.setState({
+          loading: false,
+          results: JSON.parse(xhr.responseText),
+          xhr: null
+        });
+      };
 
-    oReq.open("get", "http://localhost:8000", true);
-    oReq.send();
+      xhr.open("get", "http://api.papersearch.org/articles?q="+query, true);
+      xhr.send();
 
-    this.setState({ loading: true });
+      _this.setState({ loading: true, xhr: xhr });
+    }
   },
   /*jshint ignore:start */
   render: function() {

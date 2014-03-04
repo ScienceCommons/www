@@ -28,8 +28,6 @@ var SearchPage = React.createClass({
   render: function () {
     var content;
 
-    console.log("query", this.state.query);
-
     if (this.state.query) {
       content = <SearchResults query={this.state.query}/>;
     }
