@@ -29,5 +29,5 @@ $RECYCLE.BIN/
 
 /node_modules/
 .tmp
-/src/build/
+src/assets/
 /dist/

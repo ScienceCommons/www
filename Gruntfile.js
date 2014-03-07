@@ -23,28 +23,28 @@ module.exports = function (grunt) {
     loader: 'style!sass-loader'
   }, {
     test: /\.gif/,
-    loader: 'url-loader?prefix=/build/&limit=10000&minetype=image/gif'
+    loader: 'url-loader?prefix=/assets/&limit=10000&minetype=image/gif'
   }, {
     test: /\.jpg/,
-    loader: 'url-loader?prefix=/build/&limit=10000&minetype=image/jpg'
+    loader: 'url-loader?prefix=/assets/&limit=10000&minetype=image/jpg'
   }, {
     test: /\.png/,
-    loader: 'url-loader?prefix=/build/&limit=10000&minetype=image/png'
+    loader: 'url-loader?prefix=/assets/&limit=10000&minetype=image/png'
   }, {
     test: /\.js$/,
     loader: 'jsx-loader'
   }, {
     test: /\.woff$/,
-    loader: "url-loader?prefix=/build/&limit=10000&minetype=application/font-woff"
+    loader: "url-loader?prefix=/assets/&limit=10000&minetype=application/font-woff"
   }, { 
     test: /\.ttf$/,
-    loader: "file-loader?prefix=/build/"
+    loader: "file-loader?prefix=/assets/"
   }, {
     test: /\.eot$/,
-    loader: "file-loader?prefix=/build/"
+    loader: "file-loader?prefix=/assets/"
   }, {
     test: /\.svg$/,
-    loader: "file-loader?prefix=/build/"
+    loader: "file-loader?prefix=/assets/"
   }];
 
   var handle404 = function(src) {
@@ -87,14 +87,14 @@ module.exports = function (grunt) {
       },
       development: {
         output: {
-          path: '<%= pkg.src %>/build/',
-          filename: '<%= pkg.mainOutput %>.js'
+          path: '<%= pkg.src %>',
+          filename: 'assets/<%= pkg.mainOutput %>.js'
         }
       },
       dist: {
         output: {
-          path: '<%= pkg.dist %>/',
-          filename: '<%= pkg.mainOutput %>.js'
+          path: '<%= pkg.dist %>',
+          filename: 'assets/<%= pkg.mainOutput %>.js'
         },
         plugins: [
           new webpack.optimize.DedupePlugin(),
@@ -112,7 +112,7 @@ module.exports = function (grunt) {
       webpack: {
         files: ['<%= pkg.src %>/scripts/{,*/}*.js',
           '<%= pkg.src %>/styles/{,*/}*.css',
-          '!<%= pkg.src %>/build/<%= pkg.mainOutput %>.js'
+          '!<%= pkg.src %>/assets/<%= pkg.mainOutput %>.js'
         ],
         tasks: ['webpack:development']
       },
@@ -122,7 +122,7 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= pkg.src %>/{,*/}*.html',
-          '<%= pkg.src %>/build/<%= pkg.mainOutput %>.js'
+          '<%= pkg.src %>/assets/<%= pkg.mainOutput %>.js'
         ]
       }
     },
@@ -137,7 +137,7 @@ module.exports = function (grunt) {
           middleware: function (connect, options) {
             return [
               lrSnippet,
-              mountFolder(connect, pkgConfig.src+"/build"),
+              mountFolder(connect, pkgConfig.src+"/assets"),
               mountFolder(connect, pkgConfig.src),
               handle404(pkgConfig.src)
             ];
