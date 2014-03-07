@@ -34,7 +34,7 @@ module.exports = function (grunt) {
     loader: 'jsx-loader'
   }, {
     test: /\.woff$/,
-    loader: "url-loader?limit=10000&minetype=application/font-woff"
+    loader: "url-loader?prefix=/build/&limit=10000&minetype=application/font-woff"
   }, { 
     test: /\.ttf$/,
     loader: "file-loader?prefix=/build/"
