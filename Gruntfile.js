@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 
   var loaders = [{
     test: /\.css$/,
-    loader: 'style!css'
+    loader: 'style-loader!css-loader'
   }, {
     test: /\.s[ac]ss$/,
     loader: 'style!sass-loader'
@@ -32,6 +32,18 @@ module.exports = function (grunt) {
   }, {
     test: /\.js$/,
     loader: 'jsx-loader'
+  }, {
+    test: /\.woff$/,
+    loader: "url-loader?limit=10000&minetype=application/font-woff"
+  }, { 
+    test: /\.ttf$/,
+    loader: "file-loader"
+  }, {
+    test: /\.eot$/,
+    loader: "file-loader"
+  }, {
+    test: /\.svg$/,
+    loader: "file-loader"
   }];
 
   grunt.initConfig({
@@ -92,6 +104,7 @@ module.exports = function (grunt) {
           middleware: function (connect, options) {
             return [
               lrSnippet,
+              mountFolder(connect, "src/build"),
               mountFolder(connect, pkgConfig.src),
               function(req, res){
                 for(var file, i = 0; i < pkgConfig.src.length; i++){

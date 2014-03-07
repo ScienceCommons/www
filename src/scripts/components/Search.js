@@ -26,7 +26,7 @@ var Search = React.createClass({
     return (
       <form onSubmit={this.updateSearch} className={this.props.className}>
         <input type="text" placeholder="Search papers" size="60" valueLink={this.linkState('query')} ref="searchBox" />
-        <button type="submit">Search</button>
+        <button type="submit"><span className="glyphicon glyphicon-search"></span></button>
       </form>
     );
   }
