@@ -14,7 +14,6 @@ var Pages = require('./pages.js');
 
 // CSS
 require('../styles/reset.css');
-require('topcoat/css/topcoat-desktop-light.css');
 require('../styles/main.css');
 
 

@@ -1,3 +1,7 @@
+body {
+  background: #dfe2e2;
+}
+
 /* transitions */
 
 .fade-enter {
