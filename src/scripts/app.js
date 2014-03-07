@@ -10,7 +10,7 @@ var Locations = Router.Locations;
 var Location = Router.Location;
 
 
-var Pages = require('./pages/index.js');
+var Pages = require('./pages.js');
 
 // CSS
 require('../styles/reset.css');

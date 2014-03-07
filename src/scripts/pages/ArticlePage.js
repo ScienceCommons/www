@@ -18,11 +18,26 @@ var ArticlePage = React.createClass({
   },
   componentWillMount: function () {
     var _this = this;
-    var article = _.findWhere(Articles, {id: this.props.articleId});
+    if (this.props.articleId) {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        _this.setState({
+          loading: false,
+          article: JSON.parse(xhr.responseText),
+          xhr: null
+        });
+      };
 
-    setTimeout(function() {
-      _this.setState({article: article, loading: false});
-    }, 500);
+      xhr.open("get", "http://api.papersearch.org/articles?id="+this.props.articleId, true);
+      xhr.send();
+
+      _this.setState({ xhr: xhr });
+    }
+  },
+  componentWillUnmount: function() {
+    if (this.state.xhr) {
+      this.state.xhr.abort();
+    }
   },
   /*jshint ignore:start */
   render: function () {
