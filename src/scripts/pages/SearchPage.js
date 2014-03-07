@@ -9,6 +9,7 @@ var Search = require('../components/Search.js');
 var SearchResults = require('../components/SearchResults.js');
 var NavigatableMixin = require('react-router-component').NavigatableMixin;
 var Constants = require("../constants.js");
+var Link = require('react-router-component').Link;
 
 require('../../styles/search-page.scss');
 
@@ -24,7 +25,7 @@ var SearchPage = React.createClass({
     return (
       <div className="search-page container-fluid">
         <div className="header row">
-          <div className="h1 inline-block">{Constants.COMPANY_NAME}</div>
+          <Link className="h1 inline-block" href={"/"}>{Constants.COMPANY_NAME}</Link>
           <Search query={this.props.query} className="inline-block"/>
 
           <button type="button" className="pull-right">user@curatescience.com</button>
