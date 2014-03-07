@@ -37,13 +37,13 @@ module.exports = function (grunt) {
     loader: "url-loader?limit=10000&minetype=application/font-woff"
   }, { 
     test: /\.ttf$/,
-    loader: "file-loader"
+    loader: "file-loader?prefix=/build/"
   }, {
     test: /\.eot$/,
-    loader: "file-loader"
+    loader: "file-loader?prefix=/build/"
   }, {
     test: /\.svg$/,
-    loader: "file-loader"
+    loader: "file-loader?prefix=/build/"
   }];
 
   grunt.initConfig({
