@@ -7,6 +7,7 @@
 var React = require('react/addons');
 var SearchResults = require('../components/SearchResults.js');
 var NavigatableMixin = require('react-router-component').NavigatableMixin;
+var Constants = require("../constants.js");
 
 require('../../styles/search-page.scss');
 
@@ -34,7 +35,7 @@ var SearchPage = React.createClass({
 
     return (
       <div className="search-page">
-        <h1 className="h1">Alexandria Search</h1>
+        <h1 className="h1">{Constants.COMPANY_NAME}</h1>
         <form onSubmit={this.updateSearch}>
           <input type="text" placeholder="Search papers" size="60" valueLink={this.linkState('newSearch')}/>
           <button type="submit">Go</button>
