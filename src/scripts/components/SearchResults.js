@@ -20,16 +20,18 @@ var SearchResult = React.createClass({
     if (data) {
       var doi;
       if (data.doi) {
-        doi = " (doi: " + data.doi + ")";
+        doi = (
+          <span>| doi: <a href={"http://www.plosone.org/article/info"+encodeURIComponent(":doi/"+data.doi)} target="_blank">{data.doi}</a>
+          </span>
+        );
       }
 
       return (
         <li className="search-result" key={data.id}>
           <ReactTransitionGroup transitionName="fade">
             <div>
-              <div className="h5">{data.publication_date}</div>
               <Link className="h3 link" href={"/articles/"+data.id}>{data.title}</Link>
-              {doi}
+              <div className="h5">{data.publication_date} {doi}</div>
             </div>
             <p>{data.abstract}</p>
           </ReactTransitionGroup>
