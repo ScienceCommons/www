@@ -22,13 +22,13 @@ module.exports = function (grunt) {
     loader: 'style!sass-loader'
   }, {
     test: /\.gif/,
-    loader: 'url-loader?limit=10000&minetype=image/gif'
+    loader: 'url-loader?prefix=/build/&limit=10000&minetype=image/gif'
   }, {
     test: /\.jpg/,
-    loader: 'url-loader?limit=10000&minetype=image/jpg'
+    loader: 'url-loader?prefix=/build/&limit=10000&minetype=image/jpg'
   }, {
     test: /\.png/,
-    loader: 'url-loader?limit=10000&minetype=image/png'
+    loader: 'url-loader?prefix=/build/&limit=10000&minetype=image/png'
   }, {
     test: /\.js$/,
     loader: 'jsx-loader'
