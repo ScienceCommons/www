@@ -93,7 +93,7 @@ module.exports = function (grunt) {
       },
       dist: {
         output: {
-          path: '<%= pkg.dist %>/build/',
+          path: '<%= pkg.dist %>/',
           filename: '<%= pkg.mainOutput %>.js'
         },
         plugins: [
@@ -131,6 +131,7 @@ module.exports = function (grunt) {
           middleware: function (connect, options) {
             return [
               lrSnippet,
+              mountFolder(connect, pkgConfig.src+"/build"),
               mountFolder(connect, pkgConfig.src),
               handle404(pkgConfig.src)
             ];
