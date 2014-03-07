@@ -25,7 +25,7 @@ var SearchPage = React.createClass({
       <div className="search-page container-fluid">
         <div className="header row">
           <div className="h1 inline-block">{Constants.COMPANY_NAME}</div>
-          <Search query={this.props.query}/>
+          <Search query={this.props.query} className="inline-block"/>
 
           <button type="button" className="pull-right">user@curatescience.com</button>
         </div>

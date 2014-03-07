@@ -23,7 +23,7 @@ var HomePage = React.createClass({
           </div>
         </div>
 
-        <Search />
+        <Search className="text-center"/>
       </div>
     );
   }
