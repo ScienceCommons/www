@@ -104,7 +104,6 @@ module.exports = function (grunt) {
           middleware: function (connect, options) {
             return [
               lrSnippet,
-              mountFolder(connect, "src/build"),
               mountFolder(connect, pkgConfig.src),
               function(req, res){
                 for(var file, i = 0; i < pkgConfig.src.length; i++){
