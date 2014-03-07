@@ -30,3 +30,7 @@ body {
 .inline-block {
   display: inline-block !important;
 }
+
+.link {
+  text-decoration: underline !important;
+}

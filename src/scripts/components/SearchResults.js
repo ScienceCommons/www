@@ -28,7 +28,7 @@ var SearchResult = React.createClass({
           <ReactTransitionGroup transitionName="fade">
             <div>
               <div className="h5">{data.publication_date}</div>
-              <Link className="h3" href={"/articles/"+data.id}>{data.title}</Link>
+              <Link className="h3 link" href={"/articles/"+data.id}>{data.title}</Link>
               {doi}
             </div>
             <p>{data.abstract}</p>
