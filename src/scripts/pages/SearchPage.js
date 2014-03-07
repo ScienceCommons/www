@@ -5,6 +5,7 @@
 'use strict';
 
 var React = require('react/addons');
+var Search = require('../components/Search.js');
 var SearchResults = require('../components/SearchResults.js');
 var NavigatableMixin = require('react-router-component').NavigatableMixin;
 var Constants = require("../constants.js");
@@ -12,36 +13,25 @@ var Constants = require("../constants.js");
 require('../../styles/search-page.scss');
 
 var SearchPage = React.createClass({
-  mixins: [React.addons.LinkedStateMixin, NavigatableMixin],
-  getInitialState: function() {
-    return {
-      newSearch: this.props.query || "",
-      query: this.props.query
-    };
-  },
-  updateSearch: function() {
-    //this.setState({query: this.state.newSearch });
-    this.navigate("/query/"+this.state.newSearch);
-
-    return false;
-  },
   /*jshint ignore:start */
   render: function () {
     var content;
 
-    if (this.state.query) {
-      content = <SearchResults query={this.state.query}/>;
+    if (this.props.query) {
+      content = <SearchResults query={this.props.query}/>;
     }
 
     return (
-      <div className="search-page">
-        <h1 className="h1">{Constants.COMPANY_NAME}</h1>
-        <form onSubmit={this.updateSearch}>
-          <input type="text" placeholder="Search papers" size="60" valueLink={this.linkState('newSearch')}/>
-          <button type="submit">Go</button>
-        </form>
+      <div className="search-page container-fluid">
+        <div className="header row">
+          <div className="h1 inline-block">{Constants.COMPANY_NAME}</div>
+          <Search query={this.props.query}/>
 
-        {content}
+          <button type="button" className="pull-right">user@curatescience.com</button>
+        </div>
+        <div className="row">
+          {content}
+        </div>
       </div>
     );
   }

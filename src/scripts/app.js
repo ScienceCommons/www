@@ -14,6 +14,7 @@ var Pages = require('./pages.js');
 
 // CSS
 require('../styles/reset.css');
+require('../styles/bootstrap.css');
 require('../styles/main.css');
 
 
@@ -22,7 +23,7 @@ var App = React.createClass({
   render: function() {
     return (
       <Locations>
-        <Location path="/" handler={Pages.Search} />
+        <Location path="/" handler={Pages.Home} />
         <Location path="/query/" handler={Pages.Search} />
         <Location path="/query/:query" handler={Pages.Search} />
         <Location path="/profile" handler={Pages.Profile} />

@@ -1,5 +1,6 @@
 body {
   background: #dfe2e2;
+  padding: 10px;
 }
 
 /* transitions */
@@ -22,29 +23,10 @@ body {
   opacity: 0.01;
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-weight: bold;
+.pull-right {
+  float: right !important;
 }
 
-.h1 {
-  font-size: 200%;
-}
-
-.h2 {
- font-size: 180%;
-}
-
-.h3 {
-  font-size: 160%;
-}
-
-.h4 {
- font-size: 140%;
-}
-.h5 {
-  font-size: 120%;
-}
-
-.h6 {
- font-size: 100%;
+.inline-block {
+  display: inline-block !important;
 }
