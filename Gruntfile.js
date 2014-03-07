@@ -6,6 +6,7 @@ var lrSnippet = require('connect-livereload')({
 var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
+var webpack = require("webpack");
 
 module.exports = function (grunt) {
   // Let *load-grunt-tasks* require everything
@@ -46,27 +47,25 @@ module.exports = function (grunt) {
     loader: "file-loader?prefix=/build/"
   }];
 
-  var handle404 = function(req, res){
-    for(var file, i = 0; i < pkgConfig.src.length; i++){
-      file = pkgConfig.src + "/index.html"; 
-      if (grunt.file.exists(file)){
-        require('fs').createReadStream(file).pipe(res);
-        return; // we're done
+  var handle404 = function(src) {
+    return function(req, res){
+      for(var file, i = 0; i < src.length; i++){
+        file = src + "/index.html"; 
+        if (grunt.file.exists(file)){
+          require('fs').createReadStream(file).pipe(res);
+          return; // we're done
+        }
       }
-    }
-    res.statusCode(404); // where's index.html?
-    res.end();
+      res.statusCode(404); // where's index.html?
+      res.end();
+    };
   };
 
   grunt.initConfig({
     pkg: pkgConfig,
     webpack: {
-      development: {
+      options: {
         entry: './<%= pkg.src %>/scripts/app.js',
-        output: {
-          path: '<%= pkg.src %>/build/',
-          filename: '<%= pkg.mainOutput %>.js'
-        },
         debug: true,
         cache: true,
         stats: {
@@ -85,6 +84,22 @@ module.exports = function (grunt) {
           }],
           loaders: loaders
         }
+      },
+      development: {
+        output: {
+          path: '<%= pkg.src %>/build/',
+          filename: '<%= pkg.mainOutput %>.js'
+        }
+      },
+      dist: {
+        output: {
+          path: '<%= pkg.dist %>/build/',
+          filename: '<%= pkg.mainOutput %>.js'
+        },
+        plugins: [
+          new webpack.optimize.DedupePlugin(),
+          new webpack.optimize.UglifyJsPlugin()
+        ]
       }
     },
     watch: {
@@ -117,7 +132,7 @@ module.exports = function (grunt) {
             return [
               lrSnippet,
               mountFolder(connect, pkgConfig.src),
-              handle404
+              handle404(pkgConfig.src)
             ];
           }
         }
@@ -126,7 +141,8 @@ module.exports = function (grunt) {
         options: {
           middleware: function (connect) {
             return [
-              mountFolder(connect, pkgConfig.dist)
+              mountFolder(connect, pkgConfig.dist),
+              handle404(pkgConfig.dist)
             ];
           }
         }
@@ -158,6 +174,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', ['karma']);
+  grunt.registerTask('heroku', ['webpack:dist']);
 
   grunt.registerTask('build', []);
 
