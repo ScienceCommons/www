@@ -89,10 +89,21 @@ module.exports = function (grunt) {
       },
       livereload: {
         options: {
-          middleware: function (connect) {
+          middleware: function (connect, options) {
             return [
               lrSnippet,
-              mountFolder(connect, pkgConfig.src)
+              mountFolder(connect, pkgConfig.src),
+              function(req, res){
+                for(var file, i = 0; i < pkgConfig.src.length; i++){
+                  file = pkgConfig.src + "/index.html"; 
+                  if (grunt.file.exists(file)){
+                    require('fs').createReadStream(file).pipe(res);
+                    return; // we're done
+                  }
+                }
+                res.statusCode(404); // where's index.html?
+                res.end();
+              }
             ];
           }
         }
