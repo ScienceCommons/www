@@ -88,10 +88,16 @@ var SearchResults = React.createClass({
 
     if (this.state.loading) {
       content = <li><Spinner /></li>;
-    } else {
+    } else if (this.state.results.length > 0 ) {
       content = this.state.results.map(function(result) {
         return <SearchResult data={result} />;
       });
+    } else {
+      content = (
+        <li>
+          <h3>Sorry, no results were found</h3>
+        </li>
+      );
     }
 
     return (
