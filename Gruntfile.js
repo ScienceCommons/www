@@ -102,6 +102,12 @@ module.exports = function (grunt) {
         ]
       }
     },
+    copy: {
+      dist: {
+        src: '<%= pkg.src %>/index.html',
+        dest: '<%= pkg.dist%>/index.html'
+      }
+    },
     watch: {
       webpack: {
         files: ['<%= pkg.src %>/scripts/{,*/}*.js',
@@ -175,7 +181,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', ['karma']);
-  grunt.registerTask('heroku', ['webpack:dist']);
+  grunt.registerTask('heroku', ['webpack:dist', 'copy:dist']);
 
   grunt.registerTask('build', []);
 
