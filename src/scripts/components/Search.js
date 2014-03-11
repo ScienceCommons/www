@@ -14,6 +14,11 @@ var Search = React.createClass({
       query: this.props.query || ""
     };
   },
+  getDefaultProps: function() {
+    return {
+      size: 30
+    };
+  },
   updateSearch: function() {
     this.navigate("/query/"+this.state.query);
     return false;
@@ -25,7 +30,7 @@ var Search = React.createClass({
   render: function() {
     return (
       <form onSubmit={this.updateSearch} className={this.props.className}>
-        <input type="text" placeholder="Search papers" size="60" valueLink={this.linkState('query')} ref="searchBox" />
+        <input type="text" placeholder="Search papers" size={this.props.size} valueLink={this.linkState('query')} ref="searchBox" />
         <button type="submit"><span className="glyphicon glyphicon-search"></span></button>
       </form>
     );
