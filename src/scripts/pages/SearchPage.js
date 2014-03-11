@@ -7,7 +7,6 @@
 var React = require('react/addons');
 var Search = require('../components/Search.js');
 var SearchResults = require('../components/SearchResults.js');
-var NavigatableMixin = require('react-router-component').NavigatableMixin;
 var Constants = require("../constants.js");
 var Link = require('react-router-component').Link;
 
