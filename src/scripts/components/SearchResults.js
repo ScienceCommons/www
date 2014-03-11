@@ -49,6 +49,8 @@ var SearchResults = React.createClass({
     return {
       results: [],
       total: 0,
+      from: 0,
+      resultsPerPage: 20,
       loading: true
     };
   },
@@ -86,21 +88,29 @@ var SearchResults = React.createClass({
         });
       };
 
-      xhr.open("get", "http://api.papersearch.org/articles?q="+query, true);
+      xhr.open("get", "http://api.papersearch.org/articles?q="+query+"&from="+this.state.from, true);
       xhr.send();
 
       _this.setState({ loading: true, xhr: xhr });
     }
   },
+  nextPage: function() {
+    this.state.from = this.state.from+this.state.resultsPerPage;
+    this.fetchResults();
+  },
   /*jshint ignore:start */
   render: function() {
     var content;
     var count;
+    var next;
 
     if (this.state.loading) {
       content = <li><Spinner /></li>;
     } else if (this.state.total > 0) {
-      count = <li>Showing {this.state.from+1} to {this.state.from+20} of {this.state.total} results</li>
+      if (this.state.from + this.state.resultsPerPage < this.state.total) {
+        next = <span className="link" onClick={this.nextPage}>next page</span>;
+      }
+      count = <li>Showing {this.state.from+1} to {Math.min(this.state.total, this.state.from+this.state.resultsPerPage)} of {this.state.total} results {next}</li>
       content = this.state.results.map(function(result) {
         return <SearchResult data={result} />;
       });
@@ -116,7 +126,6 @@ var SearchResults = React.createClass({
       <ul>
         {count}
         {content}
-        }
       </ul>
     );
   }
