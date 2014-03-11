@@ -94,6 +94,10 @@ var SearchResults = React.createClass({
       _this.setState({ loading: true, xhr: xhr });
     }
   },
+  previousPage: function() {
+    this.state.from = Math.max(this.state.from-this.state.resultsPerPage, 0);
+    this.fetchResults();
+  },
   nextPage: function() {
     this.state.from = this.state.from+this.state.resultsPerPage;
     this.fetchResults();
@@ -102,7 +106,9 @@ var SearchResults = React.createClass({
   render: function() {
     var content;
     var count;
+    var pageNav;
     var next;
+    var previous;
 
     if (this.state.loading) {
       content = <li><Spinner /></li>;
@@ -110,7 +116,17 @@ var SearchResults = React.createClass({
       if (this.state.from + this.state.resultsPerPage < this.state.total) {
         next = <span className="link" onClick={this.nextPage}>next page</span>;
       }
-      count = <li>Showing {this.state.from+1} to {Math.min(this.state.total, this.state.from+this.state.resultsPerPage)} of {this.state.total} results {next}</li>
+      if (this.state.from > 0) {
+        previous = <span className="link" onClick={this.previousPage}>previous page</span>;
+      }
+
+      if (next && previous) {
+        pageNav = <span>{next} | {previous}</span>;
+      } else {
+        pageNav = next || previous
+      }
+
+      count = <li>Showing {this.state.from+1} to {Math.min(this.state.total, this.state.from+this.state.resultsPerPage)} of {this.state.total} results {pageNav}</li>
       content = this.state.results.map(function(result) {
         return <SearchResult data={result} />;
       });
