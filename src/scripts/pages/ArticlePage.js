@@ -8,6 +8,9 @@ var _ = require('underscore');
 var React = require('react/addons');
 var Articles = require("../data.js").Articles;
 var Spinner = require('../components/Spinner.js');
+var Constants = require("../constants.js");
+var Link = require('react-router-component').Link;
+var Search = require('../components/Search.js');
 
 var ArticlePage = React.createClass({
   getInitialState: function () {
@@ -28,7 +31,7 @@ var ArticlePage = React.createClass({
         });
       };
 
-      xhr.open("get", "http://api.papersearch.org/articles?id="+this.props.articleId, true);
+      xhr.open("get", "http://api.papersearch.org/articles/"+this.props.articleId, true);
       xhr.send();
 
       _this.setState({ xhr: xhr });
@@ -50,8 +53,9 @@ var ArticlePage = React.createClass({
     } else if (article) {
       content = (
         <div>
-          <h1 className="h1">{article.name}</h1>
-          <p>{article.blurb}</p>
+          <h3>{article.title}</h3>
+          <h5>{article.publication_date} | doi: {article.doi}</h5>
+          <p>{article.abstract}</p>
         </div>
       );
     } else {
@@ -59,8 +63,16 @@ var ArticlePage = React.createClass({
     }
 
     return (
-      <div>
-        {content}
+      <div className="article-page container-fluid">
+        <div className="header row">
+          <Link className="h1 inline-block" href={"/"}>{Constants.COMPANY_NAME}</Link>
+          <Search query={this.props.query} className="inline-block"/>
+
+          <button type="button" className="pull-right">user@curatescience.com</button>
+        </div>
+        <div className="row">
+          {content}
+        </div>
       </div>
     );
   }
