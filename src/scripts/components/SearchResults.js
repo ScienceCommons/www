@@ -48,6 +48,7 @@ var SearchResults = React.createClass({
   getInitialState: function() {
     return {
       results: [],
+      total: 0,
       loading: true
     };
   },
@@ -94,10 +95,12 @@ var SearchResults = React.createClass({
   /*jshint ignore:start */
   render: function() {
     var content;
+    var count;
 
     if (this.state.loading) {
       content = <li><Spinner /></li>;
-    } else if (this.state.results.length > 0 ) {
+    } else if (this.state.total > 0) {
+      count = <li>Showing {this.state.from+1} to {this.state.from+20} of {this.state.total} results</li>
       content = this.state.results.map(function(result) {
         return <SearchResult data={result} />;
       });
@@ -111,7 +114,9 @@ var SearchResults = React.createClass({
 
     return (
       <ul>
+        {count}
         {content}
+        }
       </ul>
     );
   }
