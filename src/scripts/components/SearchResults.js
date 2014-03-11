@@ -69,9 +69,18 @@ var SearchResults = React.createClass({
       var xhr = new XMLHttpRequest();
 
       xhr.onload = function() {
+        var res;
+        try {
+          res = JSON.parse(xhr.responseText) || {};
+        } catch (e) {
+          res = {};
+        };
+
         _this.setState({
           loading: false,
-          results: JSON.parse(xhr.responseText),
+          results: res.documents,
+          total: res.total,
+          from: res.from,
           xhr: null
         });
       };
