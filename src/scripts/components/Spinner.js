@@ -15,9 +15,9 @@ var Spinner = React.createClass({
   render: function() {
     return (
       <ul className="loader">
-	   <li></li>
-	   <li></li>
-	   <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
       </ul>
     );
   }
