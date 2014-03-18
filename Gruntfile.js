@@ -54,7 +54,6 @@ module.exports = function (grunt) {
   var handle404 = function(src) {
     return function(req, res) {
       var file = src + "/index.html";
-      console.log("file", file, src);
       if (grunt.file.exists(file)) {
         return fs.createReadStream(file).pipe(res);
       }
@@ -191,7 +190,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask("serve", function (target) {
     if (target === "production") {
-      return grunt.task.run(["build", "open", "connect:production:keepalive"]);
+      return grunt.task.run(["build:production", "open", "connect:production:keepalive"]);
     }
 
     grunt.task.run([
