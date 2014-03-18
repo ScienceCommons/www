@@ -8,6 +8,7 @@ var _ = require('underscore');
 var React = require('react/addons');
 var Authors = require("../data.js").Authors;
 var Spinner = require('../components/Spinner.js');
+var PageHeader = require("../components/PageHeader.js");
 
 var AuthorPage = React.createClass({
   getInitialState: function () {
@@ -43,8 +44,12 @@ var AuthorPage = React.createClass({
     }
 
     return (
-      <div>
-        {content}
+      <div className="page">
+        <PageHeader />
+
+        <div className="content author_content">
+          {content}
+        </div>
       </div>
     );
   }

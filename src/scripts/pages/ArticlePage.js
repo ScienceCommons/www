@@ -2,15 +2,13 @@
  * @jsx React.DOM
  */
 
-'use strict';
+"use strict";
 
-var _ = require('underscore');
-var React = require('react/addons');
+var _ = require("underscore");
+var React = require("react/addons");
 var Articles = require("../data.js").Articles;
-var Spinner = require('../components/Spinner.js');
-var Constants = require("../constants.js");
-var Link = require('react-router-component').Link;
-var Search = require('../components/Search.js');
+var Spinner = require("../components/Spinner.js");
+var PageHeader = require("../components/PageHeader.js");
 
 var ArticlePage = React.createClass({
   getInitialState: function () {
@@ -63,14 +61,10 @@ var ArticlePage = React.createClass({
     }
 
     return (
-      <div className="article-page container-fluid">
-        <div className="header row">
-          <Link className="h1 inline-block" href={"/"}>{Constants.COMPANY_NAME}</Link>
-          <Search query={this.props.query} className="inline-block"/>
+      <div className="page">
+        <PageHeader />
 
-          <button type="button" className="pull-right">user@curatescience.com</button>
-        </div>
-        <div className="row">
+        <div className="content article_content">
           {content}
         </div>
       </div>
