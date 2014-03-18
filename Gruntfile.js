@@ -204,8 +204,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask("test", ["karma"]);
 
-  grunt.registerTask("build:development", ["env:development", "preprocess", "webpack:development"]);
-  grunt.registerTask("build:production", ["env:production", "preprocess", "webpack:production"]);
+  grunt.registerTask("build:development", ["env:development", "preprocess:development", "webpack:development"]);
+  grunt.registerTask("build:production", ["env:production", "preprocess:production", "webpack:production"]);
 
   grunt.registerTask("default", []);
 };
