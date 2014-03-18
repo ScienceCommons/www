@@ -27,7 +27,6 @@ $RECYCLE.BIN/
 
 # App specific
 
-/node_modules/
+node_modules/
 .tmp
-src/assets/
-/dist/
+build/
