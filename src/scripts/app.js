@@ -2,12 +2,13 @@
  * @jsx React.DOM
  */
 
-'use strict';
+"use strict";
 
-var React = require('react/addons');
-var Router = require('react-router-component');
+var React = require("react/addons");
+var Router = require("react-router-component");
 var Locations = Router.Locations;
 var Location = Router.Location;
+var Cortex = require("node-cortex");
 
 
 var Pages = require('./pages.js');
@@ -35,6 +36,6 @@ var App = React.createClass({
   /*jshint ignore:end */
 });
 
-React.renderComponent(<App />, document.getElementById('content')); // jshint ignore:line
+React.renderComponent(<App />, document.getElementById("content")); // jshint ignore:line
 
 module.exports = App;
