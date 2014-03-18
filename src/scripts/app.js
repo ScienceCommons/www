@@ -36,6 +36,6 @@ var App = React.createClass({
   /*jshint ignore:end */
 });
 
-React.renderComponent(<App />, document.getElementById("content")); // jshint ignore:line
+React.renderComponent(<App />, document.getElementById("page")); // jshint ignore:line
 
 module.exports = App;
