@@ -14,9 +14,9 @@ var Cortex = require("cortexjs");
 var Pages = require('./pages.js');
 
 // CSS
-require('../styles/reset.css');
+require('../styles/reset.scss');
 require('../styles/bootstrap.css');
-require('../styles/main.css');
+require('../styles/main.scss');
 
 
 var App = React.createClass({

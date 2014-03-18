@@ -123,7 +123,7 @@ module.exports = function (grunt) {
       webpack: {
         files: [
           "./src/scripts/{,*/}*.js",
-          "./src/styles/{,*/}*.css"
+          "./src/styles/{,*/}*.[sac]*ss"
         ],
         tasks: ["webpack:development"]
       },
