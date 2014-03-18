@@ -1,42 +1,46 @@
-'use strict';
+"use strict";
+
 var LIVERELOAD_PORT = 35729;
-var lrSnippet = require('connect-livereload')({
+var lrSnippet = require("connect-livereload")({
   port: LIVERELOAD_PORT
 });
+
 var mountFolder = function (connect, dir) {
-  return connect.static(require('path').resolve(dir));
+  return connect.static(require("path").resolve(dir));
 };
+
 var webpack = require("webpack");
+var fs = require("fs");
 
 module.exports = function (grunt) {
   // Let *load-grunt-tasks* require everything
-  require('load-grunt-tasks')(grunt);
+  require("load-grunt-tasks")(grunt);
   // Read configuration from package.json
-  var pkgConfig = grunt.file.readJSON('package.json');
-  var jshintConfig = grunt.file.readJSON('.jshintrc');
+  var pkgConfig = grunt.file.readJSON("package.json");
+  var jshintConfig = grunt.file.readJSON(".jshintrc");
 
   var loaders = [{
     test: /\.css$/,
-    loader: 'style-loader!css-loader'
+    loader: "style-loader!css-loader"
   }, {
     test: /\.s[ac]ss$/,
-    loader: 'style!sass-loader'
+    loader: "style!sass-loader"
   }, {
     test: /\.gif/,
-    loader: 'url-loader?prefix=/assets/&limit=10000&minetype=image/gif'
+    loader: "url-loader?prefix=/assets/&limit=10000&minetype=image/gif"
   }, {
     test: /\.jpg/,
-    loader: 'url-loader?prefix=/assets/&limit=10000&minetype=image/jpg'
+    loader: "url-loader?prefix=/assets/&limit=10000&minetype=image/jpg"
   }, {
     test: /\.png/,
-    loader: 'url-loader?prefix=/assets/&limit=10000&minetype=image/png'
+    loader: "url-loader?prefix=/assets/&limit=10000&minetype=image/png"
   }, {
     test: /\.js$/,
-    loader: 'jsx-loader'
+    loader: "jsx-loader"
   }, {
     test: /\.woff$/,
     loader: "url-loader?prefix=/assets/&limit=10000&minetype=application/font-woff"
-  }, { 
+  }, {
     test: /\.ttf$/,
     loader: "file-loader?prefix=/assets/"
   }, {
@@ -48,24 +52,33 @@ module.exports = function (grunt) {
   }];
 
   var handle404 = function(src) {
-    return function(req, res){
-      for(var file, i = 0; i < src.length; i++){
-        file = src + "/index.html"; 
-        if (grunt.file.exists(file)){
-          require('fs').createReadStream(file).pipe(res);
-          return; // we're done
-        }
+    return function(req, res) {
+      var file = src + "/index.html";
+      console.log("file", file, src);
+      if (grunt.file.exists(file)) {
+        return fs.createReadStream(file).pipe(res);
       }
       res.statusCode(404); // where's index.html?
       res.end();
     };
   };
 
+  var DEVELOPMENT_PATH = "build/development";
+  var PRODUCTION_PATH = "build/production";
+
   grunt.initConfig({
     pkg: pkgConfig,
+    env: {
+      development: {
+        NODE_ENV: "development"
+      },
+      production: {
+        NODE_ENV: "production"
+      }
+    },
     webpack: {
       options: {
-        entry: './<%= pkg.src %>/scripts/app.js',
+        entry: "./src/scripts/app.js",
         debug: true,
         cache: true,
         stats: {
@@ -87,14 +100,19 @@ module.exports = function (grunt) {
       },
       development: {
         output: {
-          path: '<%= pkg.src %>',
-          filename: 'assets/<%= pkg.mainOutput %>.js'
+          path: DEVELOPMENT_PATH,
+          filename: "assets/main.js"
         }
       },
-      dist: {
+      production: {
         output: {
-          path: '<%= pkg.dist %>',
-          filename: 'assets/<%= pkg.mainOutput %>.js'
+          path: PRODUCTION_PATH,
+          filename: "assets/main.js"
+        },
+        externals: {
+          "react": "React",
+          "react/addons": "React",
+          "underscore": "_"
         },
         plugins: [
           new webpack.optimize.DedupePlugin(),
@@ -102,27 +120,21 @@ module.exports = function (grunt) {
         ]
       }
     },
-    copy: {
-      dist: {
-        src: '<%= pkg.src %>/index.html',
-        dest: '<%= pkg.dist%>/index.html'
-      }
-    },
     watch: {
       webpack: {
-        files: ['<%= pkg.src %>/scripts/{,*/}*.js',
-          '<%= pkg.src %>/styles/{,*/}*.css',
-          '!<%= pkg.src %>/assets/<%= pkg.mainOutput %>.js'
+        files: [
+          "./src/scripts/{,*/}*.js",
+          "./src/styles/{,*/}*.css"
         ],
-        tasks: ['webpack:development']
+        tasks: ["webpack:development"]
       },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
         },
         files: [
-          '<%= pkg.src %>/{,*/}*.html',
-          '<%= pkg.src %>/assets/<%= pkg.mainOutput %>.js'
+          DEVELOPMENT_PATH + "/{,*/}*.html",
+          DEVELOPMENT_PATH + "/assets/main.js"
         ]
       }
     },
@@ -130,60 +142,70 @@ module.exports = function (grunt) {
       options: {
         port: 8000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost'
+        hostname: "localhost"
       },
       livereload: {
         options: {
           middleware: function (connect, options) {
             return [
               lrSnippet,
-              mountFolder(connect, pkgConfig.src+"/assets"),
-              mountFolder(connect, pkgConfig.src),
-              handle404(pkgConfig.src)
+              mountFolder(connect, DEVELOPMENT_PATH +"/assets"),
+              mountFolder(connect, DEVELOPMENT_PATH),
+              handle404(DEVELOPMENT_PATH)
             ];
           }
         }
       },
-      dist: {
+      production: {
         options: {
           middleware: function (connect) {
             return [
-              mountFolder(connect, pkgConfig.dist),
-              handle404(pkgConfig.dist)
+              mountFolder(connect, PRODUCTION_PATH),
+              handle404(PRODUCTION_PATH)
             ];
           }
         }
       }
     },
+    preprocess: {
+      development: {
+        src: "src/index.html",
+        dest: DEVELOPMENT_PATH + "/index.html"
+      },
+      production: {
+        src: "src/index.html",
+        dest: PRODUCTION_PATH + "/index.html"
+      }
+    },
     open: {
       server: {
-        url: 'http://localhost:<%= connect.options.port %>'
+        url: "http://localhost:<%= connect.options.port %>"
       }
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js'
+        configFile: "karma.conf.js"
       }
     }
   });
 
-  grunt.registerTask('serve', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+  grunt.registerTask("serve", function (target) {
+    if (target === "production") {
+      return grunt.task.run(["build", "open", "connect:production:keepalive"]);
     }
 
     grunt.task.run([
-      'connect:livereload',
-      'webpack:development',
-      'open',
-      'watch'
+      "connect:livereload",
+      "build:development",
+      "open",
+      "watch"
     ]);
   });
 
-  grunt.registerTask('test', ['karma']);
-  grunt.registerTask('heroku', ['webpack:dist', 'copy:dist']);
+  grunt.registerTask("test", ["karma"]);
 
-  grunt.registerTask('build', []);
+  grunt.registerTask("build:development", ["env:development", "preprocess", "webpack:development"]);
+  grunt.registerTask("build:production", ["env:production", "preprocess", "webpack:production"]);
 
-  grunt.registerTask('default', []);
+  grunt.registerTask("default", []);
 };
