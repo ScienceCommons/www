@@ -39,6 +39,7 @@
         "file-loader": "~0.5.1",
         "grunt-aws-s3": "~0.8.1",
         "grunt-preprocess": "~4.0.0",
-        "grunt-env": "~0.4.0"
+        "grunt-env": "~0.4.0",
+        "grunt-webfont": "~0.3.0"
     }
 }

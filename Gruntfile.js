@@ -176,6 +176,17 @@ module.exports = function (grunt) {
         dest: PRODUCTION_PATH + "/index.html"
       }
     },
+    webfont: {
+      icons: {
+        src: "src/icons/*.svg",
+        dest: "src/fonts",
+        destCss: "src/styles",
+        options: {
+          hashes: false,
+          htmlDemo: false
+        }
+      }
+    },
     open: {
       server: {
         url: "http://localhost:<%= connect.options.port %>"
@@ -203,8 +214,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask("test", ["karma"]);
 
-  grunt.registerTask("build:development", ["env:development", "preprocess:development", "webpack:development"]);
-  grunt.registerTask("build:production", ["env:production", "preprocess:production", "webpack:production"]);
+  grunt.registerTask("build:development", ["env:development", "preprocess:development", "webfont", "webpack:development"]);
+  grunt.registerTask("build:production", ["env:production", "preprocess:production", "webfont", "webpack:production"]);
 
   grunt.registerTask("default", []);
 };

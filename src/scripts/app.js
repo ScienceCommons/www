@@ -11,12 +11,12 @@ var Location = Router.Location;
 var Cortex = require("cortexjs");
 
 
-var Pages = require('./pages.js');
+var Pages = require("./pages.js");
 
 // CSS
-require('../styles/reset.scss');
-require('../styles/bootstrap.css');
-require('../styles/main.scss');
+require("../styles/reset.scss");
+require("../styles/icons.css");
+require("../styles/main.scss");
 
 
 var App = React.createClass({
