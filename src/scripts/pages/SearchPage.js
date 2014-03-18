@@ -21,8 +21,8 @@ var SearchPage = React.createClass({
     }
 
     return (
-      <div className="search-page container-fluid">
-        <PageHeader />
+      <div className="page">
+        <PageHeader query={this.props.query} />
 
         <div className="content search_content">
           {content}
