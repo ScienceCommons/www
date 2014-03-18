@@ -1,0 +1,680 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/0.10.25/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install' ]
+2 info using npm@1.3.24
+3 info using node@v0.10.25
+4 warn package.json alexandria@0.0.0 No repository field.
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ '/Users/stephen/Code/ScienceCommons/www',
+6 verbose install   [ 'react',
+6 verbose install     'underscore',
+6 verbose install     'react-router-component',
+6 verbose install     'cortexjs',
+6 verbose install     'grunt',
+6 verbose install     'load-grunt-tasks',
+6 verbose install     'grunt-contrib-watch',
+6 verbose install     'grunt-contrib-connect',
+6 verbose install     'connect-livereload',
+6 verbose install     'webpack',
+6 verbose install     'jsx-loader',
+6 verbose install     'grunt-webpack',
+6 verbose install     'style-loader',
+6 verbose install     'sass-loader',
+6 verbose install     'url-loader',
+6 verbose install     'css-loader',
+6 verbose install     'karma-script-launcher',
+6 verbose install     'karma-chrome-launcher',
+6 verbose install     'karma-firefox-launcher',
+6 verbose install     'karma-jasmine',
+6 verbose install     'karma-phantomjs-launcher',
+6 verbose install     'karma',
+6 verbose install     'grunt-karma',
+6 verbose install     'karma-webpack-plugin',
+6 verbose install     'webpack-dev-server',
+6 verbose install     'grunt-open',
+6 verbose install     'jshint-loader',
+6 verbose install     'grunt-contrib-copy',
+6 verbose install     'file-loader',
+6 verbose install     'grunt-aws-s3',
+6 verbose install     'grunt-preprocess',
+6 verbose install     'grunt-env' ] ]
+7 info preinstall alexandria@0.0.0
+8 warn package.json jsx-loader@0.9.0 No repository field.
+9 warn package.json jshint-loader@0.6.0 No repository field.
+10 warn package.json karma-webpack-plugin@1.0.0 No repository field.
+11 warn package.json node-cortex@0.4.1 No repository field.
+12 warn package.json webpack-dev-server@1.0.2 No repository field.
+13 verbose readDependencies using package.json deps
+14 verbose already installed skipping load-grunt-tasks@~0.2.1 /Users/stephen/Code/ScienceCommons/www
+15 verbose already installed skipping grunt-contrib-watch@~0.5.3 /Users/stephen/Code/ScienceCommons/www
+16 verbose already installed skipping grunt-contrib-connect@~0.6.0 /Users/stephen/Code/ScienceCommons/www
+17 verbose already installed skipping connect-livereload@~0.3.1 /Users/stephen/Code/ScienceCommons/www
+18 verbose already installed skipping webpack@~1.1.0 /Users/stephen/Code/ScienceCommons/www
+19 verbose cache add [ 'jsx-loader@petehunt/jsx-loader', null ]
+20 verbose cache add name=undefined spec="jsx-loader@petehunt/jsx-loader" args=["jsx-loader@petehunt/jsx-loader",null]
+21 verbose parsed url { protocol: null,
+21 verbose parsed url   slashes: null,
+21 verbose parsed url   auth: null,
+21 verbose parsed url   host: null,
+21 verbose parsed url   port: null,
+21 verbose parsed url   hostname: null,
+21 verbose parsed url   hash: null,
+21 verbose parsed url   search: null,
+21 verbose parsed url   query: null,
+21 verbose parsed url   pathname: 'jsx-loader@petehunt/jsx-loader',
+21 verbose parsed url   path: 'jsx-loader@petehunt/jsx-loader',
+21 verbose parsed url   href: 'jsx-loader@petehunt/jsx-loader' }
+22 verbose cache add name="jsx-loader" spec="petehunt/jsx-loader" args=["jsx-loader","petehunt/jsx-loader"]
+23 verbose parsed url { protocol: null,
+23 verbose parsed url   slashes: null,
+23 verbose parsed url   auth: null,
+23 verbose parsed url   host: null,
+23 verbose parsed url   port: null,
+23 verbose parsed url   hostname: null,
+23 verbose parsed url   hash: null,
+23 verbose parsed url   search: null,
+23 verbose parsed url   query: null,
+23 verbose parsed url   pathname: 'petehunt/jsx-loader',
+23 verbose parsed url   path: 'petehunt/jsx-loader',
+23 verbose parsed url   href: 'petehunt/jsx-loader' }
+24 verbose addNamed [ 'jsx-loader', 'petehunt/jsx-loader' ]
+25 verbose addNamed [ null, null ]
+26 verbose already installed skipping sass-loader@~0.0.1 /Users/stephen/Code/ScienceCommons/www
+27 verbose already installed skipping grunt-webpack@~1.0.0 /Users/stephen/Code/ScienceCommons/www
+28 verbose already installed skipping style-loader@~0.6.0 /Users/stephen/Code/ScienceCommons/www
+29 verbose already installed skipping url-loader@~0.5.2 /Users/stephen/Code/ScienceCommons/www
+30 silly lockFile c14172d8-jsx-loader-petehunt-jsx-loader jsx-loader@petehunt/jsx-loader
+31 verbose lock jsx-loader@petehunt/jsx-loader /Users/stephen/.npm/c14172d8-jsx-loader-petehunt-jsx-loader.lock
+32 verbose already installed skipping css-loader@~0.6.6 /Users/stephen/Code/ScienceCommons/www
+33 info addNameTag [ 'jsx-loader', 'petehunt/jsx-loader' ]
+34 verbose already installed skipping karma-script-launcher@~0.1.0 /Users/stephen/Code/ScienceCommons/www
+35 verbose already installed skipping karma-chrome-launcher@~0.1.2 /Users/stephen/Code/ScienceCommons/www
+36 verbose url raw jsx-loader
+37 verbose url resolving [ 'https://registry.npmjs.org/', './jsx-loader' ]
+38 verbose url resolved https://registry.npmjs.org/jsx-loader
+39 info trying registry request attempt 1 at 20:45:48
+40 verbose etag "AJ0QB2YXJPCN1IRVVORHDUR6C"
+41 http GET https://registry.npmjs.org/jsx-loader
+42 verbose already installed skipping karma-phantomjs-launcher@~0.1.1 /Users/stephen/Code/ScienceCommons/www
+43 verbose already installed skipping karma-firefox-launcher@~0.1.3 /Users/stephen/Code/ScienceCommons/www
+44 verbose already installed skipping karma@~0.10.9 /Users/stephen/Code/ScienceCommons/www
+45 verbose already installed skipping karma-jasmine@~0.1.5 /Users/stephen/Code/ScienceCommons/www
+46 verbose already installed skipping grunt-karma@~0.6.2 /Users/stephen/Code/ScienceCommons/www
+47 verbose already installed skipping karma-webpack-plugin@~1.0.0 /Users/stephen/Code/ScienceCommons/www
+48 verbose already installed skipping webpack-dev-server@~1.0.2 /Users/stephen/Code/ScienceCommons/www
+49 verbose already installed skipping grunt-open@~0.2.2 /Users/stephen/Code/ScienceCommons/www
+50 verbose already installed skipping jshint-loader@~0.6.0 /Users/stephen/Code/ScienceCommons/www
+51 verbose already installed skipping grunt-contrib-copy@~0.5.0 /Users/stephen/Code/ScienceCommons/www
+52 verbose already installed skipping file-loader@~0.5.1 /Users/stephen/Code/ScienceCommons/www
+53 verbose already installed skipping grunt-aws-s3@~0.8.1 /Users/stephen/Code/ScienceCommons/www
+54 verbose already installed skipping grunt-preprocess@~4.0.0 /Users/stephen/Code/ScienceCommons/www
+55 verbose already installed skipping grunt-env@~0.4.0 /Users/stephen/Code/ScienceCommons/www
+56 verbose already installed skipping react@~0.9.0 /Users/stephen/Code/ScienceCommons/www
+57 verbose already installed skipping underscore@1.5.2 /Users/stephen/Code/ScienceCommons/www
+58 verbose already installed skipping react-router-component@~0.6.0 /Users/stephen/Code/ScienceCommons/www
+59 verbose cache add [ 'cortexjs@~0.4.0', null ]
+60 verbose cache add name=undefined spec="cortexjs@~0.4.0" args=["cortexjs@~0.4.0",null]
+61 verbose parsed url { protocol: null,
+61 verbose parsed url   slashes: null,
+61 verbose parsed url   auth: null,
+61 verbose parsed url   host: null,
+61 verbose parsed url   port: null,
+61 verbose parsed url   hostname: null,
+61 verbose parsed url   hash: null,
+61 verbose parsed url   search: null,
+61 verbose parsed url   query: null,
+61 verbose parsed url   pathname: 'cortexjs@~0.4.0',
+61 verbose parsed url   path: 'cortexjs@~0.4.0',
+61 verbose parsed url   href: 'cortexjs@~0.4.0' }
+62 verbose cache add name="cortexjs" spec="~0.4.0" args=["cortexjs","~0.4.0"]
+63 verbose parsed url { protocol: null,
+63 verbose parsed url   slashes: null,
+63 verbose parsed url   auth: null,
+63 verbose parsed url   host: null,
+63 verbose parsed url   port: null,
+63 verbose parsed url   hostname: null,
+63 verbose parsed url   hash: null,
+63 verbose parsed url   search: null,
+63 verbose parsed url   query: null,
+63 verbose parsed url   pathname: '~0.4.0',
+63 verbose parsed url   path: '~0.4.0',
+63 verbose parsed url   href: '~0.4.0' }
+64 verbose addNamed [ 'cortexjs', '~0.4.0' ]
+65 verbose addNamed [ null, '>=0.4.0-0 <0.5.0-0' ]
+66 silly lockFile 8d707074-cortexjs-0-4-0 cortexjs@~0.4.0
+67 verbose lock cortexjs@~0.4.0 /Users/stephen/.npm/8d707074-cortexjs-0-4-0.lock
+68 verbose already installed skipping grunt@~0.4.2 /Users/stephen/Code/ScienceCommons/www
+69 silly addNameRange { name: 'cortexjs', range: '>=0.4.0-0 <0.5.0-0', hasData: false }
+70 verbose url raw cortexjs
+71 verbose url resolving [ 'https://registry.npmjs.org/', './cortexjs' ]
+72 verbose url resolved https://registry.npmjs.org/cortexjs
+73 info trying registry request attempt 1 at 20:45:48
+74 http GET https://registry.npmjs.org/cortexjs
+75 http 304 https://registry.npmjs.org/jsx-loader
+76 silly registry.get cb [ 304,
+76 silly registry.get   { date: 'Tue, 18 Mar 2014 03:45:48 GMT',
+76 silly registry.get     server: 'Apache',
+76 silly registry.get     via: '1.1 varnish',
+76 silly registry.get     'last-modified': 'Tue, 18 Mar 2014 03:45:48 GMT',
+76 silly registry.get     'cache-control': 'max-age=1',
+76 silly registry.get     etag: '"AJ0QB2YXJPCN1IRVVORHDUR6C"',
+76 silly registry.get     'x-served-by': 'cache-lax1429-LAX',
+76 silly registry.get     'x-cache': 'MISS',
+76 silly registry.get     'x-cache-hits': '0',
+76 silly registry.get     'x-timer': 'S1395114348.295815945,VS0,VE82',
+76 silly registry.get     vary: 'Accept',
+76 silly registry.get     'content-length': '0',
+76 silly registry.get     'keep-alive': 'timeout=10, max=50',
+76 silly registry.get     connection: 'Keep-Alive' } ]
+77 verbose etag jsx-loader from cache
+78 info maybeGithub Attempting petehunt/jsx-loader from git://github.com/petehunt/jsx-loader
+79 silly lockFile 7251acf0-t-github-com-petehunt-jsx-loader git://github.com/petehunt/jsx-loader
+80 verbose lock git://github.com/petehunt/jsx-loader /Users/stephen/.npm/7251acf0-t-github-com-petehunt-jsx-loader.lock
+81 verbose addRemoteGit [ 'git://github.com/petehunt/jsx-loader', 'master' ]
+82 verbose git remote.origin.url git://github.com/petehunt/jsx-loader
+83 http 200 https://registry.npmjs.org/cortexjs
+84 silly registry.get cb [ 200,
+84 silly registry.get   { date: 'Tue, 18 Mar 2014 03:45:48 GMT',
+84 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+84 silly registry.get     etag: '"89SWR83KDHLF5YDYPVUH4UN80"',
+84 silly registry.get     'content-type': 'application/json',
+84 silly registry.get     via: '1.1 varnish',
+84 silly registry.get     'cache-control': 'max-age=1',
+84 silly registry.get     'content-length': '12576',
+84 silly registry.get     'accept-ranges': 'bytes',
+84 silly registry.get     age: '0',
+84 silly registry.get     'x-served-by': 'cache-v43-ASH, cache-lax1425-LAX',
+84 silly registry.get     'x-cache': 'MISS, MISS',
+84 silly registry.get     'x-cache-hits': '0, 0',
+84 silly registry.get     'x-timer': 'S1395114348.296230793,VS0,VS-18,VE189,VE272',
+84 silly registry.get     vary: 'Accept',
+84 silly registry.get     'keep-alive': 'timeout=10, max=50',
+84 silly registry.get     connection: 'Keep-Alive' } ]
+85 silly addNameRange number 2 { name: 'cortexjs', range: '>=0.4.0-0 <0.5.0-0', hasData: true }
+86 silly addNameRange versions [ 'cortexjs', [ '0.4.1', '0.4.2', '0.4.3', '0.4.4', '0.4.5' ] ]
+87 verbose addNamed [ 'cortexjs', '0.4.5' ]
+88 verbose addNamed [ '0.4.5', '0.4.5' ]
+89 silly lockFile 34c5f120-cortexjs-0-4-5 cortexjs@0.4.5
+90 verbose lock cortexjs@0.4.5 /Users/stephen/.npm/34c5f120-cortexjs-0-4-5.lock
+91 silly lockFile 2f7e0ebf--org-cortexjs-cortexjs-0-4-5-tgz https://registry.npmjs.org/cortexjs/-/cortexjs-0.4.5.tgz
+92 verbose lock https://registry.npmjs.org/cortexjs/-/cortexjs-0.4.5.tgz /Users/stephen/.npm/2f7e0ebf--org-cortexjs-cortexjs-0-4-5-tgz.lock
+93 verbose addRemoteTarball [ 'https://registry.npmjs.org/cortexjs/-/cortexjs-0.4.5.tgz',
+93 verbose addRemoteTarball   '8e556d5dee2c5b018844a5faa5451660efd75c42' ]
+94 info retry fetch attempt 1 at 20:45:48
+95 verbose fetch to= /var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/tmp.tgz
+96 http GET https://registry.npmjs.org/cortexjs/-/cortexjs-0.4.5.tgz
+97 verbose git fetch -a origin (git://github.com/petehunt/jsx-loader)
+98 verbose git rev-list -n1 master d0625f3c0a6948c899ae1d442cf7f2b45fbe8c2f
+99 verbose resolved git url git://github.com/petehunt/jsx-loader#d0625f3c0a6948c899ae1d442cf7f2b45fbe8c2f
+100 verbose tar unpack /var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/tmp.tgz
+101 silly lockFile 71d59982-48763-0-4063621910754591-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package
+102 verbose lock tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package /Users/stephen/.npm/71d59982-48763-0-4063621910754591-package.lock
+103 silly lockFile 0e1fd4a5-48763-0-4063621910754591-tmp-tgz tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/tmp.tgz
+104 verbose lock tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/tmp.tgz /Users/stephen/.npm/0e1fd4a5-48763-0-4063621910754591-tmp-tgz.lock
+105 silly gunzTarPerm modes [ '755', '644' ]
+106 silly gunzTarPerm extractEntry
+107 silly gunzTarPerm modified mode [ '', 509, 493 ]
+108 silly gunzTarPerm extractEntry .gitignore
+109 silly gunzTarPerm modified mode [ '.gitignore', 436, 420 ]
+110 silly gunzTarPerm extractEntry README.md
+111 silly gunzTarPerm modified mode [ 'README.md', 436, 420 ]
+112 silly gunzTarPerm extractEntry index.js
+113 silly gunzTarPerm modified mode [ 'index.js', 436, 420 ]
+114 silly gunzTarPerm extractEntry package.json
+115 silly gunzTarPerm modified mode [ 'package.json', 436, 420 ]
+116 silly lockFile 71d59982-48763-0-4063621910754591-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package
+117 silly lockFile 71d59982-48763-0-4063621910754591-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package
+118 silly lockFile 0e1fd4a5-48763-0-4063621910754591-tmp-tgz tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/tmp.tgz
+119 silly lockFile 0e1fd4a5-48763-0-4063621910754591-tmp-tgz tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/tmp.tgz
+120 verbose tar pack [ '/Users/stephen/.npm/jsx-loader/0.9.0/package.tgz',
+120 verbose tar pack   '/var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package' ]
+121 verbose tarball /Users/stephen/.npm/jsx-loader/0.9.0/package.tgz
+122 verbose folder /var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package
+123 silly lockFile 71d59982-48763-0-4063621910754591-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package
+124 verbose lock tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package /Users/stephen/.npm/71d59982-48763-0-4063621910754591-package.lock
+125 silly lockFile 53eac567-npm-jsx-loader-0-9-0-package-tgz tar:///Users/stephen/.npm/jsx-loader/0.9.0/package.tgz
+126 verbose lock tar:///Users/stephen/.npm/jsx-loader/0.9.0/package.tgz /Users/stephen/.npm/53eac567-npm-jsx-loader-0-9-0-package-tgz.lock
+127 silly lockFile 71d59982-48763-0-4063621910754591-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package
+128 silly lockFile 71d59982-48763-0-4063621910754591-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348763-0.4063621910754591/package
+129 silly lockFile 53eac567-npm-jsx-loader-0-9-0-package-tgz tar:///Users/stephen/.npm/jsx-loader/0.9.0/package.tgz
+130 silly lockFile 53eac567-npm-jsx-loader-0-9-0-package-tgz tar:///Users/stephen/.npm/jsx-loader/0.9.0/package.tgz
+131 silly lockFile 0fb71eea-hen-npm-jsx-loader-0-9-0-package /Users/stephen/.npm/jsx-loader/0.9.0/package
+132 verbose lock /Users/stephen/.npm/jsx-loader/0.9.0/package /Users/stephen/.npm/0fb71eea-hen-npm-jsx-loader-0-9-0-package.lock
+133 silly lockFile 0fb71eea-hen-npm-jsx-loader-0-9-0-package /Users/stephen/.npm/jsx-loader/0.9.0/package
+134 silly lockFile 0fb71eea-hen-npm-jsx-loader-0-9-0-package /Users/stephen/.npm/jsx-loader/0.9.0/package
+135 verbose tar unpack /Users/stephen/.npm/jsx-loader/0.9.0/package.tgz
+136 silly lockFile 6dc5d664-hen-npm-jsx-loader-0-9-0-package tar:///Users/stephen/.npm/jsx-loader/0.9.0/package
+137 verbose lock tar:///Users/stephen/.npm/jsx-loader/0.9.0/package /Users/stephen/.npm/6dc5d664-hen-npm-jsx-loader-0-9-0-package.lock
+138 silly lockFile 53eac567-npm-jsx-loader-0-9-0-package-tgz tar:///Users/stephen/.npm/jsx-loader/0.9.0/package.tgz
+139 verbose lock tar:///Users/stephen/.npm/jsx-loader/0.9.0/package.tgz /Users/stephen/.npm/53eac567-npm-jsx-loader-0-9-0-package-tgz.lock
+140 silly gunzTarPerm modes [ '755', '644' ]
+141 silly gunzTarPerm extractEntry package.json
+142 silly gunzTarPerm extractEntry .npmignore
+143 silly gunzTarPerm extractEntry README.md
+144 silly gunzTarPerm extractEntry index.js
+145 silly lockFile 6dc5d664-hen-npm-jsx-loader-0-9-0-package tar:///Users/stephen/.npm/jsx-loader/0.9.0/package
+146 silly lockFile 6dc5d664-hen-npm-jsx-loader-0-9-0-package tar:///Users/stephen/.npm/jsx-loader/0.9.0/package
+147 silly lockFile 53eac567-npm-jsx-loader-0-9-0-package-tgz tar:///Users/stephen/.npm/jsx-loader/0.9.0/package.tgz
+148 silly lockFile 53eac567-npm-jsx-loader-0-9-0-package-tgz tar:///Users/stephen/.npm/jsx-loader/0.9.0/package.tgz
+149 verbose chmod /Users/stephen/.npm/jsx-loader/0.9.0/package.tgz 644
+150 verbose chown /Users/stephen/.npm/jsx-loader/0.9.0/package.tgz [ 501, 20 ]
+151 silly lockFile 7251acf0-t-github-com-petehunt-jsx-loader git://github.com/petehunt/jsx-loader
+152 silly lockFile 7251acf0-t-github-com-petehunt-jsx-loader git://github.com/petehunt/jsx-loader
+153 silly lockFile c14172d8-jsx-loader-petehunt-jsx-loader jsx-loader@petehunt/jsx-loader
+154 silly lockFile c14172d8-jsx-loader-petehunt-jsx-loader jsx-loader@petehunt/jsx-loader
+155 info already installed jsx-loader@0.9.0
+156 http 200 https://registry.npmjs.org/cortexjs/-/cortexjs-0.4.5.tgz
+157 verbose tar unpack /var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/tmp.tgz
+158 silly lockFile 75f6a065-8689-0-34581701550632715-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package
+159 verbose lock tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package /Users/stephen/.npm/75f6a065-8689-0-34581701550632715-package.lock
+160 silly lockFile d6436299-8689-0-34581701550632715-tmp-tgz tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/tmp.tgz
+161 verbose lock tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/tmp.tgz /Users/stephen/.npm/d6436299-8689-0-34581701550632715-tmp-tgz.lock
+162 silly gunzTarPerm modes [ '755', '644' ]
+163 silly gunzTarPerm extractEntry package.json
+164 silly gunzTarPerm extractEntry README.md
+165 silly gunzTarPerm extractEntry gulpfile.js
+166 silly gunzTarPerm extractEntry bower.json
+167 silly gunzTarPerm extractEntry build/cortex.js
+168 silly gunzTarPerm extractEntry build/cortex.min.js
+169 silly gunzTarPerm extractEntry examples/file_system/application.js
+170 silly gunzTarPerm extractEntry examples/file_system/application.jsx
+171 silly gunzTarPerm extractEntry examples/file_system/index.html
+172 silly gunzTarPerm extractEntry examples/skyline/application.js
+173 silly gunzTarPerm extractEntry examples/skyline/application.jsx
+174 silly gunzTarPerm extractEntry examples/skyline/index.html
+175 silly gunzTarPerm extractEntry examples/skyline/skyline.css
+176 silly gunzTarPerm extractEntry src/cortex.js
+177 silly gunzTarPerm extractEntry src/data_wrapper.js
+178 silly gunzTarPerm extractEntry src/pubsub.js
+179 silly gunzTarPerm extractEntry src/wrappers/array.js
+180 silly gunzTarPerm extractEntry src/wrappers/hash.js
+181 silly gunzTarPerm extractEntry test/cortex_test.js
+182 silly gunzTarPerm extractEntry test/data_wrapper_test.js
+183 silly gunzTarPerm extractEntry test/pubsub_test.js
+184 silly gunzTarPerm extractEntry test/wrappers/array_test.js
+185 silly gunzTarPerm extractEntry test/wrappers/hash_test.js
+186 silly lockFile 75f6a065-8689-0-34581701550632715-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package
+187 silly lockFile 75f6a065-8689-0-34581701550632715-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package
+188 silly lockFile d6436299-8689-0-34581701550632715-tmp-tgz tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/tmp.tgz
+189 silly lockFile d6436299-8689-0-34581701550632715-tmp-tgz tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/tmp.tgz
+190 verbose tar pack [ '/Users/stephen/.npm/cortexjs/0.4.5/package.tgz',
+190 verbose tar pack   '/var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package' ]
+191 verbose tarball /Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+192 verbose folder /var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package
+193 silly lockFile 75f6a065-8689-0-34581701550632715-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package
+194 verbose lock tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package /Users/stephen/.npm/75f6a065-8689-0-34581701550632715-package.lock
+195 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+196 verbose lock tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz /Users/stephen/.npm/57ed8739-n-npm-cortexjs-0-4-5-package-tgz.lock
+197 silly lockFile 75f6a065-8689-0-34581701550632715-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package
+198 silly lockFile 75f6a065-8689-0-34581701550632715-package tar:///var/folders/xg/3zqxqgvd3l198zrdvn5pj2gh0000gn/T/npm-50877-g5Vt-A0p/1395114348689-0.34581701550632715/package
+199 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+200 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+201 silly lockFile 99b79573-ephen-npm-cortexjs-0-4-5-package /Users/stephen/.npm/cortexjs/0.4.5/package
+202 verbose lock /Users/stephen/.npm/cortexjs/0.4.5/package /Users/stephen/.npm/99b79573-ephen-npm-cortexjs-0-4-5-package.lock
+203 silly lockFile 99b79573-ephen-npm-cortexjs-0-4-5-package /Users/stephen/.npm/cortexjs/0.4.5/package
+204 silly lockFile 99b79573-ephen-npm-cortexjs-0-4-5-package /Users/stephen/.npm/cortexjs/0.4.5/package
+205 verbose tar unpack /Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+206 silly lockFile 48a9192b-ephen-npm-cortexjs-0-4-5-package tar:///Users/stephen/.npm/cortexjs/0.4.5/package
+207 verbose lock tar:///Users/stephen/.npm/cortexjs/0.4.5/package /Users/stephen/.npm/48a9192b-ephen-npm-cortexjs-0-4-5-package.lock
+208 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+209 verbose lock tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz /Users/stephen/.npm/57ed8739-n-npm-cortexjs-0-4-5-package-tgz.lock
+210 silly gunzTarPerm modes [ '755', '644' ]
+211 silly gunzTarPerm extractEntry package.json
+212 silly gunzTarPerm extractEntry README.md
+213 silly gunzTarPerm extractEntry gulpfile.js
+214 silly gunzTarPerm extractEntry bower.json
+215 silly gunzTarPerm extractEntry build/cortex.js
+216 silly gunzTarPerm extractEntry build/cortex.min.js
+217 silly gunzTarPerm extractEntry examples/file_system/application.js
+218 silly gunzTarPerm extractEntry examples/file_system/application.jsx
+219 silly gunzTarPerm extractEntry examples/file_system/index.html
+220 silly gunzTarPerm extractEntry examples/skyline/application.js
+221 silly gunzTarPerm extractEntry examples/skyline/application.jsx
+222 silly gunzTarPerm extractEntry examples/skyline/index.html
+223 silly gunzTarPerm extractEntry examples/skyline/skyline.css
+224 silly gunzTarPerm extractEntry src/cortex.js
+225 silly gunzTarPerm extractEntry src/data_wrapper.js
+226 silly gunzTarPerm extractEntry src/pubsub.js
+227 silly gunzTarPerm extractEntry src/wrappers/array.js
+228 silly gunzTarPerm extractEntry src/wrappers/hash.js
+229 silly gunzTarPerm extractEntry test/cortex_test.js
+230 silly gunzTarPerm extractEntry test/data_wrapper_test.js
+231 silly gunzTarPerm extractEntry test/pubsub_test.js
+232 silly gunzTarPerm extractEntry test/wrappers/array_test.js
+233 silly gunzTarPerm extractEntry test/wrappers/hash_test.js
+234 silly lockFile 48a9192b-ephen-npm-cortexjs-0-4-5-package tar:///Users/stephen/.npm/cortexjs/0.4.5/package
+235 silly lockFile 48a9192b-ephen-npm-cortexjs-0-4-5-package tar:///Users/stephen/.npm/cortexjs/0.4.5/package
+236 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+237 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+238 verbose chmod /Users/stephen/.npm/cortexjs/0.4.5/package.tgz 644
+239 verbose chown /Users/stephen/.npm/cortexjs/0.4.5/package.tgz [ 501, 20 ]
+240 silly lockFile 2f7e0ebf--org-cortexjs-cortexjs-0-4-5-tgz https://registry.npmjs.org/cortexjs/-/cortexjs-0.4.5.tgz
+241 silly lockFile 2f7e0ebf--org-cortexjs-cortexjs-0-4-5-tgz https://registry.npmjs.org/cortexjs/-/cortexjs-0.4.5.tgz
+242 silly lockFile 34c5f120-cortexjs-0-4-5 cortexjs@0.4.5
+243 silly lockFile 34c5f120-cortexjs-0-4-5 cortexjs@0.4.5
+244 silly lockFile 8d707074-cortexjs-0-4-0 cortexjs@~0.4.0
+245 silly lockFile 8d707074-cortexjs-0-4-0 cortexjs@~0.4.0
+246 silly resolved [ { name: 'cortexjs',
+246 silly resolved     version: '0.4.5',
+246 silly resolved     description: 'A data managment solution for React',
+246 silly resolved     author: { name: 'Quan Nguyen' },
+246 silly resolved     license: 'MIT',
+246 silly resolved     devDependencies:
+246 silly resolved      { gulp: '~3.3.1',
+246 silly resolved        'gulp-util': '~2.2.9',
+246 silly resolved        'gulp-browserify': '~0.2.3',
+246 silly resolved        'gulp-uglify': '~0.1.0',
+246 silly resolved        'gulp-rename': '~0.2.0',
+246 silly resolved        'gulp-react': '~0.1.1',
+246 silly resolved        'gulp-jasmine': '~0.1.1' },
+246 silly resolved     main: './src/cortex',
+246 silly resolved     engines: { node: '*' },
+246 silly resolved     readme: 'Cortex is a Javascript library for centrally managing data with React.\n\n**Key features:**\n- supports deeply nested data with a simple API\n- performs old and new data comparison out of the box so you don\'t have to implement shouldComponentUpdate\n- has built-in methods for working with arrays and hashes data\n\n**Basic demos**\n\n[skyline (4-level nested components)](http://mquan.github.io/cortex/examples/skyline/)\n\n[file system (arbitrarily deep structure of a single component type)](http://mquan.github.io/cortex/examples/file_system/)\n\n# Quickstart\nInitialize a cortex object\n```javascript\nvar data = {a: 100, b: [1, 2, 3]};\n\nvar cortex = new Cortex(data, function() {\n  //trigger your React component to update props\n});\n```\n\nGet a nested cortex object\n```javascript\ncortex.a\n\n//Also works\ncortex[\'a\']\n```\n\nGet a nested cortex element in an array\n```javascript\ncortex.b[0]\n```\n\nGet the actual value\n```javascript\ncortex.a.getValue()\n// ==> 100\n```\n\nChange data\n```javascript\ncortex.a.set(200);\ncortex.a.getValue();\n// ==> 200\n```\n\n# Overview\n\nIn React\'s world data flows in one direction from the top down. That means if you want to make a change, change it at the source and let it propagate down the chain. But what happen when a child component needs to update the data? React\'s official guideline is to use callback for communication between parent and child components.\n\nHowever, this simply isn\'t sustainable even for trivially nested data. Imagine a Restaurant app in which the Restaurant has many Orders, each has many Items, each of which has many Modifiers. If you want to update a Modifier from \'medium rare\' to \'well-done\' you\'d have to pass the data changes several levels up. This is not only awkward but also creates unnecessary extra code in each component in the chain only for the purpose of passing data upstream.\n\nCortex\'s goal is to support arbitrarily deep data structure without requiring you to pass callbacks down the chain. Cortex achieves this by thinly wrap your data in an object that contains the key for locating each nested piece of data as accessed from the top level. When you change the data, internally Cortex passes the new value along with its location key to update the data at the source.\n\n\n# Basic example\n\nThe following example has two components Order and Item components. An Order contains an array of Items, and each Item can increase its own quantity attribute.\n\n```javascript\nvar Item = React.createClass({\n  increase: function() {\n    var quantity = this.props.item.quantity.getValue();\n    this.props.item.quantity.set(quantity + 1);\n  },\n  subTotal: function() {\n    return this.props.item.quantity.getValue() * this.props.item.price.getValue();\n  },\n  render: function() {\n    return(\n      <div className="item">\n        <a href="#" onClick={this.increase}>+</a>\n        <span>{this.props.item.quantity.getValue()}</span>\n        <span>{this.props.item.name.getValue()}</span>\n        <span>${this.subTotal()}</span>\n      </div>\n    );\n  }\n});\n\nvar Order = React.createClass({\n  render: function() {\n    var items = this.props.order.map(function(item){\n      return <Item item={item} />;\n    });\n    return(\n      <div>{items}</div>\n    );\n  }\n});\n\nvar orderComponent,\n    orderData = [\n      {name: "Burger", quantity: 2, price: 5.0},\n      {name: "Salad", quantity: 1, price: 4.50},\n      {name: "Coke", quantity: 3, price: 1.50}\n    ];\n\n//Initialize cortex with data and pass in a callback to run when data is updated.\nvar orderCortex = new Cortex(orderData, function(updatedOrder) {\n  orderComponent.setProps({order: orderCortex});\n});\n\norderComponent = React.renderComponent(\n  <Order order={orderCortex} />, document.getElementById("order")\n);\n```\n\nFirst we initialize cortex with:\n```javascript\nvar orderCortex = new Cortex(orderData, function(updatedOrder) {\n  orderComponent.setProps({order: orderCortex});\n});\n```\n\nThen it\'s passed into the Order component to render the Item components.\n\nIn Item component, note that we display the quantity value with ``this.props.item.quantity.getValue()``. This is because ``this.props.item.quantity`` only gives us the wrapper of the ``quantity`` attribute, we need to call ``getValue()`` to get the actual value.\n\nIn `increase` method, we use ``this.props.item.quantity.set(quantity + 1)`` to add 1 to the current quantity value.\n\n# Cortex API\n\n### Initialize:\n\n```javascript\nnew Cortex(data, function() {\n  //trigger your React component to update\n});\n```\n\n### Instance methods:\n\n    Method         | Description\n    ---------------|:-------------------\n    `getValue()`   | Returns the actual value\n    `val()`        | Alias for `getValue`\n    `set(value)`   | Changes the value and rewrap the entire data tree\n    `remove()`     | Self destruct method: remove self from parent if a nested object or array, set value to undefined if root level.\n\n### Cortex wrapper of array data has the following methods:\n\n    Method                         | Description\n    -------------------------------|:----------------------\n    `count()`                      | Returns length of nested wrappers\n    `forEach(callback)`            | Iterates over all elements. The callback accepts the following input `(wrapperElement, index, wrapperArray)`\n    `map(callback)`                | Returns a new array as returned by the callback. Callback accepts same input as forEach callback\n    `find(callback)`               | Returns the first wrapper element that meets the condition returned by callback. Callback accepts same input as forEach callback.\n    `findIndex(callback)`          | Returns index of first wrapper element that meets condition returned callback. Callback accepts same input as forEach callback.\n    `push(value)`                  | Inserts and rewrap the value at the end of the array.\n    `pop()`                        | Removes the last element in the array\n    `insertAt(index, [value])`     | Inserts a value or an array of values starting at specified index.\n    `removeAt(index, howMany = 1)` | Removes specified number of elements starting at index location. By default it removes 1 element if number of elements to be removed isn\'t specified.\n\n### Cortex wrapper of hash data has the following methods:\n    Methods                        | Description\n    -------------------------------|:------------------------\n    `keys()`                       | Returns the array of keys\n    `values()`                     | Returns the array of values\n    `hasKey(key)`                  | Returns boolean value whether the key exists\n    `forEach(callback)`            | Iterates over every key and value pair. The callback accepts the following inputs `(key, wrapperElement)`\n    `delete(key)`                  | Deletes the specified key and value pair\n    `add(key, value)`              | Adds the specified key and value pair\n\n\n# Install via Bower\n```console\nbower install cortexjs\n```\n\nReference the js file\n```html\n<script src="/bower_components/cortexjs/build/cortex.js"></script>\n```\n\n# Using cortex with node.js\nInstall via npm\n```console\nnpm install cortexjs\n```\n\nUse it:\n```javascript\nCortex = require("cortexjs");\n\nwrappedData = new Cortex({mydata: 1});\nconsole.log(wrappedData.mydata.getValue()); //1\n\nwrappedData.mydata.set(100);\nconsole.log(wrappedData.mydata.getValue()); //100\n```\n\n# Buidling Cortex\nTo build Cortex:\n```console\ngulp\n```\n\nTo run test:\n```console\ngulp test\n```\n\nTo compile jsx files in examples into js files:\n```console\ngulp react\n```\n',
+246 silly resolved     readmeFilename: 'README.md',
+246 silly resolved     _id: 'cortexjs@0.4.5',
+246 silly resolved     dist: { shasum: '5bb7d518bcffa65673258be4a7775ec480bfe6fc' },
+246 silly resolved     _from: 'cortexjs@~0.4.0',
+246 silly resolved     _resolved: 'https://registry.npmjs.org/cortexjs/-/cortexjs-0.4.5.tgz' } ]
+247 info install cortexjs@0.4.5 into /Users/stephen/Code/ScienceCommons/www
+248 info installOne cortexjs@0.4.5
+249 info /Users/stephen/Code/ScienceCommons/www/node_modules/cortexjs unbuild
+250 verbose tar unpack /Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+251 silly lockFile 0da9fdb5-ommons-www-node-modules-cortexjs tar:///Users/stephen/Code/ScienceCommons/www/node_modules/cortexjs
+252 verbose lock tar:///Users/stephen/Code/ScienceCommons/www/node_modules/cortexjs /Users/stephen/.npm/0da9fdb5-ommons-www-node-modules-cortexjs.lock
+253 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+254 verbose lock tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz /Users/stephen/.npm/57ed8739-n-npm-cortexjs-0-4-5-package-tgz.lock
+255 silly gunzTarPerm modes [ '755', '644' ]
+256 silly gunzTarPerm extractEntry package.json
+257 silly gunzTarPerm extractEntry README.md
+258 silly gunzTarPerm extractEntry gulpfile.js
+259 silly gunzTarPerm extractEntry bower.json
+260 silly gunzTarPerm extractEntry build/cortex.js
+261 silly gunzTarPerm extractEntry build/cortex.min.js
+262 silly gunzTarPerm extractEntry examples/file_system/application.js
+263 silly gunzTarPerm extractEntry examples/file_system/application.jsx
+264 silly gunzTarPerm extractEntry examples/file_system/index.html
+265 silly gunzTarPerm extractEntry examples/skyline/application.js
+266 silly gunzTarPerm extractEntry examples/skyline/application.jsx
+267 silly gunzTarPerm extractEntry examples/skyline/index.html
+268 silly gunzTarPerm extractEntry examples/skyline/skyline.css
+269 silly gunzTarPerm extractEntry src/cortex.js
+270 silly gunzTarPerm extractEntry src/data_wrapper.js
+271 silly gunzTarPerm extractEntry src/pubsub.js
+272 silly gunzTarPerm extractEntry src/wrappers/array.js
+273 silly gunzTarPerm extractEntry src/wrappers/hash.js
+274 silly gunzTarPerm extractEntry test/cortex_test.js
+275 silly gunzTarPerm extractEntry test/data_wrapper_test.js
+276 silly gunzTarPerm extractEntry test/pubsub_test.js
+277 silly gunzTarPerm extractEntry test/wrappers/array_test.js
+278 silly gunzTarPerm extractEntry test/wrappers/hash_test.js
+279 silly lockFile 0da9fdb5-ommons-www-node-modules-cortexjs tar:///Users/stephen/Code/ScienceCommons/www/node_modules/cortexjs
+280 silly lockFile 0da9fdb5-ommons-www-node-modules-cortexjs tar:///Users/stephen/Code/ScienceCommons/www/node_modules/cortexjs
+281 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+282 silly lockFile 57ed8739-n-npm-cortexjs-0-4-5-package-tgz tar:///Users/stephen/.npm/cortexjs/0.4.5/package.tgz
+283 info preinstall cortexjs@0.4.5
+284 verbose readDependencies using package.json deps
+285 verbose readDependencies using package.json deps
+286 silly resolved []
+287 verbose about to build /Users/stephen/Code/ScienceCommons/www/node_modules/cortexjs
+288 info build /Users/stephen/Code/ScienceCommons/www/node_modules/cortexjs
+289 verbose linkStuff [ false,
+289 verbose linkStuff   false,
+289 verbose linkStuff   false,
+289 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+290 info linkStuff cortexjs@0.4.5
+291 verbose linkBins cortexjs@0.4.5
+292 verbose linkMans cortexjs@0.4.5
+293 verbose rebuildBundles cortexjs@0.4.5
+294 info install cortexjs@0.4.5
+295 info postinstall cortexjs@0.4.5
+296 info build /Users/stephen/Code/ScienceCommons/www
+297 verbose linkStuff [ false, false, false, '/Users/stephen/Code/ScienceCommons' ]
+298 info linkStuff alexandria@0.0.0
+299 verbose linkBins alexandria@0.0.0
+300 verbose linkMans alexandria@0.0.0
+301 verbose rebuildBundles alexandria@0.0.0
+302 verbose rebuildBundles [ '.bin',
+302 verbose rebuildBundles   'connect-livereload',
+302 verbose rebuildBundles   'cortexjs',
+302 verbose rebuildBundles   'css-loader',
+302 verbose rebuildBundles   'envify',
+302 verbose rebuildBundles   'file-loader',
+302 verbose rebuildBundles   'grunt',
+302 verbose rebuildBundles   'grunt-aws-s3',
+302 verbose rebuildBundles   'grunt-contrib-connect',
+302 verbose rebuildBundles   'grunt-contrib-copy',
+302 verbose rebuildBundles   'grunt-contrib-watch',
+302 verbose rebuildBundles   'grunt-env',
+302 verbose rebuildBundles   'grunt-hash-manifest',
+302 verbose rebuildBundles   'grunt-karma',
+302 verbose rebuildBundles   'grunt-manifest',
+302 verbose rebuildBundles   'grunt-open',
+302 verbose rebuildBundles   'grunt-preprocess',
+302 verbose rebuildBundles   'grunt-webpack',
+302 verbose rebuildBundles   'jshint-loader',
+302 verbose rebuildBundles   'jsx-loader',
+302 verbose rebuildBundles   'karma',
+302 verbose rebuildBundles   'karma-chrome-launcher',
+302 verbose rebuildBundles   'karma-coffee-preprocessor',
+302 verbose rebuildBundles   'karma-firefox-launcher',
+302 verbose rebuildBundles   'karma-html2js-preprocessor',
+302 verbose rebuildBundles   'karma-jasmine',
+302 verbose rebuildBundles   'karma-phantomjs-launcher',
+302 verbose rebuildBundles   'karma-requirejs',
+302 verbose rebuildBundles   'karma-script-launcher',
+302 verbose rebuildBundles   'karma-webpack-plugin',
+302 verbose rebuildBundles   'load-grunt-tasks',
+302 verbose rebuildBundles   'node-cortex',
+302 verbose rebuildBundles   'react',
+302 verbose rebuildBundles   'react-async',
+302 verbose rebuildBundles   'react-router-component',
+302 verbose rebuildBundles   'react-topcoat',
+302 verbose rebuildBundles   'requirejs',
+302 verbose rebuildBundles   'sass-loader',
+302 verbose rebuildBundles   'style-loader',
+302 verbose rebuildBundles   'topcoat',
+302 verbose rebuildBundles   'underscore',
+302 verbose rebuildBundles   'url-loader',
+302 verbose rebuildBundles   'webpack',
+302 verbose rebuildBundles   'webpack-dev-server' ]
+303 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/envify
+304 info build /Users/stephen/Code/ScienceCommons/www/node_modules/envify
+305 info preinstall envify@0.2.0
+306 verbose linkStuff [ false,
+306 verbose linkStuff   false,
+306 verbose linkStuff   false,
+306 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+307 info linkStuff envify@0.2.0
+308 verbose linkBins envify@0.2.0
+309 verbose link bins [ { envify: 'bin/envify' },
+309 verbose link bins   '/Users/stephen/Code/ScienceCommons/www/node_modules/.bin',
+309 verbose link bins   false ]
+310 verbose linkMans envify@0.2.0
+311 verbose rebuildBundles envify@0.2.0
+312 verbose rebuildBundles [ 'falafel', 'through' ]
+313 info install envify@0.2.0
+314 info postinstall envify@0.2.0
+315 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/grunt-hash-manifest
+316 info build /Users/stephen/Code/ScienceCommons/www/node_modules/grunt-hash-manifest
+317 info preinstall grunt-hash-manifest@0.5.1
+318 verbose linkStuff [ false,
+318 verbose linkStuff   false,
+318 verbose linkStuff   false,
+318 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+319 info linkStuff grunt-hash-manifest@0.5.1
+320 verbose linkBins grunt-hash-manifest@0.5.1
+321 verbose linkMans grunt-hash-manifest@0.5.1
+322 verbose rebuildBundles grunt-hash-manifest@0.5.1
+323 info install grunt-hash-manifest@0.5.1
+324 info postinstall grunt-hash-manifest@0.5.1
+325 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/grunt-manifest
+326 info build /Users/stephen/Code/ScienceCommons/www/node_modules/grunt-manifest
+327 info preinstall grunt-manifest@0.4.0
+328 verbose linkStuff [ false,
+328 verbose linkStuff   false,
+328 verbose linkStuff   false,
+328 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+329 info linkStuff grunt-manifest@0.4.0
+330 verbose linkBins grunt-manifest@0.4.0
+331 verbose linkMans grunt-manifest@0.4.0
+332 verbose rebuildBundles grunt-manifest@0.4.0
+333 info install grunt-manifest@0.4.0
+334 info postinstall grunt-manifest@0.4.0
+335 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/karma-coffee-preprocessor
+336 info build /Users/stephen/Code/ScienceCommons/www/node_modules/karma-coffee-preprocessor
+337 info preinstall karma-coffee-preprocessor@0.1.2
+338 verbose linkStuff [ false,
+338 verbose linkStuff   false,
+338 verbose linkStuff   false,
+338 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+339 info linkStuff karma-coffee-preprocessor@0.1.2
+340 verbose linkBins karma-coffee-preprocessor@0.1.2
+341 verbose linkMans karma-coffee-preprocessor@0.1.2
+342 verbose rebuildBundles karma-coffee-preprocessor@0.1.2
+343 verbose rebuildBundles [ '.bin', 'coffee-script' ]
+344 info install karma-coffee-preprocessor@0.1.2
+345 info postinstall karma-coffee-preprocessor@0.1.2
+346 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/karma-html2js-preprocessor
+347 info build /Users/stephen/Code/ScienceCommons/www/node_modules/karma-html2js-preprocessor
+348 info preinstall karma-html2js-preprocessor@0.1.0
+349 verbose linkStuff [ false,
+349 verbose linkStuff   false,
+349 verbose linkStuff   false,
+349 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+350 info linkStuff karma-html2js-preprocessor@0.1.0
+351 verbose linkBins karma-html2js-preprocessor@0.1.0
+352 verbose linkMans karma-html2js-preprocessor@0.1.0
+353 verbose rebuildBundles karma-html2js-preprocessor@0.1.0
+354 info install karma-html2js-preprocessor@0.1.0
+355 info postinstall karma-html2js-preprocessor@0.1.0
+356 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/karma-requirejs
+357 info build /Users/stephen/Code/ScienceCommons/www/node_modules/karma-requirejs
+358 info preinstall karma-requirejs@0.2.1
+359 verbose linkStuff [ false,
+359 verbose linkStuff   false,
+359 verbose linkStuff   false,
+359 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+360 info linkStuff karma-requirejs@0.2.1
+361 verbose linkBins karma-requirejs@0.2.1
+362 verbose linkMans karma-requirejs@0.2.1
+363 verbose rebuildBundles karma-requirejs@0.2.1
+364 info install karma-requirejs@0.2.1
+365 info postinstall karma-requirejs@0.2.1
+366 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/node-cortex
+367 info build /Users/stephen/Code/ScienceCommons/www/node_modules/node-cortex
+368 info preinstall node-cortex@0.4.1
+369 verbose linkStuff [ false,
+369 verbose linkStuff   false,
+369 verbose linkStuff   false,
+369 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+370 info linkStuff node-cortex@0.4.1
+371 verbose linkBins node-cortex@0.4.1
+372 verbose linkMans node-cortex@0.4.1
+373 verbose rebuildBundles node-cortex@0.4.1
+374 info install node-cortex@0.4.1
+375 info postinstall node-cortex@0.4.1
+376 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/react-async
+377 info build /Users/stephen/Code/ScienceCommons/www/node_modules/react-async
+378 info preinstall react-async@0.5.1
+379 verbose linkStuff [ false,
+379 verbose linkStuff   false,
+379 verbose linkStuff   false,
+379 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+380 info linkStuff react-async@0.5.1
+381 verbose linkBins react-async@0.5.1
+382 verbose linkMans react-async@0.5.1
+383 verbose rebuildBundles react-async@0.5.1
+384 verbose rebuildBundles [ 'fibers' ]
+385 info install react-async@0.5.1
+386 info postinstall react-async@0.5.1
+387 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/react-topcoat
+388 info build /Users/stephen/Code/ScienceCommons/www/node_modules/react-topcoat
+389 info preinstall react-topcoat@0.1.4
+390 verbose linkStuff [ false,
+390 verbose linkStuff   false,
+390 verbose linkStuff   false,
+390 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+391 info linkStuff react-topcoat@0.1.4
+392 verbose linkBins react-topcoat@0.1.4
+393 verbose linkMans react-topcoat@0.1.4
+394 verbose rebuildBundles react-topcoat@0.1.4
+395 verbose rebuildBundles [ 'topcoat' ]
+396 info install react-topcoat@0.1.4
+397 info postinstall react-topcoat@0.1.4
+398 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/requirejs
+399 info build /Users/stephen/Code/ScienceCommons/www/node_modules/requirejs
+400 info preinstall requirejs@2.1.10
+401 verbose linkStuff [ false,
+401 verbose linkStuff   false,
+401 verbose linkStuff   false,
+401 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+402 info linkStuff requirejs@2.1.10
+403 verbose linkBins requirejs@2.1.10
+404 verbose link bins [ { 'r.js': './bin/r.js' },
+404 verbose link bins   '/Users/stephen/Code/ScienceCommons/www/node_modules/.bin',
+404 verbose link bins   false ]
+405 verbose linkMans requirejs@2.1.10
+406 verbose rebuildBundles requirejs@2.1.10
+407 info install requirejs@2.1.10
+408 info postinstall requirejs@2.1.10
+409 verbose rebuild bundle /Users/stephen/Code/ScienceCommons/www/node_modules/topcoat
+410 info build /Users/stephen/Code/ScienceCommons/www/node_modules/topcoat
+411 info preinstall topcoat@0.7.5
+412 verbose linkStuff [ false,
+412 verbose linkStuff   false,
+412 verbose linkStuff   false,
+412 verbose linkStuff   '/Users/stephen/Code/ScienceCommons/www/node_modules' ]
+413 info linkStuff topcoat@0.7.5
+414 verbose linkBins topcoat@0.7.5
+415 verbose linkMans topcoat@0.7.5
+416 verbose rebuildBundles topcoat@0.7.5
+417 verbose rebuildBundles [ '.bin',
+417 verbose rebuildBundles   'topcoat-button',
+417 verbose rebuildBundles   'topcoat-button-bar',
+417 verbose rebuildBundles   'topcoat-button-bar-base',
+417 verbose rebuildBundles   'topcoat-button-base',
+417 verbose rebuildBundles   'topcoat-checkbox',
+417 verbose rebuildBundles   'topcoat-checkbox-base',
+417 verbose rebuildBundles   'topcoat-icon-button',
+417 verbose rebuildBundles   'topcoat-input-base',
+417 verbose rebuildBundles   'topcoat-list',
+417 verbose rebuildBundles   'topcoat-list-base',
+417 verbose rebuildBundles   'topcoat-navigation-bar',
+417 verbose rebuildBundles   'topcoat-navigation-bar-base',
+417 verbose rebuildBundles   'topcoat-notification',
+417 verbose rebuildBundles   'topcoat-notification-base',
+417 verbose rebuildBundles   'topcoat-radio-button',
+417 verbose rebuildBundles   'topcoat-radio-button-base',
+417 verbose rebuildBundles   'topcoat-range',
+417 verbose rebuildBundles   'topcoat-range-base',
+417 verbose rebuildBundles   'topcoat-search-input',
+417 verbose rebuildBundles   'topcoat-search-input-base',
+417 verbose rebuildBundles   'topcoat-switch',
+417 verbose rebuildBundles   'topcoat-switch-base',
+417 verbose rebuildBundles   'topcoat-tab-bar',
+417 verbose rebuildBundles   'topcoat-text-input',
+417 verbose rebuildBundles   'topcoat-textarea',
+417 verbose rebuildBundles   'topcoat-textarea-base',
+417 verbose rebuildBundles   'topcoat-theme',
+417 verbose rebuildBundles   'topcoat-utils' ]
+418 info install topcoat@0.7.5
+419 info postinstall topcoat@0.7.5
+420 info install alexandria@0.0.0
+421 info postinstall alexandria@0.0.0
+422 info prepublish alexandria@0.0.0
+423 error peerinvalid The package grunt does not satisfy its siblings' peerDependencies requirements!
+423 error peerinvalid Peer grunt-contrib-watch@0.5.3 wants grunt@~0.4.0
+423 error peerinvalid Peer grunt-contrib-connect@0.6.0 wants grunt@~0.4.0
+423 error peerinvalid Peer grunt-karma@0.6.2 wants grunt@0.4.x
+423 error peerinvalid Peer grunt-contrib-copy@0.5.0 wants grunt@~0.4.0
+423 error peerinvalid Peer grunt-aws-s3@0.8.1 wants grunt@~0.4.0
+423 error peerinvalid Peer grunt-preprocess@4.0.0 wants grunt@~0.4.0
+423 error peerinvalid Peer grunt-hash-manifest@0.5.1 wants grunt@0.4.2
+424 error System Darwin 13.1.0
+425 error command "/usr/local/Cellar/node/0.10.25/bin/node" "/usr/local/bin/npm" "install"
+426 error cwd /Users/stephen/Code/ScienceCommons/www
+427 error node -v v0.10.25
+428 error npm -v 1.3.24
+429 error code EPEERINVALID
+430 verbose exit [ 1, true ]

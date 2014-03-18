@@ -9,7 +9,7 @@
         "react": "~0.9.0",
         "underscore": "1.5.2",
         "react-router-component": "~0.6.0",
-        "node-cortex": "~0.4.0"
+        "cortexjs": "~0.4.0"
     },
     "devDependencies": {
         "grunt": "~0.4.2",
