@@ -55,20 +55,32 @@ var SearchResults = React.createClass({
     };
   },
   componentWillMount: function() {
-    this.fetchResults();
+    this.fetchResults(this.props.query);
   },
   componentWillUnmount: function() {
     if (this.state.xhr) {
       this.state.xhr.abort();
     }
   },
-  fetchResults: function() {
+  componentWillReceiveProps: function(newProps) {
+    if (newProps.query !== this.props.query) {
+      if (this.state.xhr) {
+        // abort
+        this.state.xhr = null;
+      }
+      this.fetchResults(newProps.query);
+    }
+  },
+  fetchResults: function(query) {
     // this will be an xhr to our search server
     var _this = this;
-    var query = _this.props.query;
     if (!query) {
       return
     } else {
+      if (this.state.xhr) {
+        this.state.xhr.abort();
+      }
+
       var xhr = new XMLHttpRequest();
 
       xhr.onload = function() {
@@ -96,11 +108,11 @@ var SearchResults = React.createClass({
   },
   previousPage: function() {
     this.state.from = Math.max(this.state.from-this.state.resultsPerPage, 0);
-    this.fetchResults();
+    this.fetchResults(this.props.query);
   },
   nextPage: function() {
     this.state.from = this.state.from+this.state.resultsPerPage;
-    this.fetchResults();
+    this.fetchResults(this.props.query);
   },
   /*jshint ignore:start */
   render: function() {
