@@ -78,7 +78,6 @@ module.exports = function (grunt) {
     webpack: {
       options: {
         entry: "./src/scripts/app.js",
-        debug: true,
         cache: true,
         stats: {
           colors: true,
@@ -98,12 +97,14 @@ module.exports = function (grunt) {
         }
       },
       development: {
+        debug: true,
         output: {
           path: DEVELOPMENT_PATH,
           filename: "assets/main.js"
         }
       },
       production: {
+        debug: false,
         output: {
           path: PRODUCTION_PATH,
           filename: "assets/main.js"
@@ -111,7 +112,8 @@ module.exports = function (grunt) {
         externals: {
           "react": "React",
           "react/addons": "React",
-          "underscore": "_"
+          "underscore": "_",
+          "react-router-component": "ReactRouter"
         },
         plugins: [
           new webpack.optimize.DedupePlugin(),
