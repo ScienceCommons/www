@@ -10,6 +10,8 @@ var Articles = require("../data.js").Articles;
 var Spinner = require("../components/Spinner.js");
 var PageHeader = require("../components/PageHeader.js");
 
+require("../../styles/pages/ArticlePage.scss");
+
 var ArticlePage = React.createClass({
   getInitialState: function () {
     return {

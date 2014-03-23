@@ -16,10 +16,8 @@ var HomePage = React.createClass({
   render: function () {
     return (
       <div id="HomePage" className="page">
-        <header>
-          <div className="pull_right">
-            <UserDropdown />
-          </div>
+        <header className="PageHeader">
+          <UserDropdown />
           <h1 className="company_name text_center">{Constants.COMPANY_NAME}</h1>
         </header>
 
