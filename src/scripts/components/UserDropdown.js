@@ -6,6 +6,7 @@
 
 var React = require('react/addons');
 var cx = React.addons.classSet;
+var Link = require('react-router-component').Link;
 
 var UserDropdown = React.createClass({
   getInitialState: function() {
@@ -43,9 +44,9 @@ var UserDropdown = React.createClass({
           <span className="user email">user@curatescience.com</span> <span className="icon icon_down_caret" />
         </button>
         <ul className={classes}>
-          <li>Profile</li>
-          <li>Saved searches</li>
-          <li>Sign out</li>
+          <li><Link href="/profile">Profile</Link></li>
+          <li><Link href="/saved">Saved searches</Link></li>
+          <li><Link href="/signout">Sign out</Link></li>
         </ul>
       </div>
     );
