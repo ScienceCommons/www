@@ -67,7 +67,10 @@ var SearchResults = React.createClass({
         // abort
         this.state.xhr = null;
       }
-      this.fetchResults(newProps.query);
+      var _this = this;
+      _this.replaceState(_this.getInitialState(), function() {
+        _this.fetchResults(newProps.query);
+      });
     }
   },
   fetchResults: function(query) {
@@ -106,12 +109,16 @@ var SearchResults = React.createClass({
     }
   },
   previousPage: function() {
-    this.state.from = Math.max(this.state.from-this.state.resultsPerPage, 0);
-    this.fetchResults(this.props.query);
+    var _this = this;
+    _this.setState({from: Math.max(this.state.from-this.state.resultsPerPage, 0) }, function() {
+      _this.fetchResults(_this.props.query);
+    });
   },
   nextPage: function() {
-    this.state.from = this.state.from+this.state.resultsPerPage;
-    this.fetchResults(this.props.query);
+    var _this = this;
+    _this.setState({from: this.state.from + this.state.resultsPerPage }, function() {
+      _this.fetchResults(_this.props.query);
+    });
   },
   renderNav: function() {
     var nav;
