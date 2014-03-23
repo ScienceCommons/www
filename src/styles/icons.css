@@ -33,3 +33,18 @@
 .icon_down_caret:before {
 	content:"\e001";
 }
+
+
+.icon_left_arrow:before {
+	content:"\e002";
+}
+
+
+.icon_right_arrow:before {
+	content:"\e003";
+}
+
+
+.icon_up_caret:before {
+	content:"\e004";
+}

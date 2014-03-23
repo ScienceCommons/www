@@ -9,4 +9,24 @@ ul.SearchResults {
     padding: 10px;
     margin-top: 15px;
   }
+
+  li.search_nav {
+    .btn {
+      padding: 5px;
+
+      .icon {
+        font-size: 30px;
+        font-weight: bold;
+        line-height: 25px;
+      }
+
+      &:hover {
+        background-color: #EEE;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }

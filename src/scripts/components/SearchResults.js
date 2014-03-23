@@ -114,29 +114,25 @@ var SearchResults = React.createClass({
     this.fetchResults(this.props.query);
   },
   renderNav: function() {
-    var count;
-    var pageNav;
+    var nav;
     var next;
     var previous;
 
     if (this.state.total > 0) {
-      if (this.state.from + this.state.resultsPerPage < this.state.total) {
-        next = <span className="link" onClick={this.nextPage}>next page</span>;
-      }
       if (this.state.from > 0) {
-        previous = <span className="link" onClick={this.previousPage}>previous page</span>;
+        previous = <button className="btn btn_subtle" onClick={this.previousPage}><span className="icon icon_left_arrow" /></button>;
+      }
+      if (this.state.from + this.state.resultsPerPage < this.state.total) {
+        next = <button className="btn btn_subtle" onClick={this.nextPage}><span className="icon icon_right_arrow" /></button>;
       }
 
-      if (next && previous) {
-        pageNav = <span>{next} | {previous}</span>;
-      } else {
-        pageNav = next || previous
-      }
-
-      count = <li>Showing {this.state.from+1} to {Math.min(this.state.total, this.state.from+this.state.resultsPerPage)} of {this.state.total} results {pageNav}</li>
+      nav = (<li className="search_nav">
+        Showing {this.state.from+1} to {Math.min(this.state.total, this.state.from+this.state.resultsPerPage)} of {this.state.total} results
+        <span>{previous}{next}</span>
+      </li>);
     }
 
-    return count;
+    return nav;
   },
   /*jshint ignore:start */
   render: function() {

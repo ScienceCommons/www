@@ -2,34 +2,40 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Sun Mar 23 11:31:26 2014
+Created by FontForge 20120731 at Sun Mar 23 11:51:37 2014
  By Stephen Demjanenko
 Created by Stephen Demjanenko with FontForge 2.0 (http://fontforge.sf.net)
 </metadata>
 <defs>
-<font id="icons" horiz-adv-x="256" >
+<font id="icons" horiz-adv-x="250" >
   <font-face 
     font-family="icons"
     font-weight="500"
     font-stretch="normal"
     units-per-em="512"
-    panose-1="2 0 6 9 0 0 0 0 0 0"
+    panose-1="2 0 6 3 0 0 0 0 0 0"
     ascent="448"
     descent="-64"
     bbox="0 0 256 341"
     underline-thickness="25"
     underline-position="-52"
-    unicode-range="U+E001-E001"
+    unicode-range="U+E001-E004"
   />
-<missing-glyph 
+<missing-glyph horiz-adv-x="187" 
 d="M17 0v341h136v-341h-136zM34 17h102v307h-102v-307z" />
-    <glyph glyph-name=".notdef" 
+    <glyph glyph-name=".notdef" horiz-adv-x="187" 
 d="M17 0v341h136v-341h-136zM34 17h102v307h-102v-307z" />
     <glyph glyph-name=".null" horiz-adv-x="0" 
  />
-    <glyph glyph-name="nonmarkingreturn" 
+    <glyph glyph-name="nonmarkingreturn" horiz-adv-x="170" 
  />
-    <glyph glyph-name="uniE001" unicode="&#xe001;" 
+    <glyph glyph-name="uniE001" unicode="&#xe001;" horiz-adv-x="256" 
 d="M256 243l-128 -128v0l-128 128l22 22l106 -107l107 107z" />
+    <glyph glyph-name="uniE002" unicode="&#xe002;" 
+d="M0 194v0l110 111l23 -22l-75 -74h192v-31h-191l74 -73l-23 -22z" />
+    <glyph glyph-name="uniE003" unicode="&#xe003;" 
+d="M250 194v-1l-110 -110l-23 22l74 73h-191v31h191l-74 74l23 22z" />
+    <glyph glyph-name="uniE004" unicode="&#xe004;" horiz-adv-x="256" 
+d="M0 137l128 128v0l128 -128l-21 -22l-107 107l-106 -107z" />
   </font>
 </defs></svg>
