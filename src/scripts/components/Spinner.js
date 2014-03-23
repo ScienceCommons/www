@@ -4,17 +4,17 @@
 
 // taken from: http://codepen.io/georgehastings/pen/skznp
 
-'use strict';
+"use strict";
 
-var React = require('react/addons');
+var React = require("react/addons");
 
-require('../../styles/spinner.scss');
+require("../../styles/components/Spinner.scss");
 
 var Spinner = React.createClass({
   /*jshint ignore:start */
   render: function() {
     return (
-      <ul className="loader">
+      <ul className="Spinner">
         <li></li>
         <li></li>
         <li></li>
@@ -23,4 +23,5 @@ var Spinner = React.createClass({
   }
   /*jshint ignore:end */
 });
+
 module.exports = Spinner;

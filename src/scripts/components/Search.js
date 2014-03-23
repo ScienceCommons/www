@@ -2,10 +2,12 @@
  * @jsx React.DOM
  */
 
-'use strict';
+"use strict";
 
-var React = require('react/addons');
+var React = require("react/addons");
 var NavigatableMixin = require("react-router-component").NavigatableMixin;
+
+require("../../styles/components/Search.scss");
 
 var Search = React.createClass({
   mixins: [React.addons.LinkedStateMixin, NavigatableMixin],
@@ -29,7 +31,7 @@ var Search = React.createClass({
   /*jshint ignore:start */
   render: function() {
     return (
-      <form onSubmit={this.updateSearch} className={this.props.className}>
+      <form onSubmit={this.updateSearch} className={"Search " + this.props.className}>
         <input type="text" placeholder="Search papers" className="no_outline" size={this.props.size} valueLink={this.linkState('query')} ref="searchBox" />
       </form>
     );

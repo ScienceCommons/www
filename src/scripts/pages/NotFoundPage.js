@@ -11,7 +11,7 @@ var NotFoundPage = React.createClass({
   /*jshint ignore:start */
   render: function () {
     return (
-      <div className="page">
+      <div id="NotFoundPage" className="page">
         <PageHeader />
 
         <div className="content">

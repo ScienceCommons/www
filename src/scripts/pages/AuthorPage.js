@@ -2,12 +2,12 @@
  * @jsx React.DOM
  */
 
-'use strict';
+"use strict";
 
-var _ = require('underscore');
-var React = require('react/addons');
+var _ = require("underscore");
+var React = require("react/addons");
 var Authors = require("../data.js").Authors;
-var Spinner = require('../components/Spinner.js');
+var Spinner = require("../components/Spinner.js");
 var PageHeader = require("../components/PageHeader.js");
 
 var AuthorPage = React.createClass({
@@ -44,10 +44,10 @@ var AuthorPage = React.createClass({
     }
 
     return (
-      <div className="page">
+      <div id="AuthorPage" className="page">
         <PageHeader />
 
-        <div className="content author_content">
+        <div className="content">
           {content}
         </div>
       </div>

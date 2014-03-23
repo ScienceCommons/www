@@ -1,0 +1,17 @@
+.PageHeader {
+  background-color: #686868;
+  padding: 20px 20px 10px 20px;
+  position: relative;
+  line-height: 28px;
+
+  .h1 {
+    margin-top: 0;
+  }
+
+  .company_name {
+    margin-right: 20px;
+    font-size: 28px;
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+}

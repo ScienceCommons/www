@@ -17,7 +17,7 @@ var Pages = require("./pages.js");
 // CSS
 require("../styles/reset.scss");
 require("../styles/icons.css");
-require("../styles/main.scss");
+require("../styles/app.scss");
 
 
 var App = React.createClass({

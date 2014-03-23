@@ -1,0 +1,14 @@
+.UserDropdown {
+  position: absolute;
+  right: 10px;
+
+  button {
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFFFFF;
+
+    &:hover {
+      background-color: #828282;
+    }
+  }
+}

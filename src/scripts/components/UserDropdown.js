@@ -2,11 +2,13 @@
  * @jsx React.DOM
  */
 
-'use strict';
+"use strict";
 
-var React = require('react/addons');
+var React = require("react/addons");
 var cx = React.addons.classSet;
-var Link = require('react-router-component').Link;
+var Link = require("react-router-component").Link;
+
+require("../../styles/components/UserDropdown.scss");
 
 var UserDropdown = React.createClass({
   getInitialState: function() {
@@ -39,15 +41,17 @@ var UserDropdown = React.createClass({
     });
 
     return (
-      <div className="btn_group user_dropdown inline_block dropdown">
-        <button type="button" className="btn btn_subtle no_outline" onClick={this.toggle} ref="button">
-          <span className="user email">user@curatescience.com</span> <span className="icon icon_down_caret" />
-        </button>
-        <ul className={classes}>
-          <li><Link href="/profile">Profile</Link></li>
-          <li><Link href="/saved">Saved searches</Link></li>
-          <li><Link href="/signout">Sign out</Link></li>
-        </ul>
+      <div className="UserDropdown inline_block">
+        <div className="btn_group dropdown">
+          <button type="button" className="btn btn_subtle no_outline" onClick={this.toggle} ref="button">
+            <span className="user email">user@curatescience.com</span> <span className="icon icon_down_caret" />
+          </button>
+          <ul className={classes}>
+            <li><Link href="/profile">Profile</Link></li>
+            <li><Link href="/saved">Saved searches</Link></li>
+            <li><Link href="/signout">Sign out</Link></li>
+          </ul>
+        </div>
       </div>
     );
   }

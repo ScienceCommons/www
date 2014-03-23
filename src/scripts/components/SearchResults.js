@@ -2,15 +2,14 @@
  * @jsx React.DOM
  */
 
-'use strict';
+"use strict";
 
-var React = require('react/addons');
+var React = require("react/addons");
 var ReactTransitionGroup = React.addons.CSSTransitionGroup;
-var Link = require('react-router-component').Link;
-var Spinner = require('./Spinner.js');
+var Link = require("react-router-component").Link;
+var Spinner = require("./Spinner.js");
 
-var _ = require('underscore');
-var SampleResults = require("../data.js").Articles;
+require("../../styles/components/SearchResults.scss");
 
 var SearchResult = React.createClass({
   /*jshint ignore:start */
@@ -27,7 +26,7 @@ var SearchResult = React.createClass({
       }
 
       return (
-        <li className="search-result" key={data.id}>
+        <li className="SearchResult" key={data.id}>
           <ReactTransitionGroup transitionName="fade">
             <div>
               <Link className="h3 link" href={"/articles/"+data.id}>{data.title}</Link>
@@ -114,17 +113,13 @@ var SearchResults = React.createClass({
     this.state.from = this.state.from+this.state.resultsPerPage;
     this.fetchResults(this.props.query);
   },
-  /*jshint ignore:start */
-  render: function() {
-    var content;
+  renderNav: function() {
     var count;
     var pageNav;
     var next;
     var previous;
 
-    if (this.state.loading) {
-      content = <li><Spinner /></li>;
-    } else if (this.state.total > 0) {
+    if (this.state.total > 0) {
       if (this.state.from + this.state.resultsPerPage < this.state.total) {
         next = <span className="link" onClick={this.nextPage}>next page</span>;
       }
@@ -139,9 +134,22 @@ var SearchResults = React.createClass({
       }
 
       count = <li>Showing {this.state.from+1} to {Math.min(this.state.total, this.state.from+this.state.resultsPerPage)} of {this.state.total} results {pageNav}</li>
+    }
+
+    return count;
+  },
+  /*jshint ignore:start */
+  render: function() {
+    var content;
+    var nav;
+
+    if (this.state.loading) {
+      content = <li><Spinner /></li>;
+    } else if (this.state.total > 0) {
       content = this.state.results.map(function(result) {
         return <SearchResult data={result} />;
       });
+      nav = this.renderNav();
     } else {
       content = (
         <li>
@@ -151,8 +159,8 @@ var SearchResults = React.createClass({
     }
 
     return (
-      <ul>
-        {count}
+      <ul className="SearchResults">
+        {nav}
         {content}
       </ul>
     );

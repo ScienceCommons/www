@@ -2,14 +2,14 @@
  * @jsx React.DOM
  */
 
-'use strict';
+"use strict";
 
-var React = require('react/addons');
-var Search = require('../components/Search.js');
-var SearchResults = require('../components/SearchResults.js');
+var React = require("react/addons");
+var Search = require("../components/Search.js");
+var SearchResults = require("../components/SearchResults.js");
 var PageHeader = require("../components/PageHeader.js");
 
-require('../../styles/search-page.scss');
+require("../../styles/pages/SearchPage.scss");
 
 var SearchPage = React.createClass({
   /*jshint ignore:start */
@@ -21,10 +21,10 @@ var SearchPage = React.createClass({
     }
 
     return (
-      <div className="page">
+      <div id="SearchPage" className="page">
         <PageHeader query={this.props.query} />
 
-        <div className="content search_content">
+        <div className="content">
           {content}
         </div>
       </div>

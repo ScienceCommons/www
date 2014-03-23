@@ -61,10 +61,10 @@ var ArticlePage = React.createClass({
     }
 
     return (
-      <div className="page">
+      <div id="ArticlePage" className="page">
         <PageHeader />
 
-        <div className="content article_content">
+        <div className="content">
           {content}
         </div>
       </div>
