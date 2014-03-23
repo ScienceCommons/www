@@ -21,7 +21,7 @@ var ArticlePage = React.createClass({
   },
   componentWillMount: function () {
     var _this = this;
-    if (this.props.articleId) {
+    if (_this.props.articleId) {
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
         _this.setState({
@@ -31,7 +31,7 @@ var ArticlePage = React.createClass({
         });
       };
 
-      xhr.open("get", "http://api.papersearch.org/articles/"+this.props.articleId, true);
+      xhr.open("get", "http://api.papersearch.org/articles/"+_this.props.articleId, true);
       xhr.send();
 
       _this.setState({ xhr: xhr });
@@ -78,7 +78,7 @@ var ArticlePage = React.createClass({
                 <p>{article.abstract}</p>
               </td>
               <td>
-                <h3>Keywords</h3>
+                <h3>Tags</h3>
                 <div>
                   <span className="pill">Moral Purity</span>
                   <span className="pill">Physical cleansing</span>
