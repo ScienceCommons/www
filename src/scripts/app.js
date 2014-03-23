@@ -9,6 +9,7 @@ var Router = require("react-router-component");
 var Locations = Router.Locations;
 var Location = Router.Location;
 var Cortex = require("cortexjs");
+var NotFound = Router.NotFound
 
 
 var Pages = require("./pages.js");
@@ -30,6 +31,7 @@ var App = React.createClass({
         <Location path="/profile" handler={Pages.Profile} />
         <Location path="/articles/:articleId" handler={Pages.Article} />
         <Location path="/authors/:authorId" handler={Pages.Author} />
+        <NotFound handler={Pages.NotFound} />
       </Locations>
     );
   }
