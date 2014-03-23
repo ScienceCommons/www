@@ -31,4 +31,5 @@ node_modules/
 .tmp
 build/development/
 build/production/public
+build/production/.git
 npm-debug.log
