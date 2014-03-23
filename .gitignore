@@ -29,5 +29,6 @@ $RECYCLE.BIN/
 
 node_modules/
 .tmp
-build/
+build/development/
+build/production/public
 npm-debug.log

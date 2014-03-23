@@ -63,7 +63,7 @@ module.exports = function (grunt) {
   };
 
   var DEVELOPMENT_PATH = "build/development";
-  var PRODUCTION_PATH = "build/production";
+  var PRODUCTION_PATH = "build/production/public";
 
   grunt.initConfig({
     pkg: pkgConfig,
