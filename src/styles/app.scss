@@ -52,6 +52,24 @@ h6, .h6 {
   text-align: center;
 }
 
+.text_right {
+  text-align: right;
+}
+
+.dim {
+  opacity: 0.5;
+}
+
+.pill {
+  border-radius: 4px;
+  background-color: #2270BF;
+  color: white;
+  padding: 4px;
+  font-size: 10px;
+  line-height: 18px;
+  margin: 2px;
+}
+
 .pull_right {
   float: right !important;
 }

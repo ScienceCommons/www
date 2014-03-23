@@ -53,9 +53,40 @@ var ArticlePage = React.createClass({
     } else if (article) {
       content = (
         <div>
-          <h3>{article.title}</h3>
-          <h5>{article.publication_date} | doi: {article.doi}</h5>
-          <p>{article.abstract}</p>
+          <table>
+            <tr>
+              <td>
+                <h3>{article.title}</h3>
+                <h5>Some authors {article.publication_date}</h5>
+              </td>
+              <td>
+                <table className="publication_doi">
+                  <tr>
+                    <td className="text_right dim">Publication</td>
+                    <td>Science</td>
+                  </tr>
+                  <tr>
+                    <td className="text_right dim">DOI</td>
+                    <td>{article.doi}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Abstract</h3>
+                <p>{article.abstract}</p>
+              </td>
+              <td>
+                <h3>Keywords</h3>
+                <div>
+                  <span className="pill">Moral Purity</span>
+                  <span className="pill">Physical cleansing</span>
+                  <span className="pill">Cleansing products</span>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
       );
     } else {
