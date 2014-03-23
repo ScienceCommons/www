@@ -145,13 +145,16 @@ var SearchResults = React.createClass({
       content = this.state.results.map(function(result) {
         return <SearchResult data={result} />;
       });
-      nav = this.renderNav();
     } else {
       content = (
         <li>
           <h3>Sorry, no results were found</h3>
         </li>
       );
+    }
+
+    if (this.state.total > 0) {
+      nav = this.renderNav();
     }
 
     return (
