@@ -124,8 +124,10 @@ module.exports = function (grunt) {
     watch: {
       webpack: {
         files: [
-          "./src/scripts/{,*/}*.js",
-          "./src/styles/{,*/}*.[sac]*ss"
+          "./src/scripts/**/*.js",
+          "./src/styles/**/*.css",
+          "./src/styles/**/*.sass",
+          "./src/styles/**/*.scss"
         ],
         tasks: ["webpack:development"]
       },
