@@ -46,7 +46,7 @@ var Pill = React.createClass({
             <button type="submit">
               <span className="icon icon_check_mark"></span>
             </button>
-            <button type="button" onClick={this.handleCheckMarkClick}>
+            <button type="button" onClick={this.handleRemoveClick}>
               <span className="icon icon_close"></span>
             </button>
           </form>
