@@ -8,6 +8,7 @@ var React = require("react/addons");
 var ReactTransitionGroup = React.addons.CSSTransitionGroup;
 var Link = require("react-router-component").Link;
 var Spinner = require("./Spinner.js");
+var SearchFilter = require("./SearchFilter.js");
 
 require("../../styles/components/SearchResults.scss");
 
@@ -167,7 +168,14 @@ var SearchResults = React.createClass({
     return (
       <ul className="SearchResults">
         {nav}
-        {content}
+        <table>
+          <tbody>
+            <tr>
+              <td><SearchFilter /></td>
+              <td>{content}</td>
+            </tr>
+          </tbody>
+        </table>
       </ul>
     );
   }
