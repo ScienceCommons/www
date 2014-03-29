@@ -8,7 +8,7 @@ var _ = require("underscore");
 var React = require("react/addons");
 var Authors = require("../data.js").Authors;
 var Spinner = require("../components/Spinner.js");
-var PageHeader = require("../components/PageHeader.js");
+var DefaultLayout = require("../layouts/DefaultLayout.js");
 
 var AuthorPage = React.createClass({
   getInitialState: function () {
@@ -44,13 +44,9 @@ var AuthorPage = React.createClass({
     }
 
     return (
-      <div id="AuthorPage" className="page">
-        <PageHeader />
-
-        <div className="content">
-          {content}
-        </div>
-      </div>
+      <DefaultLayout id="AuthorPage">
+        {content}
+      </DefaultLayout>
     );
   }
   /*jshint ignore:end */

@@ -44,12 +44,12 @@ var UserDropdown = React.createClass({
       <div className="UserDropdown inline_block">
         <div className="btn_group dropdown">
           <button type="button" className="btn btn_subtle no_outline" onClick={this.toggle} ref="button">
-            <span className="user email">user@curatescience.com</span> <span className="icon icon_down_caret" />
+            <span className="user email">{this.props.user.email}</span> <span className="icon icon_down_caret" />
           </button>
           <ul className={classes}>
             <li><Link href="/profile">Profile</Link></li>
             <li><Link href="/saved">Saved searches</Link></li>
-            <li><Link href="/signout">Sign out</Link></li>
+            <li><Link href="/logout">Logout</Link></li>
           </ul>
         </div>
       </div>

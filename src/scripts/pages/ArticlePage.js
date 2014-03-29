@@ -6,9 +6,9 @@
 
 var _ = require("underscore");
 var React = require("react/addons");
+var DefaultLayout = require("../layouts/DefaultLayout.js");
 var Articles = require("../data.js").Articles;
 var Spinner = require("../components/Spinner.js");
-var PageHeader = require("../components/PageHeader.js");
 var TagEditor = require("../components/TagEditor.js");
 
 require("../../styles/pages/ArticlePage.scss");
@@ -95,13 +95,9 @@ var ArticlePage = React.createClass({
     }
 
     return (
-      <div id="ArticlePage" className="page">
-        <PageHeader />
-
-        <div className="content">
-          {content}
-        </div>
-      </div>
+      <DefaultLayout id="ArticlePage">
+        {content}
+      </DefaultLayout>
     );
   }
   /*jshint ignore:end */

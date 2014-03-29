@@ -5,22 +5,20 @@
 "use strict";
 
 var React = require("react/addons");
-var PageHeader = require("../components/PageHeader.js");
+var FullLayout = require("../layouts/FullLayout.js")
+
+require("../../styles/pages/NotFoundPage.scss");
 
 var NotFoundPage = React.createClass({
   /*jshint ignore:start */
   render: function () {
     return (
-      <div id="NotFoundPage" className="page">
-        <PageHeader />
-
-        <div className="content">
-          <h1>Sorry, we could not find the page you were looking for</h1>
-          <p>
-            Our team has been emailed about this error.
-          </p>
-        </div>
-      </div>
+      <FullLayout id="NotFoundPage">
+        <h1>Sorry, we could not find the page you were looking for</h1>
+        <p>
+          Our team has been emailed about this error.
+        </p>
+      </FullLayout>
     );
   }
   /*jshint ignore:end */

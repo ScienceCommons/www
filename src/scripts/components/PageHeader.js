@@ -15,11 +15,15 @@ require("../../styles/components/PageHeader.scss");
 var PageHeader = React.createClass({
   /*jshint ignore:start */
   render: function() {
+    if (this.props.user) {
+      var userDropdown = <UserDropdown user={this.props.user} />;
+    }
+
     return (
       <header className="PageHeader">
         <Link className="company_name h1 inline_block" href={"/"}>{Constants.COMPANY_NAME}</Link>
         <Search query={this.props.query} className="inline_block header_search"/>
-        <UserDropdown />
+        {userDropdown}
       </header>
     );
   }

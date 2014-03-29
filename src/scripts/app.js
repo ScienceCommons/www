@@ -31,6 +31,8 @@ var App = React.createClass({
         <Location path="/profile" handler={Pages.Profile} />
         <Location path="/articles/:articleId" handler={Pages.Article} />
         <Location path="/authors/:authorId" handler={Pages.Author} />
+        <Location path="/login" handler={Pages.Login} />
+        <Location path="/signup" handler={Pages.Signup} />
         <NotFound handler={Pages.NotFound} />
       </Locations>
     );
