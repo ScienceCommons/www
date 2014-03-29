@@ -9,14 +9,17 @@ var React = require("react/addons");
 var Articles = require("../data.js").Articles;
 var Spinner = require("../components/Spinner.js");
 var PageHeader = require("../components/PageHeader.js");
+var TagEditor = require("../components/TagEditor.js");
 
 require("../../styles/pages/ArticlePage.scss");
 
 var ArticlePage = React.createClass({
+  mixins: [React.addons.LinkedStateMixin],
   getInitialState: function () {
     return {
       article: false,
-      loading: true
+      loading: true,
+      tags: ["Moral purity", "Physical cleansing", "Cleansing products"]
     };
   },
   componentWillMount: function () {
@@ -79,11 +82,9 @@ var ArticlePage = React.createClass({
               </td>
               <td>
                 <h3>Tags</h3>
-                <div>
-                  <span className="pill">Moral Purity</span>
-                  <span className="pill">Physical cleansing</span>
-                  <span className="pill">Cleansing products</span>
-                </div>
+                <TagEditor valueLink={this.linkState("tags")} editable={true}/>
+                <h3>Tags</h3>
+                <TagEditor valueLink={this.linkState("tags")}/>
               </td>
             </tr>
           </table>
