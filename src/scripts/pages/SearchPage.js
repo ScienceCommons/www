@@ -5,7 +5,6 @@
 "use strict";
 
 var React = require("react/addons");
-var Search = require("../components/Search.js");
 var SearchResults = require("../components/SearchResults.js");
 var DefaultLayout = require("../layouts/DefaultLayout.js");
 
