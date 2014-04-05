@@ -77,7 +77,7 @@ module.exports = function (grunt) {
     },
     webpack: {
       options: {
-        entry: "./src/scripts/app.js",
+        entry: "./client/scripts/app.js",
         cache: true,
         stats: {
           colors: true,
@@ -124,10 +124,10 @@ module.exports = function (grunt) {
     watch: {
       webpack: {
         files: [
-          "./src/scripts/**/*.js",
-          "./src/styles/**/*.css",
-          "./src/styles/**/*.sass",
-          "./src/styles/**/*.scss"
+          "./client/scripts/**/*.js",
+          "./client/styles/**/*.css",
+          "./client/styles/**/*.sass",
+          "./client/styles/**/*.scss"
         ],
         tasks: ["webpack:development"]
       },
@@ -172,19 +172,19 @@ module.exports = function (grunt) {
     },
     preprocess: {
       development: {
-        src: "src/index.html",
+        src: "client/index.html",
         dest: DEVELOPMENT_PATH + "/index.html"
       },
       production: {
-        src: "src/index.html",
+        src: "client/index.html",
         dest: PRODUCTION_PATH + "/index.html"
       }
     },
     webfont: {
       icons: {
-        src: "src/icons/*.svg",
-        dest: "src/fonts",
-        destCss: "src/styles",
+        src: "client/icons/*.svg",
+        dest: "client/fonts",
+        destCss: "client/styles",
         options: {
           hashes: false,
           htmlDemo: false
