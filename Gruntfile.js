@@ -247,6 +247,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask("build:development", ["env:development", "preprocess:development", "webfont", "webpack:development"]);
   grunt.registerTask("build:production", ["env:production", "preprocess:production", "webfont", "webpack:production"]);
+  grunt.registerTask("deploy", ["build:production", "s3:production"]);
 
   grunt.registerTask("default", []);
 };
