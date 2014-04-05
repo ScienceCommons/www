@@ -8,7 +8,6 @@ var React = require("react/addons");
 var Router = require("react-router-component");
 var Locations = Router.Locations;
 var Location = Router.Location;
-var Cortex = require("cortexjs");
 var NotFound = Router.NotFound
 
 
