@@ -200,6 +200,33 @@ module.exports = function (grunt) {
       unit: {
         configFile: "karma.conf.js"
       }
+    },
+    aws: grunt.file.readJSON('./aws.json'),
+    s3: {
+      options: {
+        key: '<%= aws.key %>',
+        secret: '<%= aws.secret %>',
+        bucket: '<%= aws.bucket %>',
+        access: 'public-read',
+        headers: {
+          // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+          "Cache-Control": "max-age=630720000, public",
+          "Expires": new Date(Date.now() + 63072000000).toUTCString()
+        }
+      },
+      production: {
+        options: { gzip: true },
+        upload: [
+          {
+            src: './build/production/public/index.html',
+            dest: 'index.html'
+          },
+          {
+            src: './build/production/public/assets/*',
+            dest: 'assets/'
+          }
+        ]
+      }
     }
   });
 
