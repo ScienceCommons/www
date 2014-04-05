@@ -6,7 +6,6 @@
 
 var _ = require("underscore");
 var React = require("react/addons");
-var Authors = require("../data.js").Authors;
 var Spinner = require("../components/Spinner.js");
 var DefaultLayout = require("../layouts/DefaultLayout.js");
 
@@ -19,7 +18,6 @@ var AuthorPage = React.createClass({
   },
   componentWillMount: function () {
     var _this = this;
-    var author = _.findWhere(Authors, {id: this.props.authorId});
 
     setTimeout(function() {
       _this.setState({author: author, loading: false});
