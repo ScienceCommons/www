@@ -9,6 +9,7 @@ var React = require("react/addons");
 var DefaultLayout = require("../layouts/DefaultLayout.js");
 var Spinner = require("../components/Spinner.js");
 var TagEditor = require("../components/TagEditor.js");
+var ArticleModel = require("../models/Article.js");
 
 require("../../styles/pages/ArticlePage.scss");
 
@@ -28,7 +29,7 @@ var ArticlePage = React.createClass({
       xhr.onload = function() {
         _this.setState({
           loading: false,
-          article: JSON.parse(xhr.responseText),
+          article: new ArticleModel(JSON.parse(xhr.responseText)),
           xhr: null
         });
       };
@@ -58,8 +59,8 @@ var ArticlePage = React.createClass({
           <table>
             <tr>
               <td>
-                <h3>{article.title}</h3>
-                <h5>Some authors {article.publication_date}</h5>
+                <h3>{article.get("title")}</h3>
+                <h5>Some authors {article.get("publication_date")}</h5>
               </td>
               <td>
                 <table className="publication_doi">
@@ -69,7 +70,7 @@ var ArticlePage = React.createClass({
                   </tr>
                   <tr>
                     <td className="text_right dim">DOI</td>
-                    <td>{article.doi}</td>
+                    <td>{article.get("doi")}</td>
                   </tr>
                 </table>
               </td>
@@ -77,7 +78,7 @@ var ArticlePage = React.createClass({
             <tr>
               <td>
                 <h3>Abstract</h3>
-                <p>{article.abstract}</p>
+                <p>{article.get("abstract")}</p>
               </td>
               <td>
                 <h3>Tags</h3>

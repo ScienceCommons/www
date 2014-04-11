@@ -8,6 +8,7 @@ var _ = require("underscore");
 var React = require("react/addons");
 var Spinner = require("../components/Spinner.js");
 var DefaultLayout = require("../layouts/DefaultLayout.js");
+var AuthorModel = require("../models/Author.js");
 
 var AuthorPage = React.createClass({
   getInitialState: function () {
@@ -20,6 +21,7 @@ var AuthorPage = React.createClass({
     var _this = this;
 
     setTimeout(function() {
+      var author = new AuthorModel();
       _this.setState({author: author, loading: false});
     }, 500);
   },
@@ -34,7 +36,7 @@ var AuthorPage = React.createClass({
     } else if (author) {
       content = (
         <div>
-          <h1 className="h1">{author.name}</h1>
+          <h1 className="h1">{author.get("name")}</h1>
         </div>
       );
     } else {
