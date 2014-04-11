@@ -7,7 +7,6 @@
 var _ = require("underscore");
 var React = require("react/addons");
 var DefaultLayout = require("../layouts/DefaultLayout.js");
-var Articles = require("../data.js").Articles;
 var Spinner = require("../components/Spinner.js");
 var TagEditor = require("../components/TagEditor.js");
 
