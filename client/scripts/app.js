@@ -12,6 +12,7 @@ var NotFound = Router.NotFound
 
 
 var Pages = require("./pages.js");
+var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
 
 // CSS
 require("../styles/reset.scss");
@@ -23,7 +24,7 @@ var App = React.createClass({
   /*jshint ignore:start */
   render: function() {
     return (
-      <Locations>
+      <Locations onNavigation={GoogleAnalytics.TrackNavigation}>
         <Location path="/" handler={Pages.Home} />
         <Location path="/query/" handler={Pages.Search} />
         <Location path="/query/:query" handler={Pages.Search} />
