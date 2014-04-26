@@ -23,26 +23,19 @@ var ArticlePage = React.createClass({
     };
   },
   componentWillMount: function () {
-    var _this = this;
-    if (_this.props.articleId) {
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function() {
-        _this.setState({
-          loading: false,
-          article: new ArticleModel(JSON.parse(xhr.responseText)),
-          xhr: null
-        });
-      };
-
-      xhr.open("get", "http://api.papersearch.org/articles/"+_this.props.articleId, true);
-      xhr.send();
-
-      _this.setState({ xhr: xhr });
+    if (this.props.articleId) {
+      var article = new ArticleModel({id: this.props.articleId});
+      this.xhr = article.fetch().done(this.loadingDone);
+      this.setState({article: article});
     }
   },
+  loadingDone: function() {
+    this.xhr = null;
+    this.setState({loading: false});
+  },
   componentWillUnmount: function() {
-    if (this.state.xhr) {
-      this.state.xhr.abort();
+    if (this.xhr) {
+      this.xhr.abort();
     }
   },
   /*jshint ignore:start */
