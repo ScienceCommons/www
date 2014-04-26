@@ -8,7 +8,7 @@
     "dependencies": {
         "react": "~0.10.0",
         "underscore": "1.5.2",
-        "react-router-component": "~0.15.0",
+        "react-router-component": "0.18.2",
         "backbone": "1.1.2",
         "backbone-react-component": "0.6.2"
     },
