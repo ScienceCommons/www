@@ -10,6 +10,7 @@ var Locations = Router.Locations;
 var Location = Router.Location;
 var NotFound = Router.NotFound
 
+require("./vendor/react.backbone.js");
 
 var Pages = require("./pages.js");
 var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
