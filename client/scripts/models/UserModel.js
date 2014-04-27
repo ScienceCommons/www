@@ -7,7 +7,9 @@ var defaults = {
   "email": "sdemjanenko@gmail.com",
   "first_name": "Stephen",
   "middle_name": "Victor",
-  "last_name": "Demjanenko"
+  "last_name": "Demjanenko",
+  "articles": [],
+  "comments": []
 };
 
 var UserModel = function(data, options) {
