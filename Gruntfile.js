@@ -109,12 +109,6 @@ module.exports = function (grunt) {
           path: PRODUCTION_PATH,
           filename: "assets/main.js"
         },
-        externals: {
-          "react": "React",
-          "react/addons": "React",
-          "underscore": "_",
-          "react-router-component": "ReactRouter"
-        },
         plugins: [
           new webpack.optimize.DedupePlugin(),
           new webpack.optimize.UglifyJsPlugin()
