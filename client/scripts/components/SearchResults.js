@@ -5,6 +5,8 @@
 "use strict";
 
 var React = require("react/addons");
+var _ = require("underscore");
+
 var ReactTransitionGroup = React.addons.CSSTransitionGroup;
 var Link = require("react-router-component").Link;
 var Spinner = require("./Spinner.js");
@@ -18,9 +20,11 @@ var SearchResult = React.createClass({
     var data = this.props.data;
 
     if (data) {
-      var doi;
+      if (data.publication_date) {
+        var pub_date = <span>| {data.publication_date}</span>;
+      }
       if (data.doi) {
-        doi = (
+        var doi = (
           <span>| doi: <a href={"http://www.plosone.org/article/info"+encodeURIComponent(":doi/"+data.doi)} target="_blank">{data.doi}</a>
           </span>
         );
@@ -31,7 +35,7 @@ var SearchResult = React.createClass({
           <ReactTransitionGroup transitionName="fade">
             <div>
               <Link className="h3 link" href={"/articles/"+data.id}>{data.title}</Link>
-              <div className="h5">{data.publication_date} {doi}</div>
+              <div className="h5">{_.pluck(data.authors_denormalized, "last_name").join(", ")} {pub_date} {doi}</div>
             </div>
             <p>{data.abstract}</p>
           </ReactTransitionGroup>
