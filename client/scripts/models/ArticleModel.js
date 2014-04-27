@@ -9,8 +9,8 @@ var defaults = {
   "tags": ["Moral purity", "Physical cleansing", "Cleansing products"],
   "doi": "",
   "publication_date": "",
-  "authors": ["Stephen Demjanenko", "Ben Coe"],
-  "publication": "Science"
+  "authors_denormalized": [],
+  "journal": "Science"
 };
 
 var ArticleModel = function(data, options) {
@@ -21,7 +21,7 @@ var ArticleModel = function(data, options) {
 };
 
 ArticleModel.prototype.url = function() {
-  return "http://api.papersearch.org/articles/" + this.cortex.id.val();
+  return "http://api.curatescience.org/articles/" + this.cortex.id.val();
 };
 
 ArticleModel.prototype.fetch = function(callback) {

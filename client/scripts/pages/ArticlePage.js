@@ -5,6 +5,7 @@
 "use strict";
 
 var React = require("react/addons");
+var _ = require("underscore");
 
 var ArticleModel = require("../models/ArticleModel.js");
 
@@ -45,13 +46,13 @@ var ArticlePage = React.createClass({
             <tr>
               <td>
                 <h3><ContentEditable editable={true} data={article.title} /></h3>
-                <h5>{article.authors.val().join(", ")} (<ContentEditable editable={true} data={article.publication_date} />)</h5>
+                <h5>{_.pluck(article.authors_denormalized.val(), "last_name").join(", ")} (<ContentEditable editable={true} data={article.publication_date} />)</h5>
               </td>
               <td>
                 <table className="publication_doi">
                   <tr>
                     <td className="text_right dim">Publication</td>
-                    <td><ContentEditable editable={true} data={article.publication} /></td>
+                    <td><ContentEditable editable={true} data={article.journal} /></td>
                   </tr>
                   <tr>
                     <td className="text_right dim">DOI</td>

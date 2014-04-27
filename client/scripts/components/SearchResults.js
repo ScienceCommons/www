@@ -103,7 +103,7 @@ var SearchResults = React.createClass({
         });
       };
 
-      xhr.open("get", "http://api.papersearch.org/articles?q="+query+"&from="+this.state.from, true);
+      xhr.open("get", "http://api.curatescience.org/articles?q="+query+"&from="+this.state.from, true);
       xhr.send();
 
       _this.setState({ loading: true, xhr: xhr });
