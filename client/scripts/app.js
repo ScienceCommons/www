@@ -5,10 +5,12 @@
 "use strict";
 
 var React = require("react/addons");
+var _ = require("underscore");
 var Router = require("react-router-component");
 var Locations = Router.Locations;
 var Location = Router.Location;
-var NotFound = Router.NotFound
+var NotFound = Router.NotFound;
+var UserModel = require("./models/UserModel.js");
 
 require("./vendor/react.backbone.js");
 
@@ -24,29 +26,32 @@ require("../styles/app.scss");
 var App = React.createClass({
   mixins: [Router.NavigatableMixin],
   getInitialState: function() {
+    var userData = _.extend({}, CS.user, {loading: _.isUndefined(CS.user)});
     return {
-      user: CS.user
+      user: new UserModel(userData)
     };
   },
   /*jshint ignore:start */
   render: function() {
-    if (!this.state.user) {
+    if (this.state.user.cortex.loading.val()) {
       return (
         <Locations onNavigation={GoogleAnalytics.TrackNavigation}>
           <NotFound handler={Pages.Login} />
         </Locations>
       );
     } else {
+      var user = this.state.user;
       return (
         <Locations onNavigation={GoogleAnalytics.TrackNavigation}>
-          <Location path="/" handler={Pages.Home} />
-          <Location path="/query/" handler={Pages.Search} />
-          <Location path="/query/:query" handler={Pages.Search} />
-          <Location path="/profile" handler={Pages.Profile} />
-          <Location path="/articles/:articleId" handler={Pages.Article} />
-          <Location path="/authors/:authorId" handler={Pages.Author} />
-          <Location path="/login" handler={Pages.Login} />
-          <Location path="/signup" handler={Pages.Signup} />
+          <Location path="/" user={user} handler={Pages.Home} />
+          <Location path="/query/" user={user} handler={Pages.Search} />
+          <Location path="/query/:query" user={user} handler={Pages.Search} />
+          <Location path="/profile" user={user} handler={Pages.Profile} />
+          <Location path="/articles/:articleId" user={user} handler={Pages.Article} />
+          <Location path="/authors/:authorId" user={user} handler={Pages.Author} />
+          <Location path="/login" user={user} handler={Pages.Login} />
+          <Location path="/logout" user={user} handler={Pages.Logout} />
+          <Location path="/signup" user={user} handler={Pages.Signup} />
           <NotFound handler={Pages.NotFound} />
         </Locations>
       );

@@ -44,7 +44,7 @@ var AuthorPage = React.createClass({
     }
 
     return (
-      <DefaultLayout id="AuthorPage">
+      <DefaultLayout id="AuthorPage" user={this.props.user}>
         {content}
       </DefaultLayout>
     );

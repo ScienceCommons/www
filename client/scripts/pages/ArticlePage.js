@@ -81,7 +81,7 @@ var ArticlePage = React.createClass({
     }
 
     return (
-      <DefaultLayout id="ArticlePage">
+      <DefaultLayout id="ArticlePage" user={this.props.user}>
         {content}
       </DefaultLayout>
     );

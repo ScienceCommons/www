@@ -11,7 +11,7 @@ var ProfilePage = React.createClass({
   /*jshint ignore:start */
   render: function () {
     return (
-      <DefaultLayout id="ProfilePage">
+      <DefaultLayout id="ProfilePage" user={this.props.user}>
         <h1 className="h1">Profile</h1>
       </DefaultLayout>
     );

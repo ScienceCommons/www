@@ -28,7 +28,7 @@ var LoginPage = React.createClass({
   /*jshint ignore:start */
   render: function () {
     return (
-      <FullLayout id="LoginPage">
+      <FullLayout id="LoginPage" user={this.props.user}>
         <form onSubmit={this.handleSubmit}>
           <input type="text" size="30" placeholder="Email" ref="email" valueLink={this.linkState("email")} />
           <input type="password" size="30" placeholder="Password" valueLink={this.linkState("password")} />

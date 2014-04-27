@@ -16,7 +16,7 @@ var SignupPage = React.createClass({
   /*jshint ignore:start */
   render: function () {
     return (
-      <FullLayout id="SignupPage">
+      <FullLayout id="SignupPage" user={this.props.user}>
         <h3>Register for an invite</h3>
         <form action="http://christianbattista.us7.list-manage.com/subscribe/post?u=d140eca9cfe4a96473dac6ea5&amp;id=fba08af7dd" method="post" target="_blank">
           <input type="email" value="" ref="email" name="EMAIL" placeholder="Enter email address" size="30" required />

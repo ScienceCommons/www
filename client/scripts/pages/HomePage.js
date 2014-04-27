@@ -14,7 +14,7 @@ var HomePage = React.createClass({
   /*jshint ignore:start */
   render: function () {
     return (
-      <FullLayout id="HomePage" user={{email: "user@curatescience.org"}}>
+      <FullLayout id="HomePage" user={this.props.user}>
         <Search query={this.props.query} className="inline_block header_search"/>
       </FullLayout>
     );

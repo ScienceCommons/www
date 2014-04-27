@@ -1,0 +1,27 @@
+"use strict";
+
+var _ = require("underscore");
+var Cortex = require("cortexjs");
+
+var defaults = {
+  "email": "sdemjanenko@gmail.com",
+  "first_name": "Stephen",
+  "middle_name": "Victor",
+  "last_name": "Demjanenko"
+};
+
+var UserModel = function(data, options) {
+  data = _.defaults(data, defaults);
+  options = options || {};
+  this.cortex = new Cortex(data, options.callback);
+};
+
+UserModel.prototype.logout = function(callback) {
+  CS.user = null;
+  this.cortex.set({loading: true});
+  if (_.isFunction(callback)) {
+    callback();
+  }
+};
+
+module.exports = UserModel;

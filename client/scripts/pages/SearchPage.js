@@ -20,7 +20,7 @@ var SearchPage = React.createClass({
     }
 
     return (
-      <DefaultLayout id="SearchPage" query={this.props.query} >
+      <DefaultLayout id="SearchPage" query={this.props.query} user={this.props.user}>
         {content}
       </DefaultLayout>
     );
