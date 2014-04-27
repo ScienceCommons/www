@@ -17,11 +17,14 @@ var UserModel = function(data, options) {
 };
 
 UserModel.prototype.logout = function(callback) {
-  CS.user = null;
-  this.cortex.set({loading: true});
-  if (_.isFunction(callback)) {
-    callback();
-  }
+  var _this = this;
+  setTimeout(function() {
+    CS.user = null;
+    _this.cortex.set({loading: true});
+    if (_.isFunction(callback)) {
+      callback();
+    }
+  }, 1000);
 };
 
 module.exports = UserModel;
