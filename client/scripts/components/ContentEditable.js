@@ -42,13 +42,16 @@ var ContentEditable = React.createClass({
     this.setState({editing: true}, function() {
       _this.refs.editable.getDOMNode().focus();
     });
+    ga("send", "event", "ContentEditable", "click", "edit");
   },
   handleSubmit: function(e) {
     this.finishEdits();
     this.props.data.set(this.refs.editable.getDOMNode().textContent);
+    ga("send", "event", "ContentEditable", "click", "submit");
   },
   handleCancelClick: function() {
     this.finishEdits();
+    ga("send", "event", "ContentEditable", "click", "cancel");
   },
   finishEdits: function() {
     if (!this.state.hovering) {
