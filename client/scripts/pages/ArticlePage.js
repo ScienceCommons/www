@@ -7,51 +7,81 @@
 var React = require("react/addons");
 var Cortex = require("cortexjs");
 
-var DefaultLayout = require("../layouts/DefaultLayout.js");
 var ArticleModel = require("../models/ArticleModel.js");
-var ArticleView = require("../views/ArticleView.js");
+
+var DefaultLayout = require("../layouts/DefaultLayout.js");
+var Spinner = require("../components/Spinner.js");
+var TagEditor = require("../components/TagEditor.js");
 
 require("../../styles/pages/ArticlePage.scss");
 
 var ArticlePage = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
   getInitialState: function () {
     return {
-      article: ArticleModel({}),
-      loading: true,
-      errors: null
+      article: new ArticleModel({id: this.props.articleId}, {callback: this.handleArticleUpdate, loading: true})
     };
   },
   componentWillMount: function () {
-    if (this.props.articleId) {
-      var xhr = new XMLHttpRequest();
-      var _this = this;
-      xhr.onload = function() {
-        _this.xhr = null;
-
-        var data = JSON.parse(xhr.responseText);
-        var article = ArticleModel(data, function() {
-          _this.setState({article: article});
-        });
-
-        _this.setState({loading: false, article: article});
-      };
-      xhr.open("get", "http://api.papersearch.org/articles/"+this.props.articleId, true);
-      xhr.send();
-
-      this.xhr = xhr;
-    }
+    this.state.article.fetch();
+  },
+  handleArticleUpdate: function() {
+    this.setState({article: this.state.article});
   },
   componentWillUnmount: function() {
-    if (this.xhr) {
-      this.xhr.abort();
-    }
+    this.state.article.unmount();
   },
   /*jshint ignore:start */
   render: function () {
+    var loading = this.state.article.loading;
+    var article = this.state.article.cortex;
+    var content;
+
+    if (loading) {
+      content = <Spinner />
+    } else if (article) {
+      content = (
+        <div>
+          <table>
+            <tr>
+              <td>
+                <h3>{article.title.val()}</h3>
+                <h5>Some authors {article.publication_date.val()}</h5>
+              </td>
+              <td>
+                <table className="publication_doi">
+                  <tr>
+                    <td className="text_right dim">Publication</td>
+                    <td>Science</td>
+                  </tr>
+                  <tr>
+                    <td className="text_right dim">DOI</td>
+                    <td>{article.doi.val()}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Abstract</h3>
+                <p>{article.abstract.val()}</p>
+              </td>
+              <td>
+                <h3>Editable Tags</h3>
+                <TagEditor tags={article.tags} editable={true} />
+                <h3>Tags</h3>
+                <TagEditor tags={article.tags} />
+              </td>
+            </tr>
+          </table>
+        </div>
+      );
+    } else {
+      content = <h1>Article not found</h1>
+    }
+
     return (
       <DefaultLayout id="ArticlePage">
-        <ArticleView article={this.state.article} loading={this.state.loading} />
+        {content}
       </DefaultLayout>
     );
   }
