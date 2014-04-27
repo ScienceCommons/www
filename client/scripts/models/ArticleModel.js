@@ -8,7 +8,9 @@ var defaults = {
   "abstract": "",
   "tags": ["Moral purity", "Physical cleansing", "Cleansing products"],
   "doi": "",
-  "publication_date": ""
+  "publication_date": "",
+  "authors": ["Stephen Demjanenko", "Ben Coe"],
+  "publication": "Science"
 };
 
 var ArticleModel = function(data, options) {

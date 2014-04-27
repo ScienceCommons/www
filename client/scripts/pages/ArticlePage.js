@@ -46,13 +46,13 @@ var ArticlePage = React.createClass({
             <tr>
               <td>
                 <h3><ContentEditable editable={true}>{article.title}</ContentEditable></h3>
-                <h5>Some authors {article.publication_date.val()}</h5>
+                <h5>{article.authors.val().join(", ")} (<ContentEditable editable={true}>{article.publication_date}</ContentEditable>)</h5>
               </td>
               <td>
                 <table className="publication_doi">
                   <tr>
                     <td className="text_right dim">Publication</td>
-                    <td>Science</td>
+                    <td><ContentEditable editable={true}>{article.publication}</ContentEditable></td>
                   </tr>
                   <tr>
                     <td className="text_right dim">DOI</td>
