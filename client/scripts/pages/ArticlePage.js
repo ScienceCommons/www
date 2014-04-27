@@ -77,7 +77,7 @@ var ArticlePage = React.createClass({
         </div>
       );
     } else {
-      content = <h1>Article not found</h1>
+      content = <h1>Article not found</h1>;
     }
 
     return (

@@ -22,21 +22,35 @@ require("../styles/app.scss");
 
 
 var App = React.createClass({
+  mixins: [Router.NavigatableMixin],
+  getInitialState: function() {
+    return {
+      user: CS.user
+    };
+  },
   /*jshint ignore:start */
   render: function() {
-    return (
-      <Locations onNavigation={GoogleAnalytics.TrackNavigation}>
-        <Location path="/" handler={Pages.Home} />
-        <Location path="/query/" handler={Pages.Search} />
-        <Location path="/query/:query" handler={Pages.Search} />
-        <Location path="/profile" handler={Pages.Profile} />
-        <Location path="/articles/:articleId" handler={Pages.Article} />
-        <Location path="/authors/:authorId" handler={Pages.Author} />
-        <Location path="/login" handler={Pages.Login} />
-        <Location path="/signup" handler={Pages.Signup} />
-        <NotFound handler={Pages.NotFound} />
-      </Locations>
-    );
+    if (!this.state.user) {
+      return (
+        <Locations onNavigation={GoogleAnalytics.TrackNavigation}>
+          <NotFound handler={Pages.Login} />
+        </Locations>
+      );
+    } else {
+      return (
+        <Locations onNavigation={GoogleAnalytics.TrackNavigation}>
+          <Location path="/" handler={Pages.Home} />
+          <Location path="/query/" handler={Pages.Search} />
+          <Location path="/query/:query" handler={Pages.Search} />
+          <Location path="/profile" handler={Pages.Profile} />
+          <Location path="/articles/:articleId" handler={Pages.Article} />
+          <Location path="/authors/:authorId" handler={Pages.Author} />
+          <Location path="/login" handler={Pages.Login} />
+          <Location path="/signup" handler={Pages.Signup} />
+          <NotFound handler={Pages.NotFound} />
+        </Locations>
+      );
+    }
   }
   /*jshint ignore:end */
 });
