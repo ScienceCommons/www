@@ -5,23 +5,93 @@
 "use strict";
 
 var React = require("react/addons");
+var cx = React.addons.classSet;
+
+require("../../styles/components/ContentEditable.scss");
 
 var ContentEditable = React.createClass({
+  getInitialState: function() {
+    return {
+      editing: false,
+      hovering: false
+    };
+  },
   getDefaultProps: function() {
     return {
       editable: false
     };
   },
-  data: function() {
-    return this.props.children;
+  handleMouseEnter: function() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+    this.setState({hovering: true});
   },
-  handleChange: function() {
-    var newVal = this.refs.editable.getDOMNode().innerHTML;
-    this.data().set(newVal);
+  handleMouseLeave: function() {
+    var _this = this;
+    if (!this.state.editing) {
+      this.timeout = setTimeout(function() {
+        _this.timeout = null;
+        _this.setState({hovering: false});
+      }, 500);
+    }
+  },
+  handleEditClick: function() {
+    var _this = this;
+    this.setState({editing: true}, function() {
+      _this.refs.editable.getDOMNode().focus();
+    });
+  },
+  handleSubmit: function(e) {
+    this.finishEdits();
+    this.props.data.set(this.refs.editable.getDOMNode().textContent);
+  },
+  handleCancelClick: function() {
+    this.finishEdits();
+  },
+  finishEdits: function() {
+    if (!this.state.hovering) {
+      this.handleMouseLeave();
+    }
+    this.setState({editing: false, hovering: true});
   },
   /*jshint ignore:start */
+  renderEditControls: function() {
+    var buttons;
+    if (this.state.editing) {
+      var submitButton = <button type="button" onClick={this.handleSubmit}><span className="icon icon_check_mark"></span></button>;
+      var cancelButton = <button type="button" onClick={this.handleCancelClick}><span className="icon icon_close"></span></button>;
+      buttons = [submitButton, cancelButton];
+    } else {
+      buttons = <button type="button" onClick={this.handleEditClick}><span className="icon icon_edit"></span></button>;
+    }
+    var classes = cx({
+      "controls": true,
+      "editing": this.state.editing
+    });
+
+    return (
+      <div className={classes}>
+        {buttons}
+      </div>
+    );
+  },
   render: function () {
-    return <span contentEditable={this.props.editable} ref="editable" onChange={this.handleChange} onBlur={this.handleChange}>{this.data().val()}</span>
+    if (this.props.editable) {
+      if (this.state.hovering) {
+        var controls = this.renderEditControls();
+      }
+
+      return (
+        <div className="ContentEditable" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+          <div ref="editable" contentEditable={this.state.editing} key={this.state.editing ? "editing": "notEditing"}>{this.props.data.val()}</div>
+          {controls}
+        </div>
+      );
+    } else {
+      return <div className="ContentEditable">{this.props.data.val()}</div>
+    }
   }
   /*jshint ignore:end */
 });

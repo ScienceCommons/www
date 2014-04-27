@@ -5,7 +5,6 @@
 "use strict";
 
 var React = require("react/addons");
-var Cortex = require("cortexjs");
 
 var ArticleModel = require("../models/ArticleModel.js");
 
@@ -45,18 +44,18 @@ var ArticlePage = React.createClass({
           <table>
             <tr>
               <td>
-                <h3><ContentEditable editable={true}>{article.title}</ContentEditable></h3>
-                <h5>{article.authors.val().join(", ")} (<ContentEditable editable={true}>{article.publication_date}</ContentEditable>)</h5>
+                <h3><ContentEditable editable={true} data={article.title} /></h3>
+                <h5>{article.authors.val().join(", ")} (<ContentEditable editable={true} data={article.publication_date} />)</h5>
               </td>
               <td>
                 <table className="publication_doi">
                   <tr>
                     <td className="text_right dim">Publication</td>
-                    <td><ContentEditable editable={true}>{article.publication}</ContentEditable></td>
+                    <td><ContentEditable editable={true} data={article.publication} /></td>
                   </tr>
                   <tr>
                     <td className="text_right dim">DOI</td>
-                    <td><ContentEditable editable={true}>{article.doi}</ContentEditable></td>
+                    <td><ContentEditable editable={true} data={article.doi} /></td>
                   </tr>
                 </table>
               </td>
@@ -64,7 +63,7 @@ var ArticlePage = React.createClass({
             <tr>
               <td>
                 <h3>Abstract</h3>
-                <p><ContentEditable editable={true}>{article.abstract}</ContentEditable></p>
+                <p><ContentEditable editable={true} data={article.abstract} /></p>
               </td>
               <td>
                 <h3>Editable Tags</h3>
