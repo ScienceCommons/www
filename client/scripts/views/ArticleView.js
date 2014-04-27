@@ -11,10 +11,7 @@ var TagEditor = require("../components/TagEditor.js");
 require("../../styles/views/ArticleView.scss");
 
 var ArticleView = React.createClass({
-  mixins: [
-    React.addons.LinkedStateMixin,
-    React.BackboneMixin("article")
-  ],
+  mixins: [React.addons.LinkedStateMixin],
   getInitialState: function () {
     return {
       tags: ["Moral purity", "Physical cleansing", "Cleansing products"]
@@ -34,8 +31,8 @@ var ArticleView = React.createClass({
           <table>
             <tr>
               <td>
-                <h3>{article.get("title")}</h3>
-                <h5>Some authors {article.get("publication_date")}</h5>
+                <h3>{article.title.val()}</h3>
+                <h5>Some authors {article.publication_date.val()}</h5>
               </td>
               <td>
                 <table className="publication_doi">
@@ -45,7 +42,7 @@ var ArticleView = React.createClass({
                   </tr>
                   <tr>
                     <td className="text_right dim">DOI</td>
-                    <td>{article.get("doi")}</td>
+                    <td>{article.doi.val()}</td>
                   </tr>
                 </table>
               </td>
@@ -53,13 +50,13 @@ var ArticleView = React.createClass({
             <tr>
               <td>
                 <h3>Abstract</h3>
-                <p>{article.get("abstract")}</p>
+                <p>{article.abstract.val()}</p>
               </td>
               <td>
                 <h3>Tags</h3>
-                <TagEditor valueLink={this.linkState("tags")} editable={true}/>
+                <TagEditor tags={article.tags} editable={true} />
                 <h3>Tags</h3>
-                <TagEditor valueLink={this.linkState("tags")}/>
+                <TagEditor tags={article.tags} />
               </td>
             </tr>
           </table>

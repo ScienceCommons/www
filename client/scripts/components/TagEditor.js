@@ -13,9 +13,10 @@ require("../../styles/components/TagEditor.scss");
 var Pill = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
   getInitialState: function() {
+    var val = this.props.tag.val();
     return {
-      editing: this.props.tag.length === 0,
-      value: this.props.tag
+      editing: val.length === 0,
+      value: val
     };
   },
   getDefaultState: function() {
@@ -29,10 +30,10 @@ var Pill = React.createClass({
   handleCheckMarkClick: function(e) {
     e.preventDefault();
     this.setState({editing: false});
-    this.props.onChange(this.state.value);
+    this.props.tag.set(this.state.value);
   },
   handleRemoveClick: function() {
-    this.props.onChange(null);
+    this.props.tag.remove();
   },
   /*jshint ignore:start */
   render: function() {
@@ -68,41 +69,20 @@ var TagEditor = React.createClass({
     };
   },
   add: function() {
-    var tags = this.props.valueLink;
-    tags.requestChange(tags.value.concat([""]));
-  },
-  handleChange: function(tag) {
-    var _this = this;
-    return function(newTag) {
-      if (newTag === null) {
-        _this.remove(tag);
-      } else {
-        var tags = _this.props.valueLink;
-        var index = tags.value.indexOf(tag);
-        tags.value[index] = newTag;
-        tags.requestChange(tags.value);
-      }
-    };
-  },
-  remove: function(tag) {
-    var tags = this.props.valueLink;
-    tags.requestChange(_.without(tags.value, tag));
+    this.props.tags.push("");
   },
   /*jshint ignore:start */
   render: function() {
     var editable = this.props.editable;
-    var tags = this.props.valueLink.value
     var _this = this;
-    var pills = _.map(tags, function(tag) {
-      if (tag) {
-        var key = tag;
-      }
-      return <Pill tag={tag} onChange={_this.handleChange(tag)} editable={editable} key={key}/>;
+    var pills = this.props.tags.map(function(tag) {
+      return <Pill tag={tag} editable={editable} key={tag.val()}/>;
     });
 
     if (editable) {
       var add = <span className="icon icon_add" onClick={this.add}></span>;
     }
+    
     return (
       <div className="TagEditor">
         {pills}

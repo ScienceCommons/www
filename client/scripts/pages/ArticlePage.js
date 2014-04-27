@@ -5,8 +5,10 @@
 "use strict";
 
 var React = require("react/addons");
+var Cortex = require("cortexjs");
+
 var DefaultLayout = require("../layouts/DefaultLayout.js");
-var ArticleModel = require("../models/Article.js");
+var ArticleModel = require("../models/ArticleModel.js");
 var ArticleView = require("../views/ArticleView.js");
 
 require("../../styles/pages/ArticlePage.scss");
@@ -15,18 +17,30 @@ var ArticlePage = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
   getInitialState: function () {
     return {
-      article: new ArticleModel({id: this.props.articleId}),
-      loading: true
+      article: ArticleModel({}),
+      loading: true,
+      errors: null
     };
   },
   componentWillMount: function () {
     if (this.props.articleId) {
-      this.xhr = this.state.article.fetch().done(this.loadingDone);
+      var xhr = new XMLHttpRequest();
+      var _this = this;
+      xhr.onload = function() {
+        _this.xhr = null;
+
+        var data = JSON.parse(xhr.responseText);
+        var article = ArticleModel(data, function() {
+          _this.setState({article: article});
+        });
+
+        _this.setState({loading: false, article: article});
+      };
+      xhr.open("get", "http://api.papersearch.org/articles/"+this.props.articleId, true);
+      xhr.send();
+
+      this.xhr = xhr;
     }
-  },
-  loadingDone: function() {
-    this.xhr = null;
-    this.setState({loading: false});
   },
   componentWillUnmount: function() {
     if (this.xhr) {
