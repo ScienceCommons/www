@@ -4,9 +4,9 @@ var _ = require("underscore");
 var Cortex = require("cortexjs");
 
 var defaults = {
-  "email": "sdemjanenko@gmail.com",
+  "email": "stephen@curatescience.org",
   "first_name": "Stephen",
-  "middle_name": "Victor",
+  "middle_name": "",
   "last_name": "Demjanenko",
   "articles": [],
   "comments": []
