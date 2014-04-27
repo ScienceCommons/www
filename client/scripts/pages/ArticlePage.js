@@ -12,6 +12,7 @@ var ArticleModel = require("../models/ArticleModel.js");
 var DefaultLayout = require("../layouts/DefaultLayout.js");
 var Spinner = require("../components/Spinner.js");
 var TagEditor = require("../components/TagEditor.js");
+var ContentEditable = require("../components/ContentEditable.js");
 
 require("../../styles/pages/ArticlePage.scss");
 
@@ -44,7 +45,7 @@ var ArticlePage = React.createClass({
           <table>
             <tr>
               <td>
-                <h3>{article.title.val()}</h3>
+                <h3><ContentEditable editable={true}>{article.title}</ContentEditable></h3>
                 <h5>Some authors {article.publication_date.val()}</h5>
               </td>
               <td>
@@ -55,7 +56,7 @@ var ArticlePage = React.createClass({
                   </tr>
                   <tr>
                     <td className="text_right dim">DOI</td>
-                    <td>{article.doi.val()}</td>
+                    <td><ContentEditable editable={true}>{article.doi}</ContentEditable></td>
                   </tr>
                 </table>
               </td>
@@ -63,7 +64,7 @@ var ArticlePage = React.createClass({
             <tr>
               <td>
                 <h3>Abstract</h3>
-                <p>{article.abstract.val()}</p>
+                <p><ContentEditable editable={true}>{article.abstract}</ContentEditable></p>
               </td>
               <td>
                 <h3>Editable Tags</h3>
