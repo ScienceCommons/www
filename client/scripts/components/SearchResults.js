@@ -7,7 +7,6 @@
 var React = require("react/addons");
 var _ = require("underscore");
 
-var ReactTransitionGroup = React.addons.CSSTransitionGroup;
 var Link = require("react-router-component").Link;
 var Spinner = require("./Spinner.js");
 var SearchFilter = require("./SearchFilter.js");
@@ -32,13 +31,11 @@ var SearchResult = React.createClass({
 
       return (
         <li className="SearchResult" key={data.id}>
-          <ReactTransitionGroup transitionName="fade">
-            <div>
-              <Link className="h3 link" href={"/articles/"+data.id}>{data.title}</Link>
-              <div className="h5">{_.pluck(data.authors_denormalized, "last_name").join(", ")} {pub_date} {doi}</div>
-            </div>
-            <p>{data.abstract}</p>
-          </ReactTransitionGroup>
+          <div>
+            <Link className="h3 link" href={"/articles/"+data.id}>{data.title}</Link>
+            <div className="h5">{_.pluck(data.authors_denormalized, "last_name").join(", ")} {pub_date} {doi}</div>
+          </div>
+          <p>{data.abstract}</p>
         </li>
       );
     } else {
