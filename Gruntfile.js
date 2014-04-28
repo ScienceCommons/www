@@ -77,7 +77,6 @@ module.exports = function (grunt) {
     },
     webpack: {
       options: {
-        entry: "./client/scripts/app.js",
         cache: true,
         stats: {
           colors: true,
@@ -98,18 +97,26 @@ module.exports = function (grunt) {
       },
       development: {
         debug: true,
+        entry: {
+          main: "./client/scripts/app.js"
+        },
         output: {
-          path: DEVELOPMENT_PATH,
-          filename: "assets/main.js"
+          path: DEVELOPMENT_PATH+"/assets",
+          filename: "[name].js"
         }
       },
       production: {
         debug: false,
+        entry: {
+          vendor: "./client/scripts/vendor.js",
+          main: "./client/scripts/app.js"
+        },
         output: {
-          path: PRODUCTION_PATH,
-          filename: "assets/main.js"
+          path: PRODUCTION_PATH+"/assets",
+          filename: "[name].js"
         },
         plugins: [
+          new webpack.optimize.CommonsChunkPlugin("commons.chunk.js"),
           new webpack.optimize.DedupePlugin(),
           new webpack.optimize.UglifyJsPlugin()
         ]
