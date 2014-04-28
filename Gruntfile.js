@@ -27,28 +27,28 @@ module.exports = function (grunt) {
     loader: "style!sass-loader"
   }, {
     test: /\.gif/,
-    loader: "url-loader?prefix=/assets/&limit=10000&minetype=image/gif"
+    loader: "url-loader?limit=10000&minetype=image/gif"
   }, {
     test: /\.jpg/,
-    loader: "url-loader?prefix=/assets/&limit=10000&minetype=image/jpg"
+    loader: "url-loader?limit=10000&minetype=image/jpg"
   }, {
     test: /\.png/,
-    loader: "url-loader?prefix=/assets/&limit=10000&minetype=image/png"
+    loader: "url-loader?limit=10000&minetype=image/png"
   }, {
     test: /\.js$/,
     loader: "jsx-loader"
   }, {
     test: /\.woff$/,
-    loader: "url-loader?prefix=/assets/&limit=10000&minetype=application/font-woff"
+    loader: "url-loader?limit=10000&minetype=application/font-woff"
   }, {
     test: /\.ttf$/,
-    loader: "file-loader?prefix=/assets/"
+    loader: "file-loader"
   }, {
     test: /\.eot$/,
-    loader: "file-loader?prefix=/assets/"
+    loader: "file-loader"
   }, {
     test: /\.svg$/,
-    loader: "file-loader?prefix=/assets/"
+    loader: "file-loader"
   }];
 
   var handle404 = function(src) {
@@ -228,6 +228,14 @@ module.exports = function (grunt) {
           }
         ]
       }
+    },
+    clean: {
+      development: {
+        src: [DEVELOPMENT_PATH+"/assets"]
+      },
+      production: {
+        src: [PRODUCTION_PATH+"/assets"]
+      }
     }
   });
 
@@ -246,8 +254,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask("test", ["karma"]);
 
-  grunt.registerTask("build:development", ["env:development", "preprocess:development", "webfont", "webpack:development"]);
-  grunt.registerTask("build:production", ["env:production", "preprocess:production", "webfont", "webpack:production"]);
+  grunt.registerTask("build:development", ["clean:development", "env:development", "preprocess:development", "webfont", "webpack:development"]);
+  grunt.registerTask("build:production", ["clean:production", "env:production", "preprocess:production", "webfont", "webpack:production"]);
   grunt.registerTask("deploy", ["build:production", "s3:production"]);
 
   grunt.registerTask("default", []);
