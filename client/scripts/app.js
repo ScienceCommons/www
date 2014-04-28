@@ -35,14 +35,14 @@ var App = React.createClass({
   render: function() {
     if (this.state.user.cortex.loading.val()) {
       return (
-        <Locations onNavigation={GoogleAnalytics.TrackNavigation}>
+        <Locations onNavigation={GoogleAnalytics.TrackNavigation} hash>
           <NotFound handler={Pages.Login} />
         </Locations>
       );
     } else {
       var user = this.state.user;
       return (
-        <Locations onNavigation={GoogleAnalytics.TrackNavigation}>
+        <Locations onNavigation={GoogleAnalytics.TrackNavigation} hash>
           <Location path="/" user={user} handler={Pages.Home} />
           <Location path="/query/" user={user} handler={Pages.Search} />
           <Location path="/query/:query" user={user} handler={Pages.Search} />
