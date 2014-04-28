@@ -77,6 +77,7 @@ var SearchResults = React.createClass({
   },
   fetchResults: function(query) {
     // this will be an xhr to our search server
+    var t0 = _.now();
     var _this = this;
     if (!query) {
       return
@@ -94,6 +95,7 @@ var SearchResults = React.createClass({
         } catch (e) {
           res = {};
         };
+        var t1 = _.now();
 
         _this.setState({
           loading: false,
@@ -102,6 +104,7 @@ var SearchResults = React.createClass({
           from: res.from,
           xhr: null
         });
+        ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, query);
       };
 
       xhr.open("get", "http://api.curatescience.org/articles?q="+query+"&from="+this.state.from, true);
