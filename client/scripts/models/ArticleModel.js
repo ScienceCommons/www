@@ -25,6 +25,7 @@ ArticleModel.prototype.url = function() {
 };
 
 ArticleModel.prototype.fetch = function(callback) {
+  var t0 = _.now();
   if (this.xhr) {
     this.xhr.abort();
   }
@@ -35,10 +36,12 @@ ArticleModel.prototype.fetch = function(callback) {
     _this.xhr = null;
     _this.loading = false;
     var data = JSON.parse(xhr.responseText);
+    var t1 = _.now();
     _this.cortex.set(_.defaults(data, defaults));
     if (_.isFunction(callback)) {
       callback();
     }
+    ga('send', 'timing', 'Article', 'Fetch', t1-t0, _this.cortex.id.val());
   };
 
   xhr.open("get", this.url(), true);
