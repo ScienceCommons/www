@@ -104,7 +104,7 @@ var SearchResults = React.createClass({
           from: res.from,
           xhr: null
         });
-        ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, query);
+        ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, query+"&from="+res.from);
       };
 
       xhr.open("get", "http://api.curatescience.org/articles?q="+query+"&from="+this.state.from, true);
