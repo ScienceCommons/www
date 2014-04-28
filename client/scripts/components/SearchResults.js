@@ -104,10 +104,10 @@ var SearchResults = React.createClass({
           from: res.from,
           xhr: null
         });
-        ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, query+"&from="+res.from);
+        ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, "/articles?q="+query+"&from="+res.from);
       };
 
-      xhr.open("get", "http://api.curatescience.org/articles?q="+query+"&from="+this.state.from, true);
+      xhr.open("get", window.location.protocol+"//api.curatescience.org/articles?q="+query+"&from="+this.state.from, true);
       xhr.send();
 
       _this.setState({ loading: true, xhr: xhr });

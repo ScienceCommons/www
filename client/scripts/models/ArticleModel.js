@@ -21,7 +21,7 @@ var ArticleModel = function(data, options) {
 };
 
 ArticleModel.prototype.url = function() {
-  return "http://api.curatescience.org/articles/" + this.cortex.id.val();
+  return window.location.protocol+"//api.curatescience.org/articles/" + this.cortex.id.val();
 };
 
 ArticleModel.prototype.fetch = function(callback) {
