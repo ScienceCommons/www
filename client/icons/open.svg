@@ -4,8 +4,6 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
 <g>
-	
-		<rect x="5.514933" y="14.000214" transform="matrix(0.707107 0.707107 -0.707107 0.707107 16 -6.627417)" width="20.970135" height="3.999573"/>
+	<polygon points="16,21.828125 7.171875,13 10,10.171875 16,16.171875 22,10.171875 24.828125,13 	"/>
 </g>
-<rect x="14.000214" y="5.514933" transform="matrix(0.707107 0.707107 -0.707107 0.707107 16 -6.627417)" width="3.999573" height="20.970135"/>
 </svg>
