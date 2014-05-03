@@ -46,31 +46,23 @@ var ArticlePage = React.createClass({
             <tr>
               <td>
                 <h3><ContentEditable editable={true} data={article.title} /></h3>
-                <h5>{_.pluck(article.authors_denormalized.val(), "last_name").join(", ")} (<ContentEditable editable={true} data={article.publication_date} />)</h5>
-              </td>
-              <td>
-                <table className="publication_doi">
-                  <tr>
-                    <td className="text_right dim">Publication</td>
-                    <td><ContentEditable editable={true} data={article.journal} /></td>
-                  </tr>
-                  <tr>
-                    <td className="text_right dim">DOI</td>
-                    <td><ContentEditable editable={true} data={article.doi} /></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h3>Abstract</h3>
+                <h5>{_.pluck(article.authors_denormalized.val(), "last_name").join(", ")} <ContentEditable editable={true} data={article.publication_date} /></h5>
+                <h3>Research Abstract</h3>
                 <p><ContentEditable editable={true} data={article.abstract} /></p>
               </td>
-              <td>
-                <h3>Editable Tags</h3>
-                <TagEditor tags={article.tags} editable={true} />
-                <h3>Tags</h3>
-                <TagEditor tags={article.tags} />
+              <td className="text_right">
+                <div className="btn_group">
+                  <button className="btn bookmark_article"><span className="icon icon_bookmark"></span></button>
+                  <button className="btn"><span className="icon icon_share"></span></button>
+                </div>
+                <div className="dim">Journal</div>
+                <div>Science</div>
+                <div className="dim">DOI</div>
+                <div><ContentEditable editable={true} data={article.doi} /></div>
+                <div className="dim">Keywords</div>
+                <div>
+                  <TagEditor tags={article.tags} editable={true} />
+                </div>
               </td>
             </tr>
           </table>

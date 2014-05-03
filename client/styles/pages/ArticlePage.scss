@@ -1,7 +1,13 @@
+@import "../variables.scss";
+
 #ArticlePage {
   .publication_doi {
     td {
       padding: 4px;
     }
+  }
+
+  .bookmark_article {
+    color: $blue;
   }
 }

@@ -1,8 +1,10 @@
+@import "../variables.scss";
+
 .Pill {
   display: inline-block;
   white-space: nowrap;
   border-radius: 4px;
-  background-color: #2270BF;
+  background-color: $blue;
   color: white;
   padding: 4px;
   font-size: 12px;
