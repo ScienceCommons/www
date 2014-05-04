@@ -51,43 +51,12 @@ $replicationWidth: 256px;
       background-color: $off_white;
     }
 
-    .badges {
-      font-size: 30px;
-
-      .icon .icon {
-        font-size: 25px;
-      }
-
-      .badge {
-        margin: 5px 10px;
-      }
-    }
-  }
-}
-
-i.icon {
-  position: relative;
-  text-align: center;
-
-  i.icon {
-    position: absolute;
-    left: 5px;
-    top: 2px;
-  }
-}
-
-.badge {
-  color: black;
-
-  .icon {
-    color: white;
-  }
-
-  &.blue {
-    color: $blue;
-
-    .icon {
-      color: white;
+    .badges .Badge {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      margin-right: 10px;
     }
   }
 }

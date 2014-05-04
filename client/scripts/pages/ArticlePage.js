@@ -13,6 +13,7 @@ var DefaultLayout = require("../layouts/DefaultLayout.js");
 var Spinner = require("../components/Spinner.js");
 var TagEditor = require("../components/TagEditor.js");
 var ContentEditable = require("../components/ContentEditable.js");
+var Badge = require("../components/Badge.js");
 
 require("../../styles/pages/ArticlePage.scss");
 
@@ -92,46 +93,22 @@ var ArticlePage = React.createClass({
                 <tr>
                   <td></td>
                   <td className="badges">
-                    <i className="badge blue icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_data"></i>
-                    </i>
-                    <i className="badge blue icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_methods"></i>
-                    </i>
-                    <i className="badge icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_registration"></i>
-                    </i>
-                    <i className="badge icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_disclosure"></i>
-                    </i>
+                    <Badge badge="data" active={true}/>
+                    <Badge badge="methods" active={true}/>
+                    <Badge badge="registration" />
+                    <Badge badge="disclosure" />
                   </td>
                   <td className="badges replication">
-                    <i className="badge blue icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_data"></i>
-                    </i>
-                    <i className="badge blue icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_methods"></i>
-                    </i>
-                    <i className="badge icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_registration"></i>
-                    </i>
-                    <i className="badge icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_disclosure"></i>
-                    </i>
+                    <Badge badge="data" active={true}/>
+                    <Badge badge="methods" active={true}/>
+                    <Badge badge="registration" active={true}/>
+                    <Badge badge="disclosure" active={true}/>
                   </td>
                   <td className="badges">
-                    <i className="badge blue icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_data"></i>
-                    </i>
-                    <i className="badge blue icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_methods"></i>
-                    </i>
-                    <i className="badge icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_registration"></i>
-                    </i>
-                    <i className="badge icon icon_bkgr_squircle">
-                      <i className="icon icon_sml_disclosure"></i>
-                    </i>
+                    <Badge badge="data" />
+                    <Badge badge="methods" />
+                    <Badge badge="registration" />
+                    <Badge badge="disclosure" />
                   </td>
                 </tr>
                 <tr>
