@@ -2,6 +2,7 @@
 
 module.exports = {
   NotFound: require("./pages/NotFoundPage.js"),
+  About: require("./pages/AboutPage.js"),  
   Article: require("./pages/ArticlePage.js"),
   Author: require("./pages/AuthorPage.js"),
   Home: require("./pages/HomePage.js"),

@@ -9,6 +9,7 @@ var Constants = require("../constants.js");
 var Search = require("./Search.js");
 var UserDropdown = require("./UserDropdown.js");
 var Link = require("react-router-component").Link;
+var Logo = require("./Logo.js");
 
 require("../../styles/components/PageHeader.scss");
 
@@ -21,8 +22,7 @@ var PageHeader = React.createClass({
 
     return (
       <header className="PageHeader">
-        <Link className="company_name h1 inline_block" href={"/"}>{Constants.COMPANY_NAME}</Link>
-        <span className="icon icon_bkgr_header_large"></span>
+        <Link href="/" className="logoLink"><Logo /></Link>
         <Search query={this.props.query} className="inline_block header_search"/>
         {userDropdown}
       </header>

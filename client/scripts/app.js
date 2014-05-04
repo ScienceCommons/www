@@ -50,6 +50,7 @@ var App = React.createClass({
           <Location path="/articles/:articleId" user={user} handler={Pages.Article} />
           <Location path="/authors/:authorId" user={user} handler={Pages.Author} />
           <Location path="/login" user={user} handler={Pages.Login} />
+          <Location path="/about" user={user} handler={Pages.About} />          
           <Location path="/logout" user={user} handler={Pages.Logout} />
           <Location path="/signup" user={user} handler={Pages.Signup} />
           <NotFound handler={Pages.NotFound} />

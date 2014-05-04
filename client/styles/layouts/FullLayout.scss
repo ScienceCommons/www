@@ -1,12 +1,16 @@
+@import "../variables.scss";
+
 .FullLayout {
-  background-color: #333333;
+  background-color: $dark;
   position: absolute;
   height: 100%;
   width: 100%;
 
-  h1.company_name {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    font-size: 54px;
+  .Logo {
+    height: 256px;
+
+    text {
+      fill: white;
+    }
   }
 }
