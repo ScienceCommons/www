@@ -22,6 +22,7 @@ var PageHeader = React.createClass({
     return (
       <header className="PageHeader">
         <Link className="company_name h1 inline_block" href={"/"}>{Constants.COMPANY_NAME}</Link>
+        <span className="icon icon_bkgr_header_large"></span>
         <Search query={this.props.query} className="inline_block header_search"/>
         {userDropdown}
       </header>

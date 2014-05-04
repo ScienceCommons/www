@@ -45,181 +45,191 @@
 }
 
 
-.icon_bkgr_notification_1digit:before {
+.icon_bkgr_header_large:before {
 	content:"\e004";
 }
 
 
-.icon_bkgr_notification_2digits:before {
+.icon_bkgr_header_small:before {
 	content:"\e005";
 }
 
 
-.icon_bkgr_squircle:before {
+.icon_bkgr_notification_1digit:before {
 	content:"\e006";
 }
 
 
-.icon_bookmark:before {
+.icon_bkgr_notification_2digits:before {
 	content:"\e007";
 }
 
 
-.icon_check_mark:before {
+.icon_bkgr_squircle:before {
 	content:"\e008";
 }
 
 
-.icon_close:before {
+.icon_bookmark:before {
 	content:"\e009";
 }
 
 
-.icon_comment:before {
+.icon_check_mark:before {
 	content:"\e00a";
 }
 
 
-.icon_delete:before {
+.icon_close:before {
 	content:"\e00b";
 }
 
 
-.icon_down_caret:before {
+.icon_comment:before {
 	content:"\e00c";
 }
 
 
-.icon_download:before {
+.icon_delete:before {
 	content:"\e00d";
 }
 
 
-.icon_edit:before {
+.icon_down_caret:before {
 	content:"\e00e";
 }
 
 
-.icon_facebook:before {
+.icon_download:before {
 	content:"\e00f";
 }
 
 
-.icon_history:before {
+.icon_edit:before {
 	content:"\e010";
 }
 
 
-.icon_left_arrow:before {
+.icon_facebook:before {
 	content:"\e011";
 }
 
 
-.icon_lrg_data:before {
+.icon_history:before {
 	content:"\e012";
 }
 
 
-.icon_lrg_disclosure:before {
+.icon_left_arrow:before {
 	content:"\e013";
 }
 
 
-.icon_lrg_methods:before {
+.icon_lrg_data:before {
 	content:"\e014";
 }
 
 
-.icon_lrg_registration:before {
+.icon_lrg_disclosure:before {
 	content:"\e015";
 }
 
 
-.icon_mail:before {
+.icon_lrg_methods:before {
 	content:"\e016";
 }
 
 
-.icon_notification:before {
+.icon_lrg_registration:before {
 	content:"\e017";
 }
 
 
-.icon_open:before {
+.icon_mail:before {
 	content:"\e018";
 }
 
 
-.icon_person:before {
+.icon_notification:before {
 	content:"\e019";
 }
 
 
-.icon_proceed:before {
+.icon_open:before {
 	content:"\e01a";
 }
 
 
-.icon_removed:before {
+.icon_person:before {
 	content:"\e01b";
 }
 
 
-.icon_replication:before {
+.icon_proceed:before {
 	content:"\e01c";
 }
 
 
-.icon_reply:before {
+.icon_removed:before {
 	content:"\e01d";
 }
 
 
-.icon_right_arrow:before {
+.icon_replication:before {
 	content:"\e01e";
 }
 
 
-.icon_search:before {
+.icon_reply:before {
 	content:"\e01f";
 }
 
 
-.icon_share:before {
+.icon_right_arrow:before {
 	content:"\e020";
 }
 
 
-.icon_sml_data:before {
+.icon_search:before {
 	content:"\e021";
 }
 
 
-.icon_sml_disclosure:before {
+.icon_share:before {
 	content:"\e022";
 }
 
 
-.icon_sml_methods:before {
+.icon_sml_data:before {
 	content:"\e023";
 }
 
 
-.icon_sml_registration:before {
+.icon_sml_disclosure:before {
 	content:"\e024";
 }
 
 
-.icon_sml_reproducible:before {
+.icon_sml_methods:before {
 	content:"\e025";
 }
 
 
-.icon_twitter:before {
+.icon_sml_registration:before {
 	content:"\e026";
 }
 
 
-.icon_up_caret:before {
+.icon_sml_reproducible:before {
 	content:"\e027";
+}
+
+
+.icon_twitter:before {
+	content:"\e028";
+}
+
+
+.icon_up_caret:before {
+	content:"\e029";
 }
