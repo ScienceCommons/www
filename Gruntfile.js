@@ -197,11 +197,6 @@ module.exports = function (grunt) {
         url: "http://localhost:<%= connect.options.port %>"
       }
     },
-    karma: {
-      unit: {
-        configFile: "karma.conf.js"
-      }
-    },
     aws: grunt.file.readJSON('./aws.json'),
     s3: {
       options: {
@@ -251,8 +246,6 @@ module.exports = function (grunt) {
       "watch"
     ]);
   });
-
-  grunt.registerTask("test", ["karma"]);
 
   grunt.registerTask("build:development", ["clean:development", "env:development", "preprocess:development", "webfont", "webpack:development"]);
   grunt.registerTask("build:production", ["clean:production", "env:production", "preprocess:production", "webfont", "webpack:production"]);
