@@ -10,7 +10,29 @@ var defaults = {
   "doi": "",
   "publication_date": "",
   "authors_denormalized": [],
-  "journal": "Science"
+  "journal": "Science",
+  "comments": [
+    {
+      "name": "Anonymous",
+      "date": "4-1-2014",
+      "title": "Foo",
+      "body": "Blah",
+      "replies": [
+        {
+          "name": "Stephen Demjanenko",
+          "date": "4-1-2014",
+          "title": "This is not useful",
+          "body": "Try to leave useful comments.  Thanks!"
+        },
+      ]
+    },
+    {
+      "name": "Stephen Demjanenko",
+      "date": "4-1-2014",
+      "title": "This is really usefuly",
+      "body": "Im gonna see if I can replicate it"
+    }
+  ]
 };
 
 var ArticleModel = function(data, options) {
