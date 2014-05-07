@@ -55,17 +55,18 @@ var CommentForm = React.createClass({
       anonymous: false
     };
   },
-  getDefaultProps: function() {
-    return {
-      handleSubmit: function() {
-        console.log("submitted", this.state);
-      }
+  handleSubmit: function() {
+    var _this = this;
+
+    return function(e) {
+      e.preventDefault();
+      console.log("submitted", _this.state);
     };
   },
   /*jshint ignore:start */
   render: function() {
     return (
-      <form className="CommentForm" onSubmit={this.props.handleSubmit}>
+      <form className="CommentForm" onSubmit={this.handleSubmit()}>
         <input placeholder="title" type="text" valueLink={this.linkState("title")} />
         <textarea valueLink={this.linkState("body")} />
         <label><input type="checkbox" checkedLink={this.linkState("anonymous")} /> Make anonymous</label>
