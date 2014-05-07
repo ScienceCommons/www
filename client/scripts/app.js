@@ -12,8 +12,6 @@ var Location = Router.Location;
 var NotFound = Router.NotFound;
 var UserModel = require("./models/UserModel.js");
 
-require("./vendor/react.backbone.js");
-
 var Pages = require("./pages.js");
 var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
 

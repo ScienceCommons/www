@@ -14,6 +14,7 @@ var Spinner = require("../components/Spinner.js");
 var TagEditor = require("../components/TagEditor.js");
 var ContentEditable = require("../components/ContentEditable.js");
 var Badge = require("../components/Badge.js");
+var CommentBox = require("../components/CommentBox.js");
 
 require("../../styles/pages/ArticlePage.scss");
 
@@ -177,10 +178,7 @@ var ArticlePage = React.createClass({
                   </div>
                   <div>
                     <h3>Comments</h3>
-                    <form>
-                      <input type="text" placeholder="Add a comment" />
-                      <button type="submit" className="btn">Post</button>
-                    </form>
+                    <CommentBox comments={article.comments} />
                   </div>
                 </td>
                 <td>
