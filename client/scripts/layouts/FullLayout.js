@@ -6,7 +6,7 @@
 
 var React = require("react/addons");
 var Constants = require("../constants.js");
-var UserDropdown = require("../components/UserDropdown.js");
+var UserBar = require("../components/UserDropdown.js");
 var Logo = require("../components/Logo.js");
 
 require("../../styles/layouts/FullLayout.scss");
@@ -15,14 +15,14 @@ var FullPageLayout = React.createClass({
   /*jshint ignore:start */
   render: function () {
     if (this.props.user) {
-      var userDropdown = <UserDropdown user={this.props.user} />;
+      var userBar = <UserBar user={this.props.user} />;
     }
 
     return (
       <div id={this.props.id} className="page FullLayout">
         <header className="PageHeader">
           {this.props.header}
-          {userDropdown}
+          {userBar}
         </header>
 
         <div className="text_center">
