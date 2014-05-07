@@ -8,35 +8,29 @@ var _ = require("underscore");
 var React = require("react/addons");
 var Spinner = require("../components/Spinner.js");
 var DefaultLayout = require("../layouts/DefaultLayout.js");
-var AuthorModel = require("../models/Author.js");
+var UserModel = require("../models/UserModel.js");
 
 var AuthorPage = React.createClass({
   getInitialState: function () {
     return {
-      author: false,
-      loading: true
+      loading: true,
+      author: new UserModel({id: this.props.authorId}, {callback: this.handleAuthorUpdate, loading: true})
     };
   },
-  componentWillMount: function () {
-    var _this = this;
-
-    setTimeout(function() {
-      var author = new AuthorModel();
-      _this.setState({author: author, loading: false});
-    }, 500);
+  handleAuthorUpdate: function() {
+    this.setState({author: this.state.author});
   },
   /*jshint ignore:start */
   render: function () {
-    var state = this.state;
-    var author = state.author;
-    var content;
+    var loading = this.state.author.loading;
+    var author = this.state.author.cortex;
 
-    if (state.loading) {
+    if (loading) {
       content = <Spinner />
     } else if (author) {
       content = (
         <div>
-          <h1 className="h1">{author.get("name")}</h1>
+          <h1 className="h1">{author.name.val()}</h1>
         </div>
       );
     } else {
