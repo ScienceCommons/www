@@ -126,8 +126,8 @@ module.exports = function (grunt) {
       webpack: {
         files: [
           "./client/scripts/**/*.js",
+          "./client/scripts/**/*.scss",
           "./client/styles/**/*.css",
-          "./client/styles/**/*.sass",
           "./client/styles/**/*.scss"
         ],
         tasks: ["webpack:development"]

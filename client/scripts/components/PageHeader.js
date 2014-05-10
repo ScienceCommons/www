@@ -22,9 +22,9 @@ var PageHeader = React.createClass({
 
     return (
       <header className="PageHeader">
+        {userBar}
         <Link href="/" className="logoLink"><Logo /></Link>
         <Search query={this.props.query} className="inline_block header_search"/>
-        {userBar}
       </header>
     );
   }

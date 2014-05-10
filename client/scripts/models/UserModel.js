@@ -9,7 +9,8 @@ var defaults = {
   "middle_name": "",
   "last_name": "Demjanenko",
   "articles": [],
-  "comments": []
+  "comments": [],
+  "gravatarLink": "8c51e26145bc08bb6f43bead1b5ad07f.png"
 };
 
 var UserModel = function(data, options) {
@@ -27,6 +28,11 @@ UserModel.prototype.logout = function(callback) {
       callback();
     }
   }, 1000);
+};
+
+UserModel.prototype.imageUrl = function() {
+  var link = this.cortex.gravatarLink.val();
+  return "//www.gravatar.com/avatar/" + link;
 };
 
 module.exports = UserModel;
