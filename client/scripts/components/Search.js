@@ -1,42 +1,31 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./Search.scss");
 
-var React = require("react/addons");
-var NavigatableMixin = require("react-router-component").NavigatableMixin;
+var m = require("mithril");
 
-require("../../styles/components/Search.scss");
+var Search = {};
 
-var Search = React.createClass({
-  mixins: [React.addons.LinkedStateMixin, NavigatableMixin],
-  getInitialState: function() {
-    return {
-      query: this.props.query || ""
-    };
-  },
-  getDefaultProps: function() {
-    return {
-      size: 30
-    };
-  },
-  updateSearch: function() {
-    this.navigate("/query/"+this.state.query);
-    return false;
-  },
-  componentDidMount: function() {
-    this.refs.searchBox.getDOMNode().focus();
-  },
-  /*jshint ignore:start */
-  render: function() {
-    return (
-      <form onSubmit={this.updateSearch} className={"Search " + this.props.className}>
-        <input type="text" placeholder="Search papers" className="no_outline" size={this.props.size} valueLink={this.linkState('query')} ref="searchBox" />
-      </form>
-    );
-  }
-  /*jshint ignore:end */
-});
+Search.controller = function(options) {
+  options = options || {};
+
+  this.query = m.prop(options.query || "");
+  this.size = options.size || 30;
+
+  var _this = this;
+  this.updateSearch = function(e) {
+    e.preventDefault();
+    m.route("/query/"+_this.query());
+  };
+};
+
+Search.view = function(ctrl) {
+  return (
+    <form onSubmit={ctrl.updateSearch} className={"Search " + ctrl.className}>
+      <input type="text" placeholder="Search papers" size={ctrl.size} value={ctrl.query()} oninput={m.withAttr("value", ctrl.query)} />
+    </form>
+  );
+};
 
 module.exports = Search;

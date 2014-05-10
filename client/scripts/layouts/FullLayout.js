@@ -1,38 +1,37 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./FullLayout.scss");
 
-var React = require("react/addons");
-var Constants = require("../constants.js");
 var UserBar = require("../components/UserBar.js");
 var Logo = require("../components/Logo.js");
 
-require("../../styles/layouts/FullLayout.scss");
+var FullPageLayout = {};
 
-var FullPageLayout = React.createClass({
-  /*jshint ignore:start */
-  render: function () {
-    if (this.props.user) {
-      var userBar = <UserBar user={this.props.user} />;
-    }
+FullLayout.controller = function(options) {
+  options = options || {};
+  this.id = options.id;
+  this.userBarController = new UserBar.controller({user: options.user})
+};
 
-    return (
-      <div id={this.props.id} className="page FullLayout">
-        <header className="PageHeader">
-          {userBar}
-          {this.props.header}
-        </header>
-
-        <div className="text_center">
-          <Logo />
-          {this.props.children}
-        </div>
-      </div>
-    );
+FullLayout.view = function(ctrl, content) {
+  if (ctrl.user) {
+    var userBar = new UserBar.view(ctrl.userBarController);
   }
-  /*jshint ignore:end */
-});
+
+  return (
+    <div id={ctrl.id} className="page FullLayout">
+      <header className="PageHeader">
+        {userBar}
+        {ctrl.header}
+      </header>
+
+      <div className="text_center">
+        {new Logo.view()}
+        {content}
+      </div>
+    </div>
+  );
+};
 
 module.exports = FullPageLayout;

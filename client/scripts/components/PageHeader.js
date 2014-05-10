@@ -1,33 +1,34 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./PageHeader.scss");
 
-var React = require("react/addons");
-var Constants = require("../constants.js");
+var m = require("mithril");
+
 var Search = require("./Search.js");
 var UserBar = require("./UserBar.js");
-var Link = require("react-router-component").Link;
 var Logo = require("./Logo.js");
 
-require("../../styles/components/PageHeader.scss");
 
-var PageHeader = React.createClass({
-  /*jshint ignore:start */
-  render: function() {
-    if (this.props.user) {
-      var userBar = <UserBar user={this.props.user} />;
-    }
+var PageHeader = {};
 
-    return (
-      <header className="PageHeader">
-        {userBar}
-        <Link href="/" className="logoLink"><Logo /></Link>
-        <Search query={this.props.query} className="inline_block header_search"/>
-      </header>
-    );
+PageHeader.controller = function(options) {
+  options = options || {};
+  this.userBarController = new UserBar.controller({user: options.user})
+};
+
+PageHeader.view = function(ctrl) {
+  if (ctrl.user) {
+    var userBar = new UserBar.view(ctrl.userBarController);
   }
-  /*jshint ignore:end */
-});
+
+  return (
+    <header className="PageHeader">
+      {userBar}
+      <a href="/" config={m.route} className="logoLink">{new Logo.view()}</a>
+      {new Search.view({query: ctrl.query})}
+    </header>
+  );
+};
+
 module.exports = PageHeader;

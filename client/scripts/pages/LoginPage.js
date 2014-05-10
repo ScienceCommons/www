@@ -1,43 +1,38 @@
-
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./LoginPage.scss");
 
-var React = require("react/addons");
-var FullLayout = require("../layouts/FullLayout.js");
+var Layout = require("../layouts/FullLayout.js");
 
-require("../../styles/pages/LoginPage.scss");
+var LoginPage = {};
 
-var LoginPage = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
-  getInitialState: function() {
-    return {
-      email: "",
-      password: ""
-    };
-  },
-  componentDidMount: function() {
-    this.refs.email.getDOMNode().focus();
-  },
-  handleSubmit: function(e) {
+LoginPage.controller = function(options) {
+  options = _.extend({id: "LoginPage"}, options);
+  this.layoutController = new Layout.controller(options);
+
+  this.email = m.prop("");
+  this.password = m.prop("");
+
+  var _this = this;
+  this.login = function(e) {
     e.preventDefault();
-    console.log("login submit", this.state);
-  },
-  /*jshint ignore:start */
-  render: function () {
-    return (
-      <FullLayout id="LoginPage" user={this.props.user}>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" size="30" placeholder="Email" ref="email" valueLink={this.linkState("email")} />
-          <input type="password" size="30" placeholder="Password" valueLink={this.linkState("password")} />
-          <input className="btn" type="submit" value="Log in" />
-        </form>
-      </FullLayout>
-    );
-  }
-  /*jshint ignore:end */
-});
+    console.log("login submit", _this);
+  };
+};
+
+LoginPage.view = function(ctrl) {
+  var content = (
+    <div>
+      <form onSubmit={ctrl.login}>
+        <input type="text" size="30" placeholder="Email" value={ctrl.email()} oninput={m.withAttr("value", ctrl.email)} />
+        <input type="password" size="30" placeholder="Password" value={ctrl.password()} oninput={m.withAttr("value", ctrl.password)} />
+        <input className="btn" type="submit" value="Log in" />
+      </form>
+    </div>
+  );
+
+  return new Layout.view(ctrl.layoutController, content);
+};
 
 module.exports = LoginPage;

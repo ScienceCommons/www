@@ -1,27 +1,21 @@
-/**
- * @jsx React.DOM
- */
-
+/** @jsx m */
 // taken from: http://codepen.io/georgehastings/pen/skznp
 
 "use strict";
+require("./Spinner.scss");
 
 var React = require("react/addons");
 
-require("../../styles/components/Spinner.scss");
+var Spinner = {};
 
-var Spinner = React.createClass({
-  /*jshint ignore:start */
-  render: function() {
-    return (
-      <ul className="Spinner">
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-    );
-  }
-  /*jshint ignore:end */
-});
+Spinner.view = function() {
+  return (
+    <ul className="Spinner">
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  );
+};
 
 module.exports = Spinner;

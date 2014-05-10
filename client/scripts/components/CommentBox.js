@@ -1,98 +1,83 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./CommentBox.scss");
 
+var m = require("mithril");
 var _ = require("underscore");
-var React = require("react/addons");
 
-require("../../styles/components/CommentBox.scss");
+var Comment = {};
 
-var Comment = React.createClass({
-  /*jshint ignore:start */
-  render: function() {
-    var comment = this.props.comment;
-    if (comment.replies && !_.isEmpty(comment.replies.val())) {
-      var replies = <CommentList comments={comment.replies} />;
-    }
-
-    return (
-      <div className="Comment">
-        <h3 key="author">{comment.author.val()}</h3>
-        <h6 key="date">{comment.date.val()}</h6>
-        <h3 key="title">{comment.title.val()}</h3>
-        <p key="body">{comment.body.val()}</p>
-        {replies}
-      </div>
-    );
+Comment.view = function(ctrl) {
+  var comment = ctrl.comment;
+  if (comment.replies && !_.isEmpty(comment.replies.val())) {
+    var replies = new CommentList.view({comments: comment.replies});
   }
-  /*jshint ignore:end */
-});
 
-var CommentList = React.createClass({
-  /*jshint ignore:start */
-  render: function() {
-    var comments = this.props.comments.map(function(comment) {
-      return <Comment comment={comment} />
-    });
+  return (
+    <div className="Comment">
+      <h3 key="author">{comment.author.val()}</h3>
+      <h6 key="date">{comment.date.val()}</h6>
+      <h3 key="title">{comment.title.val()}</h3>
+      <p key="body">{comment.body.val()}</p>
+      {replies}
+    </div>
+  );
+};
 
-    return (
-      <div className="CommentList">
-        {comments}
-      </div>
-    );
-  }
-  /*jshint ignore:end */
-});
+var CommentList = {};
 
-var CommentForm = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
-  getInitialState: function() {
-    return {
-      body: "",
-      title: "",
-      anonymous: false
-    };
-  },
-  handleSubmit: function() {
-    var _this = this;
+CommentList.view = function(ctrl) {
+  var comments = ctrl.comments.map(function(comment) {
+    return new Comment.view({comment: comment});
+  });
 
-    return function(e) {
-      e.preventDefault();
-      console.log("submitted", _this.state);
-    };
-  },
-  /*jshint ignore:start */
-  render: function() {
-    return (
-      <form className="CommentForm" onSubmit={this.handleSubmit()}>
-        <input placeholder="title" type="text" valueLink={this.linkState("title")} />
-        <textarea valueLink={this.linkState("body")} />
-        <label><input type="checkbox" checkedLink={this.linkState("anonymous")} /> Make anonymous</label>
-        <input type="submit">Post</input>
-      </form>
-    );
-  }
-  /*jshint ignore:end */
-});
+  return (
+    <div className="CommentList">
+      {comments}
+    </div>
+  );
+};
 
-var CommentBox = React.createClass({
-  getDefaultProps: function() {
-    return {
-      comments: []
-    };
-  },
-  /*jshint ignore:start */
-  render: function() {
-    return (
-      <div className="CommentBox">
-        <CommentForm />
-        <CommentList comments={this.props.comments} />
-      </div>
-    );
-  }
-  /*jshint ignore:end */
-});
+var CommentForm = {};
+
+CommentForm.controller = function() {
+  this.title = m.prop("");
+  this.body = m.prop("");
+  this.anonymous = m.prop(false);
+
+  var _this = this;
+  this.handleSubmit = function(e) {
+    e.preventDefault();
+    console.log("submitted", _this);
+  };
+};
+
+CommentForm.view = function(ctrl) {
+  return (
+    <form className="CommentForm" onSubmit={ctrl.handleSubmit}>
+      <input placeholder="title" type="text" value={ctrl.title()} oninput={m.withAttr("value", ctrl.title)}/>
+      <textarea value={ctrl.body()} oninput={m.withAttr("value", ctrl.body)}/>
+      <label><input type="checkbox" checked={ctrl.anonymous()} onchange={m.withAttr("checked", ctrl.anonymous)} /> Make anonymous</label>
+      <input type="submit">Post</input>
+    </form>
+  );
+};
+
+var CommentBox = {};
+
+CommentBox.controller = function(options) {
+  this.comments = options.comments;
+  this.commentFormController = new CommentForm.controller();
+};
+
+CommentBox.view = function(ctrl) {
+  return (
+    <div className="CommentBox">
+      {new CommentForm.view(ctrl.commentFormController)}
+      {new CommentList.view({comments: ctrl.comments})}
+    </div>
+  );
+};
 
 module.exports = CommentBox;

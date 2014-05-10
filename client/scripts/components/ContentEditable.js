@@ -1,13 +1,10 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./ContentEditable.scss");
 
-var React = require("react/addons");
-var cx = React.addons.classSet;
+var cx = require("../utils/ClassSet.js");
 
-require("../../styles/components/ContentEditable.scss");
 
 var ContentEditable = React.createClass({
   getInitialState: function() {

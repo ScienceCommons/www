@@ -1,58 +1,51 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
-
 require("./Dropdown.scss");
 
-var React = require("react/addons");
-var cx = React.addons.classSet;
+var m = require("mithril");
+var cx = require("../utils/ClassSet.js");
 
-var Dropdown = React.createClass({
-  getInitialState: function() {
-    return {
-      open: false
-    };
-  },
-  getDefaultProps: function() {
-    return {
-      className: ""
-    };
-  },
-  toggle: function() {
-    this.setState({open: !this.state.open});
-  },
-  outsideClick: function(e) {
-    if (this.state.open) {
-      var button = this.refs.button.getDOMNode();
-      if (e.target != button && e.target.parentNode != button) {
-        this.setState({open: false});
-      }
-    }
-  },
-  componentDidMount: function() {
-    document.addEventListener("click", this.outsideClick);
-  },
-  componentWillUnmount: function() {
-    document.removeEventListener("click", this.outsideClick);
-  },
-  /*jshint ignore:start */
-  render: function() {
-    if (this.state.open) {
-      var content = <div className="content">{this.props.children}</div>;
-    }
+var Dropdown = {};
 
-    return (
-      <div className={"Dropdown " + this.props.className}>
-        <button type="button" className="btn btn_subtle no_outline" onClick={this.toggle} ref="button">
-          {this.props.label}
-        </button>
-        {content}
-      </div>
-    );
+Dropdown.controller = function(options) {
+  options = options || {};
+
+  this.open = m.prop(false);
+  this.className = options.className || "";
+  this.label = options.label;
+
+  var _this = this;
+  this.toggle = function() {
+    _this.open(!_this.open());
+  };
+
+  this.outsideClick = function(e) {
+    if (_this.open()) {
+      //var button = this.refs.button.getDOMNode();
+      //if (e.target != button && e.target.parentNode != button) {
+        _this.open(false);
+      //}
+    }
   }
-  /*jshint ignore:end */
-});
+
+  document.addEventListener("click", this.outsideClick);
+  //document.removeEventListener("click", this.outsideClick); on unload
+};
+
+Dropdown.view = function(ctrl, content) {
+  if (crl.open()) {
+    var dropdownContent = <div className="content">{content}</div>;
+  }
+
+  return (
+    <div className={"Dropdown " + ctrl.className}>
+      <button type="button" className="btn btn_subtle no_outline" onClick={ctrl.toggle}>
+        {ctrl.label}
+      </button>
+      {dropdownContent}
+    </div>
+  );
+};
 
 module.exports = Dropdown;

@@ -1,35 +1,30 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
 
-var React = require("react/addons");
-var Router = require("react-router-component");
-
-var FullLayout = require("../layouts/FullLayout.js");
+var Layout = require("../layouts/FullLayout.js");
 var Spinner = require("../components/Spinner.js");
 
-require("../../styles/pages/LogoutPage.scss");
+var LogoutPage = {};
 
-var LogoutPage = React.createClass({
-  mixins: [Router.NavigatableMixin],
-  componentDidMount: function() {
-    var _this = this;
-    this.props.user.logout(function() {
-      _this.navigate("/login");
-    });
-  },
-  /*jshint ignore:start */
-  render: function () {
-    return (
-      <FullLayout id="LogoutPage" user={this.props.user}>
-        <h3>Logging out</h3>
-        <Spinner />
-      </FullLayout>
-    );
-  }
-  /*jshint ignore:end */
-});
+LogoutPage.controller = function(options) {
+  options = _.extend({id: "LogoutPage"}, options);
+  this.layoutController = new Layout.controller(options);
+
+  setTimeout(function() {
+    m.route("/login")
+  }, 3000);
+};
+
+LogoutPage.view = function(ctrl) {
+  var content = (
+    <div>
+      <h3>Logging out</h3>
+      {new Spinner.view()}
+    </div>
+  );
+
+  return new Layout.view(ctrl.layoutController, content);
+};
 
 module.exports = LogoutPage;

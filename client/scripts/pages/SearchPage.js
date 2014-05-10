@@ -1,31 +1,28 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./SearchPage.scss");
 
-var React = require("react/addons");
+
 var SearchResults = require("../components/SearchResults.js");
-var DefaultLayout = require("../layouts/DefaultLayout.js");
+var Layout = require("../layouts/DefaultLayout.js");
 
-require("../../styles/pages/SearchPage.scss");
+var SearchPage = {};
 
-var SearchPage = React.createClass({
-  /*jshint ignore:start */
-  render: function () {
-    var content;
+SearchPage.controller = function(options) {
+  options = _.extend({id: "SearchPage"}, options);
+  this.layoutController = new Layout.controller(options);
+  this.searchResultsController = new SearchResults.controller();
+};
 
-    if (this.props.query) {
-      content = <SearchResults query={this.props.query}/>;
-    }
+SearchPage.view = function(ctrl) {
+  var content = (
+    <div>
+      {new SearchResults.view(ctrl.searchResultsController)}
+    </div>
+  );
 
-    return (
-      <DefaultLayout id="SearchPage" query={this.props.query} user={this.props.user}>
-        {content}
-      </DefaultLayout>
-    );
-  }
-  /*jshint ignore:end */
-});
+  return new Layout.view(ctrl.layoutController, content);
+};
 
 module.exports = SearchPage;

@@ -1,22 +1,24 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
 
-var React = require("react/addons");
-var FullLayout = require("../layouts/FullLayout.js")
+var Layout = require("../layouts/FullLayout.js")
 
-var AboutPage = React.createClass({
-  /*jshint ignore:start */
-  render: function () {
-    return (
-      <FullLayout id="AboutPage">
-        <h1>About</h1>
-      </FullLayout>
-    );
-  }
-  /*jshint ignore:end */
-});
+var AboutPage = {};
+
+AboutPage.controller = function(options) {
+  options = _.extend({id: "AboutPage"}, options);
+  this.layoutController = new Layout.controller(options);
+};
+
+AboutPage.view = function(ctrl) {
+  var content = (
+    <div>
+      <h1>About</h1>
+    </div>
+  );
+
+  return new Layout.view(ctrl.layoutController, content);
+};
 
 module.exports = AboutPage;

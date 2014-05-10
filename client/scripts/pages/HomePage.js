@@ -1,28 +1,32 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./HomePage.scss");
 
-var React = require("react/addons");
-var FullLayout = require("../layouts/FullLayout.js")
+var m = require("mithril");
+var Layout = require("../layouts/FullLayout.js")
 var Search = require("../components/Search.js");
-var Router = require("react-router-component");
-var Link = Router.Link;
 
-require("../../styles/pages/HomePage.scss");
+var HomePage = {};
 
-var HomePage = React.createClass({
-  /*jshint ignore:start */
-  render: function () {
-    var whatIsLink = <Link href="/about" className="aboutLink">What is Curate Science?</Link>;
-    return (
-      <FullLayout id="HomePage" user={this.props.user} header={whatIsLink}>
-        <Search query={this.props.query} className="inline_block header_search"/>
-      </FullLayout>
-    );
-  }
-  /*jshint ignore:end */
-});
+HomePage.controller = function(options) {
+  options = _.extend({
+    id: "HomePage",
+    header: <a href="/about" className="aboutLink" config={m.route}>What is Curate Science?<a/>
+  }, options);
+
+  this.layoutController = new Layout.controller(options);
+  this.searchController = new Search.controller({});
+};
+
+HomePage.view = function(ctrl) {
+  var content = (
+    <div>
+      {new Search.view(ctrl.searchController)}
+    </div>
+  );
+
+  return new Layout.view(ctrl.layoutController, content);
+};
 
 module.exports = HomePage;

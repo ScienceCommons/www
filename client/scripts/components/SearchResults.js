@@ -1,189 +1,132 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./SearchResults.scss");
 
-var React = require("react/addons");
 var _ = require("underscore");
+var m = require("mithril");
 
-var Link = require("react-router-component").Link;
 var Spinner = require("./Spinner.js");
 var SearchFilter = require("./SearchFilter.js");
 
-require("../../styles/components/SearchResults.scss");
+var SearchResult = {};
 
-var SearchResult = React.createClass({
-  /*jshint ignore:start */
-  render: function() {
-    var data = this.props.data;
+SearchResults.controller = function() {
+  this.results = m.prop([]);
+  this.total = m.prop(0);
+  this.from = m.prop(0);
+  this.resultsPerPage = m.prop(20);
+  this.loading = m.prop(true);
 
-    if (data) {
-      if (data.publication_date) {
-        var pub_date = <span>| {data.publication_date}</span>;
-      }
-      if (data.doi) {
-        var doi = (
-          <span>| doi: <a href={"http://www.plosone.org/article/info"+encodeURIComponent(":doi/"+data.doi)} target="_blank">{data.doi}</a>
-          </span>
-        );
-      }
+  var _this = this;
+  this.previousPage = function() {
+    _this.from(Math.max(_this.from()-_this.resultsPerPage(), 0));
+    _this.fetchResults();
+  };
 
-      return (
-        <li className="SearchResult" key={data.id}>
-          <div>
-            <Link className="h3 link" href={"/articles/"+data.id}>{data.title}</Link>
-            <div className="h5">{_.pluck(data.authors_denormalized, "last_name").join(", ")} {pub_date} {doi}</div>
-          </div>
-          <p>{data.abstract}</p>
-        </li>
-      );
-    } else {
-      return (<li />)
-    }
-  }
-  /*jshint ignore:end */
-});
+  this.nextPage = function() {
+    _this.from(_this.from() + _this.resultsPerPage());
+    _this.fetchResults();
+  };
 
-var SearchResults = React.createClass({
-  getInitialState: function() {
-    return {
-      results: [],
-      total: 0,
-      from: 0,
-      resultsPerPage: 20,
-      loading: true
-    };
-  },
-  componentWillMount: function() {
-    this.fetchResults(this.props.query);
-  },
-  componentWillUnmount: function() {
-    if (this.state.xhr) {
-      this.state.xhr.abort();
-    }
-  },
-  componentWillReceiveProps: function(newProps) {
-    if (newProps.query !== this.props.query) {
-      if (this.state.xhr) {
-        // abort
-        this.state.xhr = null;
-      }
-      var _this = this;
-      _this.replaceState(_this.getInitialState(), function() {
-        _this.fetchResults(newProps.query);
-      });
-    }
-  },
-  fetchResults: function(query) {
-    // this will be an xhr to our search server
+  this.fetchResults = function() {
+    _this.loading(true);
+
+    var query = m.route.param("query");
     var t0 = _.now();
-    var _this = this;
-    if (!query) {
-      return
-    } else {
-      if (this.state.xhr) {
-        this.state.xhr.abort();
-      }
+    m.request({method: "GET", url: "https://api.curatescience.org/articles?q="+query+"&from="+_this.from(), background: true}).then(function(res) {
+      var t1 = _.now();
 
-      var xhr = new XMLHttpRequest();
+      _this.results(res.documents);
+      _this.loading(false);
+      _this.total(res.total);
+      _this.from(res.from);
 
-      xhr.onload = function() {
-        var res;
-        try {
-          res = JSON.parse(xhr.responseText) || {};
-        } catch (e) {
-          res = {};
-        };
-        var t1 = _.now();
-
-        _this.setState({
-          loading: false,
-          results: res.documents,
-          total: res.total,
-          from: res.from,
-          xhr: null
-        });
-        ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, "/articles?q="+query+"&from="+res.from);
-      };
-
-      xhr.open("get", "https://api.curatescience.org/articles?q="+query+"&from="+this.state.from, true);
-      xhr.send();
-
-      _this.setState({ loading: true, xhr: xhr });
-    }
-  },
-  previousPage: function() {
-    var _this = this;
-    _this.setState({from: Math.max(this.state.from-this.state.resultsPerPage, 0) }, function() {
-      _this.fetchResults(_this.props.query);
+      // log timing
+      ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, "/articles?q="+query+"&from="+res.from);
     });
-  },
-  nextPage: function() {
-    var _this = this;
-    _this.setState({from: this.state.from + this.state.resultsPerPage }, function() {
-      _this.fetchResults(_this.props.query);
-    });
-  },
-  renderNav: function() {
-    var nav;
-    var next;
-    var previous;
+  };
 
-    if (this.state.total > 0) {
-      if (this.state.from > 0) {
-        previous = <button className="btn btn_subtle" onClick={this.previousPage}><span className="icon icon_left_arrow" /></button>;
-      }
-      if (this.state.from + this.state.resultsPerPage < this.state.total) {
-        next = <button className="btn btn_subtle" onClick={this.nextPage}><span className="icon icon_right_arrow" /></button>;
-      }
+  this.fetchResults();
+};
 
-      nav = (<li className="search_nav">
-        Showing {this.state.from+1} to {Math.min(this.state.total, this.state.from+this.state.resultsPerPage)} of {this.state.total} results
-        <span>{previous}{next}</span>
-      </li>);
+SearchResults.itemView = function(data) {
+  if (data) {
+    if (data.publication_date) {
+      var pub_date = <span>| {data.publication_date}</span>;
     }
-
-    return nav;
-  },
-  /*jshint ignore:start */
-  render: function() {
-    var content;
-    var nav;
-
-    if (this.state.loading) {
-      content = <li><Spinner /></li>;
-    } else if (this.state.total > 0) {
-      content = this.state.results.map(function(result) {
-        return <SearchResult data={result} />;
-      });
-    } else {
-      content = (
-        <li>
-          <h3>Sorry, no results were found</h3>
-        </li>
+    if (data.doi) {
+      var doi = (
+        <span>| doi: <a href={"http://www.plosone.org/article/info"+encodeURIComponent(":doi/"+data.doi)} target="_blank">{data.doi}</a>
+        </span>
       );
-    }
-
-    if (this.state.total > 0) {
-      nav = this.renderNav();
     }
 
     return (
-      <ul className="SearchResults">
-        {nav}
-        <table>
-          <tbody>
-            <tr>
-              <td><SearchFilter /></td>
-              <td>{content}</td>
-            </tr>
-          </tbody>
-        </table>
-      </ul>
+      <li>
+        <div>
+          <a href={"/articles/"+data.id} config={m.route}>{data.title}</a>
+          <div className="h5">{_.pluck(data.authors_denormalized, "last_name").join(", ")} {pub_date} {doi}</div>
+        </div>
+        <p>{data.abstract}</p>
+      </li>
+    );
+  } else {
+    return <li />;
+  }
+};
+
+SearchResults.navView = function(ctrl) {
+  if (ctrl.total() > 0) {
+    if (ctrl.from() > 0) {
+      var previous = <button className="btn btn_subtle" onClick={ctrl.previousPage}><span className="icon icon_left_arrow" /></button>;
+    }
+    if (ctrl.from() + ctrl.resultsPerPage() < ctrl.total()) {
+      var next = <button className="btn btn_subtle" onClick={ctrl.nextPage}><span className="icon icon_right_arrow" /></button>;
+    }
+
+    var nav = (
+      <div className="search_nav">
+        Showing {ctrl.from()+1} to {Math.min(ctrl.total(), ctrl.from()+ctrl.resultsPerPage())} of {ctrl.total()} results
+        <span>{previous}{next}</span>
+      </div>
     );
   }
-  /*jshint ignore:end */
-});
+
+  return nav;
+};
+
+SearchResults.view = function(ctrl) {
+  var content;
+
+  if (this.state.loading) {
+    content = <li>{new Spinner.view()}</li>;
+  } else if (ctrl.total() > 0) {
+    content = _.map(ctrl.results(), function(result) {
+      return new SearchResults.itemView(result);
+    });
+  } else {
+    content = (
+      <li>
+        <h3>Sorry, no results were found</h3>
+      </li>
+    );
+  }
+
+  return (
+    <div className="SearchResults">
+      {new SearchResults.navView(ctrl)}
+
+      <table>
+        <tbody>
+          <tr>
+            <td><SearchFilter /></td>
+            <td>{content}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 module.exports = SearchResults;

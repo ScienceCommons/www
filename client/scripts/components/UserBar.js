@@ -1,49 +1,52 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
 require("./UserBar.scss");
 
-var React = require("react/addons");
-var Router = require("react-router-component");
-var Link = Router.Link;
 var Notifications = require("./Notifications.js");
 var Dropdown = require("./Dropdown.js");
 
-var UserBar = React.createClass({
-  handleBookmarkClick: function() {
-    console.log("bookmarking");
-  },
-  /*jshint ignore:start */
-  render: function() {
-    var user = this.props.user.cortex;
-    var dropdown;
-    if (user.loading.val()) {
-      dropdown = <Dropdown />;
-    } else {
-      var image = <img src={this.props.user.imageUrl()} />;
-      dropdown = (
-        <Dropdown label={image} className="user">
-          <ul>
-            <li><Link href="/profile">Profile</Link></li>
-            <li><Link href="/saved">Saved searches</Link></li>
-            <li><Link href="/logout">Log out</Link></li>
-          </ul>
-        </Dropdown>
-      );
-    }
+var UserBar = {};
 
-    return (
-      <div className="UserBar">
-        <Notifications notifications={user.notifications.val()} />
-        <span className="icon icon_bookmark" onClick={this.handleBookmarkClick}></span>
-        <Link href="/history" className="history"><span className="icon icon_history"></span></Link>
-        {dropdown}
-      </div>
+UserBar.controller = function(options) {
+  this.user = options.user;
+
+  this.dropdownController = new Dropdown.controller({
+    className: "user",
+    label: "User"
+  });
+
+  this.notificationsController = new Notifications.controller({
+    notifications: this.user.cortex.notifications.val()
+  });
+
+  var _this = this;
+  this.handleBookmarkClick = function() {
+    console.log("bookmarking");
+  };
+};
+
+UserBar.view = function(ctrl) {
+  var user = ctrl.user.cortex;
+  if (!user.loading.val()) {
+    //var image = <img src={ctrl.user.imageUrl()} />;
+    var dropdownContent = (
+      <ul>
+        <li><a href="/profile" config={m.route}>Profile</a></li>
+        <li><a href="/saved" config={m.route}>Saved searches</a></li>
+        <li><a href="/logout" config={m.route}>Log out</a></li>
+      </ul>
     );
   }
-  /*jshint ignore:end */
-});
+
+  return (
+    <div className="UserBar">
+      {new Notifications.view(ctrl.notificationsController)}
+      <span className="icon icon_bookmark" onClick={ctrl.handleBookmarkClick}></span>
+      <a href="/history" className="history" config={m.route}><span className="icon icon_history"></span></a>
+      {new Dropdown.view(ctrl.dropdownController, dropdownContent)}
+    </div>
+  );
+};
 
 module.exports = UserBar;

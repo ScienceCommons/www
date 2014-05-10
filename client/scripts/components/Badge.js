@@ -1,38 +1,32 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./Badge.scss");
 
-var React = require("react/addons");
-var cx = React.addons.classSet;
-var Icons = require("../icons.js");
+var cx = require("../utils/ClassSet.js");
 
-require("../../styles/components/Badge.scss");
+var Badge = {};
 
-var Badge = React.createClass({
-  getDefaultProps: function() {
-    return {
-      active: false
-    };
-  },
-  /*jshint ignore:start */
-  render: function() {
-    var classes = cx({
-      Badge: true,
-      active: this.props.active
-    });
+Badge.icons = {
+  data: require("../icons/DataIcon.js"),
+  disclosure: require("../icons/DisclosureIcon.js"),
+  methods: require("../icons/MethodsIcon.js"),
+  registration: require("../icons/RegistrationIcon.js"),
+  reproducible: require("../icons/ReproducibleIcon.js")
+};
 
-    return (
-      <svg x="0px" y="0px" viewBox="0 0 32 32" className={classes}>
-        <g>
-          <path d="M16,32C5.532813,32,0,26.467188,0,16S5.532813,0,16,0s16,5.532813,16,16S26.467188,32,16,32z"/>
-        </g>
-        {Icons[this.props.badge]()}
-      </svg>
-    );
-  }
-  /*jshint ignore:end */
-});
+Badge.view = function(ctrl) {
+  var classes = cx({
+    Badge: true,
+    active: ctrl.active
+  });
+
+  return (
+    <svg x="0px" y="0px" viewBox="0 0 32 32" className={classes}>
+      <path d="M16,32C5.532813,32,0,26.467188,0,16S5.532813,0,16,0s16,5.532813,16,16S26.467188,32,16,32z"/>
+      {new Badge.icons[ctrl.badge].view(ctrl)}
+    </svg>
+  );
+};
 
 module.exports = Badge;

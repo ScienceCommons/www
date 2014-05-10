@@ -1,28 +1,25 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
+require("./DefaultLayout.scss");
 
-var React = require("react/addons");
 var PageHeader = require("../components/PageHeader.js");
 
-require("../../styles/layouts/DefaultLayout.scss");
+var DefaultLayout = {};
 
-var DefaultLayout = React.createClass({
-  /*jshint ignore:start */
-  render: function () {
-    return (
-      <div id={this.props.id} className="page DefaultLayout">
-        <PageHeader user={this.props.user} query={this.props.query} />
+DefaultLayout.controller = function(options) {
+  options = options || {};
+  this.id = options.id
+  this.pageHeaderController = new PageHeader.controller({user: options.user, query: options.query})
+};
 
-        <div className="content">
-          {this.props.children}
-        </div>
-      </div>
-    );
-  }
-  /*jshint ignore:end */
-});
+DefaultLayout.view = function(ctrl, content) {
+  return (
+    <div id={ctrl.id} className="page DefaultLayout">
+      {new PageHeader.view(ctrl.pageHeaderController)}
+      <div className="content">{content}</div>
+    </div>
+  );
+};
 
 module.exports = DefaultLayout;

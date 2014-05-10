@@ -1,25 +1,39 @@
-/**
- * @jsx React.DOM
- */
+/** @jsx m */
 
 "use strict";
-
-var React = require("react/addons");
-var _ = require("underscore");
-var Router = require("react-router-component");
-var Locations = Router.Locations;
-var Location = Router.Location;
-var NotFound = Router.NotFound;
-var UserModel = require("./models/UserModel.js");
-
-var Pages = require("./pages.js");
-var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
-
-// CSS
 require("../styles/normalize.scss");
 require("../styles/icons.css");
 require("../styles/app.scss");
 
+var _ = require("underscore");
+
+var UserModel = require("./models/UserModel.js");
+var Pages = require("./pages.js");
+var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
+
+
+var App = {};
+
+App.pages = {
+  NotFound: require("./pages/NotFoundPage.js"),
+  About: require("./pages/AboutPage.js"),  
+  Article: require("./pages/ArticlePage.js"),
+  Author: require("./pages/AuthorPage.js"),
+  Home: require("./pages/HomePage.js"),
+  Login: require("./pages/LoginPage.js"),
+  Logout: require("./pages/LogoutPage.js"),
+  Profile: require("./pages/ProfilePage.js"),
+  Search: require("./pages/SearchPage.js"),
+  Signup: require("./pages/SignupPage.js")
+};
+
+App.controller = function() {
+  this.page = m.props("Home");
+};
+
+App.view = function(ctrl) {
+
+};
 
 var App = React.createClass({
   mixins: [Router.NavigatableMixin],
@@ -59,6 +73,19 @@ var App = React.createClass({
   /*jshint ignore:end */
 });
 
-React.renderComponent(<App />, document.getElementById("page")); // jshint ignore:line
+var appController = new App.controller();
+
+m.route(document.getElementById("page"), "/", {
+  "/": appController.page("Home"),
+  "/query/": appController.page("Search"),
+  "/query/:query": appController.page("Search"),
+  "/profile": appController.page("Profile"),
+  "/articles/:articleId": appController.page("Article"),
+  "/authors/:authorId": appController.page("AuthorPage"),
+  "/login": appController.page("Login"),
+  "/about": appController.page("About"),
+  "/logout": appController.page("Logout"),
+  "/signup": appController.page("Signup")
+});
 
 module.exports = App;
