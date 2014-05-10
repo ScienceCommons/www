@@ -36,7 +36,7 @@ var UserBar = React.createClass({
 
     return (
       <div className="UserBar">
-        <Notifications />
+        <Notifications notifications={user.notifications.val()} />
         <span className="icon icon_bookmark" onClick={this.handleBookmarkClick}></span>
         <Link href="/history" className="history"><span className="icon icon_history"></span></Link>
         {dropdown}

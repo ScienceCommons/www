@@ -3,9 +3,13 @@
  */
 
 "use strict";
-var React = require("react/addons");
 
-require("../../styles/components/Notifications.scss");
+require("./Notifications.scss");
+
+var _ = require("underscore");
+var React = require("react/addons");
+var cx = React.addons.classSet;
+var Dropdown = require("./Dropdown.js");
 
 // number of digits
 var Paths = {
@@ -16,24 +20,39 @@ var Paths = {
 var Notifications = React.createClass({
   getDefaultProps: function() {
     return {
-      unreadCount: 1,
+      unreadCount: 2,
       notifications: []
     };
   },
   /*jshint ignore:start */
   render: function() {
     var path = this.props.unreadCount >= 10 ? Paths[2] : Paths[1];
+    var label = (
+      <svg viewBox="0 0 40 32" className="notifications_icon">
+        <path className="background" d={path} />
+        <g transform="scale(0.65 0.65) translate(4,12)">
+          <path className="icon" d="M30,22.666565l-3.818237-2.222168l-1.272705-10c0-2.454712-2.521606-4.444458-4.363647-4.444458H19v-4h-6v4h-1.54541c-1.842041,0-4.363647,1.989746-4.363647,4.444458l-1.272705,10L2,22.666565v3.333374h10v1c0,2.209106,1.790894,4,4,4s4-1.790894,4-4v-1h10V22.666565z"/>
+        </g>
+        <text x="20" y="13">{this.props.unreadCount}</text>
+      </svg>
+    );
 
+    var notifications = _.map(this.props.notifications, function(notification) {
+      var classes = cx({unread: !notification.read});
+
+      return (
+        <li className={classes}>
+          <h2>{notification.title}</h2>
+          <p>{notification.body}</p>
+        </li>
+      );
+    });
+
+    // Don't render the path right now because React sucks and can't bubble a click event outside an svg
     return (
-      <div className="Notifications">
-        <svg viewBox="0 0 40 32">
-          <path className="background" d={path} />
-          <g transform="scale(0.65 0.65) translate(4,12)">
-            <path className="icon" d="M30,22.666565l-3.818237-2.222168l-1.272705-10c0-2.454712-2.521606-4.444458-4.363647-4.444458H19v-4h-6v4h-1.54541c-1.842041,0-4.363647,1.989746-4.363647,4.444458l-1.272705,10L2,22.666565v3.333374h10v1c0,2.209106,1.790894,4,4,4s4-1.790894,4-4v-1h10V22.666565z"/>
-          </g>
-          <text x="20" y="13">{this.props.unreadCount}</text>
-        </svg>
-      </div>
+      <Dropdown label="Notifications" className="Notifications">
+        <ul className="notifications">{notifications}</ul>
+      </Dropdown>
     );
   }
   /*jshint ignore:end */

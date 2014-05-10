@@ -10,7 +10,11 @@ var defaults = {
   "last_name": "Demjanenko",
   "articles": [],
   "comments": [],
-  "gravatarLink": "8c51e26145bc08bb6f43bead1b5ad07f.png"
+  "gravatarLink": "8c51e26145bc08bb6f43bead1b5ad07f.png",
+  "notifications": [
+    {title: "foo", body: "foo body", read: false},
+    {title: "bar", body: "bar body", read: true}
+  ]
 };
 
 var UserModel = function(data, options) {
