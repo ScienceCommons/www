@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import "../variables.scss";
 
 $replicationWidth: 256px;
 
@@ -72,7 +72,7 @@ $replicationWidth: 256px;
     position: relative;
     width: $replicationWidth;
     z-index: 0;
-    background-image: url("../../images/subway_study.png"), url("../../images/subway_path.png");
+    background-image: url("../images/subway_study.png"), url("../images/subway_path.png");
     background-repeat: no-repeat;
     background-position: 50% 20px, right 0 top 20px;
     background-size: auto auto, 100% 7px;
@@ -104,13 +104,13 @@ $replicationWidth: 256px;
     }
 
     &.closed {
-      background-image: url("../../images/subway_replication_closed.png"), url("../../images/subway_path.png");
+      background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");
       background-position: -2px 20px;
       width: 30px;
     }
 
     &.open {
-      background-image: url("../../images/subway_replication_open.png"), url("../../images/subway_path.png");
+      background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
       width: $replicationWidth;
 
       .count {

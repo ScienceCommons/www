@@ -1,9 +1,7 @@
 /** @jsx m */
 
 "use strict";
-require("../styles/normalize.scss");
-require("../styles/icons.css");
-require("../styles/app.scss");
+require("./app.scss");
 
 var _ = require("underscore");
 

@@ -8,11 +8,11 @@ var cx = require("../utils/ClassSet.js");
 var Badge = {};
 
 Badge.icons = {
-  data: require("../icons/DataIcon.js"),
-  disclosure: require("../icons/DisclosureIcon.js"),
-  methods: require("../icons/MethodsIcon.js"),
-  registration: require("../icons/RegistrationIcon.js"),
-  reproducible: require("../icons/ReproducibleIcon.js")
+  data: require("./icons/DataIcon.js"),
+  disclosure: require("./icons/DisclosureIcon.js"),
+  methods: require("./icons/MethodsIcon.js"),
+  registration: require("./icons/RegistrationIcon.js"),
+  reproducible: require("./icons/ReproducibleIcon.js")
 };
 
 Badge.view = function(ctrl) {

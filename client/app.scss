@@ -1,5 +1,7 @@
+@import "./normalize.scss";
+@import "./icons.css";
 @import "./variables.scss";
-@import "./fonts.scss";
+@import "./fonts/gibson.scss";
 
 body {
   font-family:"Gibson", Times, serif;
