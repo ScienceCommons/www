@@ -4,8 +4,6 @@
 "use strict";
 require("./Spinner.scss");
 
-var React = require("react/addons");
-
 var Spinner = {};
 
 Spinner.view = function() {

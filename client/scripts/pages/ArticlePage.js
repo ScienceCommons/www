@@ -16,7 +16,6 @@ var ArticleModel = require("../models/ArticleModel.js");
 
 var ArticlePage = {};
 
-
 ArticlePage.controller = function(options) {
   options = _.extend({id: "ArticlePage"}, options);
   this.layoutController = new Layout.controller(options);
@@ -43,7 +42,7 @@ ArticlePage.view = function(ctrl) {
                 <h3>{article.title.val()}</h3>
                 <h5>{_.pluck(article.authors_denormalized.val(), "last_name").join(", ")} {article.publication_date.val()}</h5>
                 <h3>Research Abstract</h3>
-                <p><{article.abstract.val()}</p>
+                <p>{article.abstract.val()}</p>
               </td>
               <td className="text_right">
                 <div className="btn_group">

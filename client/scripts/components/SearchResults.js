@@ -9,7 +9,7 @@ var m = require("mithril");
 var Spinner = require("./Spinner.js");
 var SearchFilter = require("./SearchFilter.js");
 
-var SearchResult = {};
+var SearchResults = {};
 
 SearchResults.controller = function() {
   this.results = m.prop([]);
@@ -120,7 +120,7 @@ SearchResults.view = function(ctrl) {
       <table>
         <tbody>
           <tr>
-            <td><SearchFilter /></td>
+            <td>{new SearchFilter.view()}</td>
             <td>{content}</td>
           </tr>
         </tbody>

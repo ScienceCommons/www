@@ -3,7 +3,7 @@
 var GoogleAnalytics = {};
 
 GoogleAnalytics.TrackNavigation = function() {
-  ga('send', 'pageview', window.location.hash.slice(1));
+  //ga('send', 'pageview', window.location.pathname);
 };
 
 module.exports = GoogleAnalytics;

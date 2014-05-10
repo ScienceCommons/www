@@ -6,7 +6,7 @@ require("./FullLayout.scss");
 var UserBar = require("../components/UserBar.js");
 var Logo = require("../components/Logo.js");
 
-var FullPageLayout = {};
+var FullLayout = {};
 
 FullLayout.controller = function(options) {
   options = options || {};
@@ -34,4 +34,4 @@ FullLayout.view = function(ctrl, content) {
   );
 };
 
-module.exports = FullPageLayout;
+module.exports = FullLayout;

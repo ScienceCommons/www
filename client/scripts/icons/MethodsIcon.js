@@ -2,8 +2,6 @@
 
 "use strict";
 
-var React = require("react/addons");
-
 var MethodsIcon = {};
 
 MethodsIcon.view = function(ctrl) {

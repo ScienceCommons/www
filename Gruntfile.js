@@ -36,7 +36,7 @@ module.exports = function (grunt) {
     loader: "url-loader?limit=10000&minetype=image/png"
   }, {
     test: /\.js$/,
-    loader: "jsx-loader"
+    loader: "msx-loader"
   }, {
     test: /\.woff$/,
     loader: "url-loader?limit=10000&minetype=application/font-woff"
@@ -103,6 +103,10 @@ module.exports = function (grunt) {
         output: {
           path: DEVELOPMENT_PATH+"/assets",
           filename: "[name].js"
+        },
+        externals: {
+          "mithril": "m",
+          "underscore": "_"
         }
       },
       production: {
