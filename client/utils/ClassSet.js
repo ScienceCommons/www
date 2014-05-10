@@ -7,6 +7,7 @@ var ClassSet = function(classes) {
     if (val) {
       str = str + " " + key;
     }
+    return str;
   }, "");
 };
 

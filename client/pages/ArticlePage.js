@@ -9,6 +9,7 @@ var Layout = require("../layouts/DefaultLayout.js");
 var Spinner = require("../components/Spinner.js");
 var TagEditor = require("../components/TagEditor.js");
 //var ContentEditable = require("../components/ContentEditable.js");
+//new TagEditor.view(ctrl.tagEditorController)
 var Badge = require("../components/Badge.js");
 var CommentBox = require("../components/CommentBox.js");
 
@@ -55,7 +56,7 @@ ArticlePage.view = function(ctrl) {
                 <div>{article.doi.val()}</div>
                 <div className="dim">Keywords</div>
                 <div>
-                  {new TagEditor.view(ctrl.tagEditorController)}
+                  TagEditor here
                 </div>
               </td>
             </tr>

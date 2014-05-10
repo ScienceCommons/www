@@ -77,49 +77,23 @@ SearchResults.itemView = function(data) {
   }
 };
 
-SearchResults.navView = function(ctrl) {
-  if (ctrl.total() > 0) {
-    if (ctrl.from() > 0) {
-      var previous = <button className="btn btn_subtle" onClick={ctrl.previousPage}><span className="icon icon_left_arrow" /></button>;
-    }
-    if (ctrl.from() + ctrl.resultsPerPage() < ctrl.total()) {
-      var next = <button className="btn btn_subtle" onClick={ctrl.nextPage}><span className="icon icon_right_arrow" /></button>;
-    }
-
-    var nav = (
-      <div className="search_nav">
-        Showing {ctrl.from()+1} to {Math.min(ctrl.total(), ctrl.from()+ctrl.resultsPerPage())} of {ctrl.total()} results
-        <span>{previous}{next}</span>
-      </div>
-    );
-  }
-
-  return nav;
-};
-
 SearchResults.view = function(ctrl) {
   var content;
 
   if (ctrl.loading()) {
-    content = <li>{new Spinner.view()}</li>;
+    content = new Spinner.view();
   } else if (ctrl.total() > 0) {
-    content = _.map(ctrl.results(), function(result) {
-      return new SearchResults.itemView(result);
-    });
+    content = <ul>{_.map(ctrl.results(), function(result) { return new SearchResults.itemView(result); })}</ul>;
   } else {
-    content = (
-      <li>
-        <h3>Sorry, no results were found</h3>
-      </li>
-    );
+    content = <h3>Sorry, no results were found</h3>;
   }
 
   if (ctrl.total() > 0) {
     if (ctrl.from() > 0) {
-      var previous = <button className="btn btn_subtle" onClick={ctrl.previousPage}><span className="icon icon_left_arrow" /></button>;
+      var previous = <button className="btn btn_subtle" onclick={ctrl.previousPage}><span className="icon icon_left_arrow" /></button>;
     }
     if (ctrl.from() + ctrl.resultsPerPage() < ctrl.total()) {
-      var next = <button className="btn btn_subtle" onClick={ctrl.nextPage}><span className="icon icon_right_arrow" /></button>;
+      var next = <button className="btn btn_subtle" onclick={ctrl.nextPage}><span className="icon icon_right_arrow" /></button>;
     }
 
     var nav = (
