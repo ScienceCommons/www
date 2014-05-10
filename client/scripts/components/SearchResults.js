@@ -41,6 +41,7 @@ SearchResults.controller = function() {
       _this.loading(false);
       _this.total(res.total);
       _this.from(res.from);
+      m.redraw();
 
       // log timing
       ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, "/articles?q="+query+"&from="+res.from);
@@ -99,7 +100,7 @@ SearchResults.navView = function(ctrl) {
 SearchResults.view = function(ctrl) {
   var content;
 
-  if (this.state.loading) {
+  if (ctrl.loading()) {
     content = <li>{new Spinner.view()}</li>;
   } else if (ctrl.total() > 0) {
     content = _.map(ctrl.results(), function(result) {
@@ -113,9 +114,25 @@ SearchResults.view = function(ctrl) {
     );
   }
 
+  if (ctrl.total() > 0) {
+    if (ctrl.from() > 0) {
+      var previous = <button className="btn btn_subtle" onClick={ctrl.previousPage}><span className="icon icon_left_arrow" /></button>;
+    }
+    if (ctrl.from() + ctrl.resultsPerPage() < ctrl.total()) {
+      var next = <button className="btn btn_subtle" onClick={ctrl.nextPage}><span className="icon icon_right_arrow" /></button>;
+    }
+
+    var nav = (
+      <div className="search_nav">
+        Showing {ctrl.from()+1} to {Math.min(ctrl.total(), ctrl.from()+ctrl.resultsPerPage())} of {ctrl.total()} results
+        <span>{previous}{next}</span>
+      </div>
+    );
+  }
+
   return (
     <div className="SearchResults">
-      {new SearchResults.navView(ctrl)}
+      {nav}
 
       <table>
         <tbody>

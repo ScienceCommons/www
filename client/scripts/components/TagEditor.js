@@ -16,7 +16,7 @@ TagEditor.controller = function(options) {
   this.addPill = function() {
     var pills = _this.pills();
     var newPill = {
-      value: "",
+      text: "",
       controller: new TagEditor.pillController()
     };
     pills.push(newPill);
@@ -67,7 +67,7 @@ TagEditor.pillView = function(pillCtrl) {
 };
 
 TagEditor.view = function(ctrl) {
-  var pills = _.map(ctrl.tags(), function(tag) {
+  var pills = ctrl.tags.map(function(tag) {
     return new TagEditor.pillView(tag, ctrl.editable);
   });
 

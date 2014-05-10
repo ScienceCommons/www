@@ -15,6 +15,7 @@ var PageHeader = {};
 PageHeader.controller = function(options) {
   options = options || {};
   this.userBarController = new UserBar.controller({user: options.user})
+  this.searchController = new Search.controller();
 };
 
 PageHeader.view = function(ctrl) {
@@ -26,7 +27,7 @@ PageHeader.view = function(ctrl) {
     <header className="PageHeader">
       {userBar}
       <a href="/" config={m.route} className="logoLink">{new Logo.view()}</a>
-      {new Search.view({query: ctrl.query})}
+      {new Search.view(ctrl.searchController)}
     </header>
   );
 };

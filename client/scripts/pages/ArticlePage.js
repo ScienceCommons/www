@@ -19,9 +19,9 @@ var ArticlePage = {};
 ArticlePage.controller = function(options) {
   options = _.extend({id: "ArticlePage"}, options);
   this.layoutController = new Layout.controller(options);
-  this.article = new ArticleModel({id: m.route.params("articleId")}, {callback: m.redraw, loading: true})
-  this.tagEditorController = new TagEditor.controller({tags: article.tags});
-  this.commentBoxController = new CommentBox.controller({comments: article.comments});
+  this.article = new ArticleModel({id: m.route.param("articleId")}, {callback: m.redraw, loading: true})
+  this.tagEditorController = new TagEditor.controller({tags: this.article.cortex.tags});
+  this.commentBoxController = new CommentBox.controller({comments: this.article.cortex.comments});
   this.article.fetch();
 };
 
