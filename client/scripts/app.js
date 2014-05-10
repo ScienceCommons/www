@@ -16,7 +16,7 @@ var Pages = require("./pages.js");
 var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
 
 // CSS
-require("../styles/reset.scss");
+require("../styles/normalize.scss");
 require("../styles/icons.css");
 require("../styles/app.scss");
 
