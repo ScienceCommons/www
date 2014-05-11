@@ -49,6 +49,7 @@ m.route.mode = "pathname";
 m.route(document.getElementById("page"), "/", {
   "/": App.showPage("Home"),
   "/query": App.showPage("Search"),
+  "/query/": App.showPage("Search"),
   "/query/:query": App.showPage("Search"),
   "/profile": App.showPage("Profile"),
   "/articles/:articleId": App.showPage("Article"),
