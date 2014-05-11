@@ -34,34 +34,30 @@ ArticlePage.view = function(ctrl) {
   if (article) {
     content = (
       <div>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <h3>{article.get("title")}</h3>
-                <h5>{_.pluck(article.get("authors_denormalized"), "last_name").join(", ")} {article.get("publication_date")}</h5>
-                <h3>Research Abstract</h3>
-                <p>{article.get("abstract")}</p>
-              </td>
-              <td className="text_right">
-                <div className="btn_group">
-                  <button className="btn bookmark_article"><span className="icon icon_bookmark"></span></button>
-                  <button className="btn"><span className="icon icon_share"></span></button>
-                </div>
-                <div className="dim">Journal</div>
-                <div>Science</div>
-                <div className="dim">DOI</div>
-                <div>{article.get("doi")}</div>
-                <div className="dim">Keywords</div>
-                <div>
-                  TagEditor here
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="section">
+          <div className="col span_3_of_4">
+            <h3>{article.get("title")}</h3>
+            <h5>{_.pluck(article.get("authors_denormalized"), "last_name").join(", ")} {article.get("publication_date")}</h5>
+            <h3>Research Abstract</h3>
+            <p>{article.get("abstract")}</p>
+          </div>
+          <div className="col span_1_of_4">
+            <div className="btn_group">
+              <button className="btn bookmark_article"><span className="icon icon_bookmark"></span></button>
+              <button className="btn"><span className="icon icon_share"></span></button>
+            </div>
+            <div className="dim">Journal</div>
+            <div>Science</div>
+            <div className="dim">DOI</div>
+            <div>{article.get("doi")}</div>
+            <div className="dim">Keywords</div>
+            <div>
+              TagEditor here
+            </div>
+          </div>
+        </div>
 
-        <div>
+        <div className="section">
           <h1>Replications</h1>
           <table className="Replications">
             <thead>
@@ -155,39 +151,35 @@ ArticlePage.view = function(ctrl) {
           </table>
         </div>
 
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <div>
-                  <h3>Community Summary</h3>
-                  <div className="dim">June 21, 2014</div>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros tellus, venenatis molestie ligula in, lobortis lobortis est. Nunc adipiscing erat sed libero volutpat dapibus ultrices feugiat elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent ac nisi luctus arcu tempus malesuada. Fusce lectus augue, ultrices id purus ac, viverra convallis ipsum. Mauris convallis urna ut magna laoreet, quis dapibus dolor aliquet. Nunc tristique pulvinar imperdiet. Fusce et lectus ac nunc porta eleifend imperdiet sed diam. Curabitur sollicitudin id enim a lacinia. Suspendisse ultricies laoreet turpis a tempor. Cras dapibus, dolor quis ultrices convallis, sapien lectus blandit turpis, in mollis purus elit ac magna.
-                  </p>
-                </div>
-                <div>
-                  <h3>Comments</h3>
-                  {new CommentBox.view(ctrl.commentBoxController)}
-                </div>
-              </td>
-              <td>
-                <div>
-                  <h3>Peer Review</h3>
-                  <div className="dim">Action Editor</div>
-                  <div>Cathleen Moore</div>
-                  <div className="dim">Reviewer 1</div>
-                  <div>Unknown at this time</div>
-                  <div className="dim">Reviewer 2</div>
-                  <div>Unknown at this time</div>
-                </div>
-                <div>
-                  <h3>External Resources</h3>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="section">
+          <div className="col span_3_of_4">
+            <div>
+              <h3>Community Summary</h3>
+              <div className="dim">June 21, 2014</div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros tellus, venenatis molestie ligula in, lobortis lobortis est. Nunc adipiscing erat sed libero volutpat dapibus ultrices feugiat elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent ac nisi luctus arcu tempus malesuada. Fusce lectus augue, ultrices id purus ac, viverra convallis ipsum. Mauris convallis urna ut magna laoreet, quis dapibus dolor aliquet. Nunc tristique pulvinar imperdiet. Fusce et lectus ac nunc porta eleifend imperdiet sed diam. Curabitur sollicitudin id enim a lacinia. Suspendisse ultricies laoreet turpis a tempor. Cras dapibus, dolor quis ultrices convallis, sapien lectus blandit turpis, in mollis purus elit ac magna.
+              </p>
+            </div>
+            <div>
+              <h3>Comments</h3>
+              {new CommentBox.view(ctrl.commentBoxController)}
+            </div>
+          </div>
+          <div className="col span_1_of_4">
+            <div>
+              <h3>Peer Review</h3>
+              <div className="dim">Action Editor</div>
+              <div>Cathleen Moore</div>
+              <div className="dim">Reviewer 1</div>
+              <div>Unknown at this time</div>
+              <div className="dim">Reviewer 2</div>
+              <div>Unknown at this time</div>
+            </div>
+            <div>
+              <h3>External Resources</h3>
+            </div>
+          </div>
+        </div>
       </div>
     );
   } else {
