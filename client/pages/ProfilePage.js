@@ -1,6 +1,7 @@
 /** @jsx m */
 
 "use strict";
+require("./ProfilePage.scss");
 
 var Layout = require("../layouts/DefaultLayout.js");
 
@@ -14,11 +15,58 @@ ProfilePage.controller = function(options) {
   this.user = options.user;
 };
 
-ProfilePage.view = function(ctrl) {
-  var user = ctrl.user;
-  var articlesContent;
+ProfilePage.detailsView = function(user) {
+  var areasOfStudy = _.map(user.get("areas_of_study"), function(area) {
+    return <div className="section">{area}</div>;
+  });
+
+  return (
+    <div className="details">
+      <h1 className="h1 section">{user.get("fullName")}</h1>
+      <div className="section">
+        <div className="col span_1_of_2">
+          <h3>About</h3>
+          {user.get("about")}
+        </div>
+        <div className="col span_1_of_2">
+          <div className="areasOfStudy">
+            <h3>Areas of Study</h3>
+            {areasOfStudy}
+          </div>
+
+          <div className="contacts">
+            <h3>Contact</h3>
+
+            <div className="section">
+              <span className="icon icon_twitter"></span>
+              <a href={user.get("twitterUrl")}>{user.get("twitter")}</a>
+            </div>
+
+            <div className="section">
+              <span className="icon icon_facebook"></span>
+              <a href={user.get("facebookUrl")}>{user.get("facebook")}</a>
+            </div>
+
+            <div className="section">
+              <span className="icon icon_mail"></span>
+              <a href={"mailto:" + user.get("email")}>{user.get("email")}</a>
+            </div>
+
+            <div className="section">
+              <span className="icon icon_comment"></span>
+              Send a message
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+ProfilePage.articlesView = function(user) {
+  var content;
   if (user.get("articles").length === 0) {
-    articlesContent = (
+    content = (
       <p>
         You have no articles. You can link articles by searching for them and then requesting to be linked.
       </p>
@@ -27,12 +75,21 @@ ProfilePage.view = function(ctrl) {
     var list = _.map(user.get("articles"), function(article) {
       return <li>{article.title}</li>
     });
-    articlesContent = <ul>{list}</ul>;
+    content = <ul>{list}</ul>;
   }
 
-  var commentsContent;
+  return (
+    <div className="articles">
+      <h3>Articles</h3>
+      {content}
+    </div>
+  );
+};
+
+ProfilePage.recentContributionsView = function(user) {
+  var content;
   if (user.get("comments").length === 0) {
-    commentsContent = (
+    content = (
       <p>
         You have no comments.
       </p>
@@ -41,18 +98,29 @@ ProfilePage.view = function(ctrl) {
     var list = _.map(user.get("comments"), function(comment) {
       return <li>{comment.body}</li>
     });
-    commentsContent = <ul>{list}</ul>;
+    content = <ul>{list}</ul>;
   }
 
-  var content = (
-    <div>
-      <h1 className="h1">{[user.get("first_name"), user.get("middle_name"), user.get("last_name")].join(" ")} ({user.get("email")})</h1>
+  return (
+    <div className="recentContributions">
+      <h3>Recent Contributions</h3>
+      {content}
+    </div>
+  );
+};
 
-      <h3>Articles</h3>
-      {articlesContent}
-      
-      <h3>Comments</h3>
-      {commentsContent}
+ProfilePage.view = function(ctrl) {
+  var user = ctrl.user;
+
+  var content = (
+    <div className="section">
+      <div className="col span_1_of_2">
+        {ProfilePage.detailsView(ctrl.user)}
+        {ProfilePage.articlesView(ctrl.user)}
+      </div>
+      <div className="col span_1_of_2">
+        {ProfilePage.recentContributionsView(ctrl.user)}
+      </div>
     </div>
   );
 

@@ -105,8 +105,7 @@ module.exports = function (grunt) {
           filename: "[name].js"
         },
         externals: {
-          "mithril": "m",
-          "underscore": "_"
+          "mithril": "m"
         }
       },
       production: {

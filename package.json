@@ -6,7 +6,7 @@
     "dist": "dist",
     "mainOutput": "main",
     "dependencies": {
-        "mithril": "*",
+        "mithril": "0.1.12",
         "underscore": "1.6.0"
     },
     "devDependencies": {
