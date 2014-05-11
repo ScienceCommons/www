@@ -11,25 +11,27 @@ var UserBar = {};
 UserBar.controller = function(options) {
   this.user = options.user;
 
-  this.dropdownController = new Dropdown.controller({
-    className: "user",
-    label: <img src={this.user.get("gravatarUrl")} />
-  });
+  if (this.user) {
+    this.dropdownController = new Dropdown.controller({
+      className: "user",
+      label: <img src={this.user.get("gravatarUrl")} />
+    });
 
-  this.notificationsController = new Notifications.controller({
-    notifications: this.user.get("notifications")
-  });
+    this.notificationsController = new Notifications.controller({
+      notifications: this.user.get("notifications")
+    });
 
-  var _this = this;
-  this.handleBookmarkClick = function() {
-    console.log("bookmarking");
-  };
+    var _this = this;
+    this.handleBookmarkClick = function() {
+      console.log("bookmarking");
+    };
+  }
 };
 
 UserBar.view = function(ctrl) {
   var user = ctrl.user;
   if (!user) {
-    return;
+    return <ul className="UserBar"/>;
   }
 
   var dropdownContent = (
@@ -43,7 +45,7 @@ UserBar.view = function(ctrl) {
   return (
     <ul className="UserBar">
       <li>{new Notifications.view(ctrl.notificationsController)}</li>
-      <li><span className="icon icon_bookmark" onClick={ctrl.handleBookmarkClick}></span></li>
+      <li><span className="icon icon_bookmark" onclick={ctrl.handleBookmarkClick}></span></li>
       <li><a href="/history" className="history" config={m.route}><span className="icon icon_history"></span></a></li>
       <li>{new Dropdown.view(ctrl.dropdownController, dropdownContent)}</li>
     </ul>

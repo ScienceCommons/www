@@ -16,10 +16,12 @@
   <script src="//cdn.jsdelivr.net/mithril/0.1.12/mithril.js"></script>
 
   <script type="text/javascript">
-    var CS = {
-      user: {} // user data here
-    }; 
+    var CS = {};
+    <!-- @if NODE_ENV='development' -->
+    CS.user = {}; // user data here
+    <!-- @endif -->
   </script>
+  
 
   <script type="text/javascript">
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

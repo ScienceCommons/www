@@ -21,19 +21,25 @@ App.pages = {
   Signup: require("./pages/SignupPage.js")
 };
 
-App.user = new UserModel(CS.user);
-
 App.showPage = function(pageName) {
   var Page = {};
 
   Page.controller = function() {
-    if (!App.user) {
-      pageName = "Login";
+    if (!CS.user && App.user) {
+      delete App.user;
+    } else if (CS.user && !App.user) {
+      App.user = new UserModel(CS.user, {silent: true});
     }
 
-    this.currentPage = App.pages[pageName];
-    this.pageController = new this.currentPage.controller({user: App.user});
-    GoogleAnalytics.TrackNavigation();
+    if (!App.user && pageName !== "Login") {
+      this.currentPage = App.pages["Login"];
+      this.pageController = new this.currentPage.controller({user: App.user});
+      m.route("/login");
+    } else {
+      this.currentPage = App.pages[pageName];
+      this.pageController = new this.currentPage.controller({user: App.user});
+      GoogleAnalytics.TrackNavigation();  
+    }
   };
 
   Page.view = function(ctrl) {
