@@ -39,16 +39,16 @@ module.exports = function (grunt) {
     loader: "msx-loader"
   }, {
     test: /\.woff$/,
-    loader: "url-loader?limit=10000&minetype=application/font-woff"
+    loader: "url-loader?prefix=/assets/&limit=10000&minetype=application/font-woff"
   }, {
     test: /\.ttf$/,
-    loader: "file-loader"
+    loader: "file-loader?prefix=/assets/"
   }, {
     test: /\.eot$/,
-    loader: "file-loader"
+    loader: "file-loader?prefix=/assets/"
   }, {
     test: /\.svg$/,
-    loader: "file-loader"
+    loader: "file-loader?prefix=/assets/"
   }];
 
   var handle404 = function(src) {
