@@ -4,6 +4,12 @@
   .details {
     background: $light_gray;
 
+    .editOrFollow {
+      float: right;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+
     .contacts {
       .section:not(:first-child) {
         margin-top: 10px;

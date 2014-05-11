@@ -22,6 +22,7 @@ ProfilePage.detailsView = function(user) {
 
   return (
     <div className="details">
+      <button type="button" className="editOrFollow">{user.get("id") === CS.user.id ? "Settings": "Follow"}</button>
       <h1 className="h1 section">{user.get("fullName")}</h1>
       <div className="section">
         <div className="col span_1_of_2">
