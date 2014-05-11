@@ -3,6 +3,8 @@
 "use strict";
 require("./SearchPage.scss");
 
+var _ = require("underscore");
+
 var Layout = require("../layouts/DefaultLayout.js");
 var SearchResults = require("../components/SearchResults.js");
 

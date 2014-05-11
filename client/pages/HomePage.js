@@ -3,6 +3,7 @@
 "use strict";
 require("./HomePage.scss");
 
+var _ = require("underscore");
 var m = require("mithril");
 var Layout = require("../layouts/FullLayout.js")
 var Search = require("../components/Search.js");
