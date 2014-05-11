@@ -27,17 +27,19 @@ UserBar.controller = function(options) {
 };
 
 UserBar.view = function(ctrl) {
-  var user = ctrl.user.cortex;
-  if (!user.loading.val()) {
-    //var image = <img src={ctrl.user.imageUrl()} />;
-    var dropdownContent = (
-      <ul>
-        <li><a href="/profile" config={m.route}>Profile</a></li>
-        <li><a href="/saved" config={m.route}>Saved searches</a></li>
-        <li><a href="/logout" config={m.route}>Log out</a></li>
-      </ul>
-    );
+  var user = ctrl.user;
+  if (!user) {
+    return;
   }
+
+  //var image = <img src={ctrl.user.imageUrl()} />;
+  var dropdownContent = (
+    <ul>
+      <li><a href="/profile" config={m.route}>Profile</a></li>
+      <li><a href="/saved" config={m.route}>Saved searches</a></li>
+      <li><a href="/logout" config={m.route}>Log out</a></li>
+    </ul>
+  );
 
   return (
     <div className="UserBar">

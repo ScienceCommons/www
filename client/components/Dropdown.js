@@ -29,18 +29,18 @@ Dropdown.controller = function(options) {
     }
   }
 
-  document.addEventListener("click", this.outsideClick);
+  //document.addEventListener("click", this.outsideClick);
   //document.removeEventListener("click", this.outsideClick); on unload
 };
 
 Dropdown.view = function(ctrl, content) {
-  if (crl.open()) {
+  if (ctrl.open()) {
     var dropdownContent = <div className="content">{content}</div>;
   }
 
   return (
     <div className={"Dropdown " + ctrl.className}>
-      <button type="button" className="btn btn_subtle no_outline" onClick={ctrl.toggle}>
+      <button type="button" className="btn btn_subtle no_outline" onclick={ctrl.toggle}>
         {ctrl.label}
       </button>
       {dropdownContent}

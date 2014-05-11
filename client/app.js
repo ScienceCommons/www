@@ -44,7 +44,7 @@ App.showPage = function(pageName) {
 };
 
 m.route.mode = "pathname";
-m.route(document.getElementById("page"), "/", {
+m.route(document.getElementById("page"), "/not_found", {
   "/": App.showPage("Home"),
   "/query": App.showPage("Search"),
   "/query/": App.showPage("Search"),
@@ -55,7 +55,8 @@ m.route(document.getElementById("page"), "/", {
   "/login": App.showPage("Login"),
   "/about": App.showPage("About"),  
   "/logout": App.showPage("Logout"),
-  "/signup": App.showPage("Signup")
+  "/signup": App.showPage("Signup"),
+  "/not_found": App.showPage("NotFound")
 });
 
 module.exports = App;

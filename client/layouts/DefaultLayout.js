@@ -19,15 +19,11 @@ DefaultLayout.controller = function(options) {
 };
 
 DefaultLayout.view = function(ctrl, content) {
-  if (ctrl.user) {
-    var userBar = new UserBar.view(ctrl.userBarController);
-  }
-
   return (
     <div id={ctrl.id} className="page DefaultLayout">
       <header>
         <div className="banner">
-          {userBar}
+          {new UserBar.view(ctrl.userBarController)}
           <a href="/" config={m.route} className="logoLink">{new Logo.view()}</a>
         </div>
         {new Search.view(ctrl.searchController)}
