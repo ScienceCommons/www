@@ -3,9 +3,8 @@
 "use strict";
 require("./SearchPage.scss");
 
-
-var SearchResults = require("../components/SearchResults.js");
 var Layout = require("../layouts/DefaultLayout.js");
+var SearchResults = require("../components/SearchResults.js");
 
 var SearchPage = {};
 

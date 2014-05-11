@@ -1,5 +1,6 @@
 "use strict";
 
+var _ = require("underscore");
 var BaseModel = require("./BaseModel.js");
 
 var ArticleModel = BaseModel.extend({
@@ -34,7 +35,22 @@ var ArticleModel = BaseModel.extend({
       }
     ]
   },
-  urlRoot: "https://api.curatescience.org/articles"
+  urlRoot: "https://api.curatescience.org/articles",
+  computeds: {
+    authorsEtAl: function() {
+      var authors = this.get("authors_denormalized");
+      if (!_.isEmpty(authors)) {
+        var lastName = authors[0].lastName;
+        return lastName + (authors.length > 1 ? " et al.": "");
+      }
+    },
+    year: function() {
+      var date = this.get("publication_date");
+      if (date) {
+        return (new Date(date)).getFullYear();
+      }
+    }
+  }
 });
 
 module.exports = ArticleModel;

@@ -13,7 +13,7 @@ UserBar.controller = function(options) {
 
   this.dropdownController = new Dropdown.controller({
     className: "user",
-    label: "User"
+    label: <img src={this.user.get("gravatarUrl")} />
   });
 
   this.notificationsController = new Notifications.controller({
@@ -32,7 +32,6 @@ UserBar.view = function(ctrl) {
     return;
   }
 
-  //var image = <img src={ctrl.user.imageUrl()} />;
   var dropdownContent = (
     <ul>
       <li><a href="/profile" config={m.route}>Profile</a></li>
@@ -42,12 +41,12 @@ UserBar.view = function(ctrl) {
   );
 
   return (
-    <div className="UserBar">
-      {new Notifications.view(ctrl.notificationsController)}
-      <span className="icon icon_bookmark" onClick={ctrl.handleBookmarkClick}></span>
-      <a href="/history" className="history" config={m.route}><span className="icon icon_history"></span></a>
-      {new Dropdown.view(ctrl.dropdownController, dropdownContent)}
-    </div>
+    <ul className="UserBar">
+      <li>{new Notifications.view(ctrl.notificationsController)}</li>
+      <li><span className="icon icon_bookmark" onClick={ctrl.handleBookmarkClick}></span></li>
+      <li><a href="/history" className="history" config={m.route}><span className="icon icon_history"></span></a></li>
+      <li>{new Dropdown.view(ctrl.dropdownController, dropdownContent)}</li>
+    </ul>
   );
 };
 
