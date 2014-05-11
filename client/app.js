@@ -3,8 +3,6 @@
 "use strict";
 require("./app.scss");
 
-var _ = require("underscore");
-
 var UserModel = require("./models/UserModel.js");
 var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
 
@@ -23,14 +21,14 @@ App.pages = {
   Signup: require("./pages/SignupPage.js")
 };
 
-App.user = new UserModel(_.extend({}, CS.user, {loading: _.isUndefined(CS.user)}));
+App.user = new UserModel(CS.user);
 
 App.showPage = function(pageName) {
   var Page = {};
 
   Page.controller = function() {
-    if (App.user.cortex.loading.val()) {
-      pageName = "NotFound";
+    if (!App.user) {
+      pageName = "Login";
     }
 
     this.currentPage = App.pages[pageName];

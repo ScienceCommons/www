@@ -17,7 +17,7 @@ UserBar.controller = function(options) {
   });
 
   this.notificationsController = new Notifications.controller({
-    notifications: this.user.cortex.notifications.val()
+    notifications: this.user.get("notifications")
   });
 
   var _this = this;

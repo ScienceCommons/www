@@ -10,16 +10,16 @@ var Comment = {};
 
 Comment.view = function(ctrl) {
   var comment = ctrl.comment;
-  if (comment.replies && !_.isEmpty(comment.replies.val())) {
+  if (_.isEmpty(comment.replies)) {
     var replies = new CommentList.view({comments: comment.replies});
   }
 
   return (
     <div className="Comment">
-      <h3 key="author">{comment.author.val()}</h3>
-      <h6 key="date">{comment.date.val()}</h6>
-      <h3 key="title">{comment.title.val()}</h3>
-      <p key="body">{comment.body.val()}</p>
+      <h3 key="author">{comment.author}</h3>
+      <h6 key="date">{comment.date}</h6>
+      <h3 key="title">{comment.title}</h3>
+      <p key="body">{comment.body}</p>
       {replies}
     </div>
   );
@@ -28,7 +28,7 @@ Comment.view = function(ctrl) {
 var CommentList = {};
 
 CommentList.view = function(ctrl) {
-  var comments = ctrl.comments.map(function(comment) {
+  var comments = _.map(ctrl.comments, function(comment) {
     return new Comment.view({comment: comment});
   });
 

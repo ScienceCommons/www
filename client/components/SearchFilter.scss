@@ -1,7 +1,13 @@
+@import "../variables.scss";
+
 .SearchFilter {
   width: 200px;
 
   label {
     display: block;
+  }
+
+  button.active {
+    background-color: $blue;
   }
 }

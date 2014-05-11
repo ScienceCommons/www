@@ -18,32 +18,30 @@ var ArticleModel = require("../models/ArticleModel.js");
 var ArticlePage = {};
 
 ArticlePage.controller = function(options) {
+  this.article = new ArticleModel({id: m.route.param("articleId")});
+  this.article.fetch();
+
   options = _.extend({id: "ArticlePage"}, options);
   this.layoutController = new Layout.controller(options);
-  this.article = new ArticleModel({id: m.route.param("articleId")}, {callback: m.redraw, loading: true})
-  this.tagEditorController = new TagEditor.controller({tags: this.article.cortex.tags});
-  this.commentBoxController = new CommentBox.controller({comments: this.article.cortex.comments});
-  this.article.fetch();
+  this.tagEditorController = new TagEditor.controller({tags: this.article.get("tags")});
+  this.commentBoxController = new CommentBox.controller({comments: this.article.get("comments")});
 };
 
 ArticlePage.view = function(ctrl) {
-  var loading = ctrl.article.loading;
-  var article = ctrl.article.cortex;
+  var article = ctrl.article;
   var content;
 
-  if (loading) {
-    content = new Spinner.view();
-  } else if (article) {
+  if (article) {
     content = (
       <div>
         <table>
           <tbody>
             <tr>
               <td>
-                <h3>{article.title.val()}</h3>
-                <h5>{_.pluck(article.authors_denormalized.val(), "last_name").join(", ")} {article.publication_date.val()}</h5>
+                <h3>{article.get("title")}</h3>
+                <h5>{_.pluck(article.get("authors_denormalized"), "last_name").join(", ")} {article.get("publication_date")}</h5>
                 <h3>Research Abstract</h3>
-                <p>{article.abstract.val()}</p>
+                <p>{article.get("abstract")}</p>
               </td>
               <td className="text_right">
                 <div className="btn_group">
@@ -53,7 +51,7 @@ ArticlePage.view = function(ctrl) {
                 <div className="dim">Journal</div>
                 <div>Science</div>
                 <div className="dim">DOI</div>
-                <div>{article.doi.val()}</div>
+                <div>{article.get("doi")}</div>
                 <div className="dim">Keywords</div>
                 <div>
                   TagEditor here

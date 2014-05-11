@@ -13,8 +13,8 @@ var DefaultLayout = {};
 
 DefaultLayout.controller = function(options) {
   options = options || {};
-  this.id = options.id
-  this.userBarController = new UserBar.controller({user: options.user})
+  this.id = options.id;
+  this.userBarController = new UserBar.controller({user: options.user});
   this.searchController = new Search.controller({query: m.route.param("query")});
 };
 
