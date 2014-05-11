@@ -96,7 +96,11 @@ SearchResults.view = function(ctrl) {
     );
 
     if (ctrl.from() + ctrl.resultsPerPage() < ctrl.total()) {
-      var more = <button type="button" onclick={ctrl.nextPage}>More results</button>;
+      var more = (
+        <div className="section more">
+          <button type="button" onclick={ctrl.nextPage}>More results</button>
+        </div>
+      );
     }
   }
 
@@ -107,7 +111,7 @@ SearchResults.view = function(ctrl) {
       <div className="col span_5_of_6">
         {nav}
         {content}
-        <div className="section more">{more}</div>
+        {more}
       </div>
     </div>
   );
