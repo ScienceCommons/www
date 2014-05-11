@@ -36,7 +36,7 @@ module.exports = function (grunt) {
     loader: "url-loader?limit=10000&minetype=image/png"
   }, {
     test: /\.js$/,
-    loader: "jsx-loader"
+    loader: "msx-loader"
   }, {
     test: /\.woff$/,
     loader: "url-loader?limit=10000&minetype=application/font-woff"
@@ -98,25 +98,27 @@ module.exports = function (grunt) {
       development: {
         debug: true,
         entry: {
-          main: "./client/scripts/app.js"
+          main: "./client/app.js"
         },
         output: {
           path: DEVELOPMENT_PATH+"/assets",
           filename: "[name].js"
+        },
+        externals: {
+          "mithril": "m",
+          "underscore": "_"
         }
       },
       production: {
         debug: false,
         entry: {
-          vendor: "./client/scripts/vendor.js",
-          main: "./client/scripts/app.js"
+          main: "./client/app.js"
         },
         output: {
           path: PRODUCTION_PATH+"/assets",
           filename: "[name].js"
         },
         plugins: [
-          new webpack.optimize.CommonsChunkPlugin("commons.chunk.js"),
           new webpack.optimize.DedupePlugin(),
           new webpack.optimize.UglifyJsPlugin()
         ]
@@ -125,10 +127,8 @@ module.exports = function (grunt) {
     watch: {
       webpack: {
         files: [
-          "./client/scripts/**/*.js",
-          "./client/scripts/**/*.scss",
-          "./client/styles/**/*.css",
-          "./client/styles/**/*.scss"
+          "./client/**/*.js",
+          "./client/**/*.scss"
         ],
         tasks: ["webpack:development"]
       },
@@ -185,7 +185,7 @@ module.exports = function (grunt) {
       icons: {
         src: "client/icons/*.svg",
         dest: "client/fonts",
-        destCss: "client/styles",
+        destCss: "client",
         options: {
           hashes: false,
           htmlDemo: false

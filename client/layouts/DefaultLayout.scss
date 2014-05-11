@@ -1,0 +1,50 @@
+@import "../variables.scss";
+
+.DefaultLayout {
+  position: absolute;
+  width: 100%;
+  
+  header {
+    margin-bottom: 20px;
+
+    .banner {
+      background-color: $dark;
+      padding: 10px 20px 10px 10px;
+      position: relative;
+      line-height: 28px;
+    }
+
+    .Search {
+      position: relative;
+      background-color: $light_gray;
+      border-bottom: 1px solid $gray;
+      padding: 10px 3%;
+
+      input {
+        height: 35px;
+        font-size: 24px;
+        width: 100%;
+      }
+    }
+
+    .logoLink {
+      text-decoration: none;
+    }
+
+    .Logo {
+      width: 200px;
+      height: 100px;
+      display: inline-block;
+
+      text {
+        fill: white;
+      }
+    }
+    
+    .Notifications {
+      height: 32px;
+      width: 32px;
+      display: inline-block;
+    }
+  }
+}

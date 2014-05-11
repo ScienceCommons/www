@@ -6,9 +6,8 @@
     "dist": "dist",
     "mainOutput": "main",
     "dependencies": {
-        "react": "~0.10.0",
-        "underscore": "1.6.0",
-        "react-router-component": "0.18.2"
+        "mithril": "*",
+        "underscore": "1.6.0"
     },
     "devDependencies": {
         "grunt": "0.4.4",
@@ -33,6 +32,7 @@
         "grunt-env": "0.4.1",
         "grunt-webfont": "0.3.4",
         "grunt-s3": "0.2.0-alpha.3",
-        "grunt-contrib-clean": "0.5.0"
+        "grunt-contrib-clean": "0.5.0",
+        "msx-loader": "*"
     }
 }
