@@ -2,18 +2,20 @@
 
 "use strict";
 
+var _ = require("underscore");
+
 var Layout = require("../layouts/FullLayout.js");
 var Spinner = require("../components/Spinner.js");
 
 var LogoutPage = {};
 
 LogoutPage.controller = function(options) {
-  options = _.extend({id: "LogoutPage"}, options);
-  this.layoutController = new Layout.controller(options);
+  this.layoutController = new Layout.controller(_.extend({id: "LogoutPage"}, options));
 
   setTimeout(function() {
-    m.route("/login")
-  }, 3000);
+    delete CS.user;
+    m.route("/login");
+  }, 2000);
 };
 
 LogoutPage.view = function(ctrl) {

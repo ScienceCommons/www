@@ -8,7 +8,7 @@ var BaseModel = function(data, options) {
   resetAssociations(this);
   resetAttributes(this);
 
-  this.set(data);
+  this.set(data, {silent: this.options.silent});
   if (this.constructor._cache && this.id) {
     this.constructor._cache[this.id] = this;
   }
@@ -72,6 +72,7 @@ BaseModel.prototype.set = function(attr, val, options) {
     _.each(attr, function(obj_val, key) {
       _this.set(key, obj_val, {silent: true}); // let the outside set trigger the endComputation
     });
+    options = val || {};
   }
 
   if (!options.silent) {
@@ -136,7 +137,7 @@ BaseModel.prototype.toJSON = function() {
 
 function resetAttributes(model) {
   model.attributes = {};
-  model.set(model.defaults || {});
+  model.set(model.defaults || {}, {silent: model.options.silent});
 }
 
 function resetAssociations(model) {

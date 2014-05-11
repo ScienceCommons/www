@@ -13,12 +13,10 @@ var Badge = require("../components/Badge.js");
 var HomePage = {};
 
 HomePage.controller = function(options) {
-  options = _.extend({
+  this.layoutController = new Layout.controller(_.extend({
     id: "HomePage",
     header: <a href="/about" className="aboutLink" config={m.route}>What is Curate Science?</a>
-  }, options);
-
-  this.layoutController = new Layout.controller(options);
+  }, options));
   this.searchController = new Search.controller({});
 
   this.mostCuratedArticles = [
@@ -26,34 +24,34 @@ HomePage.controller = function(options) {
       title: "Feeling the future: Experimental evidence for anomalous retroactive influences on congnition and affect",
       authors_denormalized: [{lastName: "Bern"}],
       publication_date: "2011-6-1"
-    }),
+    }, {silent: true}),
     new ArticleModel({
       title: "Automaticity of social behavior: Direct effects of trait construct and stereotype activiation on action",
       authors_denormalized: [{lastName: "Bargh"}, {lastName: "Chen"}, {lastName: "Burrows"}],
       publication_date: "1996-6-1"
-    }),
+    }, {silent: true}),
     new ArticleModel({
       title: "Coherent arbitrariness: Stable demand curves without stable preference",
       authors_denormalized: [{lastName: "Airely"}],
       publication_date: "2003-6-1"
-    })
+    }, {silent: true})
   ];
   this.recentlyCuratedArticles = [
     new ArticleModel({
       title: "Two birds with one stone: A preregistered adversarial collaboration on horizontal eye movements in free recall",
       authors_denormalized: [{lastName: "Matzke"}, {lastName: "van Rijn"}, {lastName: "Slagter"}],
       publication_date: "2013-6-1"
-    }),
+    }, {silent: true}),
     new ArticleModel({
       title: "On the association between loneliness and bathing habits: Nine replications of Bargh & Shalev (2012) Study 1",
       authors_denormalized: [{lastName: "Donnellan"}, {lastName: "Lucas"}, {lastName: "Cesario"}],
       publication_date: "2006-6-1"
-    }),
+    }, {silent: true}),
     new ArticleModel({
       title: "Washing away your sins: Threatened morality and physical cleansing",
       authors_denormalized: [{lastName: "Zhong"}, {lastName: "Liljenquist"}],
       publication_date: "2006-6-1"
-    })
+    }, {silent: true})
   ];
 };
 
