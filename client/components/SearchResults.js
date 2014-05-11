@@ -55,18 +55,16 @@ SearchResults.controller = function() {
 
 SearchResults.itemView = function(article) {
   return (
-    <li className="searchResult">
-      <div className="section">
-        <div className="col span_3_of_4">
-          <a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a>
-          <div className="authors">({article.get("year")}) {article.get("authorsEtAl")}</div>
-        </div>
-        <div className="col span_1_of_4 badges">
-          {new Badge.view({badge: "data", active: true})}
-          {new Badge.view({badge: "methods", active: true})}
-          {new Badge.view({badge: "registration"})}
-          {new Badge.view({badge: "disclosure"})}
-        </div>
+    <li className="searchResult section">
+      <div className="col span_3_of_4">
+        <a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a>
+        <div className="authors">({article.get("year")}) {article.get("authorsEtAl")}</div>
+      </div>
+      <div className="col span_1_of_4 badges">
+        {new Badge.view({badge: "data", active: true})}
+        {new Badge.view({badge: "methods", active: true})}
+        {new Badge.view({badge: "registration"})}
+        {new Badge.view({badge: "disclosure"})}
       </div>
     </li>
   );
