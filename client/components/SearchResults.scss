@@ -1,13 +1,40 @@
-ul.SearchResults {
+@import "../variables.scss";
+
+.SearchResults {
   padding: 10px;
 
-  li.SearchResult {
-    background-color: #EEE;
+  ul {
+    list-style: none;
+  }
+
+  .sort {
+    float: right;
+    margin-right: 10px;
+  }
+
+  .more {
+    text-align: center;
+  }
+
+  .searchResult {
     color: #000;
-    border-radius: 5px;
-    border: 1px solid #CCC;
     padding: 10px;
     margin-top: 15px;
+
+    &:not(:last-child) {
+      border-bottom: 2px solid $light_gray;
+    }
+
+    .badges {
+      text-align: right;
+    }
+
+    .Badge {
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      padding: 0 10px;
+    }
   }
 
   li.search_nav {
