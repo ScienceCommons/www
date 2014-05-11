@@ -1,0 +1,131 @@
+@import "../variables.scss";
+
+$replicationWidth: 256px;
+
+#ArticlePage {
+  .publication_doi {
+    td {
+      padding: 4px;
+    }
+  }
+
+  .bookmark_article {
+    color: $blue;
+  }
+
+  table.Replications {
+    border-collapse:collapse;
+    border: 1px solid $gray;
+
+    td {
+      border: 1px solid $gray;
+      padding: 10px;
+    }
+
+    th {
+      padding: 10px;
+
+      &:first-child {
+        border: 1px solid $gray;
+      }
+    }
+
+    td:first-child, thead, tfoot {
+      background-color: $light_gray;
+    }
+
+    td:first-child {
+      text-align: right;
+    }
+
+    td:not(:first-child) {
+      text-align: center;
+      width: $replicationWidth;
+    }
+
+    tfoot td {
+      text-align: center !important;
+    }
+
+    td.replication {
+      background-color: $off_white;
+    }
+
+    .badges .Badge {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.ReplicationPath {
+  white-space: nowrap;
+  padding-top: 20px;
+  overflow: auto;
+
+  .study {
+    float: left;
+    height: 54px;
+    position: relative;
+    width: $replicationWidth;
+    z-index: 0;
+    background-image: url("../images/subway_study.png"), url("../images/subway_path.png");
+    background-repeat: no-repeat;
+    background-position: 50% 20px, right 0 top 20px;
+    background-size: auto auto, 100% 7px;
+
+    .add_replication {
+      //replace-text-with-dimensions('subway_add.png')
+      position: absolute;
+      right: 40px;
+      top: 20px;
+    }
+  }
+
+  .replication {
+    background-repeat: no-repeat, repeat-x;
+    background-position: 50% 20px, 0 20px;
+    float: left;
+    height: 54px;
+    position: relative;
+
+    .count {
+      background: #23A6E0;
+      color: #FFF;
+      display: block;
+      line-height: 24px;
+      margin-top: -10px;
+      text-align: center;
+      width: 30px;
+      border-radius: 4px;
+    }
+
+    &.closed {
+      background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");
+      background-position: -2px 20px;
+      width: 30px;
+    }
+
+    &.open {
+      background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
+      width: $replicationWidth;
+
+      .count {
+        display: none;
+      }
+    }
+  }
+
+
+  .study:first-of-type {
+    background-size: auto auto, 50% 7px;
+  }
+
+  .study:last-child {
+    background-position: 50% 20px, left 0 top 20px;
+    background-size: auto auto, 75% 7px;
+  }
+}

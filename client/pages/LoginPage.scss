@@ -1,0 +1,11 @@
+#LoginPage {
+  input {
+    height: 32px;
+    border-radius: 4px;
+    margin-right: 10px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

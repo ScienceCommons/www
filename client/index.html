@@ -13,16 +13,14 @@
   <![endif]-->
   <div id="page"></div>
 
+  <script src="//cdn.jsdelivr.net/underscorejs/1.6.0/underscore.js"></script>
+  <script src="//cdn.jsdelivr.net/mithril/0.1.12/mithril.js"></script>
+
   <script type="text/javascript">
     var CS = {
       user: {} // user data here
     }; 
   </script>
-  
-  <!-- @if NODE_ENV='production' -->
-  <script type="text/javascript" src="/assets/commons.chunk.js"></script>
-  <!-- @endif -->
-  <script type="text/javascript" src="/assets/main.js"></script>
 
   <script type="text/javascript">
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -33,5 +31,7 @@
     ga('create', 'UA-50411070-2', 'org.s3-website-us-east-1.amazonaws.com');
     ga('send', 'pageview');
   </script>
+
+  <script type="text/javascript" src="/assets/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+@import "../variables.scss";
+
+.FullLayout {
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
+
+  header {
+    background-color: $dark;
+  }
+
+  a.logo {
+    text-decoration: none;
+  }
+
+  .Logo {
+    height: 256px;
+
+    text {
+      fill: white;
+    }
+  }
+}
