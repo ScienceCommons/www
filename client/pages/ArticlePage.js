@@ -46,7 +46,7 @@ ArticlePage.view = function(ctrl) {
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2>{article.get("title")}</h2>
-            <p className="authors">{article.get("authorLastNames")}, {article.get("year")}</p>
+            <p className="authors">{_.compact([article.get("authorLastNames"), article.get("year")]).join(", ")}</p>
 
             <h3>Abstract</h3>
             <p className="abstract">{article.get("abstract")}</p>
