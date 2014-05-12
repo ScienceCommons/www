@@ -15,8 +15,7 @@
         "grunt-contrib-watch": "0.6.1",
         "grunt-contrib-connect": "0.7.1",
         "connect-livereload": "0.4.0",
-        "webpack": "1.1.8",
-        "jsx-loader": "0.10.1",
+        "webpack": "1.1.10",
         "grunt-webpack": "1.0.5",
         "style-loader": "0.6.3",
         "sass-loader": "0.1.1",
@@ -30,7 +29,7 @@
         "grunt-aws-s3": "0.8.5",
         "grunt-preprocess": "4.0.0",
         "grunt-env": "0.4.1",
-        "grunt-webfont": "0.3.4",
+        "grunt-webfont": "0.4.0",
         "grunt-s3": "0.2.0-alpha.3",
         "grunt-contrib-clean": "0.5.0",
         "msx-loader": "*"
