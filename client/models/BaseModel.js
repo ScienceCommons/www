@@ -54,7 +54,7 @@ BaseModel.prototype.get = function(attr) {
   if (this.associations) {
     res = this.associations[attr];
     if (!_.isUndefined(res)) {
-      return res();
+      return res;
     }
   }
 };
@@ -63,9 +63,18 @@ BaseModel.prototype.set = function(attr, val, options) {
   options = options || {};
 
   if (_.isString(attr)) {
-    this.attributes[attr] = val;
-    if (attr === "id") {
-      this.id = val;
+    if (!_.isUndefined(this.associations[attr])) {
+      var relation = this.relations[attr];
+      if (relation.type === "many") {
+        this.associations[attr] = _.map(val, function(modelData) { return new relation.model(modelData); });
+      } else {
+        this.associations[attr] = new relation.model(val);
+      }
+    } else {
+      this.attributes[attr] = val;
+      if (attr === "id") {
+        this.id = val;
+      }
     }
   } else { // its an object
     var _this = this;
@@ -145,7 +154,7 @@ function resetAttributes(model) {
 function resetAssociations(model) {
   model.associations = {};
   _.each(model.relations, function(options, key) {
-    model.associations[key] = m.prop(options.type === "many" ? [] : {});
+    model.associations[key] = options.type === "many" ? [] : {};
   });
 }
 

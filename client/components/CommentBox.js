@@ -10,17 +10,19 @@ var Comment = {};
 
 Comment.view = function(ctrl) {
   var comment = ctrl.comment;
-  if (_.isEmpty(comment.replies)) {
-    var replies = new CommentList.view({comments: comment.replies});
+  if (!_.isEmpty(comment.get("replies"))) {
+    var replies = new CommentList.view({comments: comment.get("replies")});
   }
 
   return (
     <div className="Comment">
-      <h3 key="author">{comment.author}</h3>
-      <h6 key="date">{comment.date}</h6>
-      <h3 key="title">{comment.title}</h3>
-      <p key="body">{comment.body}</p>
-      {replies}
+      {comment.get("image")}
+      <div className="commentContent">
+        <h5>{comment.get("author")} - 2 days ago</h5>
+        <p>{comment.get("body")}</p>
+
+        {replies}
+      </div>
     </div>
   );
 };
