@@ -57,7 +57,7 @@ CommentForm.controller = function(options) {
 
 CommentForm.view = function(ctrl) {
   return (
-    <form className="CommentForm" onSubmit={ctrl.handleSubmit}>
+    <form className="CommentForm" onsubmit={ctrl.handleSubmit}>
       <button type="submit" className="btn">Post</button>
 
       <div className="commentWrapper">
