@@ -38,7 +38,7 @@ App.showPage = function(pageName) {
     } else {
       this.currentPage = App.pages[pageName];
       this.pageController = new this.currentPage.controller({user: App.user});
-      GoogleAnalytics.TrackNavigation();  
+      GoogleAnalytics.TrackNavigation();
     }
   };
 

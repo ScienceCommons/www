@@ -48,7 +48,7 @@ ArticlePage.view = function(ctrl) {
             <h2>{article.get("title")}</h2>
             <p className="authors">{article.get("authorLastNames")}, {article.get("year")}</p>
 
-            <h3>Research Abstract</h3>
+            <h3>Abstract</h3>
             <p className="abstract">{article.get("abstract")}</p>
           </div>
 
