@@ -45,7 +45,7 @@ var ArticleModel = BaseModel.extend({
     authorsEtAl: function() {
       var authors = this.get("authors_denormalized");
       if (!_.isEmpty(authors)) {
-        var lastName = authors[0].lastName;
+        var lastName = _.first(authors).last_name;
         return lastName + (authors.length > 1 ? " et al.": "");
       }
     },
