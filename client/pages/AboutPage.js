@@ -2,7 +2,8 @@
 
 "use strict";
 
-var Layout = require("../layouts/FullLayout.js")
+var _ = require("underscore");
+var Layout = require("../layouts/FullLayout.js");
 
 var AboutPage = {};
 
