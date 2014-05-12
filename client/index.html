@@ -13,7 +13,12 @@
   <![endif]-->
   <div id="page"></div>
 
+  <!-- @if NODE_ENV='development' -->
   <script src="//cdn.jsdelivr.net/mithril/0.1.12/mithril.js"></script>
+  <!-- @endif -->
+  <!-- @if NODE_ENV='production' -->
+  <script src="//cdn.jsdelivr.net/mithril/0.1.12/mithril.min.js"></script>
+  <!-- @endif -->
 
   <script type="text/javascript">
     var CS = {};
