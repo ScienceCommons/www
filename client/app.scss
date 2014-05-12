@@ -5,7 +5,7 @@
 @import "./grid.scss";
 
 body {
-  font-family:"Gibson", Times, serif;
+  font-family:"Gibson", sans-serif;
 }
 
 h1, .h1,
@@ -14,7 +14,7 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  font-family: "Gibson-semibold";
+  font-family: "Gibson-semibold", sans-serif;
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
