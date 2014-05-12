@@ -52,7 +52,11 @@ var ArticleModel = BaseModel.extend({
     authorLastNames: function() {
       var authors = this.get("authors_denormalized");
       var lastNames = _.pluck(authors, "last_name");
-      return _.first(lastNames, lastNames.length-1).join(", ") + " & " + _.last(lastNames);
+      if (lastNames.length > 1) {
+        return _.first(lastNames, lastNames.length-1).join(", ") + " & " + _.last(lastNames);
+      } else if (lastNames.length == 1) {
+        return _.first(lastNames);
+      }
     },
     year: function() {
       var date = this.get("publication_date");
