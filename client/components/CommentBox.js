@@ -20,6 +20,7 @@ Comment.view = function(ctrl) {
       <div className="commentContent">
         <h5>{comment.get("author")} - 2 days ago</h5>
         <p>{comment.get("body")}</p>
+        <label onclick={ctrl.reply}><span className="icon icon_reply"></span> Reply</label>
 
         {replies}
       </div>
@@ -31,7 +32,7 @@ var CommentList = {};
 
 CommentList.view = function(ctrl) {
   var comments = _.map(ctrl.comments, function(comment) {
-    return new Comment.view({comment: comment});
+    return new Comment.view({comment: comment, reply: function() { alert("reply clicked"); }});
   });
 
   return (
@@ -51,7 +52,7 @@ CommentForm.controller = function(options) {
   var _this = this;
   this.handleSubmit = function(e) {
     e.preventDefault();
-    console.log("submitted", _this);
+    alert("comment added: " + _this.body());
   };
 };
 
