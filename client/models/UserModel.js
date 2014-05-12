@@ -1,6 +1,5 @@
 "use strict";
 
-
 var BaseModel = require("./BaseModel.js");
 
 var UserModel = BaseModel.extend({

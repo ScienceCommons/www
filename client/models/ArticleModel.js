@@ -4,6 +4,9 @@ var _ = require("underscore");
 var BaseModel = require("./BaseModel.js");
 
 var ArticleModel = BaseModel.extend({
+  relations: {
+    "comments": {type: "many", model: require("./CommentModel.js")},
+  },
   defaults: {
     "title": "",
     "abstract": "",
@@ -15,14 +18,13 @@ var ArticleModel = BaseModel.extend({
     "comments": [
       {
         "author": "Anonymous",
+        "gravatar": null,
         "date": "4-1-2014",
-        "title": "Foo",
         "body": "Blah",
         "replies": [
           {
             "author": "Stephen Demjanenko",
             "date": "4-1-2014",
-            "title": "This is not useful",
             "body": "Try to leave useful comments.  Thanks!"
           }
         ]
@@ -30,7 +32,6 @@ var ArticleModel = BaseModel.extend({
       {
         "author": "Stephen Demjanenko",
         "date": "4-1-2014",
-        "title": "This is really usefuly",
         "body": "Im gonna see if I can replicate it"
       }
     ],
