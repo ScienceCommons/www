@@ -8,9 +8,7 @@ var _ = require("underscore");
 var Layout = require("../layouts/DefaultLayout.js");
 var Spinner = require("../components/Spinner.js");
 var ReplicationsTable = require("../components/ReplicationsTable.js");
-var TagEditor = require("../components/TagEditor.js");
-//var ContentEditable = require("../components/ContentEditable.js");
-//new TagEditor.view(ctrl.tagEditorController)
+var Pill = require("../components/Pill.js");
 var CommentBox = require("../components/CommentBox.js");
 
 var ArticleModel = require("../models/ArticleModel.js");
@@ -23,7 +21,6 @@ ArticlePage.controller = function(options) {
 
   options = _.extend({id: "ArticlePage"}, options);
   this.layoutController = new Layout.controller(options);
-  this.tagEditorController = new TagEditor.controller({tags: this.article.get("tags")});
   this.commentBoxController = new CommentBox.controller({comments: this.article.get("comments"), user: options.user});
 };
 
@@ -39,6 +36,10 @@ ArticlePage.view = function(ctrl) {
           <p>{reviewer}</p>
         </div>
       );
+    });
+
+    var tags = _.map(article.get("tags"), function(tag) {
+      return new Pill.view({label: tag});
     });
 
     content = (
@@ -70,7 +71,7 @@ ArticlePage.view = function(ctrl) {
 
             <div className="keywords">
               <h5>Keywords</h5>
-              <p>TagEditor here</p>
+              <p>{tags}</p>
             </div>
           </div>
         </div>
