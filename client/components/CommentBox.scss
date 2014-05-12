@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .CommentBox {
   .Comment {
     border: 1px solid black;
@@ -6,5 +8,49 @@
   
   .CommentList {
     margin-left: 20px;
+  }
+
+  .CommentForm {
+    border-radius: 8px;
+    border: 1px solid $gray;
+    background: $light_gray;
+    padding: 15px;
+
+    .commentWrapper {
+      background: white;
+      border: 1px solid $gray;
+      border-radius: $btn_radius;
+      padding-right: 20px;
+      padding: 5px;
+      overflow: hidden;
+    }
+
+    div.textareaWrapper {
+      overflow: hidden;
+    }
+
+    textarea {
+      height: 31px;
+      width: 100%;
+      border: 0;
+      resize: vertical;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .btn {
+      float: right;
+      padding: 10px 20px;
+      margin-left: 10px;
+    }
+
+    .userImage {
+      float: left;
+      height: 30px;
+      width: 30px;
+      margin-right: 10px;
+    }
   }
 }

@@ -41,10 +41,10 @@ CommentList.view = function(ctrl) {
 
 var CommentForm = {};
 
-CommentForm.controller = function() {
-  this.title = m.prop("");
+CommentForm.controller = function(options) {
   this.body = m.prop("");
   this.anonymous = m.prop(false);
+  this.user = options.user;
 
   var _this = this;
   this.handleSubmit = function(e) {
@@ -56,10 +56,14 @@ CommentForm.controller = function() {
 CommentForm.view = function(ctrl) {
   return (
     <form className="CommentForm" onSubmit={ctrl.handleSubmit}>
-      <input placeholder="title" type="text" value={ctrl.title()} oninput={m.withAttr("value", ctrl.title)}/>
-      <textarea value={ctrl.body()} oninput={m.withAttr("value", ctrl.body)}/>
-      <label><input type="checkbox" checked={ctrl.anonymous()} onchange={m.withAttr("checked", ctrl.anonymous)} /> Make anonymous</label>
-      <input type="submit">Post</input>
+      <button type="submit" className="btn">Post</button>
+
+      <div className="commentWrapper">
+        <img src={ctrl.user.get("gravatarUrl")} className="userImage" />
+        <div className="textareaWrapper">
+          <textarea value={ctrl.body()} oninput={m.withAttr("value", ctrl.body)} placeholder="Add a comment"/>
+        </div>
+      </div>
     </form>
   );
 };
@@ -68,7 +72,7 @@ var CommentBox = {};
 
 CommentBox.controller = function(options) {
   this.comments = options.comments;
-  this.commentFormController = new CommentForm.controller();
+  this.commentFormController = new CommentForm.controller({user: options.user});
 };
 
 CommentBox.view = function(ctrl) {

@@ -8,7 +8,7 @@ var BaseModel = function(data, options) {
   resetAssociations(this);
   resetAttributes(this);
 
-  this.set(data, {silent: this.options.silent});
+  this.set(data);
   if (this.constructor._cache && this.id) {
     this.constructor._cache[this.id] = this;
   }
@@ -76,9 +76,11 @@ BaseModel.prototype.set = function(attr, val, options) {
   }
 
   if (!options.silent) {
-    m.redraw();
+    this.redraw();
   }
 };
+
+BaseModel.prototype.redraw = _.throttle(m.redraw, 16, {leading: false});
 
 BaseModel.prototype.setter = function(attr) {
   var _this = this;
@@ -137,7 +139,7 @@ BaseModel.prototype.toJSON = function() {
 
 function resetAttributes(model) {
   model.attributes = {};
-  model.set(model.defaults || {}, {silent: model.options.silent});
+  model.set(model.defaults || {});
 }
 
 function resetAssociations(model) {
