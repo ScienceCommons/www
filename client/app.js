@@ -28,7 +28,7 @@ App.showPage = function(pageName) {
     if (!CS.user && App.user) {
       delete App.user;
     } else if (CS.user && !App.user) {
-      App.user = new UserModel(CS.user, {silent: true});
+      App.user = new UserModel(CS.user);
     }
 
     if (!App.user && pageName !== "Login") {
