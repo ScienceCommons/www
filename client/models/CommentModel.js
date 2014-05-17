@@ -9,20 +9,23 @@ var CommentModel = BaseModel.extend({
     replies: {type: "many"} // model is defined below
   },
   defaults: {
-    "author": "",
     "userId": "",
     "body": "",
-    "gravatar": "8c51e26145bc08bb6f43bead1b5ad07f.png", // me
     "anonymous": false
   },
   computeds: {
-    image: function() {
-      var gravatar = this.get("gravatar");
-
-      if (this.get("anonymous") === false && gravatar) {
-        return <img src={"//www.gravatar.com/avatar/" + gravatar} className="commentImage"/>;
+    authorName: function() {
+      if (this.get("anonymous")) {
+        return "Anonymous";
       } else {
-        return <span className="icon icon_person commentImage"></span>;
+        return this.get("author").get("fullName");
+      }
+    },
+    image: function() {
+      if (this.get("anonymous")) {
+        return <span className="icon icon_person"></span>;
+      } else {
+        return this.get("author").get("image");
       }
     }
   }

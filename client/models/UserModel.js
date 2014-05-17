@@ -1,11 +1,14 @@
+/** @jsx m */
+
 "use strict";
 
 var BaseModel = require("./BaseModel.js");
+var CommentModel = require("./CommentModel.js");
 
 var UserModel = BaseModel.extend({
   relations: {
     "articles": {type: "many", model: require("./ArticleModel.js")},
-    "comments": {type: "many", model: require("./CommentModel.js")},
+    "comments": {type: "many", model: CommentModel},
     "notifications": {type: "many", model: require("./NotificationModel.js")},
   },
   defaults: {
@@ -36,8 +39,20 @@ var UserModel = BaseModel.extend({
     },
     twitterUrl: function() {
       return "https://www.twitter.com/" + this.get("twitter");
+    },
+    image: function() {
+      if (this.get("gravatar")) {
+        return <img src={this.get("gravatarUrl")} className="userImage"/>;
+      } else {
+        return <div className="userImage initials">{this.get("initials")}</div>
+      }
+    },
+    initials: function() {
+      return this.get("first_name")[0] + this.get("last_name")[0];
     }
   }
 });
+
+CommentModel.prototype.relations.author = {model: UserModel}; // if we define it in CommentModel we get a circular reference
 
 module.exports = UserModel;

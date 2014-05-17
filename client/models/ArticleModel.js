@@ -17,20 +17,19 @@ var ArticleModel = BaseModel.extend({
     "journal": "Science",
     "comments": [
       {
-        "author": "Anonymous",
-        "gravatar": null,
+        "anonymous": true,
         "date": "4-1-2014",
         "body": "Blah",
         "replies": [
           {
-            "author": "Stephen Demjanenko",
+            "author": {first_name: "Stephen", last_name: "Demjanenko"},
             "date": "4-1-2014",
             "body": "Try to leave useful comments.  Thanks!"
           }
         ]
       },
       {
-        "author": "Stephen Demjanenko",
+        "author": {first_name: "Stephen", last_name: "Demjanenko"},
         "date": "4-1-2014",
         "body": "Im gonna see if I can replicate it"
       }

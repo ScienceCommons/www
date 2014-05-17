@@ -67,10 +67,8 @@ BaseModel.prototype.initialize = function(){};
 BaseModel.prototype.computeds = {};
 
 BaseModel.prototype.initializeAssociations = function() {
-  if (_.isUndefined(this.associations)) {
-    this.associations = {};
-  }
-
+  this.associations = this.associations || {};
+  
   var _this = this;
   _.each(this.relations, function(relation, key) {
     if (_.isUndefined(_this.associations[key])) {
@@ -123,7 +121,8 @@ BaseModel.prototype.set = function(attr, val, options) {
         if (this.associations[attr]) {
           this.associations[attr].reset(val); // its a BaseCollection
         } else {
-          this.associations[attr] = new relationCollection(relation)(val);
+          var Collection = relationCollection(relation);
+          this.associations[attr] = new Collection(val);
         }
       } else {
         if (this.associations[attr]) {

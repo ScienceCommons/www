@@ -3,7 +3,6 @@
 "use strict";
 require("./CommentBox.scss");
 
-var CommentModel = require("../models/CommentModel.js");
 var DropdownSelect = require("./DropdownSelect.js");
 
 var m = require("mithril");
@@ -21,7 +20,7 @@ Comment.view = function(ctrl) {
     <div className="Comment">
       {comment.get("image")}
       <div className="commentContent">
-        <h5>{comment.get("author")} - 2 days ago</h5>
+        <h5>{comment.get("authorName")} - 2 days ago</h5>
         <p>{comment.get("body")}</p>
         <label onclick={ctrl.reply}><span className="icon icon_reply"></span> Reply</label>
 
@@ -66,12 +65,12 @@ CommentForm.controller = function(options) {
 
   this.handleSubmit = function(e) {
     e.preventDefault();
-    _this.comments.push(new CommentModel({
-      "author": _this.user.get("fullName"),
+    _this.comments.add({
+      "author": _this.user,
       "date": "4-1-2014",
       "body": _this.body(),
       "anonymous": _this.anonymous()
-    }));
+    });
     CommentForm.reset(_this);
   };
 
