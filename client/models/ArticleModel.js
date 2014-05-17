@@ -39,10 +39,17 @@ var ArticleModel = BaseModel.extend({
       {
         "authors": "Zhong et al.",
         "replications": [
+          {"authors": "Zhong et al."},
           {"authors": "Zhong et al."}
         ]
-      },
-      {"authors": "Zhong et al."}
+      },{
+        "authors": "Zhong et al.",
+        "replications": [
+          {"authors": "Zhong et al."}
+        ]
+      }, {
+        "authors": "Zhong et al.",
+      }
     ],
     "action_editor": "Cathleen Moore",
     "reviewers": ["Bob Bland", "Crystal Cali"],

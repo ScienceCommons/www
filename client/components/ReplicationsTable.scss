@@ -2,6 +2,8 @@
 $replication_width: 300px;
 
 .Replications {
+  white-space: nowrap;
+  
   .study, .details, .replications, .legend {
     display: inline-block;    
   }
@@ -35,7 +37,6 @@ $replication_width: 300px;
   .details .replicationPath {
     white-space: nowrap;
     padding-top: 20px;
-    overflow: auto;
 
     position: relative;
     z-index: 0;
