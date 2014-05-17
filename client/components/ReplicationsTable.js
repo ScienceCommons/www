@@ -15,7 +15,7 @@ ReplicationsTable.studyView = function(study) {
   return (
     <div className="study">
       <div className="details">
-        <div className="diagram cell"></div>
+        <div className="replicationPath cell"></div>
         <div className="authors cell">{study.get("authors")}</div>
         <div className="badges cell">
           {new Badge.view({badge: "data", active: true})}
@@ -40,7 +40,23 @@ ReplicationsTable.studyView = function(study) {
 ReplicationsTable.view = function(ctrl) {
   var article = ctrl.article;
   var studies = article.get("studies").map(ReplicationsTable.studyView);
-  return studies;
+
+  return (
+    <div className="Replications">
+      <div className="legend">
+        <div className="replicationPath cell">Replication path</div>
+        <div className="authors cell">Authors</div>
+        <div className="badges cell"></div>
+        <div className="independentVariables cell">Independent Variables</div>
+        <div className="dependentVariables cell">Dependent Variables</div>
+        <div className="n cell">N <span className="icon icon_person"></span></div>
+        <div className="power cell">Power</div>
+        <div className="effectSize cell">Effect Size</div>
+      </div>
+      {studies}
+    </div>
+  );
+
   return (
     <table className="Replications">
       <thead>
