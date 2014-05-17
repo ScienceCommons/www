@@ -5,7 +5,8 @@ var BaseModel = require("./BaseModel.js");
 
 var ArticleModel = BaseModel.extend({
   relations: {
-    "comments": {type: "many", model: require("./CommentModel.js")}
+    "comments": {type: "many", model: require("./CommentModel.js")},
+    "studies": {type: "many", model: require("./StudyModel.js")}
   },
   defaults: {
     "title": "",
@@ -33,6 +34,15 @@ var ArticleModel = BaseModel.extend({
         "date": "4-1-2014",
         "body": "Im gonna see if I can replicate it"
       }
+    ],
+    "studies": [
+      {
+        "authors": "Zhong et al.",
+        "replications": [
+          {"authors": "Zhong et al."}
+        ]
+      },
+      {"authors": "Zhong et al."}
     ],
     "action_editor": "Cathleen Moore",
     "reviewers": ["Bob Bland", "Crystal Cali"],
