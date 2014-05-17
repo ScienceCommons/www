@@ -66,6 +66,33 @@ $replication_width: 300px;
       right: 40px;
       top: 20px;
     }
+
+    .count {
+      background: #23A6E0;
+      color: #FFF;
+      line-height: 24px;
+      margin-top: -10px;
+      text-align: center;
+      width: 30px;
+      border-radius: 4px;
+    }
+
+    .replicationsCount {
+      position: absolute;
+      right: 0;
+      top: 5px;
+
+      &.closed {
+        background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");
+        background-position: -2px 20px;
+        width: 30px;
+      }
+
+      &.open {
+        background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
+        width: $replication_width;
+      }
+    }
   }
 
   .replications .replicationPath {
@@ -74,17 +101,6 @@ $replication_width: 300px;
     background-position: 50% 20px, 0 20px;
     position: relative;
     background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
-
-    .count {
-      background: #23A6E0;
-      color: #FFF;
-      display: block;
-      line-height: 24px;
-      margin-top: -10px;
-      text-align: center;
-      width: 30px;
-      border-radius: 4px;
-    }
   }
 
   .studies > .study:first-child > .details .replicationPath {
