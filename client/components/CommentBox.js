@@ -3,6 +3,8 @@
 "use strict";
 require("./CommentBox.scss");
 
+var CommentModel = require("../models/CommentModel.js");
+
 var m = require("mithril");
 var _ = require("underscore");
 
@@ -45,15 +47,25 @@ CommentList.view = function(ctrl) {
 var CommentForm = {};
 
 CommentForm.controller = function(options) {
-  this.body = m.prop("");
-  this.anonymous = m.prop(false);
+  CommentForm.reset(this);
   this.user = options.user;
+  this.comments = options.comments;
 
   var _this = this;
   this.handleSubmit = function(e) {
     e.preventDefault();
-    alert("comment added: " + _this.body());
+    _this.comments.push(new CommentModel({
+      "author": _this.user.get("fullName"),
+      "date": "4-1-2014",
+      "body": _this.body()
+    }));
+    CommentForm.reset(_this);
   };
+};
+
+CommentForm.reset = function(ctrl) {
+  ctrl.body = m.prop("");
+  ctrl.anonymous = m.prop(false);
 };
 
 CommentForm.view = function(ctrl) {
@@ -75,7 +87,7 @@ var CommentBox = {};
 
 CommentBox.controller = function(options) {
   this.comments = options.comments;
-  this.commentFormController = new CommentForm.controller({user: options.user});
+  this.commentFormController = new CommentForm.controller({user: options.user, comments: this.comments});
 };
 
 CommentBox.view = function(ctrl) {
