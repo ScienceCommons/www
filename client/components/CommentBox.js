@@ -69,7 +69,8 @@ CommentForm.controller = function(options) {
     _this.comments.push(new CommentModel({
       "author": _this.user.get("fullName"),
       "date": "4-1-2014",
-      "body": _this.body()
+      "body": _this.body(),
+      "anonymous": _this.anonymous()
     }));
     CommentForm.reset(_this);
   };
