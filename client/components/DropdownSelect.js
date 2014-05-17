@@ -21,6 +21,7 @@ DropdownSelect.controller = function(options) {
       if (value !== _this.value()) {
         _this.onchange(value);  
       }
+      _this.dropdownController.toggle();
     };
   };
 };
