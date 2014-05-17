@@ -10,6 +10,7 @@ var ReplicationsTable = {};
 ReplicationsTable.studyAddReplications = function(study) {
   return function(e) {
     e.preventDefault();
+    study.initializeAssociations();
     study.get("replications").add({});
     study.set("closed", false);
   };
