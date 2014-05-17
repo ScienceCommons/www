@@ -2,11 +2,15 @@
 
 #ArticlePage {
 
+  .articleTitle {
+    margin-top: 0;
+  }
+
   .authors {
     color: $gray;
   }
 
-  .journal, .doi, .keywords, .peerReview {
+  .journal, .doi, .tags, .peerReview {
     h5 {
       color: $gray;
       margin-top: 15px;
