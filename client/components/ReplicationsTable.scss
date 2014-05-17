@@ -3,7 +3,7 @@ $replication_width: 300px;
 
 .Replications {
   white-space: nowrap;
-  
+
   .study, .details, .replications, .legend {
     display: inline-block;    
   }
@@ -20,12 +20,24 @@ $replication_width: 300px;
   .details, .legend {
     .cell {
       padding: 10px 20px;
+      border-bottom: 1px solid $gray;
 
       &:not(.replicationPath) {
         border-right: 1px solid $gray;
       }
-      border-bottom: 1px solid $gray;
     }
+  }
+
+  .replications .study:last-child > .details .cell {
+    border-right: 0;
+  }
+
+  .study:not(:first-of-type) > .details .cell:not(.replicationPath) {
+    border-left: 1px solid $gray;
+  }
+
+  .replications .study:not(:first-of-type) > .details .cell {
+    border-left: 0;
   }
 
   .replicationPath {
