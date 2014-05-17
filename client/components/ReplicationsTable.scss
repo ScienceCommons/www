@@ -1,10 +1,10 @@
 @import "../variables.scss";
 $replication_width: 300px;
 
-.Replications {
+.ReplicationsTable {
   white-space: nowrap;
 
-  .study, .details, .replications, .legend {
+  .studies, .study, .details, .replications, .legend {
     display: inline-block;    
   }
 
@@ -84,12 +84,13 @@ $replication_width: 300px;
     }
   }
 
-  & > .study {
-    &:first-of-type > .details > .replicationPath {
-      background-size: auto auto, 50% 7px;
-    }
+  .studies > .study:first-child > .details .replicationPath {
+    background-size: auto auto, 50% 7px;
+  }
 
-    &:last-child > .details > .replicationPath {
+  & > .study {
+
+    &:last-child > .details .replicationPath {
       background-position: 50% 20px, left 0 top 20px;
       background-size: auto auto, 75% 7px;
     }

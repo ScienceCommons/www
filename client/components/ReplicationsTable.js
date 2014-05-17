@@ -42,7 +42,7 @@ ReplicationsTable.view = function(ctrl) {
   var studies = article.get("studies").map(ReplicationsTable.studyView);
 
   return (
-    <div className="Replications">
+    <div className="ReplicationsTable">
       <div className="legend">
         <div className="replicationPath cell">Replication path</div>
         <div className="authors cell">Authors</div>
@@ -53,7 +53,9 @@ ReplicationsTable.view = function(ctrl) {
         <div className="power cell">Power</div>
         <div className="effectSize cell">Effect Size</div>
       </div>
-      {studies}
+      <div className="studies">
+        {studies}
+      </div>
     </div>
   );
 
