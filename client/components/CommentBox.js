@@ -73,6 +73,16 @@ CommentForm.controller = function(options) {
     }));
     CommentForm.reset(_this);
   };
+
+  this.handleInput = function() {
+    _this.body(this.value);
+    CommentForm.autosize(this);
+  };
+};
+
+CommentForm.autosize = function(el) {
+  el.style.height = "auto";
+  el.style.height = el.scrollHeight+'px';
 };
 
 CommentForm.reset = function(ctrl) {
@@ -88,7 +98,7 @@ CommentForm.view = function(ctrl) {
       <div className="commentWrapper">
         {new DropdownSelect.view(ctrl.dropdownSelectController)}
         <div className="textareaWrapper">
-          <textarea value={ctrl.body()} oninput={m.withAttr("value", ctrl.body)} placeholder="Add a comment"/>
+          <textarea value={ctrl.body()} oninput={ctrl.handleInput} placeholder="Add a comment"/>
         </div>
       </div>
     </form>
