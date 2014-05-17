@@ -7,15 +7,21 @@ var Badge = require("./Badge.js");
 
 var ReplicationsTable = {};
 
-ReplicationsTable.studyView = function(study) {
+ReplicationsTable.studyView = function(study, isReplication) {
   if (study.get("replications")) {
-    var replications = study.get("replications").map(ReplicationsTable.studyView);
+    var replications = study.get("replications").map(function(replication) {
+      return ReplicationsTable.studyView(replication, true)
+    });
+  }
+
+  if (!isReplication) {
+    var addReplicationLink = <a href="#" class="add_replication"></a>;
   }
 
   return (
     <div className="study">
       <div className="details">
-        <div className="replicationPath cell"></div>
+        <div className="replicationPath cell">{addReplicationLink}</div>
         <div className="authors cell">{study.get("authors")}</div>
         <div className="badges cell">
           {new Badge.view({badge: "data", active: true})}
@@ -39,7 +45,9 @@ ReplicationsTable.studyView = function(study) {
 
 ReplicationsTable.view = function(ctrl) {
   var article = ctrl.article;
-  var studies = article.get("studies").map(ReplicationsTable.studyView);
+  var studies = article.get("studies").map(function(study) {
+    return ReplicationsTable.studyView(study);
+  });
 
   return (
     <div className="ReplicationsTable">

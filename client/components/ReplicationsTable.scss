@@ -58,8 +58,11 @@ $replication_width: 300px;
     background-size: auto auto, 100% 7px;
 
     .add_replication {
-      //replace-text-with-dimensions('subway_add.png')
+      background-image: url("../images/subway_add.png");
+      background-repeat: no-repeat;
       position: absolute;
+      width: 25px;
+      height: 38px;
       right: 40px;
       top: 20px;
     }
