@@ -7,7 +7,40 @@ var Badge = require("./Badge.js");
 
 var ReplicationsTable = {};
 
-ReplicationsTable.view = function() {
+ReplicationsTable.studyView = function(study) {
+  if (study.get("replications")) {
+    var replications = study.get("replications").map(ReplicationsTable.studyView);
+  }
+
+  return (
+    <div className="study">
+      <div className="details">
+        <div className="diagram cell"></div>
+        <div className="authors cell">{study.get("authors")}</div>
+        <div className="badges cell">
+          {new Badge.view({badge: "data", active: true})}
+          {new Badge.view({badge: "methods", active: true})}
+          {new Badge.view({badge: "registration"})}
+          {new Badge.view({badge: "disclosure"})}
+        </div>
+        <div className="independentVariables cell">{study.get("independentVariables")}</div>
+        <div className="dependentVariables cell">{study.get("dependentVariables")}</div>
+        <div className="n cell">{study.get("n")}</div>
+        <div className="power cell">{study.get("power")}%</div>
+        <div className="effectSize cell">d={study.get("effectSize")}</div>
+      </div>
+
+      <div className="replications">
+        {replications}
+      </div>
+    </div>
+  );
+};
+
+ReplicationsTable.view = function(ctrl) {
+  var article = ctrl.article;
+  var studies = article.get("studies").map(ReplicationsTable.studyView);
+  return studies;
   return (
     <table className="Replications">
       <thead>

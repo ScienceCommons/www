@@ -1,5 +1,28 @@
 @import "../variables.scss";
 
+.study {
+  display: inline-block;
+
+  .details, .replications {
+    display: inline-block;    
+  }
+
+  .replications {
+    background-color: $off_white;
+  }
+
+  .badges .Badge {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+
+
+
 table.Replications {
   border-collapse: collapse;
   border: 1px solid $gray;

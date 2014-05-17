@@ -18,6 +18,7 @@ var ArticlePage = {};
 ArticlePage.controller = function(options) {
   this.article = new ArticleModel({id: m.route.param("articleId")});
   this.article.initializeAssociations();
+  window.article = this.article;
   this.article.fetch();
 
   options = _.extend({id: "ArticlePage"}, options);
@@ -78,7 +79,7 @@ ArticlePage.view = function(ctrl) {
         </div>
 
         <div className="section">
-          {new ReplicationsTable.view()}
+          {new ReplicationsTable.view({article: article})}
         </div>
 
         <div className="section">
