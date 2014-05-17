@@ -81,6 +81,7 @@ $replication_width: 300px;
       position: absolute;
       right: 0;
       top: 5px;
+      text-decoration: none;
 
       &.closed {
         background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");

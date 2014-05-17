@@ -10,6 +10,7 @@ var StudyModel = BaseModel.extend({
     replications: {type: "many"} // model is defined below
   },
   defaults: {
+    "authors": "Zhong et al.",
     "independentVariables": "Transcribe unethical vs ethical deed",
     "dependentVariables": "Desirability of cleaning-related products",
     "n": 27,

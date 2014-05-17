@@ -40,13 +40,14 @@ var ArticleModel = BaseModel.extend({
         "authors": "Zhong et al.",
         "closed": true, // for testing the replication graph
         "replications": [
-          {"authors": "Zhong et al."},
-          {"authors": "Zhong et al."}
+          {"authors": "Feng et al."},
+          {"authors": "Wong et al."}
         ]
       },{
         "authors": "Zhong et al.",
+        closed: true,
         "replications": [
-          {"authors": "Zhong et al."}
+          {"authors": "Schwarmer et al."}
         ]
       }, {
         "authors": "Zhong et al.",

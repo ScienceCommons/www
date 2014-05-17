@@ -7,6 +7,14 @@ var Badge = require("./Badge.js");
 
 var ReplicationsTable = {};
 
+ReplicationsTable.studyAddReplications = function(study) {
+  return function(e) {
+    e.preventDefault();
+    study.get("replications").add({});
+    study.set("closed", false);
+  };
+};
+
 ReplicationsTable.toggleStudyReplications = function(study) {
   return function(e) {
     e.preventDefault();
@@ -22,7 +30,7 @@ ReplicationsTable.studyView = function(study, isReplication) {
   }
 
   if (!isReplication) {
-    var addReplicationLink = <a href="#" class="add_replication"></a>;
+    var addReplicationLink = <a href="#" onclick={ReplicationsTable.studyAddReplications(study)} class="add_replication"></a>;
   }
 
   if (study.get("replications") && study.get("replications").length > 0) {
