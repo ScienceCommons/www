@@ -4,6 +4,7 @@
 require("./CommentBox.scss");
 
 var CommentModel = require("../models/CommentModel.js");
+var DropdownSelect = require("./DropdownSelect.js");
 
 var m = require("mithril");
 var _ = require("underscore");
@@ -51,7 +52,18 @@ CommentForm.controller = function(options) {
   this.user = options.user;
   this.comments = options.comments;
 
+  
+  this.dropdownSelectController = new DropdownSelect.controller({
+    options: [
+      {value: false, content: <img src={this.user.get("gravatarUrl")} className="userImage" />},
+      {value: true, content: <div className="userImage"><span className="icon icon_person"></span></div>}
+    ],
+    value: this.anonymous,
+    onchange: this.anonymous
+  });
+
   var _this = this;
+
   this.handleSubmit = function(e) {
     e.preventDefault();
     _this.comments.push(new CommentModel({
@@ -71,10 +83,10 @@ CommentForm.reset = function(ctrl) {
 CommentForm.view = function(ctrl) {
   return (
     <form className="CommentForm" onsubmit={ctrl.handleSubmit}>
-      <button type="submit" className="btn">Post</button>
+      <button type="submit" className="btn post">Post</button>
 
       <div className="commentWrapper">
-        <img src={ctrl.user.get("gravatarUrl")} className="userImage" />
+        {new DropdownSelect.view(ctrl.dropdownSelectController)}
         <div className="textareaWrapper">
           <textarea value={ctrl.body()} oninput={m.withAttr("value", ctrl.body)} placeholder="Add a comment"/>
         </div>
