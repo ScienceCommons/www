@@ -75,6 +75,8 @@ $replication_width: 300px;
       text-align: center;
       width: 30px;
       border-radius: 4px;
+      position: absolute;
+      right: 8px;
     }
 
     .replicationsCount {
@@ -82,16 +84,15 @@ $replication_width: 300px;
       right: 0;
       top: 5px;
       text-decoration: none;
+      height: 44px;
+      top: 0px;
+      right: -8px;
+      background-repeat: no-repeat;
 
       &.closed {
         background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");
         background-position: -2px 20px;
         width: 30px;
-      }
-
-      &.open {
-        background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
-        width: $replication_width;
       }
     }
   }

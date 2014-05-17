@@ -37,7 +37,7 @@ ReplicationsTable.studyView = function(study, isReplication) {
   if (study.get("replications") && study.get("replications").length > 0) {
     var count = study.get("replications").length;
     var replicationCountLink = (
-      <a href="#" onclick={ReplicationsTable.toggleStudyReplications(study)} class="replicationsCount closed">
+      <a href="#" onclick={ReplicationsTable.toggleStudyReplications(study)} class={"replicationsCount " + (study.get("closed") ? "closed" : "")}>
         <div class="count"><span className="icon icon_replication"></span> {count}</div>
       </a>
     );
