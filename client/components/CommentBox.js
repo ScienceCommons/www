@@ -34,7 +34,7 @@ Comment.view = function(ctrl) {
 var CommentList = {};
 
 CommentList.view = function(ctrl) {
-  var comments = _.map(ctrl.comments, function(comment) {
+  var comments = ctrl.comments.map(function(comment) {
     return new Comment.view({comment: comment, reply: function() { alert("reply clicked"); }});
   });
 

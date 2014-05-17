@@ -1,31 +1,57 @@
 "use strict";
 
+/*
+ *  BaseModel
+ *  - similar to Backbone
+ *  - supports computeds and associations
+ */
+
 var _ = require("underscore");
 var m = require("mithril");
+var BaseCollection = require("./BaseCollection.js");
 
 var BaseModel = function(data, options) {
   this.options = options || {};
-  resetAssociations(this);
-  resetAttributes(this);
 
-  this.set(data);
+  if (this.options.initializeAssociations !== false) {
+    // might need to init given the data
+    this.initializeAssociations();
+  }
+
+  this.attributes = {};
+  if (this.defaults) {
+    this.set(_.extend({}, this.defaults, data), this.options); // pass options so that it can be silently initialized
+  } else {
+    this.set(data, this.options);
+  }
+
   if (this.constructor._cache && this.id) {
     this.constructor._cache[this.id] = this;
   }
   this.errors = {};
+  this.initialize.apply(this, arguments);
 };
 
-BaseModel.extend = function(proto_opts) {
-  var child = function(data, opts) {
-    BaseModel.apply(this, [data, opts]);
+BaseModel.extend = function(protoProps, staticProps) {
+  var parent = this;
+  var child;
 
-    if (_.isFunction(this.initialize)) {
-      this.initialize.apply(this, [data, opts]);
-    }
-  };
+  if (protoProps && _.has(protoProps, 'constructor')) {
+    child = protoProps.constructor;
+  } else {
+    child = function(){ return parent.apply(this, arguments); };
+  }
 
-  _.extend(child.prototype, BaseModel.prototype, proto_opts);
-  child.prototype.constructor = child;
+   _.extend(child, parent, staticProps);
+
+   var Surrogate = function(){ this.constructor = child; };
+   Surrogate.prototype = parent.prototype;
+   child.prototype = new Surrogate();
+
+   if (protoProps) {
+     _.extend(child.prototype, protoProps);
+   }
+
   child._cache = {};
   child.findOrCreate = function(data, opts) {
     if (!child._cache[data.id]) {
@@ -36,19 +62,40 @@ BaseModel.extend = function(proto_opts) {
   return child;
 };
 
-BaseModel.prototype.defaults = {};
+BaseModel.prototype.initialize = function(){};
 
-BaseModel.prototype.get = function(attr) {
-  var res = this.attributes[attr];
-  if (!_.isUndefined(res)) {
-    return res;
+BaseModel.prototype.computeds = {};
+
+BaseModel.prototype.initializeAssociations = function() {
+  if (_.isUndefined(this.associations)) {
+    this.associations = {};
   }
 
-  if (this.computeds) {
-    res = this.computeds[attr];
-    if (!_.isUndefined(res)) {
-      return res.call(this);
+  var _this = this;
+  _.each(this.relations, function(relation, key) {
+    if (_.isUndefined(_this.associations[key])) {
+      if (relation.type === "many") {
+        var Collection = relationCollection(relation);
+        _this.associations[key] = new Collection([], {baseUrl: _.bind(_this.url, _this)});
+      } else {
+        _this.associations[key] = new (relation.model || BaseModel)();
+      }
     }
+  });
+};
+
+BaseModel.prototype.get = function(attr, forceAttributes) {
+  if (_.isUndefined(attr)) {
+    return this.attributes;
+  }
+
+  if (forceAttributes) {
+    return this.attributes[attr];
+  }
+
+  var res = this.computeds[attr];
+  if (!_.isUndefined(res)) {
+    return res.call(this);
   }
 
   if (this.associations) {
@@ -57,18 +104,33 @@ BaseModel.prototype.get = function(attr) {
       return res;
     }
   }
+
+  return this.attributes[attr];
 };
+
+BaseModel.prototype.relations = {};
 
 BaseModel.prototype.set = function(attr, val, options) {
   options = options || {};
 
   if (_.isString(attr)) {
-    if (!_.isUndefined(this.associations[attr])) {
-      var relation = this.relations[attr];
+    var relation = this.relations[attr];
+    if (!_.isUndefined(relation)) {
+      if (!this.associations) {
+        this.initializeAssociations();
+      }
       if (relation.type === "many") {
-        this.associations[attr] = _.map(val, function(modelData) { return new relation.model(modelData); });
+        if (this.associations[attr]) {
+          this.associations[attr].reset(val); // its a BaseCollection
+        } else {
+          this.associations[attr] = new relationCollection(relation)(val);
+        }
       } else {
-        this.associations[attr] = new relation.model(val);
+        if (this.associations[attr]) {
+          this.associations[attr].set(val);
+        } else {
+          this.associations[attr] = new relation.model(val);
+        }
       }
     } else {
       this.attributes[attr] = val;
@@ -81,7 +143,6 @@ BaseModel.prototype.set = function(attr, val, options) {
     _.each(attr, function(obj_val, key) {
       _this.set(key, obj_val, {silent: true}); // let the outside set trigger the endComputation
     });
-    options = val || {};
   }
 
   if (!options.silent) {
@@ -93,30 +154,21 @@ BaseModel.prototype.redraw = _.throttle(m.redraw, 16, {leading: false});
 
 BaseModel.prototype.setter = function(attr) {
   var _this = this;
-  return function(val) {
-    if (_.isString(attr)) {
+  if (_.isString(attr)) {
+    return function(val) {
       _this.set(attr, val);
-    } else {
-      _this.set(val);
-    }
-  };
-};
-
-BaseModel.prototype.error = function() {
-  console.log("model error", arguments);
-};
-
-BaseModel.prototype.fetch = function(association, options) {
-  options = _.isString(association) ? (options || {}) : (association || {});
-
-  var t0 = _.now();
-  if (association) {
-    var options = this.relations[association];
-    return m.request({method: "GET", url: this.url(options.url), type: (options.model || BaseModel), background: true, data: options.data}).then(this.setter(association));
+    };
   } else {
-    return m.request({method: "GET", url: this.url(), background: true, data: options.data}).then(this.setter(), this.error);
+    return function(val) {
+      _this.set(val);
+    };
   }
-  //ga('send', 'timing', 'Model', 'Fetch', t1-t0, this.get("id"));
+};
+
+BaseModel.prototype.error = function() {};
+
+BaseModel.prototype.fetch = function(options) {
+  return m.request({method: "GET", url: this.url(), background: true, data: options}).then(this.setter(), this.error);
 };
 
 BaseModel.prototype.create = function() {
@@ -127,35 +179,30 @@ BaseModel.prototype.update = function() {
   return m.request({method: "PUT", url: this.url(), data: this.attributes, background: true}).then(this.setter, this.error);
 };
 
-BaseModel.prototype.destroy = function() {
+BaseModel.prototype.serverDestroy = function() {
   return m.request({method: "DELETE", url: this.url(), background: true}).then(null, this.error);
 };
 
-BaseModel.prototype.url = function(suffix) {
-  var base = this.urlRoot+"/"+this.get("id");
-  if (suffix) {
-    return base + "/" + suffix;
-  } else {
-    return base;
-  }
+// call this to clean up a model on the server
+BaseModel.prototype.cleanup = function() {
+  _.each(this.associations, function(association) {
+    association.cleanup();
+  });
+};
+
+BaseModel.prototype.url = function() {
+  return this.urlRoot+"/"+this.get("id");
 };
 
 BaseModel.prototype.toJSON = function() {
   return this.attributes;
 };
 
-// Private methods
+// helpers
 
-function resetAttributes(model) {
-  model.attributes = {};
-  model.set(model.defaults || {});
-}
-
-function resetAssociations(model) {
-  model.associations = {};
-  _.each(model.relations, function(options, key) {
-    model.associations[key] = options.type === "many" ? [] : {};
-  });
-}
+function relationCollection(relation) {
+  relation.collection = relation.collection || BaseCollection.extend({model: (relation.model || BaseModel), urlAction: relation.urlAction});
+  return relation.collection;
+};
 
 module.exports = BaseModel;
