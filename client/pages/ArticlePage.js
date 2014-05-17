@@ -17,6 +17,7 @@ var ArticlePage = {};
 
 ArticlePage.controller = function(options) {
   this.article = new ArticleModel({id: m.route.param("articleId")});
+  this.article.initializeAssociations();
   this.article.fetch();
 
   options = _.extend({id: "ArticlePage"}, options);

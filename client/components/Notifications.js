@@ -37,13 +37,13 @@ Notifications.controller = function(options) {
 };
 
 Notifications.view = function(ctrl) {
-  var notifications = _.map(ctrl.notifications, function(notification) {
-    var classes = cx({unread: !notification.read});
+  var notifications = ctrl.notifications.map(function(notification) {
+    var classes = cx({unread: !notification.get("read")});
 
     return (
       <li className={classes}>
-        <h2>{notification.title}</h2>
-        <p>{notification.body}</p>
+        <h2>{notification.get("title")}</h2>
+        <p>{notification.get("body")}</p>
       </li>
     );
   });

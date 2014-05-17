@@ -5,7 +5,7 @@ var BaseModel = require("./BaseModel.js");
 
 var ArticleModel = BaseModel.extend({
   relations: {
-    "comments": {type: "many", model: require("./CommentModel.js")},
+    "comments": {type: "many", model: require("./CommentModel.js")}
   },
   defaults: {
     "title": "",

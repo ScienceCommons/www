@@ -3,6 +3,11 @@
 var BaseModel = require("./BaseModel.js");
 
 var UserModel = BaseModel.extend({
+  relations: {
+    "articles": {type: "many", model: require("./ArticleModel.js")},
+    "comments": {type: "many", model: require("./CommentModel.js")},
+    "notifications": {type: "many", model: require("./NotificationModel.js")},
+  },
   defaults: {
     "email": "stephen@curatescience.org",
     "first_name": "Stephen",
@@ -10,8 +15,6 @@ var UserModel = BaseModel.extend({
     "last_name": "Demjanenko",
     "facebook": "sdemjanenko",
     "twitter": "sdemjanenko",
-    "articles": [],
-    "comments": [],
     "gravatar": "8c51e26145bc08bb6f43bead1b5ad07f.png", // me
     "notifications": [
       {title: "foo", body: "foo body", read: false},
