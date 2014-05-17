@@ -1,72 +1,124 @@
 @import "../variables.scss";
+$replication_width: 300px;
 
-.study {
-  display: inline-block;
-
-  .details, .replications {
+.Replications {
+  .study, .details, .replications, .legend {
     display: inline-block;    
   }
 
-  .replications {
-    background-color: $off_white;
-  }
-
-  .badges .Badge {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-}
-
-
-
-
-table.Replications {
-  border-collapse: collapse;
-  border: 1px solid $gray;
-
-  td {
+  .legend {
+    background-color: $light_gray;
     border: 1px solid $gray;
-    padding: 10px;
-  }
 
-  th {
-    padding: 10px;
-
-    &:first-child {
-      border: 1px solid $gray;
+    .cell {
+      text-align: right;
     }
   }
 
-  td:first-child, thead, tfoot {
+  .details, .legend {
+    .cell {
+      padding: 10px 20px;
+
+      &:not(.replicationPath) {
+        border-right: 1px solid $gray;
+      }
+      border-bottom: 1px solid $gray;
+    }
+  }
+
+  .replicationPath {
+    height: 54px;
+    box-sizing: border-box;
     background-color: $light_gray;
   }
 
-  td:first-child {
-    text-align: right;
+  .details .replicationPath {
+    white-space: nowrap;
+    padding-top: 20px;
+    overflow: auto;
+
+    position: relative;
+    z-index: 0;
+    background-image: url("../images/subway_study.png"), url("../images/subway_path.png");
+    background-repeat: no-repeat;
+    background-position: 50% 20px, right 0 top 20px;
+    background-size: auto auto, 100% 7px;
+
+    .add_replication {
+      //replace-text-with-dimensions('subway_add.png')
+      position: absolute;
+      right: 40px;
+      top: 20px;
+    }
   }
 
-  td:not(:first-child) {
-    text-align: center;
-    width: $replication_width;
+  .replications .replicationPath {
+    height: 64px;
+    background-repeat: no-repeat, repeat-x;
+    background-position: 50% 20px, 0 20px;
+    position: relative;
+    background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
+
+    .count {
+      background: #23A6E0;
+      color: #FFF;
+      display: block;
+      line-height: 24px;
+      margin-top: -10px;
+      text-align: center;
+      width: 30px;
+      border-radius: 4px;
+    }
   }
 
-  tfoot td {
-    text-align: center !important;
+  & > .study {
+    &:first-of-type > .details > .replicationPath {
+      background-size: auto auto, 50% 7px;
+    }
+
+    &:last-child > .details > .replicationPath {
+      background-position: 50% 20px, left 0 top 20px;
+      background-size: auto auto, 75% 7px;
+    }
   }
 
-  td.replication {
-    background-color: $off_white;
+  .authors {
+    height: 50px;
   }
 
-  .badges .Badge {
-    display: inline-block;
-    width: 40px;
+  .replications .authors {
     height: 40px;
-    margin-left: 10px;
-    margin-right: 10px;
+  }
+
+  .badges {
+    height: 50px;
+  }
+
+  .independentVariables, .dependentVariables, .n, .power, .effectSize {
+    height: 40px;
+  }
+
+  .study {
+    .details {
+      width: $replication_width;
+      border-left: none;
+    }
+
+    .cell {
+      text-align: center;
+    }
+
+    .replications {
+      background-color: $off_white;
+    }
+
+    .badges .Badge {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 }
 
