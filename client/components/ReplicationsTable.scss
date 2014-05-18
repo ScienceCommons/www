@@ -68,7 +68,7 @@ $replication_width: 300px;
     }
 
     .count {
-      background: #23A6E0;
+      background: $blue;
       color: #FFF;
       line-height: 24px;
       margin-top: -10px;
@@ -88,6 +88,17 @@ $replication_width: 300px;
       top: 0px;
       right: -8px;
       background-repeat: no-repeat;
+
+      &:before {
+        border: solid;
+        border-color: $blue transparent;
+        border-width: 6px 6px 0 6px;
+        border-width: 6px 6px 0 6px;
+        bottom: 24px;
+        content: "";
+        left: 0;
+        position: absolute;
+      }
 
       &.closed {
         background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");
