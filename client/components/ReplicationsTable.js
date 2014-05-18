@@ -23,6 +23,14 @@ ReplicationsTable.toggleStudyReplications = function(study) {
   };
 };
 
+ReplicationsTable.cellView = function(study, field) {
+  return (
+    <div className={"cell " + field + " " + (study.hasComments(field) ? "icon icon_comment" : "")}>
+      {study.get(field)}
+    </div>
+  );
+}
+
 ReplicationsTable.studyView = function(study, isReplication) {
   if (study.get("replications") && study.get("closed") !== true) {
     var replications = study.get("replications").map(function(replication) {
@@ -57,11 +65,11 @@ ReplicationsTable.studyView = function(study, isReplication) {
           {new Badge.view({badge: "registration"})}
           {new Badge.view({badge: "disclosure"})}
         </div>
-        <div className="independentVariables cell">{study.get("independentVariables")}</div>
-        <div className="dependentVariables cell">{study.get("dependentVariables")}</div>
-        <div className="n cell">{study.get("n")}</div>
-        <div className="power cell">{study.get("power")}%</div>
-        <div className="effectSize cell">d={study.get("effectSize")}</div>
+        {ReplicationsTable.cellView(study, "independentVariables")}
+        {ReplicationsTable.cellView(study, "dependentVariables")}
+        {ReplicationsTable.cellView(study, "n")}
+        {ReplicationsTable.cellView(study, "power")}
+        {ReplicationsTable.cellView(study, "effectSize")}
       </div>
 
       <div className="replications">

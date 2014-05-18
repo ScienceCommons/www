@@ -41,20 +41,18 @@ $replication_width: 300px;
   }
 
   .replicationPath {
-    height: 54px;
-    box-sizing: border-box;
+    height: 64px;
+    padding-bottom: 0 !important;
     background-color: $light_gray;
   }
 
   .details .replicationPath {
     white-space: nowrap;
-    padding-top: 20px;
-
     position: relative;
     z-index: 0;
     background-image: url("../images/subway_study.png"), url("../images/subway_path.png");
     background-repeat: no-repeat;
-    background-position: 50% 20px, right 0 top 20px;
+    background-position: 50% 40px, right 0 top 40px;
     background-size: auto auto, 100% 7px;
 
     .add_replication {
@@ -64,7 +62,7 @@ $replication_width: 300px;
       width: 25px;
       height: 38px;
       right: 40px;
-      top: 20px;
+      top: 40px;
     }
 
     .count {
@@ -81,11 +79,9 @@ $replication_width: 300px;
 
     .replicationsCount {
       position: absolute;
-      right: 0;
-      top: 5px;
       text-decoration: none;
       height: 44px;
-      top: 0px;
+      top: 20px;
       right: -8px;
       background-repeat: no-repeat;
 
@@ -109,9 +105,9 @@ $replication_width: 300px;
   }
 
   .replications .replicationPath {
-    height: 64px;
+    height: 74px;
     background-repeat: no-repeat, repeat-x;
-    background-position: 50% 20px, 0 20px;
+    background-position: 50% 40px, 0 40px;
     position: relative;
     background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
   }
@@ -129,19 +125,19 @@ $replication_width: 300px;
   }
 
   .authors {
-    height: 50px;
+    height: 70px;
   }
 
   .replications .authors {
-    height: 40px;
+    height: 60px;
   }
 
   .badges {
-    height: 50px;
+    height: 70px;
   }
 
   .independentVariables, .dependentVariables, .n, .power, .effectSize {
-    height: 40px;
+    height: 60px;
   }
 
   .study {
@@ -152,6 +148,21 @@ $replication_width: 300px;
 
     .cell {
       text-align: center;
+      position: relative;
+      white-space: normal;
+    }
+
+    .cell.icon {
+      display: block;
+    }
+
+    .cell.icon_comment {
+      &:before {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        color: $purple;
+      }
     }
 
     .replications {

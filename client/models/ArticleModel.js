@@ -42,12 +42,52 @@ var ArticleModel = BaseModel.extend({
         "replications": [
           {"authors": "Feng et al."},
           {"authors": "Wong et al."}
+        ],
+        "independentVariablesComments": [
+          {
+            "anonymous": true,
+            "date": "4-1-2014",
+            "body": "Blah",
+            "replies": [
+              {
+                "author": {first_name: "Stephen", last_name: "Demjanenko"},
+                "date": "4-1-2014",
+                "body": "Try to leave useful comments.  Thanks!"
+              }
+            ]
+          },
+          {
+            "author": {first_name: "Stephen", last_name: "Demjanenko"},
+            "date": "4-1-2014",
+            "body": "Im gonna see if I can replicate it"
+          }
         ]
-      },{
+      }, {
         "authors": "Zhong et al.",
         closed: true,
         "replications": [
-          {"authors": "Schwarmer et al."}
+          {
+            "authors": "Schwarmer et al.",
+            "dependentVariablesComments": [
+              {
+                "anonymous": true,
+                "date": "4-1-2014",
+                "body": "Blah",
+                "replies": [
+                  {
+                    "author": {first_name: "Stephen", last_name: "Demjanenko"},
+                    "date": "4-1-2014",
+                    "body": "Try to leave useful comments.  Thanks!"
+                  }
+                ]
+              },
+              {
+                "author": {first_name: "Stephen", last_name: "Demjanenko"},
+                "date": "4-1-2014",
+                "body": "Im gonna see if I can replicate it"
+              }
+            ]
+          }
         ]
       }, {
         "authors": "Zhong et al.",
