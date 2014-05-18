@@ -1,11 +1,15 @@
-@import "../variables.scss";
+@import "../../variables.scss";
 $replication_width: 300px;
 
 .ReplicationsTable {
   white-space: nowrap;
 
   .studies, .study, .details, .replications, .legend {
-    display: inline-block;    
+    display: inline-block;
+  }
+
+  .cell {
+    box-sizing: border-box;
   }
 
   .legend {
@@ -17,9 +21,12 @@ $replication_width: 300px;
     }
   }
 
+  .legend .cell, .cellContents {
+    padding: 10px 20px;
+  }
+
   .details, .legend {
     .cell {
-      padding: 10px 20px;
       border-bottom: 1px solid $gray;
 
       &:not(.replicationPath) {
@@ -50,13 +57,13 @@ $replication_width: 300px;
     white-space: nowrap;
     position: relative;
     z-index: 0;
-    background-image: url("../images/subway_study.png"), url("../images/subway_path.png");
+    background-image: url("../../images/subway_study.png"), url("../../images/subway_path.png");
     background-repeat: no-repeat;
     background-position: 50% 40px, right 0 top 40px;
     background-size: auto auto, 100% 7px;
 
     .add_replication {
-      background-image: url("../images/subway_add.png");
+      background-image: url("../../images/subway_add.png");
       background-repeat: no-repeat;
       position: absolute;
       width: 25px;
@@ -97,7 +104,7 @@ $replication_width: 300px;
       }
 
       &.closed {
-        background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");
+        background-image: url("../../images/subway_replication_closed.png"), url("../../images/subway_path.png");
         background-position: -2px 20px;
         width: 30px;
       }
@@ -109,11 +116,25 @@ $replication_width: 300px;
     background-repeat: no-repeat, repeat-x;
     background-position: 50% 40px, 0 40px;
     position: relative;
-    background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
+    background-image: url("../../images/subway_replication_open.png"), url("../../images/subway_path.png");
   }
 
   .studies > .study:first-child > .details .replicationPath {
     background-size: auto auto, 50% 7px;
+  }
+
+  .studies.hasOpenModal .study:not(.hasOpenModal) > .details .cell:not(.replicationPath) {
+    opacity: 0.1;
+  }
+
+  .cell.hasOpenModal .cellContents {
+    background-color: $blue;
+    color: white;
+  }
+
+  .cell:not(.hasOpenModal) .cellContents:hover {
+    background-color: $light_blue;
+    color: white;
   }
 
   & > .study {
@@ -150,6 +171,22 @@ $replication_width: 300px;
       text-align: center;
       position: relative;
       white-space: normal;
+
+      .cellContents {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .indicators {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+
+        .icon {
+          margin-left: 5px;
+        }
+      }
     }
 
     .cell.icon {
@@ -177,6 +214,108 @@ $replication_width: 300px;
       margin-right: 10px;
     }
   }
+
+  .fieldModal {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 10px;
+    background-color: white;
+    z-index: 100;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 300px;
+    text-align: left;
+
+    header, footer {
+      background-color: $light_gray;
+      padding: 10px;
+
+      .btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+
+    .fieldTop, .addComment {
+      position: relative;
+    }
+
+    header {
+      border-bottom: 1px solid $gray;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      margin: 0;
+
+      .fieldTop {
+        white-space: nowrap;
+      }
+
+      .fieldTitle {
+      }
+
+      .fieldTitle {
+        font-size: 18px;
+      }
+
+      .fieldUpdatedDate {
+        font-size: 14px;
+      }
+    }
+
+    footer {
+      border-top: 1px solid $gray;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      margin-top: 10px;
+
+      .addComment {
+        textarea {
+          resize: vertical;
+        }
+      }
+    }
+
+    ul.flow {
+      list-style: none;
+      height: 300px;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      li {
+        padding: 10px;
+        border-bottom: 1px solid $gray;
+      }
+
+      li.valueChange {
+        background-color: $light_blue;
+      }
+    }
+  }
+
+  form.fieldModal {
+    header {
+      text-align: right;
+    }
+
+    header .btn {
+      position: relative;
+      background-color: $blue;
+      border-color: $blue;
+      color: white;
+    }
+
+    .editView {
+      padding: 20px;
+
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+      }
+    }
+  }
 }
 
 .ReplicationPath {
@@ -190,7 +329,7 @@ $replication_width: 300px;
     position: relative;
     width: $replication_width;
     z-index: 0;
-    background-image: url("../images/subway_study.png"), url("../images/subway_path.png");
+    background-image: url("../../images/subway_study.png"), url("../../images/subway_path.png");
     background-repeat: no-repeat;
     background-position: 50% 20px, right 0 top 20px;
     background-size: auto auto, 100% 7px;
@@ -222,13 +361,13 @@ $replication_width: 300px;
     }
 
     &.closed {
-      background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");
+      background-image: url("../../images/subway_replication_closed.png"), url("../../images/subway_path.png");
       background-position: -2px 20px;
       width: 30px;
     }
 
     &.open {
-      background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
+      background-image: url("../../images/subway_replication_open.png"), url("../../images/subway_path.png");
       width: $replication_width;
 
       .count {

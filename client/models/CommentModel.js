@@ -2,7 +2,10 @@
 
 "use strict";
 
-var BaseModel = require("./BaseModel.js");
+var _ = require("underscore");
+var moment = require("moment");
+
+var BaseModel = require("./BaseData.js").Model;
 
 var CommentModel = BaseModel.extend({
   relations: {
@@ -12,14 +15,23 @@ var CommentModel = BaseModel.extend({
     "userId": "",
     "body": "",
     "anonymous": false
+    // ts
+  },
+  initialize: function() {
+    if (!this.get("ts")) {
+      this.set("ts", _.now(), {silent: true});
+    }
   },
   computeds: {
     authorName: function() {
-      if (this.get("anonymous")) {
+      if (this.get("anonymous") || !this.get("author")) {
         return "Anonymous";
       } else {
         return this.get("author").get("fullName");
       }
+    },
+    timeAgo: function() {
+      return moment(this.get("ts")).fromNow();
     },
     image: function() {
       if (this.get("anonymous")) {
