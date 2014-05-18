@@ -7,7 +7,8 @@
     "mainOutput": "main",
     "dependencies": {
         "mithril": "0.1.12",
-        "underscore": "1.6.0"
+        "underscore": "1.6.0",
+        "moment": "2.6.0"
     },
     "devDependencies": {
         "grunt": "0.4.4",
