@@ -2,12 +2,14 @@
 
 #ArticlePage {
 
-  .articleTitle {
-    margin-top: 0;
-  }
+  .articleHeader {
+    .articleTitle {
+      margin-top: 0;
+    }
 
-  .authors {
-    color: $gray;
+    .authors {
+      color: $gray;
+    }
   }
 
   .journal, .doi, .tags, .peerReview {

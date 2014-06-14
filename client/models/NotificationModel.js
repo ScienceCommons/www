@@ -2,7 +2,7 @@
 
 "use strict";
 
-var BaseModel = require("./BaseModel.js");
+var BaseModel = require("./BaseData.js").Model;
 
 var NotificationModel = BaseModel.extend({});
 

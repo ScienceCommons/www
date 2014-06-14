@@ -10,7 +10,7 @@ var App = {};
 
 App.pages = {
   NotFound: require("./pages/NotFoundPage.js"),
-  About: require("./pages/AboutPage.js"),  
+  About: require("./pages/AboutPage.js"),
   Article: require("./pages/ArticlePage.js"),
   Author: require("./pages/AuthorPage.js"),
   Home: require("./pages/HomePage.js"),
@@ -25,6 +25,8 @@ App.showPage = function(pageName) {
   var Page = {};
 
   Page.controller = function() {
+    m.startComputation();
+
     if (!CS.user && App.user) {
       delete App.user;
     } else if (CS.user && !App.user) {
@@ -41,6 +43,8 @@ App.showPage = function(pageName) {
       this.pageController = new this.currentPage.controller({user: App.user});
       GoogleAnalytics.TrackNavigation();
     }
+
+    m.endComputation();
   };
 
   Page.view = function(ctrl) {
@@ -60,7 +64,7 @@ m.route(document.getElementById("page"), "/not_found", {
   "/articles/:articleId": App.showPage("Article"),
   "/authors/:authorId": App.showPage("Author"),
   "/login": App.showPage("Login"),
-  "/about": App.showPage("About"),  
+  "/about": App.showPage("About"),
   "/logout": App.showPage("Logout"),
   "/signup": App.showPage("Signup"),
   "/not_found": App.showPage("NotFound")
