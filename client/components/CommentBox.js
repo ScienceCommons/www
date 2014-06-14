@@ -47,7 +47,8 @@ CommentList.view = function(ctrl) {
 var CommentForm = {};
 
 CommentForm.controller = function(options) {
-  CommentForm.reset(this);
+  this.body = m.prop("");
+  this.anonymous = m.prop(false);
   this.user = options.user;
   this.comments = options.comments;
 
@@ -71,7 +72,7 @@ CommentForm.controller = function(options) {
       "body": _this.body(),
       "anonymous": _this.anonymous()
     });
-    CommentForm.reset(_this);
+    _this.body("");
   };
 
   this.handleInput = function() {
@@ -83,11 +84,6 @@ CommentForm.controller = function(options) {
 CommentForm.autosize = function(el) {
   el.style.height = "auto";
   el.style.height = el.scrollHeight+'px';
-};
-
-CommentForm.reset = function(ctrl) {
-  ctrl.body = m.prop("");
-  ctrl.anonymous = m.prop(false);
 };
 
 CommentForm.view = function(ctrl) {
