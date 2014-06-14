@@ -205,6 +205,7 @@ $column_width: 300px;
 
   .study:last-child .replication_path {
     background-position: 50% 30px, right 60px top 30px;
+    border-right: 1px solid $gray;
   }
 
   .study.replication:last-child .replication_path {
