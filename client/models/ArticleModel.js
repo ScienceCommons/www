@@ -1,12 +1,12 @@
 "use strict";
 
 var _ = require("underscore");
-var BaseModel = require("./BaseModel.js");
+var BaseModel = require("./BaseData.js").Model;
 
 var ArticleModel = BaseModel.extend({
   relations: {
     "comments": {type: "many", model: require("./CommentModel.js")},
-    "studies": {type: "many", model: require("./StudyModel.js")}
+    "studies": {type: "many", model: require("./StudyModel.js"), urlAction: "studies"}
   },
   defaults: {
     "title": "",
@@ -35,13 +35,15 @@ var ArticleModel = BaseModel.extend({
         "body": "Im gonna see if I can replicate it"
       }
     ],
-    "studies": [
+    /*"studies": [
       {
+        "id": "1",
         "authors": "Zhong et al.",
+        "badges": ["data", "methods", "registration", "disclosure"],
         "closed": true, // for testing the replication graph
         "replications": [
-          {"authors": "Feng et al."},
-          {"authors": "Wong et al."}
+          {"id": "2", "authors": "Feng et al."},
+          {"id": "3", "authors": "Wong et al."}
         ],
         "independentVariablesComments": [
           {
@@ -63,10 +65,12 @@ var ArticleModel = BaseModel.extend({
           }
         ]
       }, {
+        "id": "4",
         "authors": "Zhong et al.",
         closed: true,
         "replications": [
           {
+            "id": "5",
             "authors": "Schwarmer et al.",
             "dependentVariablesComments": [
               {
@@ -82,6 +86,7 @@ var ArticleModel = BaseModel.extend({
                 ]
               },
               {
+                "id": "6",
                 "author": {first_name: "Stephen", last_name: "Demjanenko"},
                 "date": "4-1-2014",
                 "body": "Im gonna see if I can replicate it"
@@ -90,9 +95,10 @@ var ArticleModel = BaseModel.extend({
           }
         ]
       }, {
-        "authors": "Zhong et al.",
+        "id": "7",
+        "authors": "Zhong et al."
       }
-    ],
+    ],*/
     "action_editor": "Cathleen Moore",
     "reviewers": ["Bob Bland", "Crystal Cali"],
     "community_summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros tellus, venenatis molestie ligula in, lobortis lobortis est. Nunc adipiscing erat sed libero volutpat dapibus ultrices feugiat elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent ac nisi luctus arcu tempus malesuada. Fusce lectus augue, ultrices id purus ac, viverra convallis ipsum. Mauris convallis urna ut magna laoreet, quis dapibus dolor aliquet. Nunc tristique pulvinar imperdiet. Fusce et lectus ac nunc porta eleifend imperdiet sed diam. Curabitur sollicitudin id enim a lacinia. Suspendisse ultricies laoreet turpis a tempor. Cras dapibus, dolor quis ultrices convallis, sapien lectus blandit turpis, in mollis purus elit ac magna.",

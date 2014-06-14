@@ -7,7 +7,7 @@ var _ = require("underscore");
 
 var Layout = require("../layouts/DefaultLayout.js");
 var Spinner = require("../components/Spinner.js");
-var ReplicationsTable = require("../components/ReplicationsTable.js");
+var StudiesTable = require("../components/StudiesTable.js");
 var Pill = require("../components/Pill.js");
 var CommentBox = require("../components/CommentBox.js");
 
@@ -20,10 +20,12 @@ ArticlePage.controller = function(options) {
   this.article.initializeAssociations();
   window.article = this.article;
   this.article.fetch();
+  this.article.get("studies").fetch();
 
   options = _.extend({id: "ArticlePage"}, options);
   this.layoutController = new Layout.controller(options);
   this.commentBoxController = new CommentBox.controller({comments: this.article.get("comments"), user: options.user});
+  this.studiesTableController = new StudiesTable.controller({article: article});
 };
 
 ArticlePage.view = function(ctrl) {
@@ -79,7 +81,7 @@ ArticlePage.view = function(ctrl) {
         </div>
 
         <div className="section">
-          {new ReplicationsTable.view({article: article})}
+          {new StudiesTable.view(ctrl.studiesTableController)}
         </div>
 
         <div className="section">
