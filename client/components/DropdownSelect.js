@@ -19,7 +19,7 @@ DropdownSelect.controller = function(options) {
   _this.handleClick = function(value) {
     return function() {
       if (value !== _this.value()) {
-        _this.onchange(value);  
+        _this.onchange(value);
       }
       _this.dropdownController.toggle();
     };
@@ -27,7 +27,7 @@ DropdownSelect.controller = function(options) {
 };
 
 DropdownSelect.view = function(ctrl) {
-  var selectedValue = ctrl.value() || _.first(ctrl.options).value;
+  var selectedValue = _.isUndefined(ctrl.value()) ? _.first(ctrl.options).value : ctrl.value();
   var label = _.findWhere(ctrl.options, {value: selectedValue}).content;
 
   var list = _.map(ctrl.options, function(option) {
@@ -35,7 +35,7 @@ DropdownSelect.view = function(ctrl) {
   });
 
   var content = <ul>{list}</ul>;
-  
+
   return Dropdown.view(ctrl.dropdownController, content, label);
 };
 
