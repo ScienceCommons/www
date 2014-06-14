@@ -6,6 +6,7 @@ require("./StudiesTable.scss");
 var _ = require("underscore");
 var Study = require("../models/StudyModel.js");
 var cx = require("../utils/ClassSet.js");
+var Spinner = require("./Spinner.js");
 
 var StudiesTable = {};
 
@@ -146,19 +147,25 @@ StudiesTable.controller = function(opts) {
 };
 
 StudiesTable.view = function(ctrl) {
-  var studies = ctrl.article.get("studies").map(function(study) {
-    if (ctrl.expanded()[study.get("id")]) {
-      var replications = study.get("replications").map(function(replication) {
-        return StudiesTable.studyView(ctrl, replication, {replication: true});
-      });
-    }
-    return [StudiesTable.studyView(ctrl, study), replications];
-  });
-
-  if (ctrl.newStudy()) {
-    studies.push(StudiesTable.studyView(ctrl, ctrl.newStudy(), {new: true}));
+  var content;
+  if (ctrl.article.get("studies").loading) {
+    content = Spinner.view();
   } else {
-    var addStudyButton = <button className="btn addStudy" onclick={ctrl.addStudy}>Add study</button>;
+    var studies = ctrl.article.get("studies").map(function(study) {
+      if (ctrl.expanded()[study.get("id")]) {
+        var replications = study.get("replications").map(function(replication) {
+          return StudiesTable.studyView(ctrl, replication, {replication: true});
+        });
+      }
+      return [StudiesTable.studyView(ctrl, study), replications];
+    });
+
+    if (ctrl.newStudy()) {
+      studies.push(StudiesTable.studyView(ctrl, ctrl.newStudy(), {new: true}));
+    } else {
+      var addStudyButton = <button className="btn addStudy" onclick={ctrl.addStudy}>Add study</button>;
+    }
+    content = [<ul className="studies">{_.flatten(studies)}</ul>, addStudyButton];
   }
 
   // add study column
@@ -176,8 +183,7 @@ StudiesTable.view = function(ctrl) {
         <div className="cell effect_size">Effect Size</div>
       </header>
 
-      <ul className="studies">{_.flatten(studies)}</ul>
-      {addStudyButton}
+      {content}
     </div>
   );
 };
