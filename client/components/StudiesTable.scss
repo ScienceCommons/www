@@ -201,6 +201,10 @@ $column_width: 300px;
     .authors {
       height: 60px;
     }
+
+    &:not(:last-child) .cell {
+      border-right: none;
+    }
   }
 
   .study:last-child .replication_path {
@@ -215,5 +219,9 @@ $column_width: 300px;
 
   .studies > .study:first-child > .replication_path {
     background-size: auto auto, 50% 7px;
+  }
+
+  .study.replication+.study:not(.replication) .cell:not(.replication_path) {
+    border-left: 1px solid $gray;
   }
 }
