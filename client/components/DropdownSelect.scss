@@ -19,10 +19,10 @@
         border-bottom-left-radius: 3px;
         border-bottom-right-radius: 3px;
       }
+    }
 
-      &.selected {
-        border: 2px solid $blue;
-      }
+    &:not(:hover) li.selected, li:hover {
+      border: 2px solid $blue;
     }
   }
 
