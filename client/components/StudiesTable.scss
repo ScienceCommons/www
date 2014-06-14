@@ -221,7 +221,7 @@ $column_width: 300px;
     background-size: auto auto, 50% 7px;
   }
 
-  .study.replication+.study:not(.replication) .cell:not(.replication_path) {
+  .study.replication+.study .cell:not(.replication_path) {
     border-left: 1px solid $gray;
   }
 }
