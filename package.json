@@ -8,7 +8,7 @@
     "dependencies": {
         "mithril": "0.1.12",
         "underscore": "1.6.0",
-        "moment": "2.6.0"
+        "vague-time": "1.0.1"
     },
     "devDependencies": {
         "grunt": "0.4.4",

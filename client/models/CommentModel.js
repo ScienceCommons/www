@@ -3,7 +3,7 @@
 "use strict";
 
 var _ = require("underscore");
-var moment = require("moment");
+var vagueTime = require("vague-time/lib/vagueTime-en");
 
 var BaseModel = require("./BaseData.js").Model;
 
@@ -31,7 +31,9 @@ var CommentModel = BaseModel.extend({
       }
     },
     timeAgo: function() {
-      return moment(this.get("ts")).fromNow();
+      return vagueTime.get({
+        to: this.get("ts")
+      });
     },
     image: function() {
       if (this.get("anonymous")) {

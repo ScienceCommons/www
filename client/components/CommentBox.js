@@ -20,7 +20,7 @@ Comment.view = function(ctrl) {
     <div className="Comment">
       {comment.get("image")}
       <div className="commentContent">
-        <h5>{comment.get("authorName")} - 2 days ago</h5>
+        <h5>{comment.get("authorName")} - {comment.get("timeAgo")}</h5>
         <p>{comment.get("body")}</p>
         <label onclick={ctrl.reply}><span className="icon icon_reply"></span> Reply</label>
 
@@ -51,7 +51,7 @@ CommentForm.controller = function(options) {
   this.user = options.user;
   this.comments = options.comments;
 
-  
+
   this.dropdownSelectController = new DropdownSelect.controller({
     options: [
       {value: false, content: <img src={this.user.get("gravatarUrl")} className="userImage" />},
