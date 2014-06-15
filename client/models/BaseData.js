@@ -406,7 +406,11 @@ BaseData.Collection.prototype.add = function(data, options) {
     this._byId[newModel.get("id")] = newModel; // I might need event listeners for change:id to update this field
 
     if (options.sync) {
-      this.sync("create", newModel, {url: this.url()}).then(newModel.set);
+      var sync = this.sync("create", newModel, {url: this.url()})
+      sync.then(newModel.set);
+      sync.then(function() {
+        newModel._serverState = _.extend({}, newModel.get());
+      });
     }
   }
   // merge otherwise?
