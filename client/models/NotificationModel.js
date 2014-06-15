@@ -2,9 +2,9 @@
 
 "use strict";
 
-var BaseModel = require("./BaseData.js").Model;
+var CurateBaseModel = require("./CurateBaseModel.js");
 
-var NotificationModel = BaseModel.extend({});
+var NotificationModel = CurateBaseModel.extend({});
 
 
 module.exports = NotificationModel;
