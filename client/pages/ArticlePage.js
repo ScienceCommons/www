@@ -59,7 +59,7 @@ ArticlePage.view = function(ctrl) {
 
           <div className="col span_1_of_4 text_right">
             <div className="btn_group">
-              <button className="btn bookmark_article"><span className="icon icon_bookmark"></span></button>
+              <button className="btn bookmark_article" onclick={article.bookmark}><span className="icon icon_bookmark"></span></button>
               <button className="btn"><span className="icon icon_share"></span></button>
             </div>
 
