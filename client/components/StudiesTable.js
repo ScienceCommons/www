@@ -57,7 +57,7 @@ StudiesTable.controller = function(opts) {
         active.field = field;
       }
       _this.active(active);
-    }
+    };
   };
 
   this.toggleExpanded = function(study) {
@@ -67,7 +67,7 @@ StudiesTable.controller = function(opts) {
       var id = study.get("id");
       expanded[id] = !expanded[id];
       _this.expanded(expanded);
-    }
+    };
   };
 
   this.handleEditClick = function() {
@@ -132,7 +132,7 @@ StudiesTable.controller = function(opts) {
       } else {
         throw("Cannot submit an empty comment");
       }
-    }
+    };
   };
 
   this.addReplication = function(study) {
@@ -351,6 +351,8 @@ StudiesTable.modalEditors.effect_size.view = function(ctrl, study) {
 StudiesTable.modalEditors.effect_size.onsubmit = function(ctrl, study) {
   if (ctrl.getEdits(study, "effect_size", "measure")) {
     study.set("effectSizeMeasure", ctrl.getEdits(study, "effect_size", "measure"));
+  } else if (_.isEmpty(study.get("effectSizeMeasure"))) {
+    study.set("effectSizeMeasure", "d"); // d is the default
   }
   if (ctrl.getEdits(study, "effect_size", "value")) {
     study.set("effectSizeValue", ctrl.getEdits(study, "effect_size", "value"));
