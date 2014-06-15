@@ -206,15 +206,10 @@ StudiesTable.studyView = function(ctrl, study, options) {
     return StudiesTable.studyCellView(ctrl, study, field, options);
   });
 
-  if (options.new) {
+  if (options.new || study.hasChanges()) {
     var saveButtons = [
-      <button type="button" className="btn saveNewStudy" onclick={ctrl.saveNewStudy}>Save</button>,
-      <button type="button" className="btn discardNewStudy" onclick={ctrl.discardNewStudy}>Discard</button>
-    ];
-  } else if (study.hasChanges()) {
-    var saveButtons = [
-      <button type="button" className="btn saveNewStudy" onclick={ctrl.saveStudy(study)}>Save</button>,
-      <button type="button" className="btn discardNewStudy" onclick={ctrl.resetStudy(study)}>Discard</button>
+      <button type="button" className="btn saveStudy" onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
+      <button type="button" className="btn discardStudy" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
     ];
   }
 
