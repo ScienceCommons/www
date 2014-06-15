@@ -421,6 +421,7 @@ BaseData.Collection.prototype.remove = function(model, options) {
   options = options || {};
   this.models = _.without(this.models, model);
   this.length = this.models.length;
+  delete this._byId[model.get("id")];
 
   if (options.sync && !model.isNew()) {
     var sync = this.sync("delete", model, {url: this.url() + "/" + model.get("id")})
