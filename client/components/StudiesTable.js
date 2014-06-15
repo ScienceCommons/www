@@ -43,6 +43,18 @@ StudiesTable.controller = function(opts) {
     _this.newStudy(false);
   };
 
+  this.saveStudy = function(study) {
+    return function(e) {
+      study.save();
+    };
+  };
+
+  this.resetStudy = function(study) {
+    return function(e) {
+      study.set(study._serverState);
+    };
+  };
+
   this.toggleModal = function(study, field) {
     return function() {
       var active = _this.active();
@@ -195,9 +207,14 @@ StudiesTable.studyView = function(ctrl, study, options) {
   });
 
   if (options.new) {
-    var newStudyButtons = [
+    var saveButtons = [
       <button type="button" className="btn saveNewStudy" onclick={ctrl.saveNewStudy}>Save</button>,
       <button type="button" className="btn discardNewStudy" onclick={ctrl.discardNewStudy}>Discard</button>
+    ];
+  } else if (study.hasChanges()) {
+    var saveButtons = [
+      <button type="button" className="btn saveNewStudy" onclick={ctrl.saveStudy(study)}>Save</button>,
+      <button type="button" className="btn discardNewStudy" onclick={ctrl.resetStudy(study)}>Discard</button>
     ];
   }
 
@@ -210,7 +227,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
   return (
     <li className={classes}>
       {cells}
-      {newStudyButtons}
+      {saveButtons}
     </li>
   );
 };
