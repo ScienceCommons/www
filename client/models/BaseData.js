@@ -18,7 +18,7 @@ var BaseData = {
 BaseData.Model = function(data, options) {
   this.options = options || {};
   this._errors = {};
-  _.bindAll(this, "set");
+  _.bindAll(this, "set", "save");
 
   if (this.options.initializeAssociations !== false) {
     // might need to init given the data
@@ -31,6 +31,8 @@ BaseData.Model = function(data, options) {
   } else {
     this.set(data, this.options);
   }
+
+  this._serverState = this.options.server ? _.extend({}, this.get()) : {}
 
   if (this.constructor._cache && this.id) {
     this.constructor._cache[this.id] = this;
@@ -268,22 +270,52 @@ BaseData.Model.prototype.fetch = function(options) {
   var _this = this;
   res.then(function() {
     _this.loading = false;
+    _this.loaded = true;
   });
   res.then(this.set, this.error);
+  res.then(function() {
+    _this._serverState = _.extend({}, _this.get());
+  });
   this.redraw();
   return res;
 };
 
-BaseData.Model.prototype.create = function(options) {
-  return this.sync("create", this, options).then(this.set, this.error);
-};
-
-BaseData.Model.prototype.update = function(options) {
-  return this.sync("update", this, options).then(this.set, this.error);
+BaseData.Model.prototype.save = function(options) {
+  this.saving = true;
+  var action = this.isNew() ? "create" : "update";
+  var res = this.sync(action, this, options);
+  var _this = this;
+  res.then(function() {
+    _this.saving = false;
+    _this.loaded = true;
+  });
+  res.then(this.set, this.error);
+  res.then(function() {
+    _this._serverState = _.extend({}, _this.get());
+  });
+  return res;
 };
 
 BaseData.Model.prototype.destroy = function(options) {
-  return this.sync("delete", this, options).then(this.set, this.error);
+  var res = this.sync("delete", this, options);
+  res.then(this.set, this.error);
+  var _this = this;
+  res.then(function() {
+    _this._serverState = _.extend({}, _this.get());
+  })
+  return res;
+};
+
+BaseData.Model.prototype.hasChanges = function(options) {
+  var clientState = this.get();
+  var serverState = this._serverState;
+  return _.any(clientState, function(val, attr) {
+    return serverState[attr] !== val;
+  });
+};
+
+BaseData.Model.prototype.isNew = function() {
+  return _.isUndefined(this.get("id"));
 };
 
 //////// COLLECTION /////////
@@ -302,7 +334,7 @@ BaseData.Collection = function(data, options) {
     silent: true
   };
 
-  _.bindAll(this, "reset", "add", "remove", "get", "indexOf");
+  _.bindAll(this, "reset", "_resetFromServer", "add", "remove", "get", "indexOf");
   this.reset(data, options);
   this.initialize.apply(this, arguments);
 };
@@ -328,11 +360,11 @@ BaseData.Collection.prototype.reset = function(data, options) {
   for (var i = 0; i < len; i++) {
     if (data[i].id && this.get(data[i].id)) {
       existingModel = this.get(data[i].id);
-      existingModel.set(data[i], {silent: true});
+      existingModel.set(data[i], {silent: true, server: options.server});
       models[i] = existingModel;
       _byId[existingModel.get("id")] = existingModel;
     } else {
-      newModel = this.initializeModelType(data[i], this.modelOptions);
+      newModel = this.initializeModelType(data[i], _.extend({}, this.modelOptions, {server: options.server}));
       models[i] = newModel;
       _byId[newModel.get("id")] = newModel;
     }
@@ -345,6 +377,10 @@ BaseData.Collection.prototype.reset = function(data, options) {
   if (!options.silent) {
     this.redraw();
   }
+};
+
+BaseData.Collection.prototype._resetFromServer = function(data) {
+  this.reset(data, {server: true});
 };
 
 BaseData.Collection.prototype.initializeModelType = function(data, options) {
@@ -415,7 +451,7 @@ BaseData.Collection.prototype.fetch = function(options) {
   res.then(function() {
     _this.loading = false;
   });
-  res.then(this.reset, this.error);
+  res.then(this._resetFromServer, this.error);
   this.redraw();
   return res;
 };
