@@ -417,9 +417,20 @@ BaseData.Collection.prototype.add = function(data, options) {
   return newModel;
 };
 
-BaseData.Collection.prototype.remove = function(model) {
+BaseData.Collection.prototype.remove = function(model, options) {
+  options = options || {};
   this.models = _.without(this.models, model);
   this.length = this.models.length;
+
+  if (options.sync && !model.isNew()) {
+    var sync = this.sync("delete", model, {url: this.url() + "/" + model.get("id")})
+    var _this = this;
+    sync.then(function() {}, function(err) {
+      console.log("Failed to delete", err);
+      _this.add(model);
+    });
+  }
+  this.redraw();
 };
 
 BaseData.Collection.prototype.at = function(index) {
