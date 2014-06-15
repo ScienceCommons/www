@@ -3,10 +3,10 @@
 "use strict";
 
 var _ = require("underscore");
-var BaseModel = require("./BaseData.js").Model;
+var CurateBaseModel = require("./CurateBaseModel.js");
 var CommentModel = require("./CommentModel.js");
 
-var StudyModel = BaseModel.extend({
+var StudyModel = CurateBaseModel.extend({
   relations: {
     //authors: {type: "many", model: require("./UserModel.js")},
     //comments: {type: "many", model: CommentModel},

@@ -5,9 +5,9 @@
 var _ = require("underscore");
 var vagueTime = require("vague-time/lib/vagueTime-en");
 
-var BaseModel = require("./BaseData.js").Model;
+var CurateBaseModel = require("./CurateBaseModel.js");
 
-var CommentModel = BaseModel.extend({
+var CommentModel = CurateBaseModel.extend({
   relations: {
     replies: {type: "many"} // model is defined below
   },

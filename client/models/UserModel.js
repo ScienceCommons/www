@@ -2,10 +2,10 @@
 
 "use strict";
 
-var BaseModel = require("./BaseData.js").Model;
+var CurateBaseModel = require("./CurateBaseModel.js");
 var CommentModel = require("./CommentModel.js");
 
-var UserModel = BaseModel.extend({
+var UserModel = CurateBaseModel.extend({
   relations: {
     "articles": {type: "many", model: require("./ArticleModel.js")},
     "comments": {type: "many", model: CommentModel},

@@ -1,9 +1,9 @@
 "use strict";
 
 var _ = require("underscore");
-var BaseModel = require("./BaseData.js").Model;
+var CurateBaseModel = require("./CurateBaseModel.js");
 
-var ArticleModel = BaseModel.extend({
+var ArticleModel = CurateBaseModel.extend({
   relations: {
     "comments": {type: "many", model: require("./CommentModel.js")},
     "studies": {type: "many", model: require("./StudyModel.js"), urlAction: "studies"}
