@@ -55,6 +55,15 @@ StudiesTable.controller = function(opts) {
     };
   };
 
+  this.deleteStudy = function(study) {
+    return function(e) {
+      var confirmation = confirm("This will permanently delete the study");
+      if (confirmation) {
+        _this.article.get("studies").remove(study, {sync: true});
+      }
+    };
+  };
+
   this.toggleModal = function(study, field) {
     return function() {
       var active = _this.active();
@@ -211,6 +220,8 @@ StudiesTable.studyView = function(ctrl, study, options) {
       <button type="button" className="btn saveStudy" onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
       <button type="button" className="btn discardStudy" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
     ];
+  } else if (!options.new) {
+    var saveButtons = <button type="button" className="btn discardStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
   }
 
   var classes = cx({
