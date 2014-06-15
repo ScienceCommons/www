@@ -222,6 +222,10 @@ module.exports = function (grunt) {
           {
             src: './build/production/public/assets/*',
             dest: 'assets/'
+          },
+          {
+            src: './build/production/public/assets/assets/*',
+            dest: 'assets/'
           }
         ]
       }
