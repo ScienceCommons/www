@@ -125,6 +125,11 @@ var ArticleModel = CurateBaseModel.extend({
         return _.first(lastNames);
       }
     },
+    reviewersStr: {
+      set: function(val) {
+        this.set("reviewers", val.split(/\n/));
+      }
+    },
     year: function() {
       var date = this.get("publication_date");
       if (date) {

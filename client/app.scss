@@ -146,3 +146,18 @@ h6, .h6 {
     border: 1px solid transparent;
   }
 }
+
+[contenteditable=false] {
+  border: 1px solid transparent;
+}
+
+[contenteditable=true] {
+  border: 1px solid $gray;
+  font-style: italic;
+
+  &:empty:before{
+    content: attr(placeholder);
+    color: $gray;
+  }
+}
+
