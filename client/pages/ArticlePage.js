@@ -81,6 +81,7 @@ ArticlePage.view = function(ctrl) {
         </div>
 
         <div className="section">
+          <h3>Studies and replications</h3>
           {new StudiesTable.view(ctrl.studiesTableController)}
         </div>
 
