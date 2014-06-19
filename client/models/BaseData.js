@@ -176,6 +176,10 @@ BaseData.Model.prototype.set = function(attr, val, options) {
     _.each(attr, function(obj_val, key) {
       _this.set(key, obj_val, {silent: true}); // let the outside set trigger the redraw
     });
+
+    if (options.server) {
+      this._serverState = _.extend({}, this._serverState, attr);
+    }
   }
 
   if (!options.silent) {
@@ -272,11 +276,9 @@ BaseData.Model.prototype.fetch = function(options) {
     _this.loading = false;
     _this.loaded = true;
   });
-  res.then(this.set, this.error);
-  res.then(function() {
-    _this._serverState = _.extend({}, _this.get());
-  });
-  this.redraw();
+  res.then(function(data) {
+    _this.set(data, {server: true});
+  }, this.error);
   return res;
 };
 
@@ -289,33 +291,34 @@ BaseData.Model.prototype.save = function(options) {
     _this.saving = false;
     _this.loaded = true;
   });
-  res.then(this.set, this.error);
-  res.then(function() {
-    _this._serverState = _.extend({}, _this.get());
-  });
+  res.then(function(data) {
+    _this.set(data, {server: true});
+  }, this.error);
   return res;
 };
 
 BaseData.Model.prototype.destroy = function(options) {
   var res = this.sync("delete", this, options);
-  res.then(this.set, this.error);
   var _this = this;
-  res.then(function() {
-    _this._serverState = _.extend({}, _this.get());
-  })
+  res.then(function(data) {
+    _this.set(data, {server: true});
+  }, this.error);
   return res;
 };
 
 BaseData.Model.prototype.hasChanges = function(options) {
   var clientState = this.get();
-  var serverState = this._serverState;
-  return _.any(clientState, function(val, attr) {
-    return serverState[attr] !== val;
+  return _.any(this._serverState, function(val, attr) {
+    return clientState[attr] !== val;
   });
 };
 
 BaseData.Model.prototype.isNew = function() {
   return _.isUndefined(this.get("id"));
+};
+
+BaseData.Model.prototype.reset = function() {
+  this.set(this._serverState);
 };
 
 //////// COLLECTION /////////
@@ -408,8 +411,8 @@ BaseData.Collection.prototype.add = function(data, options) {
     if (options.sync) {
       var sync = this.sync("create", newModel, {url: this.url()})
       sync.then(newModel.set);
-      sync.then(function() {
-        newModel._serverState = _.extend({}, newModel.get());
+      sync.then(function(data) {
+        newModel._serverState = _.extend({}, data);
       });
     }
   }
@@ -578,3 +581,4 @@ var extend = function(protoProps, staticProps) {
 BaseData.Model.extend = BaseData.Collection.extend = extend;
 
 module.exports = BaseData;
+
