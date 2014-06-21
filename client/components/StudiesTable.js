@@ -7,6 +7,7 @@ var _ = require("underscore");
 var Study = require("../models/StudyModel.js");
 var cx = require("../utils/ClassSet.js");
 var Spinner = require("./Spinner.js");
+var StudyFinder = require("../components/StudyFinder.js");
 
 var StudiesTable = {};
 
@@ -16,16 +17,14 @@ StudiesTable.controller = function(opts) {
   this.expanded = m.prop({}); // study_id's
   this.newStudy = m.prop(false);
   this.edits = m.prop({});
+  this.studyFinderStudy = m.prop(false);
 
   var _this = this;
   this.addStudy = function() {
     if (_this.newStudy() !== false) {
       // warn that existing new study must be saved or removed
     } else {
-      //_this.newStudy(new Study({
-      //  article_id: _this.article.get("id")
-      //}));
-      _this.newStudy(new Study());
+      _this.newStudy(new Study({article_id: _this.article.get("id")}));
     }
   };
 
@@ -156,15 +155,36 @@ StudiesTable.controller = function(opts) {
     };
   };
 
-  this.addReplication = function(study) {
+  this.openStudyFinder = function(study) {
     return function() {
-      study.get("replications").add({});
-      var expanded = _this.expanded();
-      var id = study.get("id");
-      expanded[id] = true;
-      _this.expanded(expanded);
+      _this.studyFinderStudy(study);
     };
   };
+
+  this.closeStudyFinder = function() {
+    _this.studyFinderStudy(false);
+  };
+
+  this.addReplication = function(replicationStudy) {
+    var study = _this.studyFinderStudy();
+    if (study) {
+      if (study.get("article_id") === replicationStudy.get("article_id")) {
+        alert("You are picking another study in this article to be a replication.  That is not allowed.");
+      } else {
+        study.get("replications").add(replicationStudy);
+        _this.closeStudyFinder();
+        var expanded = _this.expanded();
+        var id = study.get("id");
+        expanded[id] = true;
+        _this.expanded(expanded);
+      }
+    }
+  };
+
+  this.studyFinderController = new StudyFinder.controller({
+    close: this.closeStudyFinder,
+    selectStudy: this.addReplication
+  });
 };
 
 StudiesTable.view = function(ctrl) {
@@ -189,6 +209,10 @@ StudiesTable.view = function(ctrl) {
     content = [<ul className="studies">{_.flatten(studies)}</ul>, addStudyButton];
   }
 
+  if (ctrl.studyFinderStudy()) {
+    var studyFinderModal = new StudyFinder.view(ctrl.studyFinderController);
+  }
+
   // add study column
 
   return (
@@ -205,6 +229,7 @@ StudiesTable.view = function(ctrl) {
       </header>
 
       {content}
+      {studyFinderModal}
     </div>
   );
 };
@@ -291,11 +316,15 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
       );
     });
 
+    if (ctrl.article.get("id") === study.get("article_id")) {
+      var editButton = <button className="btn" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
+    }
+
     return (
       <div className="studyModalView">
         <header>
           {field}
-          <button className="btn" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>
+          {editButton}
         </header>
 
         <ul className="history">
@@ -323,7 +352,7 @@ StudiesTable.cellViews = {};
 
 StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
   if (!options.replication) {
-    var addReplicationLink = <span class="add_replication" onclick={ctrl.addReplication(study)}></span>;
+    var addReplicationLink = <span class="add_replication" onclick={ctrl.openStudyFinder(study)}></span>;
   }
 
   var count = study.get("replications").length;

@@ -7,6 +7,7 @@ var _ = require("underscore");
 var m = require("mithril");
 
 var ArticleModel = require("../models/ArticleModel.js");
+var ArticleCollection = require("../collections/ArticleCollection.js");
 var Spinner = require("./Spinner.js");
 var SearchFilter = require("./SearchFilter.js");
 var Badge = require("./Badge.js");
@@ -14,11 +15,9 @@ var Badge = require("./Badge.js");
 var SearchResults = {};
 
 SearchResults.controller = function() {
-  this.results = m.prop([]);
-  this.total = m.prop(0);
+  this.results = new ArticleCollection([]);
   this.from = m.prop(0);
   this.resultsPerPage = m.prop(20);
-  this.loading = m.prop(true);
 
   var _this = this;
   this.previousPage = function() {
@@ -32,22 +31,7 @@ SearchResults.controller = function() {
   };
 
   this.fetchResults = function() {
-    _this.loading(true);
-
-    var query = m.route.param("query");
-    var t0 = _.now();
-    m.request({method: "GET", url: "https://api.curatescience.org/articles?q="+query+"&from="+_this.from(), background: true}).then(function(res) {
-      var t1 = _.now();
-
-      _this.results(_.map(res.documents, function(doc) { return new ArticleModel(doc); }));
-      _this.loading(false);
-      _this.total(res.total);
-      _this.from(res.from);
-      m.redraw();
-
-      // log timing
-      ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, "/articles?q="+query+"&from="+res.from);
-    });
+    _this.results.search({query: m.route.param("query"), from: _this.from()});
   };
 
   this.fetchResults();
@@ -73,15 +57,15 @@ SearchResults.itemView = function(article) {
 SearchResults.view = function(ctrl) {
   var content;
 
-  if (ctrl.loading()) {
+  if (ctrl.results.loading) {
     content = new Spinner.view();
-  } else if (ctrl.total() > 0) {
-    content = <ul>{_.map(ctrl.results(), function(article) { return new SearchResults.itemView(article); })}</ul>;
+  } else if (ctrl.results.total > 0) {
+    content = <ul>{ctrl.results.map(function(article) { return new SearchResults.itemView(article); })}</ul>;
   } else {
     content = <h3>Sorry, no results were found</h3>;
   }
 
-  if (ctrl.total() > 0) {
+  if (ctrl.results.total > 0) {
     var nav = (
       <div className="search_nav">
         <div className="sort">
@@ -89,11 +73,11 @@ SearchResults.view = function(ctrl) {
           <span>Relavance</span>
           <span>Date</span>
         </div>
-        {ctrl.total()} Results
+        {ctrl.results.total} Results
       </div>
     );
 
-    if (ctrl.from() + ctrl.resultsPerPage() < ctrl.total()) {
+    if (ctrl.from() + ctrl.resultsPerPage() < ctrl.results.total) {
       var more = (
         <div className="section more">
           <button type="button" onclick={ctrl.nextPage}>More results</button>
@@ -104,7 +88,7 @@ SearchResults.view = function(ctrl) {
 
   return (
     <div className="section SearchResults">
-      
+
       <div className="col span_1_of_6">{new SearchFilter.view()}</div>
       <div className="col span_5_of_6">
         {nav}
