@@ -46,7 +46,7 @@ HomePage.controller = function(options) {
 
 HomePage.articleView = function(article) {
   return (
-    <div className="articleView">
+    <div className="articleView" onclick={visitArticle(article)}>
       <div className="title">{article.get("title")}</div>
       <div className="authors">({article.get("year")}) {article.etAl(3)}</div>
       <div className="badges">
@@ -89,6 +89,13 @@ HomePage.view = function(ctrl) {
   );
 
   return new Layout.view(ctrl.layoutController, content);
+};
+
+// helpers
+function visitArticle(article) {
+  return function() {
+    m.route("/articles/" + article.get("id"));
+  };
 };
 
 module.exports = HomePage;
