@@ -224,4 +224,14 @@ $column_width: 300px;
   .study.replication+.study .cell:not(.replication_path) {
     border-left: 1px solid $gray;
   }
+
+  .StudyFinder {
+    position: absolute;
+    background: white;
+    border: 1px solid $gray;
+    top: 0;
+    left: 0;
+    height: 300px;
+    width: 500px;
+  }
 }
