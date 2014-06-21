@@ -35,4 +35,9 @@
   .articleView:not(:last-child) {
     border-bottom: 2px solid $light_gray;
   }
+
+  .articles {
+    position: relative;
+    min-height: 200px;
+  }
 }
