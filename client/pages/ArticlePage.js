@@ -67,6 +67,10 @@ ArticlePage.view = function(ctrl) {
       editButtons = <button type="button" className="btn" onclick={ctrl.editClick}>Edit</button>;
     }
 
+    if (!_.isEmpty(article.get("year"))) {
+      var year = "(" + article.get("year") + ")";
+    }
+
     content = (
       <div>
         <div className="editButtons">
@@ -75,7 +79,7 @@ ArticlePage.view = function(ctrl) {
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("title"))}>{article.get("title")}</h2>
-            <p className="authors">{article.get("authorLastNames")} ({article.get("year")})</p>
+            <p className="authors">{article.get("authorLastNames")} {year}</p>
 
             <h3>Abstract</h3>
             <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("abstract"))}>{article.get("abstract")}</p>
