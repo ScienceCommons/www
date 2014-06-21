@@ -24,6 +24,10 @@
     margin: 0 40px;
     padding: 20px 0;
 
+    &:hover {
+      background-color: $light_gray;
+    }
+
     .Badge {
       display: inline-block;
       height: 30px;
@@ -34,5 +38,10 @@
 
   .articleView:not(:last-child) {
     border-bottom: 2px solid $light_gray;
+  }
+
+  .articles {
+    position: relative;
+    min-height: 200px;
   }
 }
