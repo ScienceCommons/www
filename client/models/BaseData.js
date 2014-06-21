@@ -326,6 +326,9 @@ BaseData.Model.prototype.reset = function() {
 
 BaseData.Collection = function(data, options) {
   options = options || {};
+  if (options.url) {
+    this.url = options.url;
+  }
   this.options = options;
   this.models = [];
   this.length = 0;
@@ -465,7 +468,7 @@ BaseData.Collection.prototype.error = function() {};
 BaseData.Collection.prototype.fetch = function(options) {
   this.loading = true;
 
-  var res =  m.request({method: "GET", url: this.url(), background: true, data: options, deserialize: maybeJSON});
+  var res =  m.request({method: "GET", url: _.result(this, "url"), background: true, data: options, deserialize: maybeJSON});
   var _this = this;
   res.then(function() {
     _this.loading = false;
