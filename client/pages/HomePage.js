@@ -7,7 +7,9 @@ var _ = require("underscore");
 var m = require("mithril");
 var Layout = require("../layouts/FullLayout.js")
 var Search = require("../components/Search.js");
+var Spinner = require("../components/Spinner.js");
 var ArticleModel = require("../models/ArticleModel.js");
+var ArticleCollection = require("../collections/ArticleCollection.js");
 var Badge = require("../components/Badge.js");
 
 var HomePage = {};
@@ -36,23 +38,10 @@ HomePage.controller = function(options) {
       publication_date: "2003-6-1"
     }, {silent: true})
   ];
-  this.recentlyCuratedArticles = [
-    new ArticleModel({
-      title: "Two birds with one stone: A preregistered adversarial collaboration on horizontal eye movements in free recall",
-      authors_denormalized: [{lastName: "Matzke"}, {lastName: "van Rijn"}, {lastName: "Slagter"}],
-      publication_date: "2013-6-1"
-    }, {silent: true}),
-    new ArticleModel({
-      title: "On the association between loneliness and bathing habits: Nine replications of Bargh & Shalev (2012) Study 1",
-      authors_denormalized: [{lastName: "Donnellan"}, {lastName: "Lucas"}, {lastName: "Cesario"}],
-      publication_date: "2006-6-1"
-    }, {silent: true}),
-    new ArticleModel({
-      title: "Washing away your sins: Threatened morality and physical cleansing",
-      authors_denormalized: [{lastName: "Zhong"}, {lastName: "Liljenquist"}],
-      publication_date: "2006-6-1"
-    }, {silent: true})
-  ];
+  this.recentlyCuratedArticles = new ArticleCollection([], {
+    url: "https://curatescience.org/articles/recent"
+  });
+  this.recentlyCuratedArticles.fetch();
 };
 
 HomePage.articleView = function(article) {
@@ -72,7 +61,13 @@ HomePage.articleView = function(article) {
 
 HomePage.view = function(ctrl) {
   var mostCuratedArticlesContent = _.map(ctrl.mostCuratedArticles, HomePage.articleView);
-  var recentlyUpdatedArticlesContent = _.map(ctrl.recentlyCuratedArticles, HomePage.articleView);
+
+  var recentlyUpdatedArticlesContent;
+  if (ctrl.recentlyCuratedArticles.loading) {
+    recentlyUpdatedArticlesContent = Spinner.view();
+  } else {
+    recentlyUpdatedArticlesContent = ctrl.recentlyCuratedArticles.map(HomePage.articleView);
+  }
 
   var content = (
     <div>
