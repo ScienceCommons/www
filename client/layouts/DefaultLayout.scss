@@ -40,11 +40,16 @@
         fill: white;
       }
     }
-    
+
     .Notifications {
       height: 32px;
       width: 32px;
       display: inline-block;
     }
+  }
+
+  & > .content {
+    position: relative;
+    min-height: 100px;
   }
 }
