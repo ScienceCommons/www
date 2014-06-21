@@ -109,13 +109,6 @@ var ArticleModel = CurateBaseModel.extend({
   },
   urlRoot: "https://api.curatescience.org/articles",
   computeds: {
-    authorsEtAl: function() {
-      var authors = this.get("authors_denormalized");
-      if (!_.isEmpty(authors)) {
-        var lastName = _.first(authors).last_name;
-        return lastName + (authors.length > 1 ? " et al.": "");
-      }
-    },
     authorLastNames: function() {
       var authors = this.get("authors_denormalized");
       var lastNames = _.pluck(authors, "last_name");
@@ -142,6 +135,17 @@ var ArticleModel = CurateBaseModel.extend({
       data: {id: this.get("id")},
       url: this.url() + "/bookmark"
     });
+  },
+  etAl: function(num) {
+    num = num || 1;
+    var authors = this.get("authors_denormalized");
+    if (!_.isEmpty(authors)) {
+      if (authors.length > num) {
+        return _.pluck(_.first(authors, num), "last_name").join(", ") + " et al.";
+      } else {
+        return _.pluck(_.first(authors, authors.length - 1), "last_name").join(", ") + " & " + _.last(authors).last_name;
+      }
+    }
   }
 });
 

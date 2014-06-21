@@ -59,7 +59,7 @@ HomePage.articleView = function(article) {
   return (
     <div className="articleView">
       <div className="title">{article.get("title")}</div>
-      <div className="authors">({article.get("year")}) {article.get("authorsEtAl")}</div>
+      <div className="authors">({article.get("year")}) {article.etAl(3)}</div>
       <div className="badges">
         {new Badge.view({badge: "data", active: true})}
         {new Badge.view({badge: "methods", active: true})}
