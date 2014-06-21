@@ -120,7 +120,7 @@ var ArticleModel = CurateBaseModel.extend({
     },
     reviewersStr: {
       set: function(val) {
-        this.set("reviewers", val.split(/\n/));
+        this.set("reviewers", _.compact(val.split(/\n/)));
       }
     },
     year: function() {
