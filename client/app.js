@@ -5,6 +5,7 @@ require("./app.scss");
 
 var UserModel = require("./models/UserModel.js");
 var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
+var OnUnload = require("./utils/OnUnload.js");
 
 var App = {};
 
@@ -25,6 +26,7 @@ App.showPage = function(pageName) {
   var Page = {};
 
   Page.controller = function() {
+    OnUnload(this);
     m.startComputation();
 
     if (!CS.user && App.user) {
@@ -36,11 +38,11 @@ App.showPage = function(pageName) {
 
     if (!App.user && pageName !== "Login") {
       this.currentPage = App.pages["Login"];
-      this.pageController = new this.currentPage.controller({user: App.user});
+      this.controllers.page = new this.currentPage.controller({user: App.user});
       m.route("/login");
     } else {
       this.currentPage = App.pages[pageName];
-      this.pageController = new this.currentPage.controller({user: App.user});
+      this.controllers.page = new this.currentPage.controller({user: App.user});
       GoogleAnalytics.TrackNavigation();
     }
 
@@ -48,7 +50,7 @@ App.showPage = function(pageName) {
   };
 
   Page.view = function(ctrl) {
-    return new ctrl.currentPage.view(ctrl.pageController);
+    return new ctrl.currentPage.view(ctrl.controllers.page);
   };
 
   return Page;

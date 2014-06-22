@@ -4,13 +4,15 @@
 
 var _ = require("underscore");
 
+var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/FullLayout.js");
 var Spinner = require("../components/Spinner.js");
 
 var LogoutPage = {};
 
 LogoutPage.controller = function(options) {
-  this.layoutController = new Layout.controller(_.extend({id: "LogoutPage"}, options));
+  OnUnload(this);
+  this.controllers.layout = new Layout.controller(_.extend({id: "LogoutPage"}, options));
 
   setTimeout(function() {
     delete CS.user;
@@ -26,7 +28,7 @@ LogoutPage.view = function(ctrl) {
     </div>
   );
 
-  return new Layout.view(ctrl.layoutController, content);
+  return new Layout.view(ctrl.controllers.layout, content);
 };
 
 module.exports = LogoutPage;

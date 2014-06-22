@@ -3,10 +3,13 @@
 "use strict";
 require("./Dropdown.scss");
 
+var _ = require("underscore");
 var m = require("mithril");
 var cx = require("../utils/ClassSet.js");
 
 var Dropdown = {};
+
+Dropdown.instances = {};
 
 Dropdown.controller = function(options) {
   options = options || {};
@@ -16,36 +19,62 @@ Dropdown.controller = function(options) {
   this.label = options.label;
 
   var _this = this;
-  this.toggle = function() {
+  this.toggle = function(e) {
     _this.open(!_this.open());
   };
 
-  this.outsideClick = function(e) {
-    if (_this.open()) {
-      //var button = this.refs.button.getDOMNode();
-      //if (e.target != button && e.target.parentNode != button) {
-        _this.open(false);
-      //}
-    }
-  }
+  this.close = function() {
+    _this.open(false);
+  };
 
-  //document.addEventListener("click", this.outsideClick);
-  //document.removeEventListener("click", this.outsideClick); on unload
+  this.id = _.uniqueId();
+  Dropdown.instances[this.id] = this;
+  this.onunload = function() {
+    delete Dropdown.instances[_this.id];
+  };
+
+  this.contentConfig = function(el, isInitialized) {
+    _this.contentEl = el;
+  };
+
+  this.buttonConfig = function(el, isInitialized) {
+    _this.buttonEl = el;
+  };
 };
 
 Dropdown.view = function(ctrl, content, label) {
   if (ctrl.open()) {
-    var dropdownContent = <div className="dropdownContent">{content}</div>;
+    var dropdownContent = <div className="dropdownContent" config={ctrl.contentConfig}>{content}</div>;
   }
 
   return (
     <div className={"Dropdown " + ctrl.className}>
-      <button type="button" className="btn btn_subtle no_outline" onclick={ctrl.toggle}>
+      <button type="button" className="btn btn_subtle no_outline" onmousedown={ctrl.toggle} config={ctrl.buttonConfig}>
         {label || ctrl.label}
       </button>
       {dropdownContent}
     </div>
   );
+};
+
+var oldMouseDown = document.click;
+document.onmousedown = function(e) {
+  if (_.isFunction(oldMouseDown)) {
+    oldMouseDown(e);
+  }
+  var node = e.target;
+  var parentNodes = [node];
+  while (node.parentNode) {
+    node = node.parentNode;
+    parentNodes.push(node);
+  }
+
+  _.each(Dropdown.instances, function(dropdown) {
+    if (dropdown.open() && !_.contains(parentNodes, dropdown.buttonEl) && !_.contains(parentNodes, dropdown.contentEl)) {
+      dropdown.close();
+    }
+  });
+  m.redraw();
 };
 
 module.exports = Dropdown;

@@ -7,6 +7,8 @@ var _ = require("underscore");
 var m = require("mithril");
 
 var Layout = require("../layouts/DefaultLayout.js");
+var OnUnload = require("../utils/OnUnload.js");
+
 var Spinner = require("../components/Spinner.js");
 var StudiesTable = require("../components/StudiesTable.js");
 var Pill = require("../components/Pill.js");
@@ -17,6 +19,8 @@ var ArticleModel = require("../models/ArticleModel.js");
 var ArticlePage = {};
 
 ArticlePage.controller = function(options) {
+  OnUnload(this);
+
   this.article = new ArticleModel({id: m.route.param("articleId")});
   this.article.initializeAssociations();
   window.article = this.article;
@@ -25,9 +29,9 @@ ArticlePage.controller = function(options) {
   this.editing = m.prop(false);
 
   options = _.extend({id: "ArticlePage"}, options);
-  this.layoutController = new Layout.controller(options);
-  this.commentBoxController = new CommentBox.controller({comments: this.article.get("comments"), user: options.user});
-  this.studiesTableController = new StudiesTable.controller({article: article});
+  this.controllers.layout = new Layout.controller(options);
+  this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: options.user});
+  this.controllers.studiesTable = new StudiesTable.controller({article: article});
 
   var _this = this;
   this.editClick = function() {
@@ -110,14 +114,14 @@ ArticlePage.view = function(ctrl) {
 
         <div className="section">
           <h3>Studies and replications</h3>
-          {new StudiesTable.view(ctrl.studiesTableController)}
+          {new StudiesTable.view(ctrl.controllers.studiesTable)}
         </div>
 
         <div className="section">
           <div className="col span_3_of_4">
             <div>
               <h3>Comments</h3>
-              {new CommentBox.view(ctrl.commentBoxController)}
+              {new CommentBox.view(ctrl.controllers.commentBox)}
             </div>
           </div>
           <div className="col span_1_of_4">
@@ -140,7 +144,7 @@ ArticlePage.view = function(ctrl) {
     content = <h1>Article not found</h1>;
   }
 
-  return new Layout.view(ctrl.layoutController, content);
+  return new Layout.view(ctrl.controllers.layout, content);
 };
 
 module.exports = ArticlePage;

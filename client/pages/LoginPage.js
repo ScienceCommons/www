@@ -5,12 +5,14 @@ require("./LoginPage.scss");
 
 var _ = require("underscore");
 
+var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/FullLayout.js");
 
 var LoginPage = {};
 
 LoginPage.controller = function(options) {
-  this.layoutController = new Layout.controller(_.extend({id: "LoginPage"}, options));
+  OnUnload(this);
+  this.controllers.layout = new Layout.controller(_.extend({id: "LoginPage"}, options));
 
   this.email = m.prop("");
   this.password = m.prop("");
@@ -36,7 +38,7 @@ LoginPage.view = function(ctrl) {
     </div>
   );
 
-  return new Layout.view(ctrl.layoutController, content);
+  return new Layout.view(ctrl.controllers.layout, content);
 };
 
 module.exports = LoginPage;

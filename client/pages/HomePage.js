@@ -5,6 +5,8 @@ require("./HomePage.scss");
 
 var _ = require("underscore");
 var m = require("mithril");
+
+var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/FullLayout.js")
 var Search = require("../components/Search.js");
 var Spinner = require("../components/Spinner.js");
@@ -15,11 +17,12 @@ var Badge = require("../components/Badge.js");
 var HomePage = {};
 
 HomePage.controller = function(options) {
-  this.layoutController = new Layout.controller(_.extend({
+  OnUnload(this);
+  this.controllers.layout= new Layout.controller(_.extend({
     id: "HomePage",
     header: <a href="/about" className="aboutLink" config={m.route}>What is Curate Science?</a>
   }, options));
-  this.searchController = new Search.controller({});
+  this.controllers.search= new Search.controller({});
 
   this.mostCuratedArticles = [
     new ArticleModel({
@@ -72,7 +75,7 @@ HomePage.view = function(ctrl) {
   var content = (
     <div>
       <div>
-        {new Search.view(ctrl.searchController)}
+        {new Search.view(ctrl.controllers.search)}
       </div>
 
       <div className="section">
@@ -88,7 +91,7 @@ HomePage.view = function(ctrl) {
     </div>
   );
 
-  return new Layout.view(ctrl.layoutController, content);
+  return new Layout.view(ctrl.controllers.layout, content);
 };
 
 // helpers

@@ -3,6 +3,7 @@
 "use strict";
 require("./ProfilePage.scss");
 
+var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/DefaultLayout.js");
 
 var _ = require("underscore");
@@ -11,7 +12,7 @@ var ProfilePage = {};
 
 ProfilePage.controller = function(options) {
   options = _.extend({id: "ProfilePage"}, options);
-  this.layoutController = new Layout.controller(options);
+  this.controllers.layout= new Layout.controller(options);
   this.user = options.user;
 };
 
@@ -125,7 +126,7 @@ ProfilePage.view = function(ctrl) {
     </div>
   );
 
-  return new Layout.view(ctrl.layoutController, content);
+  return new Layout.view(ctrl.controllers.layout, content);
 };
 
 module.exports = ProfilePage;

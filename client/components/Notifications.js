@@ -5,6 +5,7 @@ require("./Notifications.scss");
 
 var _ = require("underscore");
 var cx = require("../utils/ClassSet.js");
+var OnUnload = require("../utils/OnUnload.js");
 var Dropdown = require("./Dropdown.js");
 
 // number of digits
@@ -16,6 +17,7 @@ var Paths = {
 var Notifications = {};
 
 Notifications.controller = function(options) {
+  OnUnload(this);
   options = options || {};
   this.notifications = options.notifications || [];
   this.unreadCount = 2;
@@ -30,7 +32,7 @@ Notifications.controller = function(options) {
     </svg>
   );
 
-  this.dropdownController = new Dropdown.controller({
+  this.controllers.dropdown = new Dropdown.controller({
     className: "Notifications",
     label: label
   });
@@ -49,7 +51,7 @@ Notifications.view = function(ctrl) {
   });
 
   var dropdownContent = <ul className="notifications">{notifications}</ul>;
-  return new Dropdown.view(ctrl.dropdownController, dropdownContent);
+  return new Dropdown.view(ctrl.controllers.dropdown, dropdownContent);
 };
 
 module.exports = Notifications;

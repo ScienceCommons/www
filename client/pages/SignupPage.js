@@ -3,13 +3,15 @@
 "use strict";
 require("./SignupPage.scss");
 
+var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/FullLayout.js");
 
 var SignupPage = {};
 
 SignupPage.controller = function(options) {
+  OnUnload(this);
   options = _.extend({id: "SignupPage"}, options);
-  this.layoutController = new Layout.controller(options);
+  this.controllers.layout = new Layout.controller(options);
 };
 
 SignupPage.view = function(ctrl) {
@@ -26,7 +28,7 @@ SignupPage.view = function(ctrl) {
     </div>
   );
 
-  return new Layout.view(ctrl.layoutController, content);
+  return new Layout.view(ctrl.controllers.layout, content);
 };
 
 module.exports = SignupPage;

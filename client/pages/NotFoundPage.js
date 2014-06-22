@@ -4,13 +4,16 @@
 require("./NotFoundPage.scss");
 
 var _ = require("underscore");
+
+var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/FullLayout.js")
 
 var NotFoundPage = {};
 
 NotFoundPage.controller = function(options) {
+  OnUnload(this);
   options = _.extend({id: "NotFoundPage"}, options);
-  this.layoutController = new Layout.controller(options);
+  this.controllers.layout = new Layout.controller(options);
 };
 
 NotFoundPage.view = function(ctrl) {
@@ -21,7 +24,7 @@ NotFoundPage.view = function(ctrl) {
     </div>
   );
 
-  return new Layout.view(ctrl.layoutController, content);
+  return new Layout.view(ctrl.controllers.layout, content);
 };
 
 module.exports = NotFoundPage;
