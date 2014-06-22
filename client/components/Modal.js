@@ -55,7 +55,7 @@ Modal.view = function(ctrl, content, label) {
   }
 };
 
-var oldMouseDown = document.click;
+var oldMouseDown = document.onmousedown;
 document.onmousedown = function(e) {
   var node = e.target;
   var parentNodes = [node];

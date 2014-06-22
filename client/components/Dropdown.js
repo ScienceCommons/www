@@ -57,11 +57,8 @@ Dropdown.view = function(ctrl, content, label) {
   );
 };
 
-var oldMouseDown = document.click;
+var oldMouseDown = document.onmousedown;
 document.onmousedown = function(e) {
-  if (_.isFunction(oldMouseDown)) {
-    oldMouseDown(e);
-  }
   var node = e.target;
   var parentNodes = [node];
   while (node.parentNode) {
@@ -74,6 +71,9 @@ document.onmousedown = function(e) {
       dropdown.close();
     }
   });
+  if (_.isFunction(oldMouseDown)) {
+    oldMouseDown(e);
+  }
   m.redraw();
 };
 
