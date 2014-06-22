@@ -1,2 +1,48 @@
+@import "../variables.scss";
+
 .Modal {
+  width: 500px;
+  height: 500px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 1px solid $gray;
+  box-sizing: border-box;
+  border-radius: $btn_radius;
+  white-space: normal;
+  overflow: hidden;
+  outline: 0;
+  -webkit-overflow-scrolling: touch;
+
+  & > .wrapper {
+    z-index: 6;
+    display: table;
+    height: 100%;
+    width: 100%;
+    background: white;
+
+    header {
+      display: table-row;
+      height: 1px;
+      background-color: $light_gray;
+      border-bottom: 1px solid $gray;
+      padding: 10px 20px;
+      box-sizing: border-box;
+      border-radius: $btn_radius $btn_radius 0 0;
+
+      .xClose {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+    }
+
+    .modalContents {
+      display: table-row;
+      height: 100%;
+    }
+  }
 }

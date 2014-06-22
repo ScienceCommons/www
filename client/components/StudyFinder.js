@@ -13,9 +13,9 @@ var StudyFinder = {};
 
 StudyFinder.controller = function(options) {
   this.search = m.prop("");
+  this.submitted = m.prop(false);
   this.matchingArticles = new ArticleCollection();
   this.selectedArticle = null;
-  this.close = options.close;
   this.selectStudy = options.selectStudy;
 
 
@@ -33,6 +33,7 @@ StudyFinder.controller = function(options) {
 
   this.runSearch = function(e) {
     e.preventDefault();
+    _this.submitted(true);
     _this.matchingArticles.search({query: _this.search()});
   };
 
@@ -52,7 +53,6 @@ StudyFinder.view = function(ctrl) {
   }
   return (
     <div className="StudyFinder">
-      <button className="btn" onclick={ctrl.close}><span className="icon icon_close"/></button>
       {content}
     </div>
   );
@@ -75,7 +75,7 @@ StudyFinder.articleView = function(ctrl, article) {
           {study.get("dependent_variables").join(", ")}
           {study.get("n")}
           {study.get("power")}
-          <button type="button" onclick={ctrl.clickStudyButton(study)}>Add as replication</button>
+          <button type="button" className="btn" onclick={ctrl.clickStudyButton(study)}>Add as replication</button>
         </li>
       );
     });
@@ -89,7 +89,7 @@ StudyFinder.articleView = function(ctrl, article) {
 
   return (
     <div>
-      <button type="btn" onclick={ctrl.deselectArticle}><span className="icon icon_left_arrow"/></button>
+      <button type="button" className="btn" onclick={ctrl.deselectArticle}><span className="icon icon_left_arrow"/></button>
       <h3>{article.get("title")}</h3>
       <h5>{article.get("authorLastNames")}</h5>
       {content}
@@ -100,10 +100,10 @@ StudyFinder.articleView = function(ctrl, article) {
 StudyFinder.searchView = function(ctrl) {
   var articles = ctrl.matchingArticles;
   var results;
-  if (articles.loading) {
+  if (!ctrl.submitted()) {
+    results = "Lookup the article with the study you would like to add as a replication.";
+  } else if (articles.loading) {
     results = Spinner.view();
-  } else if (_.isEmpty(ctrl.search())) {
-    results = "Search something";
   } else if (articles.total === 0) {
     results = "No articles found"
   } else {
@@ -116,7 +116,7 @@ StudyFinder.searchView = function(ctrl) {
     });
 
     results = (
-      <ul className="article">
+      <ul className="articles">
         {list}
       </ul>
     );
@@ -124,9 +124,14 @@ StudyFinder.searchView = function(ctrl) {
 
   return (
     <form onsubmit={ctrl.runSearch}>
-      <input type="search" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
-      <button type="submit">Search</button>
-      {results}
+      <div className="search">
+        <input placeholder="Find article" type="search" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
+        <button type="submit" className="btn">Search</button>
+      </div>
+
+      <div className="results">
+        {results}
+      </div>
     </form>
   );
 };

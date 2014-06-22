@@ -5,13 +5,17 @@ require("./StudiesTable.scss");
 
 var _ = require("underscore");
 var Study = require("../models/StudyModel.js");
+var OnUnload = require("../utils/OnUnload.js");
 var cx = require("../utils/ClassSet.js");
 var Spinner = require("./Spinner.js");
+var Modal = require("../components/Modal.js");
 var StudyFinder = require("../components/StudyFinder.js");
 
 var StudiesTable = {};
 
 StudiesTable.controller = function(opts) {
+  OnUnload(this);
+
   this.article = opts.article;
   this.active = m.prop({study_id: false, field: false, editing: false, dropdown: false});
   this.expanded = m.prop({}); // study_id's
@@ -158,11 +162,8 @@ StudiesTable.controller = function(opts) {
   this.openStudyFinder = function(study) {
     return function() {
       _this.studyFinderStudy(study);
+      _this.controllers.studyFinderModal.open(true);
     };
-  };
-
-  this.closeStudyFinder = function() {
-    _this.studyFinderStudy(false);
   };
 
   this.addReplication = function(replicationStudy) {
@@ -172,7 +173,7 @@ StudiesTable.controller = function(opts) {
         alert("You are picking another study in this article to be a replication.  That is not allowed.");
       } else {
         study.get("replications").add(replicationStudy);
-        _this.closeStudyFinder();
+        _this.controllers.studyFinderModal.open(false);
         var expanded = _this.expanded();
         var id = study.get("id");
         expanded[id] = true;
@@ -181,8 +182,9 @@ StudiesTable.controller = function(opts) {
     }
   };
 
-  this.studyFinderController = new StudyFinder.controller({
-    close: this.closeStudyFinder,
+  this.controllers.studyFinderModal = new Modal.controller();
+
+  this.controllers.studyFinder = new StudyFinder.controller({
     selectStudy: this.addReplication
   });
 };
@@ -210,7 +212,11 @@ StudiesTable.view = function(ctrl) {
   }
 
   if (ctrl.studyFinderStudy()) {
-    var studyFinderModal = new StudyFinder.view(ctrl.studyFinderController);
+    var studyFinderModal = new Modal.view(
+      ctrl.controllers.studyFinderModal,
+      new StudyFinder.view(ctrl.controllers.studyFinder),
+      "Add a replication"
+    );
   }
 
   // add study column

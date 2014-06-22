@@ -41,7 +41,15 @@ Modal.view = function(ctrl, content, label) {
   if (ctrl.open()) {
     return (
       <div className={"Modal " + ctrl.className} config={ctrl.config}>
-        {content}
+        <div className="wrapper">
+          <header>
+            <h1>{label}</h1>
+            <button className="btn xClose" onclick={ctrl.toggle}><span className="icon icon_close"/></button>
+          </header>
+          <div className="modalContent">
+            {content}
+          </div>
+        </div>
       </div>
     );
   }
