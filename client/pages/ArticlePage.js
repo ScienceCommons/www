@@ -21,12 +21,18 @@ var ArticlePage = {};
 ArticlePage.controller = function(options) {
   OnUnload(this);
 
-  this.article = new ArticleModel({id: m.route.param("articleId")});
-  this.article.initializeAssociations();
+  if (m.route.param("articleId") === "new") {
+    this.article = new ArticleModel({});
+    this.article.initializeAssociations();
+    this.editing = m.prop(true);
+  } else {
+    this.article = new ArticleModel({id: m.route.param("articleId")});
+    this.article.initializeAssociations();
+    this.article.fetch();
+    this.article.get("studies").fetch();
+    this.editing = m.prop(false);
+  }
   window.article = this.article;
-  this.article.fetch();
-  this.article.get("studies").fetch();
-  this.editing = m.prop(false);
 
   options = _.extend({id: "ArticlePage"}, options);
   this.controllers.layout = new Layout.controller(options);
@@ -39,6 +45,14 @@ ArticlePage.controller = function(options) {
   };
 
   this.saveClick = function() {
+    var res = _this.article.save();
+    if (_this.article.isNew()) {
+      res.then(function() {
+        if (!_this.article.isNew()) {
+          m.route("/articles/" + _this.article.get("id"));
+        }
+      });
+    }
     _this.editing(false);
   };
 
@@ -73,6 +87,15 @@ ArticlePage.view = function(ctrl) {
 
     if (!_.isEmpty(article.get("year"))) {
       var year = "(" + article.get("year") + ")";
+    }
+
+    var studiesTable, commentsList;
+    if (article.isNew()) {
+      studiesTable = <h5>You must save this new article before you can add studies.</h5>;
+      commentsList = <h5>You must save this new article before you can leave comments.</h5>;
+    } else {
+      studiesTable = new StudiesTable.view(ctrl.controllers.studiesTable);
+      commentsList = new CommentBox.view(ctrl.controllers.commentBox);
     }
 
     content = (
@@ -114,14 +137,14 @@ ArticlePage.view = function(ctrl) {
 
         <div className="section">
           <h3>Studies and replications</h3>
-          {new StudiesTable.view(ctrl.controllers.studiesTable)}
+          {studiesTable}
         </div>
 
         <div className="section">
           <div className="col span_3_of_4">
             <div>
               <h3>Comments</h3>
-              {new CommentBox.view(ctrl.controllers.commentBox)}
+              {commentsList}
             </div>
           </div>
           <div className="col span_1_of_4">

@@ -100,9 +100,7 @@ var ArticleModel = CurateBaseModel.extend({
       }
     ],*/
     "action_editor": "Cathleen Moore",
-    "reviewers": ["Bob Bland", "Crystal Cali"],
-    "community_summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros tellus, venenatis molestie ligula in, lobortis lobortis est. Nunc adipiscing erat sed libero volutpat dapibus ultrices feugiat elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent ac nisi luctus arcu tempus malesuada. Fusce lectus augue, ultrices id purus ac, viverra convallis ipsum. Mauris convallis urna ut magna laoreet, quis dapibus dolor aliquet. Nunc tristique pulvinar imperdiet. Fusce et lectus ac nunc porta eleifend imperdiet sed diam. Curabitur sollicitudin id enim a lacinia. Suspendisse ultricies laoreet turpis a tempor. Cras dapibus, dolor quis ultrices convallis, sapien lectus blandit turpis, in mollis purus elit ac magna.",
-    "community_summary_date": "June 21, 2014"
+    "reviewers": ["Bob Bland", "Crystal Cali"]
   },
   initialize: function(data, options) {
     _.bindAll(this, "bookmark");
