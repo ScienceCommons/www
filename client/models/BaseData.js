@@ -283,8 +283,12 @@ BaseData.Model.prototype.fetch = function(options) {
 };
 
 BaseData.Model.prototype.save = function(options) {
+  options = options || {};
   this.saving = true;
   var action = this.isNew() ? "create" : "update";
+  if (action === "create") {
+    options.url = options.url || this.urlRoot;
+  }
   var res = this.sync(action, this, options);
   var _this = this;
   res.then(function() {
