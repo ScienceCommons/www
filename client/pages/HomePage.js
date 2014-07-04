@@ -80,11 +80,11 @@ HomePage.view = function(ctrl) {
 
       <div className="section">
         <div className="col span_1_of_2 articles">
-          <h2>Most Curated Articles</h2>
+          <h2>Most Curated</h2>
           {mostCuratedArticlesContent}
         </div>
         <div className="col span_1_of_2 articles">
-          <h2>Recently Updated Articles</h2>
+          <h2>Recently Updated</h2>
           {recentlyUpdatedArticlesContent}
         </div>
       </div>
