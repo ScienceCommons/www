@@ -4,14 +4,16 @@
 .Typeahead {
   position: relative;
 
-  input {
-    width: 100%;
-  }
-
   ul.recommendations {
     @include dropdown;
     list-style: none;
     text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+
+    li {
+      padding: 2px 10px;
+    }
 
     li.selected {
       color: white;

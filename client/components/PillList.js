@@ -72,8 +72,10 @@ PillList.controller = function(options) {
     submit: this.addPill,
     onkeydown: function(e) {
       if (e.keyCode === 188 || e.keyCode === 32) { // comma, space
+        e.preventDefault();
         _this.addPill(_this.controllers.recommendationsTypeahead.value());
       } else if (e.keyCode === 8 && _.isEmpty(_this.controllers.recommendationsTypeahead.value())) {  // backspace
+        e.preventDefault();
         if (!_.isEmpty(_this.pills()) )  {
           _this.removePill();
         }
@@ -91,7 +93,7 @@ PillList.view = function(ctrl) {
       return (
         <ul className="PillList editing" onclick={ctrl.handleDivClick}>
           {pills}
-          <li>{new Typeahead.view(ctrl.controllers.recommendationsTypeahead)}</li>
+          <li className="pill">{new Typeahead.view(ctrl.controllers.recommendationsTypeahead)}</li>
         </ul>
       );
     } else {

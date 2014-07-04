@@ -28,6 +28,7 @@ Typeahead.controller = function(options) {
 
   this.handleBlur = function() {
     _this.submit(_this.value());
+    _this.open(false);
   };
 
   this.handleRecommendationClick = function(val) {
