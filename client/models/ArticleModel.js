@@ -15,7 +15,7 @@ var ArticleModel = CurateBaseModel.extend({
     "doi": "",
     "publication_date": "",
     "authors_denormalized": [],
-    "journal": "Science",
+    "journal": "",
     "comments": [
       {
         "anonymous": true,
@@ -99,8 +99,8 @@ var ArticleModel = CurateBaseModel.extend({
         "authors": "Zhong et al."
       }
     ],*/
-    "action_editor": "Cathleen Moore",
-    "reviewers": ["Bob Bland", "Crystal Cali"]
+    "action_editor": "",
+    "reviewers": []
   },
   initialize: function(data, options) {
     _.bindAll(this, "bookmark");
@@ -118,7 +118,7 @@ var ArticleModel = CurateBaseModel.extend({
     },
     reviewersStr: {
       set: function(val) {
-        this.set("reviewers", _.compact(val.split(/\n/)));
+        this.set("reviewers", val.split(/\n/));
       }
     },
     year: function() {

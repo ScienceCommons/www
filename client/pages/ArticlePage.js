@@ -60,6 +60,14 @@ ArticlePage.controller = function(options) {
     _this.article.set(_this.article._serverState);
     _this.editing(false);
   };
+
+  this.updateReviewerNum = function(num) {
+    return function(val) {
+      var reviewers = _this.article.get("reviewers");
+      reviewers[num] = val;
+      _this.article.set("reviewers", reviewers);
+    };
+  };
 };
 
 ArticlePage.view = function(ctrl) {
@@ -67,8 +75,8 @@ ArticlePage.view = function(ctrl) {
   var content;
 
   if (article) {
-    var peerReviewers = _.map(article.get("reviewers"), function(reviewer) {
-      return <li>{reviewer}</li>;
+    var peerReviewers = _.map(article.get("reviewers"), function(reviewer, i) {
+      return <li key={"peerReviewer"+i} contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(i))}>{reviewer}</li>;
     });
 
     var tags = _.map(article.get("tags"), function(tag) {
@@ -152,11 +160,12 @@ ArticlePage.view = function(ctrl) {
               <h3>Peer Review</h3>
               <div className="actionEditor">
                 <h5>Action Editor</h5>
-                <p contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("action_editor"))}>{article.get("action_editor")}</p>
+                <p placeholder="Action editor goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("action_editor"))}>{article.get("action_editor")}</p>
               </div>
               <h5>Reviewers</h5>
-              <ul className="reviewers" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("reviewersStr"))}>
+              <ul className="reviewers">
                 {peerReviewers}
+                <li key={"peerReviewer"+peerReviewers.length} placeholder="Add a reviewer" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(peerReviewers.length))}></li>
               </ul>
             </div>
           </div>

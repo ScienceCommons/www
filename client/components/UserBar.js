@@ -6,7 +6,6 @@ require("./UserBar.scss");
 var _ = require("underscore");
 
 var OnUnload = require("../utils/OnUnload.js");
-var Notifications = require("./Notifications.js");
 var Dropdown = require("./Dropdown.js");
 
 var UserBar = {};
@@ -19,10 +18,6 @@ UserBar.controller = function(options) {
     this.controllers.dropdown = new Dropdown.controller({
       className: "user",
       label: <img src={this.user.get("gravatarUrl")} />
-    });
-
-    this.controllers.notifications = new Notifications.controller({
-      notifications: this.user.get("notifications")
     });
   }
 };
@@ -43,9 +38,6 @@ UserBar.view = function(ctrl) {
 
   return (
     <ul className="UserBar">
-      <li>{new Notifications.view(ctrl.controllers.notifications)}</li>
-      <li><a href="/bookmarks" config={m.route}><span className="icon icon_bookmark"></span></a></li>
-      <li><a href="/history" className="history" config={m.route}><span className="icon icon_history"></span></a></li>
       <li>{new Dropdown.view(ctrl.controllers.dropdown, dropdownContent)}</li>
     </ul>
   );
