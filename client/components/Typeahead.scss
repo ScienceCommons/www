@@ -1,0 +1,21 @@
+@import "../variables.scss";
+@import "../mixins.scss";
+
+.Typeahead {
+  position: relative;
+
+  input {
+    width: 100%;
+  }
+
+  ul.recommendations {
+    @include dropdown;
+    list-style: none;
+    text-align: left;
+
+    li.selected {
+      color: white;
+      background-color: $dark;
+    }
+  }
+}

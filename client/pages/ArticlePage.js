@@ -10,8 +10,8 @@ var Layout = require("../layouts/DefaultLayout.js");
 var OnUnload = require("../utils/OnUnload.js");
 
 var Spinner = require("../components/Spinner.js");
+var PillList = require("../components/PillList.js");
 var StudiesTable = require("../components/StudiesTable.js");
-var Pill = require("../components/Pill.js");
 var CommentBox = require("../components/CommentBox.js");
 
 var ArticleModel = require("../models/ArticleModel.js");
@@ -38,6 +38,10 @@ ArticlePage.controller = function(options) {
   this.controllers.layout = new Layout.controller(options);
   this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: options.user});
   this.controllers.studiesTable = new StudiesTable.controller({article: article});
+  this.controllers.pillList = new PillList.controller({
+    editable: this.editing,
+    model: this.article
+  });
 
   var _this = this;
   this.editClick = function() {
@@ -79,9 +83,7 @@ ArticlePage.view = function(ctrl) {
       return <li key={"peerReviewer"+i} contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(i))}>{reviewer}</li>;
     });
 
-    var tags = _.map(article.get("tags"), function(tag) {
-      return new Pill.view({label: tag});
-    });
+    var tags = new PillList.view(ctrl.controllers.pillList);
 
     var editButtons;
     if (ctrl.editing()) {

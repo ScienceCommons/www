@@ -1,0 +1,25 @@
+@import "../variables.scss";
+
+.PillList {
+  list-style: none;
+  display: inline-block;
+
+  .pill {
+    display: inline-block;
+    white-space: nowrap;
+    border-radius: 4px;
+    background-color: $blue;
+    color: white;
+    padding: 4px;
+    font-size: 12px;
+    line-height: 20px;
+    margin: 2px;
+
+    .icon_removed {
+      font-size: 18px;
+    }
+  }
+
+  &.editing {}
+}
+
