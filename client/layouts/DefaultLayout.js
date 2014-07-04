@@ -19,6 +19,7 @@ DefaultLayout.controller = function(options) {
 
   this.controllers.userBar = new UserBar.controller({user: options.user});
   this.controllers.search = new Search.controller({query: m.route.param("query")});
+  document.title = "Curate Science";
 };
 
 DefaultLayout.view = function(ctrl, content) {

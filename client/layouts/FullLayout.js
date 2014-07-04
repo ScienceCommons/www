@@ -17,6 +17,7 @@ FullLayout.controller = function(options) {
   this.header = options.header;
   OnUnload(this);
   this.controllers.userBar = new UserBar.controller({user: options.user})
+  document.title = "Curate Science";
 };
 
 FullLayout.view = function(ctrl, content) {

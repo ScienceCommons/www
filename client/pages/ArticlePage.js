@@ -20,6 +20,7 @@ var ArticlePage = {};
 
 ArticlePage.controller = function(options) {
   OnUnload(this);
+  var _this = this;
 
   if (m.route.param("articleId") === "new") {
     this.article = new ArticleModel({});
@@ -28,7 +29,9 @@ ArticlePage.controller = function(options) {
   } else {
     this.article = new ArticleModel({id: m.route.param("articleId")});
     this.article.initializeAssociations();
-    this.article.fetch();
+    this.article.fetch().then(function() {
+      document.title = _this.article.etAl(2) + ": " + _this.article.get("title");
+    });
     this.article.get("studies").fetch();
     this.editing = m.prop(false);
   }
@@ -43,7 +46,6 @@ ArticlePage.controller = function(options) {
     model: this.article
   });
 
-  var _this = this;
   this.editClick = function() {
     _this.editing(true);
   };
