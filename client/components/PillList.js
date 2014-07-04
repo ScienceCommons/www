@@ -79,6 +79,9 @@ PillList.controller = function(options) {
         if (!_.isEmpty(_this.pills()) )  {
           _this.removePill();
         }
+      } else if (e.keyCode === 27) { // escape
+        e.preventDefault();
+        _this.editing(false);
       }
     }
   });
@@ -93,7 +96,7 @@ PillList.view = function(ctrl) {
       return (
         <ul className="PillList editing" onclick={ctrl.handleDivClick}>
           {pills}
-          <li className="pill">{new Typeahead.view(ctrl.controllers.recommendationsTypeahead)}</li>
+          <li className="pill" config={Typeahead.config}>{new Typeahead.view(ctrl.controllers.recommendationsTypeahead)}</li>
         </ul>
       );
     } else {

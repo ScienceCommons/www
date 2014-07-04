@@ -27,7 +27,6 @@ Typeahead.controller = function(options) {
   };
 
   this.handleBlur = function() {
-    _this.submit(_this.value());
     _this.open(false);
   };
 
@@ -55,9 +54,9 @@ Typeahead.controller = function(options) {
   };
 
   this.handleKeydown = function(e) {
-    _this.open(true);
     var newIndex;
     if (e.keyCode === 40) { // down arrow
+      _this.open(true);
       var newIndex = _this.index() + 1;
       if (newIndex >= _this.recommendations().length) {
         newIndex = -1;
@@ -69,6 +68,7 @@ Typeahead.controller = function(options) {
         _this.value(_this.recommendations()[_this.index()]);
       }
     } else if (e.keyCode === 38) { // up arrow
+      _this.open(true);
       newIndex = _this.index()-1;
       if (newIndex < -1) {
         newIndex = _this.recommendations().length - 1;
@@ -80,8 +80,13 @@ Typeahead.controller = function(options) {
         _this.value(_this.recommendations()[_this.index()]);
       }
     } else if (e.keyCode === 27) { // escape
-      _this.open(false);
+      if (_this.open()) {
+        _this.open(false);
+      } else {
+        options.onkeydown(e);
+      }
     } else if (options.onkeydown) { // give other components access
+      _this.open(true);
       options.onkeydown(e);
     }
   };
@@ -97,9 +102,15 @@ Typeahead.view = function(ctrl) {
   }
 
   return <form className="Typeahead" onsubmit={ctrl.handleSubmit}>
-    <input type="text" value={ctrl.value()} oninput={m.withAttr("value", ctrl.handleInput)} onkeydown={ctrl.handleKeydown}  onblur={ctrl.handleBlur} />
+    <input type="text" value={ctrl.value()} oninput={m.withAttr("value", ctrl.handleInput)} onkeydown={ctrl.handleKeydown} />
     {list}
   </form>
+};
+
+Typeahead.config = function(el, isInitialized) {
+  if (!isInitialized) {
+    el.getElementsByTagName("input")[0].focus();
+  }
 };
 
 module.exports = Typeahead;
