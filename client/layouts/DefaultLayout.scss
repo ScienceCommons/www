@@ -8,16 +8,23 @@
     margin-bottom: 20px;
 
     .banner {
+      width: 100%;
       background-color: $dark;
       padding: 10px 20px 10px 10px;
       position: relative;
       line-height: 28px;
     }
 
+    .logo_td {
+      width: 200px;
+    }
+
+    .user_bar_tr {
+      width: 70px;
+    }
+
     .Search {
       position: relative;
-      background-color: $light_gray;
-      border-bottom: 1px solid $gray;
       padding: 10px 3%;
 
       input {

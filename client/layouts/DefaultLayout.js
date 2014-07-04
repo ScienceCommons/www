@@ -25,11 +25,15 @@ DefaultLayout.view = function(ctrl, content) {
   return (
     <div id={ctrl.id} className="page DefaultLayout">
       <header>
-        <div className="banner">
-          {new UserBar.view(ctrl.controllers.userBar)}
-          <a href="/" config={m.route} className="logoLink">{new Logo.view()}</a>
-        </div>
-        {new Search.view(ctrl.controllers.search)}
+        <table className="banner">
+          <tbody>
+            <tr>
+              <td className="logo_td"><a href="/" config={m.route} className="logoLink">{new Logo.view()}</a></td>
+              <td>{new Search.view(ctrl.controllers.search)}</td>
+              <td className="user_bar_td">{new UserBar.view(ctrl.controllers.userBar)}</td>
+            </tr>
+          </tbody>
+        </table>
       </header>
 
       <div className="content">{content}</div>
