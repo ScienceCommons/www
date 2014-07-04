@@ -24,7 +24,7 @@ Search.controller = function(options) {
 Search.view = function(ctrl) {
   return (
     <form onsubmit={ctrl.updateSearch} className={"Search " + ctrl.className}>
-      <input type="search" placeholder="Search for articles" size={ctrl.size} value={ctrl.query()} oninput={m.withAttr("value", ctrl.query)} />
+      <input type="search" placeholder="Search for articles" autocomplete="off" size={ctrl.size} value={ctrl.query()} oninput={m.withAttr("value", ctrl.query)} />
     </form>
   );
 };
