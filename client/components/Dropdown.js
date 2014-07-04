@@ -49,7 +49,7 @@ Dropdown.view = function(ctrl, content, label) {
 
   return (
     <div className={"Dropdown " + ctrl.className}>
-      <button type="button" className="btn btn_subtle no_outline" onmousedown={ctrl.toggle} config={ctrl.buttonConfig}>
+      <button type="button" className="btn btn_subtle" onmousedown={ctrl.toggle} config={ctrl.buttonConfig}>
         {label || ctrl.label}
       </button>
       {dropdownContent}

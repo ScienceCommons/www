@@ -108,9 +108,6 @@ ArticlePage.view = function(ctrl) {
 
     content = (
       <div>
-        <div className="editButtons">
-          {editButtons}
-        </div>
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("title"))}>{article.get("title")}</h2>
@@ -122,18 +119,18 @@ ArticlePage.view = function(ctrl) {
 
           <div className="col span_1_of_4 text_right">
             <div className="btn_group">
-              <button className="btn bookmark_article" onclick={article.bookmark}><span className="icon icon_bookmark"></span></button>
-              <button className="btn"><span className="icon icon_share"></span></button>
+              {editButtons}
+              <button type="button" title="Bookmark article" className="btn bookmark_article" onclick={article.bookmark}><span className="icon icon_bookmark"></span></button>
             </div>
 
             <div className="journal">
               <h5>Journal</h5>
-              <p placeholder="Journal goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("journal"))}>{article.get("journal")}</p>
+              <p className="field" placeholder="Journal goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("journal"))}>{article.get("journal")}</p>
             </div>
 
             <div className="doi">
               <h5>DOI</h5>
-              <p placeholder="DOI goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("doi"))}>{article.get("doi")}</p>
+              <p className="field" placeholder="DOI goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("doi"))}>{article.get("doi")}</p>
             </div>
 
             <div className="tags">
@@ -160,7 +157,7 @@ ArticlePage.view = function(ctrl) {
               <h3>Peer Review</h3>
               <div className="actionEditor">
                 <h5>Action Editor</h5>
-                <p placeholder="Action editor goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("action_editor"))}>{article.get("action_editor")}</p>
+                <p className="field" placeholder="Action editor goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("action_editor"))}>{article.get("action_editor")}</p>
               </div>
               <h5>Reviewers</h5>
               <ul className="reviewers">

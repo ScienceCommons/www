@@ -12,6 +12,10 @@
     }
   }
 
+  .field:empty {
+    height: 1em;
+  }
+
   .journal, .doi, .tags, .peerReview {
     h5 {
       color: $gray;

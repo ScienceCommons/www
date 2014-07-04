@@ -1,6 +1,7 @@
 @import "./normalize.scss";
 @import "./icons.css";
 @import "./variables.scss";
+@import "./mixins.scss";
 @import "./fonts/gibson.scss";
 @import "./grid.scss";
 
@@ -101,10 +102,6 @@ h6, .h6 {
   }
 }
 
-.no_outline {
-  outline: none;
-}
-
 .page .content {
   padding-left: 10px;
   padding-right: 10px;
@@ -117,6 +114,11 @@ h6, .h6 {
   border-radius: $btn_radius;
   min-width: 30px;
   padding: 5px;
+
+  &:hover {
+    background: $dark;
+    color: white;
+  }
 }
 
 .btn_group {
@@ -138,13 +140,9 @@ h6, .h6 {
 }
 
 .btn_subtle {
+  @include subtle;
   padding: 5px;
   border-radius: 4px;
-
-  &:not(:hover) {
-    background: none;
-    border: 1px solid transparent;
-  }
 }
 
 [contenteditable=false] {

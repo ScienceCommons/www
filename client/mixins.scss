@@ -1,0 +1,8 @@
+@mixin subtle {
+  outline: none !important;
+
+  &:not(:hover) {
+    border-color: transparent;
+    background: none;
+  }
+}
