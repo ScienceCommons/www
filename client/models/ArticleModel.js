@@ -5,6 +5,7 @@ var CurateBaseModel = require("./CurateBaseModel.js");
 
 var ArticleModel = CurateBaseModel.extend({
   relations: {
+    "authors_denormalized": {type: "many", collection: require("../collections/AuthorCollection.js")},
     "comments": {type: "many", model: require("./CommentModel.js")},
     "studies": {type: "many", model: require("./StudyModel.js"), urlAction: "studies"}
   },
@@ -14,7 +15,6 @@ var ArticleModel = CurateBaseModel.extend({
     "tags": ["Moral purity", "Physical cleansing", "Cleansing products"],
     "doi": "",
     "publication_date": "",
-    "authors_denormalized": [],
     "journal": "",
     "comments": [
       {
@@ -107,14 +107,8 @@ var ArticleModel = CurateBaseModel.extend({
   },
   urlRoot: "https://api.curatescience.org/articles",
   computeds: {
-    authorLastNames: function() {
-      var authors = this.get("authors_denormalized");
-      var lastNames = _.pluck(authors, "last_name");
-      if (lastNames.length > 1) {
-        return _.first(lastNames, lastNames.length-1).join(", ") + " & " + _.last(lastNames);
-      } else if (lastNames.length == 1) {
-        return _.first(lastNames);
-      }
+    authors: function() {
+      return this.get("authors_denormalized");
     },
     reviewersStr: {
       set: function(val) {
@@ -134,17 +128,6 @@ var ArticleModel = CurateBaseModel.extend({
       url: this.url() + "/bookmark"
     });
   },
-  etAl: function(num) {
-    num = num || 1;
-    var authors = this.get("authors_denormalized");
-    if (!_.isEmpty(authors)) {
-      if (authors.length > num) {
-        return _.pluck(_.first(authors, num), "last_name").join(", ") + " et al.";
-      } else {
-        return _.pluck(_.first(authors, authors.length - 1), "last_name").join(", ") + " & " + _.last(authors).last_name;
-      }
-    }
-  }
 });
 
 module.exports = ArticleModel;

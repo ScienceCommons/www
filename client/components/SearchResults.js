@@ -42,7 +42,7 @@ SearchResults.itemView = function(article) {
     <li className="searchResult section">
       <div className="col span_3_of_4">
         <a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a>
-        <div className="authors">({article.get("year")}) {article.etAl(3)}</div>
+        <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
       </div>
       <div className="col span_1_of_4 badges">
         {new Badge.view({badge: "data", active: true})}

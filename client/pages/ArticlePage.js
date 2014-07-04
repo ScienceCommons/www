@@ -15,6 +15,7 @@ var StudiesTable = require("../components/StudiesTable.js");
 var CommentBox = require("../components/CommentBox.js");
 
 var ArticleModel = require("../models/ArticleModel.js");
+var AuthorModel = require("../models/AuthorModel.js");
 
 var ArticlePage = {};
 
@@ -30,7 +31,7 @@ ArticlePage.controller = function(options) {
     this.article = new ArticleModel({id: m.route.param("articleId")});
     this.article.initializeAssociations();
     this.article.fetch().then(function() {
-      document.title = _this.article.etAl(2) + ": " + _this.article.get("title");
+      document.title = _this.article.get("authors").etAl(2) + ": " + _this.article.get("title");
     });
     this.article.get("studies").fetch();
     this.editing = m.prop(false);
@@ -41,9 +42,23 @@ ArticlePage.controller = function(options) {
   this.controllers.layout = new Layout.controller(options);
   this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: options.user});
   this.controllers.studiesTable = new StudiesTable.controller({article: article});
-  this.controllers.pillList = new PillList.controller({
+  this.controllers.tagsList = new PillList.controller({
     editable: this.editing,
     model: this.article
+  });
+
+  this.controllers.authorsList = new PillList.controller({
+    editable: this.editing,
+    collection: this.article.get("authors"),
+    getter: function(val) {
+      var authors = [
+        new AuthorModel({last_name: "Coe", first_name: "Ben"}),
+        new AuthorModel({last_name: "Demjanenko", first_name: "Stephen"})
+      ];
+      return _.map(authors, function(author) {
+        return author.pill();
+      });
+    }
   });
 
   this.editClick = function() {
@@ -85,7 +100,8 @@ ArticlePage.view = function(ctrl) {
       return <li key={"peerReviewer"+i} contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(i))}>{reviewer}</li>;
     });
 
-    var tags = new PillList.view(ctrl.controllers.pillList);
+    var tags = new PillList.view(ctrl.controllers.tagsList);
+    var authors = new PillList.view(ctrl.controllers.authorsList);
 
     var editButtons;
     if (ctrl.editing()) {
@@ -115,7 +131,7 @@ ArticlePage.view = function(ctrl) {
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("title"))}>{article.get("title")}</h2>
-            <p className="authors">{article.get("authorLastNames")} {year}</p>
+            <p className="authors">{authors} {year}</p>
 
             <h3>Abstract</h3>
             <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("abstract"))}>{article.get("abstract")}</p>

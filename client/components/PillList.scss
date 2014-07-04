@@ -1,11 +1,14 @@
 @import "../variables.scss";
 
-.PillList {
+ul.PillList {
   list-style: none;
   display: inline-block;
 
-  .pill {
+  & > li {
     display: inline-block;
+  }
+
+  .pill {
     white-space: nowrap;
     border-radius: 4px;
     background-color: $blue;

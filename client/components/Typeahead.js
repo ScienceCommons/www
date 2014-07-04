@@ -13,8 +13,11 @@ Typeahead.controller = function(options) {
   this.recommendations = m.prop([]); // cached recommendations
   this.index = m.prop(-1); // used for selecting a recommendation
   this.userInput = m.prop(options.value || "");
-  this.value = m.prop(this.userInput());
+  this.pill = m.prop({label: this.userInput(), value: this.userInput()})
   this.submit = options.submit;
+  this.getter = options.getter || function() {
+    return [{label: "apple", value: "apple"}, {label: "pear", value: "pear"}];
+  };
 
   if (!this.submit) {
     throw("Typeahead: options.submit is required");
@@ -23,11 +26,14 @@ Typeahead.controller = function(options) {
   var _this = this;
   this.handleSubmit = function(e) {
     e.preventDefault();
-    _this.submit(_this.value());
+    if (_this.submit(_this.pill())) { // allow the submit function to cancel
+      _this.clear();
+    }
   };
 
   this.handleBlur = function() {
     _this.open(false);
+    _this.index(-1);
   };
 
   this.handleRecommendationClick = function(val) {
@@ -38,46 +44,49 @@ Typeahead.controller = function(options) {
 
   this.clear = function() {
     _this.userInput("");
-    _this.value("");
+    _this.pill({label: "", value: ""});
     _this.open(false);
+    _this.index(-1);
   };
 
   this.handleInput = function(val) {
     _this.userInput(val);
-    _this.value(val);
+    _this.pill({label: val, value: val});
     _this.index(-1);
     if (_.isEmpty(val)) {
       _this.recommendations([]);
     } else {
-      _this.recommendations(["apple", "pear"]);
+      _this.recommendations(_this.getter(val));
     }
   };
 
   this.handleKeydown = function(e) {
     var newIndex;
     if (e.keyCode === 40) { // down arrow
-      _this.open(true);
+      e.preventDefault();
+      _this.open(_this.userInput().length > 0);
       var newIndex = _this.index() + 1;
       if (newIndex >= _this.recommendations().length) {
         newIndex = -1;
       }
       _this.index(newIndex);
       if (_this.index() === -1 || _.isEmpty(_this.userInput())) {
-        _this.value(_this.userInput());
+        _this.pill({label: _this.userInput(), value: _this.userInput()});
       } else {
-        _this.value(_this.recommendations()[_this.index()]);
+        _this.pill(_this.recommendations()[_this.index()]);
       }
     } else if (e.keyCode === 38) { // up arrow
-      _this.open(true);
+      e.preventDefault();
+      _this.open(_this.userInput().length > 0);
       newIndex = _this.index()-1;
       if (newIndex < -1) {
         newIndex = _this.recommendations().length - 1;
       }
       _this.index(newIndex);
       if (_this.index() === -1 || _.isEmpty(_this.userInput())) {
-        _this.value(_this.userInput());
+        _this.pill({label: _this.userInput(), value: _this.userInput()});
       } else {
-        _this.value(_this.recommendations()[_this.index()]);
+        _this.pill(_this.recommendations()[_this.index()]);
       }
     } else if (e.keyCode === 27) { // escape
       if (_this.open()) {
@@ -96,13 +105,13 @@ Typeahead.view = function(ctrl) {
   var list;
   if (ctrl.open() && !_.isEmpty(ctrl.recommendations())) {
     var recommendations = _.map(ctrl.recommendations(), function(recommendation, i) {
-      return <li className={i === ctrl.index() ? "selected" : ""} >{recommendation}</li>;
+      return <li className={i === ctrl.index() ? "selected" : ""} >{recommendation.label}</li>;
     });
     list = <ul className="recommendations">{recommendations}</ul>;
   }
 
   return <form className="Typeahead" onsubmit={ctrl.handleSubmit}>
-    <input type="text" value={ctrl.value()} oninput={m.withAttr("value", ctrl.handleInput)} onkeydown={ctrl.handleKeydown} />
+    <input type="text" value={ctrl.pill().label} oninput={m.withAttr("value", ctrl.handleInput)} onkeydown={ctrl.handleKeydown} />
     {list}
   </form>
 };
