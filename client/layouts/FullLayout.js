@@ -29,7 +29,7 @@ FullLayout.view = function(ctrl, content) {
         <a href="/" config={m.route} className="logo">{new Logo.view()}</a>
       </header>
 
-      <div className="text_center">
+      <div className="pageContent">
         {content}
       </div>
     </div>

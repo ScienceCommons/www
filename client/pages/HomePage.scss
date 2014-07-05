@@ -1,6 +1,10 @@
 @import "../variables.scss";
 
 #HomePage {
+  & > header {
+    margin-bottom: 0;
+  }
+
   .aboutLink {
     position: absolute;
     top: 10px;

@@ -1,6 +1,7 @@
 /** @jsx m */
 
 "use strict";
+require("./LogoutPage.scss");
 
 var _ = require("underscore");
 
@@ -14,7 +15,7 @@ LogoutPage.controller = function(options) {
   OnUnload(this);
   this.controllers.layout = new Layout.controller(_.extend({id: "LogoutPage"}, options));
 
-  setTimeout(function() {
+  setTimeout(function() { // fake server request time
     delete CS.user;
     m.route("/login");
   }, 2000);

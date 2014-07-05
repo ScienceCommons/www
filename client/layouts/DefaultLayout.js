@@ -37,7 +37,7 @@ DefaultLayout.view = function(ctrl, content) {
         </table>
       </header>
 
-      <div className="content">{content}</div>
+      <div className="pageContent">{content}</div>
     </div>
   );
 };
