@@ -28,13 +28,19 @@ UserBar.view = function(ctrl) {
     return <ul className="UserBar"/>;
   }
 
+  if (user.canEdit()) {
+    var extras = [
+      <li className="separator"></li>,
+      <li onclick={route("/articles/new")}>Add an article</li>
+    ];
+  }
+
   var dropdownContent = (
     <ul>
       <li onclick={route("/profile")}>Profile</li>
       <li onclick={route("/saved")}>Saved searches</li>
       <li onclick={route("/logout")}>Log out</li>
-      <li className="separator"></li>
-      <li onclick={route("/articles/new")}>Add an article</li>
+      {extras}
     </ul>
   );
 
