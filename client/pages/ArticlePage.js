@@ -61,7 +61,7 @@ ArticlePage.controller = function(options) {
   });
 
   this.editClick = function() {
-    if (this.user.canEdit()) {
+    if (_this.user.canEdit()) {
       _this.editing(true);
     }
   };
