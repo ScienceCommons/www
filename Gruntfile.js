@@ -232,6 +232,10 @@ module.exports = function (grunt) {
             dest: 'index.html'
           },
           {
+            src: './build/production/public/favicon.ico',
+            dest: 'favicon.ico'
+          },
+          {
             src: './build/production/public/assets/*',
             dest: 'assets/'
           },
