@@ -30,9 +30,11 @@ UserBar.view = function(ctrl) {
 
   var dropdownContent = (
     <ul>
-      <li><a href="/profile" config={m.route}>Profile</a></li>
-      <li><a href="/saved" config={m.route}>Saved searches</a></li>
-      <li><a href="/logout" config={m.route}>Log out</a></li>
+      <li onclick={route("/profile")}>Profile</li>
+      <li onclick={route("/saved")}>Saved searches</li>
+      <li onclick={route("/logout")}>Log out</li>
+      <li className="separator"></li>
+      <li onclick={route("/articles/new")}>Add an article</li>
     </ul>
   );
 
@@ -41,6 +43,12 @@ UserBar.view = function(ctrl) {
       <li>{new Dropdown.view(ctrl.controllers.dropdown, dropdownContent)}</li>
     </ul>
   );
+};
+
+function route(path) {
+  return function(e) {
+    return m.route(path);
+  };
 };
 
 module.exports = UserBar;

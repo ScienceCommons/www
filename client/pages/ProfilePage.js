@@ -11,6 +11,7 @@ var _ = require("underscore");
 var ProfilePage = {};
 
 ProfilePage.controller = function(options) {
+  OnUnload(this);
   options = _.extend({id: "ProfilePage"}, options);
   this.controllers.layout= new Layout.controller(options);
   this.user = options.user;

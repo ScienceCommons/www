@@ -5,8 +5,9 @@
   min-height: 100%;
   width: 100%;
 
-  header {
+  & > header {
     background-color: $dark;
+    line-height: 28px;
   }
 
   a.logo {
