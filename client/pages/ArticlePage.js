@@ -30,9 +30,7 @@ ArticlePage.controller = function(options) {
   } else {
     this.article = new ArticleModel({id: m.route.param("articleId")});
     this.article.initializeAssociations();
-    this.article.fetch().then(function() {
-      document.title = _this.article.get("authors").etAl(2) + ": " + _this.article.get("title");
-    });
+    this.article.fetch();
     this.article.get("studies").fetch();
     this.editing = m.prop(false);
   }
@@ -96,6 +94,12 @@ ArticlePage.view = function(ctrl) {
   var content;
 
   if (article) {
+    document.title = _.compact([
+      article.get("authors").etAl(1),
+      article.get("journal"),
+      article.get("year")
+    ]).join(", ");
+
     var peerReviewers = _.map(article.get("reviewers"), function(reviewer, i) {
       return <li key={"peerReviewer"+i} contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(i))}>{reviewer}</li>;
     });
@@ -131,6 +135,7 @@ ArticlePage.view = function(ctrl) {
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("title"))}>{article.get("title")}</h2>
+            <h3>Authors</h3>
             <p className="authors">{authors} {year}</p>
 
             <h3>Abstract</h3>
