@@ -105,6 +105,7 @@ module.exports = function (grunt) {
           filename: "[name].js"
         },
         externals: {
+          "mithril": "m"
         }
       },
       production: {
@@ -122,6 +123,18 @@ module.exports = function (grunt) {
         plugins: [
           new webpack.optimize.OccurenceOrderPlugin(),
           new webpack.optimize.DedupePlugin()
+        ]
+      }
+    },
+    copy: {
+      development: {
+        files: [
+          {src: "client/favicon.ico", dest: DEVELOPMENT_PATH + "/favicon.ico"}
+        ]
+      },
+      production: {
+        files: [
+          {src: "client/favicon.ico", dest: PRODUCTION_PATH + "/favicon.ico"}
         ]
       }
     },
@@ -252,8 +265,8 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask("build:development", ["clean:development", "env:development", "preprocess:development", "webfont", "webpack:development"]);
-  grunt.registerTask("build:production", ["clean:production", "env:production", "preprocess:production", "webfont", "webpack:production"]);
+  grunt.registerTask("build:development", ["clean:development", "env:development", "preprocess:development", "copy:development", "webfont", "webpack:development"]);
+  grunt.registerTask("build:production", ["clean:production", "env:production", "preprocess:production", "copy:production", "webfont", "webpack:production"]);
   grunt.registerTask("deploy", ["build:production", "s3:production"]);
 
   grunt.registerTask("default", []);
