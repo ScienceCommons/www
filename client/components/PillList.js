@@ -78,13 +78,13 @@ PillList.controller = function(options) {
 
   this.toggleEditMode = function() {
     _this.editing(!_this.editing());
-  }
+  };
 
   this.controllers.recommendationsTypeahead = new Typeahead.controller({
     getter: options.getter,
     submit: this.addPill,
     onkeydown: function(e) {
-      if (e.keyCode === 188 || e.keyCode === 32) { // comma, space
+      if (e.keyCode === 188) { // comma
         e.preventDefault();
         _this.addPill(_this.controllers.recommendationsTypeahead.pill());
       } else if (e.keyCode === 8 && _.isEmpty(_this.controllers.recommendationsTypeahead.pill().label)) {  // backspace
