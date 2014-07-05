@@ -50,6 +50,9 @@ var UserModel = CurateBaseModel.extend({
     initials: function() {
       return this.get("first_name")[0] + this.get("last_name")[0];
     }
+  },
+  canEdit: function() {
+    return true;
   }
 });
 

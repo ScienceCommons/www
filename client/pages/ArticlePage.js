@@ -22,8 +22,9 @@ var ArticlePage = {};
 ArticlePage.controller = function(options) {
   OnUnload(this);
   var _this = this;
+  this.user = options.user;
 
-  if (m.route.param("articleId") === "new") {
+  if (m.route.param("articleId") === "new" && this.user.canEdit()) {
     this.article = new ArticleModel({});
     this.article.initializeAssociations();
     this.editing = m.prop(true);
@@ -38,7 +39,7 @@ ArticlePage.controller = function(options) {
 
   options = _.extend({id: "ArticlePage"}, options);
   this.controllers.layout = new Layout.controller(options);
-  this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: options.user});
+  this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: this.user});
   this.controllers.studiesTable = new StudiesTable.controller({article: article});
   this.controllers.tagsList = new PillList.controller({
     editable: this.editing,
@@ -60,7 +61,9 @@ ArticlePage.controller = function(options) {
   });
 
   this.editClick = function() {
-    _this.editing(true);
+    if (this.user.canEdit()) {
+      _this.editing(true);
+    }
   };
 
   this.saveClick = function() {
@@ -107,14 +110,16 @@ ArticlePage.view = function(ctrl) {
     var tags = new PillList.view(ctrl.controllers.tagsList);
     var authors = new PillList.view(ctrl.controllers.authorsList);
 
-    var editButtons;
-    if (ctrl.editing()) {
-      editButtons = [
-        <button type="button" className="btn" onclick={ctrl.saveClick}>Save</button>,
-        <button type="button" className="btn" onclick={ctrl.discardClick}>Discard</button>,
-      ];
-    } else {
-      editButtons = <button type="button" className="btn" onclick={ctrl.editClick}>Edit</button>;
+    if (ctrl.user.canEdit()) {
+      var editButtons;
+      if (ctrl.editing()) {
+        editButtons = [
+          <button type="button" className="btn" onclick={ctrl.saveClick}>Save</button>,
+          <button type="button" className="btn" onclick={ctrl.discardClick}>Discard</button>,
+        ];
+      } else {
+        editButtons = <button type="button" className="btn" onclick={ctrl.editClick}>Edit</button>;
+      }
     }
 
     if (!_.isEmpty(article.get("year"))) {
