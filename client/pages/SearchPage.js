@@ -20,6 +20,10 @@ SearchPage.controller = function(options) {
 };
 
 SearchPage.view = function(ctrl) {
+  var results = ctrl.controllers.searchResults.results;
+  if (!results.loading) {
+    var count = "" + results.total + " Results";
+  }
   var content = (
     <table className="filterAndResults">
       <thead>
@@ -31,7 +35,7 @@ SearchPage.view = function(ctrl) {
               <span>Relavance</span>
               <span>Date</span>
             </div>
-            {ctrl.controllers.searchResults.results.total} Results
+            {count}
           </th>
         </tr>
       </thead>
