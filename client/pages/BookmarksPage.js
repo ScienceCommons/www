@@ -4,6 +4,8 @@
 require("./BookmarksPage.scss");
 
 var _ = require("underscore");
+var m = require("mithril");
+
 var Layout = require("../layouts/DefaultLayout.js");
 var OnUnload = require("../utils/OnUnload.js");
 
@@ -22,7 +24,7 @@ BookmarksPage.view = function(ctrl) {
 
   if (bookmarks.length > 0) {
     var list = _.map(ctrl.user.get("bookmarks"), function(id) {
-      return <li><a href={"/articles/"+id}>{id}</a></li>;
+      return <li><a href={"/articles/"+id} config={m.route}>{id}</a></li>;
     });
 
     content = (
