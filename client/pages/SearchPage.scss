@@ -46,4 +46,22 @@
       }
     }
   }
+
+  td.filter > ul {
+    list-style: none;
+    width: 100%;
+
+    & > li {
+      padding: 10px;
+      border-bottom: 1px solid $gray;
+    }
+
+    label {
+      display: block;
+    }
+
+    button.active {
+      background-color: $blue;
+    }
+  }
 }
