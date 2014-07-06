@@ -7,20 +7,17 @@ var SearchFilter = {};
 
 SearchFilter.view = function(ctrl) {
   return (
-    <div className="SearchFilter">
-      <div className="section">
-        <div className="col span_1_of_2">Filter Results</div>
-        <div className="col span_1_of_2">Clear all</div>
-      </div>
-
-      <div className="section">
+    <ul className="SearchFilter">
+      <li>
         <div>Show</div>
-        <button type="button" className="active">All</button>
-        <button type="button"><span className="icon icon_bookmark"></span></button>
-        <button type="button"><span className="icon icon_eye"></span></button>
-      </div>
+        <div className="btn_group">
+          <button type="button" className="active btn">All</button>
+          <button type="button" className="btn"><span className="icon icon_bookmark"></span></button>
+          <button type="button" className="btn"><span className="icon icon_eye"></span></button>
+        </div>
+      </li>
 
-      <div className="section">
+      <li>
         <div>Articles with</div>
         <label><input type="checkbox" />Replications</label>
         <label><input type="checkbox" />Data/Syntax</label>
@@ -28,28 +25,28 @@ SearchFilter.view = function(ctrl) {
         <label><input type="checkbox" />Materials</label>
         <label><input type="checkbox" />Registrations</label>
         <label><input type="checkbox" />Disclosures</label>
-      </div>
+      </li>
 
-      <div className="section">
+      <li>
         <div>Publication Date</div>
-      </div>
+      </li>
 
-      <div className="section">
+      <li>
         <div>Journal</div>
-      </div>
+      </li>
 
-      <div className="section">
+      <li>
         <div>Participants (N)</div>
-      </div>
+      </li>
 
-      <div className="section">
+      <li>
         <div>Authors</div>
-      </div>
+      </li>
 
-      <div className="section">
+      <li>
         <div>Related keywords</div>
-      </div>
-    </div>
+      </li>
+    </ul>
   );
 };
 

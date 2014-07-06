@@ -9,12 +9,13 @@ var m = require("mithril");
 var ArticleModel = require("../models/ArticleModel.js");
 var ArticleCollection = require("../collections/ArticleCollection.js");
 var Spinner = require("./Spinner.js");
-var SearchFilter = require("./SearchFilter.js");
 var Badge = require("./Badge.js");
 
 var SearchResults = {};
 
-SearchResults.controller = function() {
+SearchResults.controller = function(options) {
+  options = options || {};
+  this.user = options.user;
   this.results = new ArticleCollection([]);
   this.from = m.prop(0);
   this.resultsPerPage = m.prop(20);
@@ -37,19 +38,23 @@ SearchResults.controller = function() {
   this.fetchResults();
 };
 
-SearchResults.itemView = function(article) {
+SearchResults.itemView = function(article, user) {
   return (
-    <li className="searchResult section">
-      <div className="col span_3_of_4">
-        <a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a>
-        <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
-      </div>
-      <div className="col span_1_of_4 badges">
-        {new Badge.view({badge: "data", active: true})}
-        {new Badge.view({badge: "methods", active: true})}
-        {new Badge.view({badge: "registration"})}
-        {new Badge.view({badge: "disclosure"})}
-      </div>
+    <li className="searchResult">
+      <header><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></header>
+      <div className="authors">
+        <button type="button" className={"btn btn_subtle bookmark " + (user.hasArticleBookmarked(article) ? "active" : "")} onclick={toggleBookmark(article, user)}>
+          <span className="icon icon_bookmark"></span>
+        </button>
+        ({article.get("year")}) {article.get("authors").etAl(3)
+      }</div>
+
+      <ul className="badges">
+        <li>{new Badge.view({badge: "data", active: true})}</li>
+        <li>{new Badge.view({badge: "methods", active: true})}</li>
+        <li>{new Badge.view({badge: "registration"})}</li>
+        <li>{new Badge.view({badge: "disclosure"})}</li>
+      </ul>
     </li>
   );
 };
@@ -60,26 +65,15 @@ SearchResults.view = function(ctrl) {
   if (ctrl.results.loading) {
     content = new Spinner.view();
   } else if (ctrl.results.total > 0) {
-    content = <ul>{ctrl.results.map(function(article) { return new SearchResults.itemView(article); })}</ul>;
+    content = <ul>{ctrl.results.map(function(article) { return new SearchResults.itemView(article, ctrl.user); })}</ul>;
   } else {
     content = <h3>Sorry, no results were found</h3>;
   }
 
   if (ctrl.results.total > 0) {
-    var nav = (
-      <div className="search_nav">
-        <div className="sort">
-          Sort by
-          <span>Relavance</span>
-          <span>Date</span>
-        </div>
-        {ctrl.results.total} Results
-      </div>
-    );
-
     if (ctrl.from() + ctrl.resultsPerPage() < ctrl.results.total) {
       var more = (
-        <div className="section more">
+        <div className="more">
           <button type="button" onclick={ctrl.nextPage}>More results</button>
         </div>
       );
@@ -87,16 +81,19 @@ SearchResults.view = function(ctrl) {
   }
 
   return (
-    <div className="section SearchResults">
-
-      <div className="col span_1_of_6">{new SearchFilter.view()}</div>
-      <div className="col span_5_of_6">
-        {nav}
-        {content}
-        {more}
-      </div>
+    <div className="SearchResults">
+      {content}
+      {more}
     </div>
   );
+};
+
+// helpers
+
+function toggleBookmark(article, user) {
+  return function(e) {
+    return user.toggleArticleBookmark(article);
+  };
 };
 
 module.exports = SearchResults;

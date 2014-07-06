@@ -1,4 +1,49 @@
+@import "../variables.scss";
+
 #SearchPage {
   height: 100%;
   min-width: 600px;
+
+  .pageContent {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 20px;
+  }
+
+  table.filterAndResults {
+    width: 100%;
+
+    & > thead {
+      text-align: left;
+      border-bottom: 1px solid $gray;
+
+      th {
+        padding: 10px 20px;
+      }
+
+      th:first-child {
+        border-right: 1px solid $gray;
+        padding-left: 30px;
+        width: 200px;
+      }
+
+      .sort {
+        float: right;
+      }
+    }
+
+    & > tbody > tr > td {
+      vertical-align: top;
+
+      &:first-child {
+        width: 200px;
+        border-right: 1px solid $gray;
+        background-color: $light_gray;
+
+        li {
+          padding-left: 30px;
+        }
+      }
+    }
+  }
 }

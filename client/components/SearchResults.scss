@@ -1,8 +1,6 @@
 @import "../variables.scss";
 
 .SearchResults {
-  padding: 10px;
-
   ul {
     list-style: none;
   }
@@ -18,15 +16,15 @@
 
   .searchResult {
     color: #000;
-    padding: 10px;
-    margin-top: 15px;
+    padding: 20px;
+    border-bottom: 2px solid $light_gray;
 
-    &:not(:last-child) {
-      border-bottom: 2px solid $light_gray;
-    }
-
-    .badges {
+    ul.badges {
       text-align: right;
+
+      li {
+        display: inline-block;
+      }
     }
 
     .Badge {
@@ -34,6 +32,10 @@
       height: 30px;
       width: 30px;
       padding: 0 10px;
+    }
+
+    button.bookmark.active {
+      color: $blue;
     }
   }
 

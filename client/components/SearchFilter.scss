@@ -1,7 +1,13 @@
 @import "../variables.scss";
 
-.SearchFilter {
-  width: 200px;
+ul.SearchFilter {
+  list-style: none;
+  width: 100%;
+
+  & > li {
+    padding: 10px;
+    border-bottom: 1px solid $gray;
+  }
 
   label {
     display: block;
