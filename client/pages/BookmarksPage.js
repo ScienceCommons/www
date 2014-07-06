@@ -21,8 +21,8 @@ BookmarksPage.view = function(ctrl) {
   var bookmarks = ctrl.user.get("bookmarks");
 
   if (bookmarks.length > 0) {
-    var list = _.map(ctrl.user.get("bookmarks"), function(bookmark) {
-      return <li>{bookmark}</li>;
+    var list = _.map(ctrl.user.get("bookmarks"), function(id) {
+      return <li><a href={"/articles/"+id}>{id}</a></li>;
     });
 
     content = (
