@@ -16,6 +16,13 @@ SearchPage.controller = function(options) {
   options = _.extend({id: "SearchPage"}, options);
   this.controllers.layout = new Layout.controller(options);
   this.controllers.searchResults = new SearchResults.controller({user: options.user});
+  this.sortBy = m.prop("relavance");
+  var _this = this;
+  this.setSort = function(sortBy) {
+    return function(e) {
+      _this.sortBy(sortBy);
+    };
+  }
 };
 
 SearchPage.view = function(ctrl) {
@@ -29,11 +36,11 @@ SearchPage.view = function(ctrl) {
         <tr>
           <th>Filter results Clear all</th>
           <th>
-            <div className="sort">
-              Sort by
-              <span>Relavance</span>
-              <span>Date</span>
-            </div>
+            <ul className="sortBy">
+              <li>Sort by</li>
+              <li className={ctrl.sortBy() === "relavance" ? "active" : ""} onclick={ctrl.setSort("relavance")}>Relavance</li>
+              <li className={ctrl.sortBy() === "date" ? "active" : ""} onclick={ctrl.setSort("date")}>Date</li>
+            </ul>
             {count}
           </th>
         </tr>

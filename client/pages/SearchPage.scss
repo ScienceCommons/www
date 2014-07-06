@@ -27,8 +27,23 @@
         width: 200px;
       }
 
-      .sort {
+      ul.sortBy {
         float: right;
+
+        li {
+          display: inline-block;
+          padding: 3px 5px;
+
+          &:not(:first-child) {
+            cursor: pointer;
+          }
+
+          &.active {
+            background: $blue;
+            color: white;
+            border-radius: $btn_radius;
+          }
+        }
       }
     }
 
