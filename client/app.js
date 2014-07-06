@@ -14,6 +14,7 @@ App.pages = {
   About: require("./pages/AboutPage.js"),
   Article: require("./pages/ArticlePage.js"),
   Author: require("./pages/AuthorPage.js"),
+  Bookmarks: require("./pages/BookmarksPage.js"),
   Home: require("./pages/HomePage.js"),
   Login: require("./pages/LoginPage.js"),
   Logout: require("./pages/LogoutPage.js"),
@@ -67,6 +68,7 @@ m.route(document.getElementById("page"), "/not_found", {
   "/authors/:authorId": App.showPage("Author"),
   "/login": App.showPage("Login"),
   "/about": App.showPage("About"),
+  "/bookmarks": App.showPage("Bookmarks"),
   "/logout": App.showPage("Logout"),
   "/signup": App.showPage("Signup"),
   "/not_found": App.showPage("NotFound")

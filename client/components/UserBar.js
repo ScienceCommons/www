@@ -38,7 +38,7 @@ UserBar.view = function(ctrl) {
   var dropdownContent = (
     <ul>
       <li onclick={route("/profile")}>Profile</li>
-      <li onclick={route("/saved")}>Saved searches</li>
+      <li onclick={route("/bookmarks")}>Bookmarks</li>
       <li onclick={route("/logout")}>Log out</li>
       {extras}
     </ul>
