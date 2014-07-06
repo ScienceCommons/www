@@ -17,18 +17,30 @@ BookmarksPage.controller = function(options) {
 };
 
 BookmarksPage.view = function(ctrl) {
-  var list = _.map(ctrl.user.get("bookmarks"), function(bookmark) {
-    return <li>{bookmark}</li>;
-  });
+  var content;
+  var bookmarks = ctrl.user.get("bookmarks");
 
-  var content = (
-    <div>
-      <h1>Bookmarks</h1>
-      <ul>
-        {list}
-      </ul>
-    </div>
-  );
+  if (bookmarks.length > 0) {
+    var list = _.map(ctrl.user.get("bookmarks"), function(bookmark) {
+      return <li>{bookmark}</li>;
+    });
+
+    content = (
+      <div>
+        <h1>Bookmarks</h1>
+        <ul>
+          {list}
+        </ul>
+      </div>
+    );
+  } else {
+    content = (
+      <div>
+        <h1>Bookmarks</h1>
+        <p>You don't have any bookmarks</p>
+      </div>
+    );
+  }
 
   return new Layout.view(ctrl.controllers.layout, content);
 };
