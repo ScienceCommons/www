@@ -74,7 +74,7 @@ SearchResults.view = function(ctrl) {
     if (ctrl.from() + ctrl.resultsPerPage() < ctrl.results.total) {
       var more = (
         <div className="more">
-          <button type="button" onclick={ctrl.nextPage}>More results</button>
+          <button type="button" className="btn" onclick={ctrl.nextPage}>More results</button>
         </div>
       );
     }
