@@ -54,7 +54,6 @@ SearchPage.view = function(ctrl) {
                 <div className="btn_group">
                   <button type="button" className="active btn">All</button>
                   <button type="button" className="btn"><span className="icon icon_bookmark"></span></button>
-                  <button type="button" className="btn"><span className="icon icon_eye"></span></button>
                 </div>
               </li>
 
