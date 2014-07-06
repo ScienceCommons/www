@@ -27,6 +27,7 @@
   .articleView {
     margin: 0 40px;
     padding: 20px 0;
+    cursor: pointer;
 
     &:hover {
       background-color: $light_gray;
