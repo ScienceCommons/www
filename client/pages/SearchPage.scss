@@ -50,8 +50,11 @@
     & > tbody > tr > td {
       vertical-align: top;
 
+      &:last-child {
+        width: 100%;
+      }
+
       &:first-child {
-        width: 200px;
         border-right: 1px solid $gray;
         background-color: $light_gray;
 
@@ -73,6 +76,7 @@
 
     label {
       display: block;
+      white-space: nowrap;
     }
 
     button.active {

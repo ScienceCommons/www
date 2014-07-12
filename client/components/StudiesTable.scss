@@ -37,7 +37,6 @@ $column_width: 300px;
   }
 
   .cell {
-    box-sizing: border-box;
     border-bottom: 1px solid $gray;
     position: relative;
   }
@@ -47,7 +46,6 @@ $column_width: 300px;
   }
 
   .cellContents {
-    box-sizing: border-box;
     text-align: center;
     height: 100%;
     width: 100%;
@@ -100,7 +98,6 @@ $column_width: 300px;
 
     header, footer {
       width: 100%;
-      box-sizing: border-box;
       padding: 10px;
       background-color: $light_gray;
     }
@@ -140,7 +137,6 @@ $column_width: 300px;
 
     input {
       width: 100%;
-      box-sizing: border-box;
     }
   }
 
@@ -261,7 +257,6 @@ $column_width: 300px;
       header, footer {
         width: 100%;
         padding: 10px;
-        box-sizing: border-box;
       }
 
       header {
@@ -330,7 +325,6 @@ $column_width: 300px;
       height: 69px; // 70-1 otherwise the bottom border looks weird
       display: inline-block;
       width: 25%;
-      box-sizing: border-box;
       padding: 8px;
       position: relative;
 

@@ -1,9 +1,7 @@
 @import "../variables.scss";
 
 .SearchResults {
-  ul {
-    list-style: none;
-  }
+  width: 100%;
 
   .sort {
     float: right;
@@ -19,8 +17,16 @@
     padding: 20px;
     border-bottom: 1px solid $light_gray;
 
+    & > td {
+      padding: 20px;
+
+      &:first-child {
+        width: 100%;
+      }
+    }
+
     ul.badges {
-      text-align: right;
+      white-space: nowrap;
 
       li {
         display: inline-block;
@@ -29,8 +35,8 @@
 
     .Badge {
       display: inline-block;
-      height: 30px;
-      width: 30px;
+      height: 50px;
+      width: 50px;
       padding: 0 10px;
     }
 

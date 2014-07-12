@@ -10,7 +10,6 @@
   right: 0;
   margin: auto;
   border: 1px solid $gray;
-  box-sizing: border-box;
   border-radius: $btn_radius;
   white-space: normal;
   overflow: hidden;
@@ -30,7 +29,6 @@
       background-color: $light_gray;
       border-bottom: 1px solid $gray;
       padding: 10px 20px;
-      box-sizing: border-box;
       border-radius: $btn_radius $btn_radius 0 0;
 
       .xClose {

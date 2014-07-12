@@ -40,22 +40,25 @@ SearchResults.controller = function(options) {
 
 SearchResults.itemView = function(article, user) {
   return (
-    <li className="searchResult">
-      <header><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></header>
-      <div className="authors">
-        <button type="button" className={"btn btn_subtle bookmark " + (user.hasArticleBookmarked(article) ? "active" : "")} onclick={toggleBookmark(article, user)}>
-          <span className="icon icon_bookmark"></span>
-        </button>
-        ({article.get("year")}) {article.get("authors").etAl(3)
-      }</div>
-
-      <ul className="badges">
-        <li>{new Badge.view({badge: "data", active: true})}</li>
-        <li>{new Badge.view({badge: "methods", active: true})}</li>
-        <li>{new Badge.view({badge: "registration"})}</li>
-        <li>{new Badge.view({badge: "disclosure"})}</li>
-      </ul>
-    </li>
+    <tr className="searchResult">
+      <td>
+        <header><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></header>
+        <div className="authors">
+          <button type="button" className={"btn btn_subtle bookmark " + (user.hasArticleBookmarked(article) ? "active" : "")} onclick={toggleBookmark(article, user)}>
+            <span className="icon icon_bookmark"></span>
+          </button>
+          ({article.get("year")}) {article.get("authors").etAl(3)}
+        </div>
+      </td>
+      <td className="badges">
+        <ul className="badges">
+          <li>{new Badge.view({badge: "data", active: true})}</li>
+          <li>{new Badge.view({badge: "methods", active: true})}</li>
+          <li>{new Badge.view({badge: "registration"})}</li>
+          <li>{new Badge.view({badge: "disclosure"})}</li>
+        </ul>
+      </td>
+    </tr>
   );
 };
 
@@ -65,7 +68,7 @@ SearchResults.view = function(ctrl) {
   if (ctrl.results.loading) {
     content = new Spinner.view();
   } else if (ctrl.results.total > 0) {
-    content = <ul>{ctrl.results.map(function(article) { return new SearchResults.itemView(article, ctrl.user); })}</ul>;
+    content = <table><tbody>{ctrl.results.map(function(article) { return new SearchResults.itemView(article, ctrl.user); })}</tbody></table>;
   } else {
     content = <h3>Sorry, no results were found</h3>;
   }

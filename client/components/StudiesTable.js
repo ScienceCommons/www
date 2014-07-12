@@ -385,7 +385,7 @@ StudiesTable.cellViews.badges = function(ctrl, study) {
   var badges = _.map(["data", "methods", "registration", "disclosure"], function(badge) {
 
     return <li onclick={StudiesTable.cellViews.handleBadgeClick(ctrl, study, badge)} className={activeBadge === badge ?  "active" : ""}>
-      {Badge.view({badge: badge, active: study.hasBadge(badge), borderWidth: 2})}
+      {Badge.view({badge: badge, active: study.hasBadge(badge)})}
     </li>;
   });
 
