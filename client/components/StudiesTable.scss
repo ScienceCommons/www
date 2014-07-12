@@ -225,4 +225,19 @@ $column_width: 300px;
   .study.replication+.study .cell:not(.replication_path) {
     border-left: 1px solid $gray;
   }
+
+  .cell.badges {
+    .cellContents {
+      padding: 0;
+    }
+  }
+
+  ul.badges {
+    & > li {
+      display: inline-block;
+      width: 25%;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+  }
 }

@@ -9,6 +9,7 @@ var OnUnload = require("../utils/OnUnload.js");
 var cx = require("../utils/ClassSet.js");
 var Spinner = require("./Spinner.js");
 var Modal = require("../components/Modal.js");
+var Badge = require("../components/Badge.js");
 var StudyFinder = require("../components/StudyFinder.js");
 
 var StudiesTable = {};
@@ -375,9 +376,11 @@ StudiesTable.cellViews.badges = function(ctrl, study) {
     var dropdown = openDropdown;
   }
 
-  var badges = <li>Badges</li>;
+  var badges = _.map(["data", "methods", "registration", "disclosure"], function(badge) {
+    return <li>{Badge.view({badge: badge, active: study.hasBadge(badge)})}</li>;
+  });
 
-  return [<ul>{badges}</ul>, dropdown];
+  return [<ul className="badges">{badges}</ul>, dropdown];
 };
 
 StudiesTable.cellViews.effect_size = function(ctrl, study) {
