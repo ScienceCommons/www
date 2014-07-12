@@ -1,6 +1,7 @@
 /** @jsx m */
 
 "use strict";
+var m = require("mithril");
 require("./CommentBox.scss");
 
 var DropdownSelect = require("./DropdownSelect.js");
@@ -106,6 +107,11 @@ var CommentBox = {};
 CommentBox.controller = function(options) {
   this.comments = options.comments;
   this.commentFormController = new CommentForm.controller({user: options.user, comments: this.comments});
+  this.interval = setInterval(m.redraw, 60000); // redraw every minute for time-stamps
+  var _this = this;
+  this.onunload = function() {
+    clearInterval(_this.interval);
+  };
 };
 
 CommentBox.view = function(ctrl) {
