@@ -13,12 +13,12 @@
   }
 
   .searchResult {
-    color: #000;
-    padding: 20px;
     border-bottom: 1px solid $light_gray;
 
     & > td {
-      padding: 20px;
+      &:not(.badges) {
+        padding: 20px;
+      }
 
       &:first-child {
         width: 100%;
@@ -27,6 +27,7 @@
 
     ul.badges {
       white-space: nowrap;
+      margin-right: 10px;
 
       li {
         display: inline-block;

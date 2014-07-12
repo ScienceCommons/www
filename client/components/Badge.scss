@@ -27,3 +27,11 @@
     stroke-dasharray: 5, 5;
   }
 }
+
+ul.badges {
+  & > li {
+    display: inline-block;
+    width: 25%;
+    padding: 8px;
+  }
+}

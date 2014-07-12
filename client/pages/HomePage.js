@@ -52,12 +52,12 @@ HomePage.articleView = function(article) {
     <div className="articleView" onclick={visitArticle(article)}>
       <div className="title">{article.get("title")}</div>
       <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
-      <div className="badges">
-        {new Badge.view({badge: "data", active: true})}
-        {new Badge.view({badge: "methods", active: true})}
-        {new Badge.view({badge: "registration"})}
-        {new Badge.view({badge: "disclosure"})}
-      </div>
+      <ul className="badges">
+        <li>{new Badge.view({badge: "data", active: true})}</li>
+        <li>{new Badge.view({badge: "methods", active: true})}</li>
+        <li>{new Badge.view({badge: "registration"})}</li>
+        <li>{new Badge.view({badge: "disclosure"})}</li>
+      </ul>
     </div>
   );
 };

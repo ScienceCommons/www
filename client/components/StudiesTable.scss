@@ -323,9 +323,6 @@ $column_width: 300px;
 
     & > li {
       height: 69px; // 70-1 otherwise the bottom border looks weird
-      display: inline-block;
-      width: 25%;
-      padding: 8px;
       position: relative;
 
       &:hover {
