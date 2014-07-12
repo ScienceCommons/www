@@ -5,12 +5,13 @@
 var _ = require("underscore");
 var CurateBaseModel = require("./CurateBaseModel.js");
 var CommentModel = require("./CommentModel.js");
+var FileModel = require("./FileModel.js");
 
 var StudyModel = CurateBaseModel.extend({
   relations: {
     //authors: {type: "many", model: require("./UserModel.js")},
     //comments: {type: "many", model: CommentModel},
-    files: {type: "many"},
+    files: {type: "many", model: FileModel},
     authors_comments: {type: "many", model: CommentModel},
     independent_variables_comments: {type: "many", model: CommentModel},
     dependent_variables_comments: {type: "many", model: CommentModel},

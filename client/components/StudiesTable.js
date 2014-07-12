@@ -407,7 +407,23 @@ StudiesTable.cellViews.handleBadgeClick = function(ctrl, study, badge) {
 
 var BadgeDropdowns = {};
 BadgeDropdowns.data = function(ctrl, study) {
-  var files = study.filesByType("data");
+  return fileDropdown(ctrl, study, "data", "Data & Syntax");
+};
+
+BadgeDropdowns.methods = function(ctrl, study) {
+  return fileDropdown(ctrl, study, "materials", "Materials");
+};
+
+BadgeDropdowns.registration = function(ctrl, study) {
+  return fileDropdown(ctrl, study, "registration", "Registration");
+};
+
+BadgeDropdowns.disclosure = function(ctrl, study) {
+  return fileDropdown(ctrl, study, "disclosure", "Disclosure");
+};
+
+function fileDropdown(ctrl, study, type, heading) {
+  var files = study.filesByType(type);
   var active = ctrl.active();
   var body = "Add some files";
   var modal;
@@ -421,13 +437,23 @@ BadgeDropdowns.data = function(ctrl, study) {
             <span className="modalTitle fileName">{file.get("name")}</span>
             <button type="button" className="btn edit"><span className="icon icon_edit"></span></button>
           </header>
+
+          <ul className="history">
+          </ul>
+
+          <footer>
+            <form>
+              <textarea></textarea>
+              <button type="submit" className="btn">Post</button>
+            </form>
+          </footer>
         </div>
       }
 
       return <tr onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className={fileIsActive ? "active" : ""}>
         <td className="fileName">{file.get("name")}</td>
         <td className="buttons">
-          <button type="button" className="btn"><span className="icon icon_download"></span></button>
+          <button type="button" className="btn" title="Download"><span className="icon icon_download"></span></button>
           <button type="button" className="btn"><span className="icon icon_comment"></span></button>
         </td>
       </tr>;
@@ -439,7 +465,7 @@ BadgeDropdowns.data = function(ctrl, study) {
   };
 
   return <div className="dropdown">
-    <header>Data &amp; Syntax</header>
+    <header>{heading}</header>
     <div className="body">
       {body}
     </div>
@@ -448,33 +474,6 @@ BadgeDropdowns.data = function(ctrl, study) {
       <button type="button" className="btn">Download all</button>
     </footer>
     {modal}
-  </div>;
-};
-
-BadgeDropdowns.methods = function() {
-  return <div className="dropdown">
-    <header>Methods</header>
-    <div className="body">
-      Body here
-    </div>
-  </div>;
-};
-
-BadgeDropdowns.registration = function() {
-  return <div className="dropdown">
-    <header>Registration</header>
-    <div className="body">
-      Body here
-    </div>
-  </div>;
-};
-
-BadgeDropdowns.disclosure = function() {
-  return <div className="dropdown">
-    <header>Disclosure</header>
-    <div className="body">
-      Body here
-    </div>
   </div>;
 };
 
