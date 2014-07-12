@@ -95,6 +95,11 @@ var StudyModel = CurateBaseModel.extend({
   destroy: function() {
     throw("Study.create must be done through the collection: article.get('studies')");
   },
+  filesByType: function(type) {
+    return this.get("files").filter(function(file) {
+      return file.get("type") === type;
+    });
+  }
 });
 
 StudyModel.prototype.relations.replications.model = StudyModel; // had to do this because of self reference

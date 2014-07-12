@@ -96,18 +96,34 @@ $column_width: 300px;
     background-color: white;
     z-index: 10;
     width: 250px;
+    border-radius: $btn_radius;
 
     header, footer {
       width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
       background-color: $light_gray;
     }
 
     header {
       border-bottom: 1px solid $gray;
+      border-top-left-radius: $btn_radius;
+      border-top-right-radius: $btn_radius;
+
+      .modalTitle {
+        line-height: 30px;
+        display: inline-block;
+      }
+
+      button.edit {
+        float: right;
+      }
     }
 
     footer {
       border-top: 1px solid $gray;
+      border-bottom-left-radius: $btn_radius;
+      border-bottom-right-radius: $btn_radius;
     }
 
     ul.history {
@@ -240,27 +256,71 @@ $column_width: 300px;
       background-color: white;
       z-index: 10;
       top: 65px;
+      text-align: left;
 
       header, footer {
         width: 100%;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding: 10px;
+        box-sizing: border-box;
       }
 
       header {
         font-size: 18px;
         font-weight: bold;
         border-bottom: 1px solid $gray;
-        border-top-left-radius: $btn_radius;
-        border-top-right-radius: $btn_radius;
       }
 
       footer {
         background-color: $light_gray;
         border-top: 1px solid $gray;
-        box-sizing: border-box;
         border-bottom-left-radius: $btn_radius;
         border-bottom-right-radius: $btn_radius;
+
+        button:last-child {
+          float: right;
+        }
+      }
+
+      .studyModalView {
+        left: 104%;
+      }
+
+      .body {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .files {
+        width: 100%;
+
+        tr:hover {
+          background-color: $light_blue;
+
+          td.fileName {
+            color: white;
+          }
+        }
+
+        tr.active {
+          background-color: $blue;
+
+          td.fileName {
+            color: white;
+          }
+        }
+
+        td {
+          padding: 5px;
+        }
+
+        .fileName {
+          width: 100%;
+          text-overflow:ellipsis;
+        }
+
+        .buttons {
+          white-space: nowrap;
+        }
       }
     }
   }

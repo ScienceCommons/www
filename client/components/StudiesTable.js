@@ -329,13 +329,13 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
     });
 
     if (ctrl.article.get("id") === study.get("article_id")) {
-      var editButton = <button className="btn" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
+      var editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
     }
 
     return (
       <div className="studyModalView">
         <header>
-          {field}
+          <span className="modalTitle">{field}</span>
           {editButton}
         </header>
 
@@ -407,36 +407,84 @@ StudiesTable.cellViews.handleBadgeClick = function(ctrl, study, badge) {
 
 var BadgeDropdowns = {};
 BadgeDropdowns.data = function(ctrl, study) {
-  var files = "Enter some files";
+  var files = study.filesByType("data");
+  var active = ctrl.active();
+  var body = "Add some files";
+  var modal;
+
+  if (files.length > 0) {
+    var rows = _.map(files, function(file) {
+      var fileIsActive = active.file === file;
+      if (fileIsActive) {
+        modal = <div className="studyModalView">
+          <header>
+            <span className="modalTitle fileName">{file.get("name")}</span>
+            <button type="button" className="btn edit"><span className="icon icon_edit"></span></button>
+          </header>
+        </div>
+      }
+
+      return <tr onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className={fileIsActive ? "active" : ""}>
+        <td className="fileName">{file.get("name")}</td>
+        <td className="buttons">
+          <button type="button" className="btn"><span className="icon icon_download"></span></button>
+          <button type="button" className="btn"><span className="icon icon_comment"></span></button>
+        </td>
+      </tr>;
+    });
+
+    body = <table className="files"><tbody>
+      {rows}
+    </tbody></table>;
+  };
+
   return <div className="dropdown">
     <header>Data &amp; Syntax</header>
-    {files}
+    <div className="body">
+      {body}
+    </div>
     <footer>
       <button type="button" className="btn">Add a file</button>
       <button type="button" className="btn">Download all</button>
     </footer>
+    {modal}
   </div>;
 };
 
 BadgeDropdowns.methods = function() {
   return <div className="dropdown">
     <header>Methods</header>
-    Body here
+    <div className="body">
+      Body here
+    </div>
   </div>;
 };
 
 BadgeDropdowns.registration = function() {
   return <div className="dropdown">
     <header>Registration</header>
-    Body here
+    <div className="body">
+      Body here
+    </div>
   </div>;
 };
 
 BadgeDropdowns.disclosure = function() {
   return <div className="dropdown">
     <header>Disclosure</header>
-    Body here
+    <div className="body">
+      Body here
+    </div>
   </div>;
+};
+
+function handleBadgeDropdownFileClick(ctrl, study, file) {
+  return function(e) {
+    e.preventDefault();
+    var active = ctrl.active();
+    active.file = file;
+    ctrl.active(active);
+  };
 };
 
 StudiesTable.cellViews.effect_size = function(ctrl, study) {
