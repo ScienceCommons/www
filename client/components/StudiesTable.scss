@@ -53,7 +53,7 @@ $column_width: 300px;
     width: 100%;
   }
 
-  .cell:not(.replication_path) .cellContents:hover {
+  .cell:not(.replication_path):not(.badges) .cellContents:hover {
     background-color: $light_blue;
     color: white;
   }
@@ -157,7 +157,7 @@ $column_width: 300px;
       line-height: 24px;
       text-align: center;
       width: 30px;
-      border-radius: 4px;
+      border-radius: $btn_radius;
       position: absolute;
       right: 8px;
     }
@@ -230,14 +230,72 @@ $column_width: 300px;
     .cellContents {
       padding: 0;
     }
+
+    .dropdown {
+      position: absolute;
+      border: 1px solid $gray;
+      border-radius: $btn_radius;
+      width: 105%;
+      left: -3%;
+      background-color: white;
+      z-index: 10;
+      top: 65px;
+
+      header, footer {
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      header {
+        font-size: 18px;
+        font-weight: bold;
+        border-bottom: 1px solid $gray;
+        border-top-left-radius: $btn_radius;
+        border-top-right-radius: $btn_radius;
+      }
+
+      footer {
+        background-color: $light_gray;
+        border-top: 1px solid $gray;
+        box-sizing: border-box;
+        border-bottom-left-radius: $btn_radius;
+        border-bottom-right-radius: $btn_radius;
+      }
+    }
   }
 
   ul.badges {
+    &.active {
+      background-color: $light_gray;
+    }
+
     & > li {
+      height: 69px; // 70-1 otherwise the bottom border looks weird
       display: inline-block;
       width: 25%;
       box-sizing: border-box;
-      padding: 10px;
+      padding: 8px;
+      position: relative;
+
+      &:hover {
+        background-color: $light_blue;
+      }
+
+      &.active {
+        background-color: white;
+        z-index: 11;
+        height: 66px;
+        vertical-align: top;
+
+        &:not(:first-child) {
+          border-left: 1px solid $gray;
+        }
+
+        &:not(:last-child) {
+          border-right: 1px solid $gray;
+        }
+      }
     }
   }
 }

@@ -72,7 +72,7 @@ StudiesTable.controller = function(opts) {
     return function() {
       var active = _this.active();
       var id = study.get("id");
-      if (field === "replication_path" || (active.study_id === id && active.field === field && !active.editing)) {
+      if (active.study_id === id && active.field === field && !active.editing) {
         active = {study_id: false, field: false, editing: false, dropdown: false};
       } else {
         if (active.study_id !== id || active.field !== field) {
@@ -273,7 +273,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
 
 StudiesTable.studyCellView = function(ctrl, study, field, options) {
   var active = ctrl.active();
-  if (active.study_id === study.get("id") && active.field === field) {
+  if (field !== "badges" && active.study_id === study.get("id") && active.field === field) {
     var modal = StudiesTable.studyModalView(ctrl, study, field, options);
   }
 
@@ -285,12 +285,17 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
   }
 
   // also include indicators
+  var cellContents = <div className="cellContents">
+    {contents}
+  </div>
+
+  if (field !== "badges" && field !== "replication_path") {
+    cellContents.attrs.onclick = ctrl.toggleModal(study, field, options)
+  }
+
   return (
     <div className={"cell " + field}>
-      <div className="cellContents" onclick={ctrl.toggleModal(study, field, options)}>
-        {contents}
-      </div>
-
+      {cellContents}
       {modal}
     </div>
   );
@@ -371,16 +376,67 @@ StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
 };
 
 StudiesTable.cellViews.badges = function(ctrl, study) {
-  var openDropdown = ctrl.active().dropdown;
-  if (openDropdown) {
-    var dropdown = openDropdown;
+  var active = ctrl.active();
+  if (active.study_id === study.get("id") && active.field === "badges") {
+    var activeBadge = active.badge;
+    var dropdown = BadgeDropdowns[activeBadge](ctrl, study);
   }
 
   var badges = _.map(["data", "methods", "registration", "disclosure"], function(badge) {
-    return <li>{Badge.view({badge: badge, active: study.hasBadge(badge)})}</li>;
+
+    return <li onclick={StudiesTable.cellViews.handleBadgeClick(ctrl, study, badge)} className={activeBadge === badge ?  "active" : ""}>
+      {Badge.view({badge: badge, active: study.hasBadge(badge), borderWidth: 2})}
+    </li>;
   });
 
-  return [<ul className="badges">{badges}</ul>, dropdown];
+  return [
+    <ul className={"badges " + (activeBadge ? "active" : "")}>{badges}</ul>,
+    dropdown
+  ]
+};
+
+StudiesTable.cellViews.handleBadgeClick = function(ctrl, study, badge) {
+  return function(e) {
+    ctrl.active({
+      study_id: study.get("id"),
+      field: "badges",
+      badge: badge
+    });
+  };
+};
+
+var BadgeDropdowns = {};
+BadgeDropdowns.data = function(ctrl, study) {
+  var files = "Enter some files";
+  return <div className="dropdown">
+    <header>Data &amp; Syntax</header>
+    {files}
+    <footer>
+      <button type="button" className="btn">Add a file</button>
+      <button type="button" className="btn">Download all</button>
+    </footer>
+  </div>;
+};
+
+BadgeDropdowns.methods = function() {
+  return <div className="dropdown">
+    <header>Methods</header>
+    Body here
+  </div>;
+};
+
+BadgeDropdowns.registration = function() {
+  return <div className="dropdown">
+    <header>Registration</header>
+    Body here
+  </div>;
+};
+
+BadgeDropdowns.disclosure = function() {
+  return <div className="dropdown">
+    <header>Disclosure</header>
+    Body here
+  </div>;
 };
 
 StudiesTable.cellViews.effect_size = function(ctrl, study) {
