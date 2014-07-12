@@ -375,6 +375,14 @@ StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
   return [addReplicationLink, replicationCountLink];
 };
 
+var BadgeHeaders = {
+  "data": "Data & Syntax",
+  "materials": "Materials",
+  "methods": "Materials",
+  "registration": "Registration",
+  "disclosure": "Disclosure"
+};
+
 StudiesTable.cellViews.badges = function(ctrl, study) {
   var active = ctrl.active();
   if (active.study_id === study.get("id") && active.field === "badges") {
@@ -384,7 +392,7 @@ StudiesTable.cellViews.badges = function(ctrl, study) {
 
   var badges = _.map(["data", "methods", "registration", "disclosure"], function(badge) {
 
-    return <li onclick={StudiesTable.cellViews.handleBadgeClick(ctrl, study, badge)} className={activeBadge === badge ?  "active" : ""}>
+    return <li onclick={StudiesTable.cellViews.handleBadgeClick(ctrl, study, badge)} className={activeBadge === badge ?  "active" : ""} title={BadgeHeaders[badge]}>
       {Badge.view({badge: badge, active: study.hasBadge(badge)})}
     </li>;
   });
@@ -412,22 +420,22 @@ StudiesTable.cellViews.handleBadgeClick = function(ctrl, study, badge) {
 
 var BadgeDropdowns = {};
 BadgeDropdowns.data = function(ctrl, study) {
-  return fileDropdown(ctrl, study, "data", "Data & Syntax");
+  return fileDropdown(ctrl, study, "data");
 };
 
 BadgeDropdowns.methods = function(ctrl, study) {
-  return fileDropdown(ctrl, study, "materials", "Materials");
+  return fileDropdown(ctrl, study, "materials");
 };
 
 BadgeDropdowns.registration = function(ctrl, study) {
-  return fileDropdown(ctrl, study, "registration", "Registration");
+  return fileDropdown(ctrl, study, "registration");
 };
 
 BadgeDropdowns.disclosure = function(ctrl, study) {
-  return fileDropdown(ctrl, study, "disclosure", "Disclosure");
+  return fileDropdown(ctrl, study, "disclosure");
 };
 
-function fileDropdown(ctrl, study, type, heading) {
+function fileDropdown(ctrl, study, type) {
   var files = study.filesByType(type);
   var active = ctrl.active();
   var body = "Add some files";
@@ -470,7 +478,7 @@ function fileDropdown(ctrl, study, type, heading) {
   };
 
   return <div className="dropdown">
-    <header>{heading}</header>
+    <header>{BadgeHeaders[type]}</header>
     <div className="body">
       {body}
     </div>
