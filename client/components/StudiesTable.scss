@@ -56,6 +56,11 @@ $column_width: 300px;
     color: white;
   }
 
+  .cell.active:not(.replication_path):not(.badges) .cellContents {
+    background-color: $blue;
+    color: white;
+  }
+
   header .cell, .cellContents {
     padding: 10px 20px;
   }

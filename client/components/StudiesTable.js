@@ -294,7 +294,7 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
   }
 
   return (
-    <div className={"cell " + field}>
+    <div className={"cell " + field + (modal ? " active" : "")}>
       {cellContents}
       {modal}
     </div>
