@@ -397,11 +397,16 @@ StudiesTable.cellViews.badges = function(ctrl, study) {
 
 StudiesTable.cellViews.handleBadgeClick = function(ctrl, study, badge) {
   return function(e) {
-    ctrl.active({
-      study_id: study.get("id"),
-      field: "badges",
-      badge: badge
-    });
+    var active = ctrl.active();
+    if (active.study_id === study.get("id") && active.field === "badges" && active.badge === badge) {
+      ctrl.active({});
+    } else {
+      ctrl.active({
+        study_id: study.get("id"),
+        field: "badges",
+        badge: badge
+      });
+    }
   };
 };
 
