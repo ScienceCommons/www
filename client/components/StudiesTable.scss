@@ -275,10 +275,6 @@ $column_width: 300px;
         border-top: 1px solid $gray;
         border-bottom-left-radius: $btn_radius;
         border-bottom-right-radius: $btn_radius;
-
-        button:last-child {
-          float: right;
-        }
       }
 
       .body {

@@ -484,7 +484,6 @@ function fileDropdown(ctrl, study, type) {
     </div>
     <footer>
       <button type="button" className="btn">Add a file</button>
-      <button type="button" className="btn">Download all</button>
     </footer>
     {modal}
   </div>;
