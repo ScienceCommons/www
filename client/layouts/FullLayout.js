@@ -12,10 +12,10 @@ var Logo = require("../components/Logo.js");
 var FullLayout = {};
 
 FullLayout.controller = function(options) {
+  OnUnload(this);
   options = options || {};
   this.id = options.id;
   this.header = options.header;
-  OnUnload(this);
   this.controllers.userBar = new UserBar.controller({user: options.user})
   document.title = "Curate Science";
 };

@@ -13,9 +13,9 @@ var Logo = require("../components/Logo.js");
 var DefaultLayout = {};
 
 DefaultLayout.controller = function(options) {
+  OnUnload(this);
   options = options || {};
   this.id = options.id;
-  OnUnload(this);
 
   this.controllers.userBar = new UserBar.controller({user: options.user});
   this.controllers.search = new Search.controller({query: m.route.param("query")});
