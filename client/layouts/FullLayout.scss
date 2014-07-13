@@ -13,6 +13,10 @@
 
   a.logo {
     text-decoration: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .Logo {
