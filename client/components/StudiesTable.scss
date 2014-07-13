@@ -90,73 +90,44 @@ $column_width: 300px;
     height: 60px;
   }
 
-  .studyModalView {
+  .cell .Modal {
     position: absolute;
     top: -1px;
     left: 100%;
-    margin-left: 10px;
-    border: 1px solid $gray;
-    background-color: white;
-    z-index: 10;
+    right: auto;
+    bottom: auto;
     width: 250px;
-    border-radius: $btn_radius;
+    height: 400px;
+    margin-left: 4px;
 
-    header, footer {
-      width: 100%;
-      padding: 10px;
-      background-color: $light_gray;
-    }
-
-    header {
-      border-bottom: 1px solid $gray;
-      border-top-left-radius: $btn_radius;
-      border-top-right-radius: $btn_radius;
-
-      .modalTitle {
-        line-height: 30px;
-        display: inline-block;
-      }
-
-      button.edit {
-        float: right;
-      }
-    }
-
-    footer {
-      border-top: 1px solid $gray;
-      border-bottom-left-radius: $btn_radius;
-      border-bottom-right-radius: $btn_radius;
-
-      form table {
-        td {
-          vertical-align: top;
-
-          &:first-child {
-            width: 100%;
-            padding-right: 10px;
-
-            textarea {
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
-
-    ul.history {
-      height: 300px;
-      width: 100%;
-      overflow-y: auto;
-    }
-  }
-
-  form.studyModalView {
     .inputs {
       padding: 20px;
     }
 
     input {
       width: 100%;
+    }
+
+    tfoot form {
+      table {
+        width: 100%;
+      }
+
+      td {
+        vertical-align: top;
+
+        &:first-child {
+          width: 100%;
+
+          textarea {
+            width: 100%;
+          }
+        }
+      }
+
+      button {
+        margin-left: 5px;
+      }
     }
   }
 

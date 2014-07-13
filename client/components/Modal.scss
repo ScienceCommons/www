@@ -16,8 +16,9 @@
   overflow: hidden;
   outline: 0;
   -webkit-overflow-scrolling: touch;
+  z-index: 100;
 
-  & > table {
+  & > table, & > .modalWrapper > table {
     width: 100%;
     height: 100%;
 
@@ -28,7 +29,11 @@
 
         td.modalHeading {
           width: 100%;
-          padding: 10px 20px;
+          padding: 10px 0px 10px 20px;
+
+          &:last-child {
+            padding-right: 20px;
+          }
         }
         td.modalActions {
           vertical-align: top;

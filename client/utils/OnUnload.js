@@ -2,7 +2,8 @@
 
 var _ = require("underscore");
 
-var OnUnload = function(ctrl) {
+var OnUnload = function(ctrl, instances) {
+  ctrl.id = _.uniqueId();
   ctrl.controllers = {};
   ctrl.onunload = function(e) {
     _.each(ctrl.controllers, function(subCtrl) {
@@ -10,6 +11,10 @@ var OnUnload = function(ctrl) {
         subCtrl.onunload(e);
       }
     });
+
+    if (instances) {
+      delete instances[ctrl.id];
+    }
   };
 };
 

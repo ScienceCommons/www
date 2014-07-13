@@ -13,9 +13,11 @@ var Badge = require("../components/Badge.js");
 var StudyFinder = require("../components/StudyFinder.js");
 
 var StudiesTable = {};
+StudiesTable.instances = {};
 
 StudiesTable.controller = function(opts) {
-  OnUnload(this);
+  OnUnload(this, StudiesTable.instances);
+  StudiesTable.instances[this.id] = this;
 
   this.article = opts.article;
   this.active = m.prop({study_id: false, field: false, editing: false, dropdown: false});
@@ -184,10 +186,15 @@ StudiesTable.controller = function(opts) {
   };
 
   this.controllers.studyFinderModal = new Modal.controller();
+  this.controllers.studyCommentAndEditModal = new Modal.controller();
 
   this.controllers.studyFinder = new StudyFinder.controller({
     selectStudy: this.addReplication
   });
+
+  this.studiesConfig = function(el, isInitialized) {
+    _this.studiesEl = el;
+  };
 };
 
 StudiesTable.view = function(ctrl) {
@@ -209,15 +216,14 @@ StudiesTable.view = function(ctrl) {
     } else {
       var addStudyButton = <button className="btn addStudy" onclick={ctrl.addStudy}>Add study</button>;
     }
-    content = [<ul className="studies">{_.flatten(studies)}</ul>, addStudyButton];
+    content = [<ul className="studies" config={ctrl.studiesConfig}>{_.flatten(studies)}</ul>, addStudyButton];
   }
 
   if (ctrl.studyFinderStudy()) {
-    var studyFinderModal = new Modal.view(
-      ctrl.controllers.studyFinderModal,
-      new StudyFinder.view(ctrl.controllers.studyFinder),
-      "Add a replication"
-    );
+    var studyFinderModal = Modal.view(ctrl.controllers.studyFinderModal, {
+      label: "Add a replication",
+      content: new StudyFinder.view(ctrl.controllers.studyFinder)
+    });
   }
 
   // add study column
@@ -302,6 +308,8 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
 };
 
 StudiesTable.studyModalView = function(ctrl, study, field) {
+  ctrl.controllers.studyCommentAndEditModal.open(true);
+
   if (ctrl.active().editing) {
     var inputs;
     if (StudiesTable.modalEditors[field]) {
@@ -313,14 +321,13 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
         </div>
       );
     }
-    return (
-      <form className="studyModalView" onsubmit={ctrl.handleEditSubmit(study, field)}>
-        <header>
-          <button type="submit" className="btn">Done</button>
-        </header>
-        {inputs}
-      </form>
-    )
+
+    return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
+      label: <button type="submit" className="btn">Done</button>,
+      buttons: false,
+      content: inputs,
+      wrapper: <form onsubmit={ctrl.handleEditSubmit(study, field)} />
+    });
   } else {
     var comments = study.getComments(field).map(function(comment) {
       return (
@@ -332,42 +339,28 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
       var editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
     }
 
-    return (
-      <div className="studyModalView">
-        <header>
-          <span className="modalTitle">{field}</span>
-          {editButton}
-        </header>
-
-        <ul className="history">
-          {comments}
-        </ul>
-
-        <footer>
-          <form onsubmit={ctrl.addComment(study, field)}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <textarea placeholder="Leave a comment" oninput={m.withAttr("value", ctrl.updateEdits(study, field, "comment"))}>{ctrl.getEdits(study, field, "comment") || ""}</textarea>
-                  </td>
-                  <td>
-                    <button type="submit" className="btn">Post</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
-        </footer>
-      </div>
-    );
+    return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
+      label: field,
+      buttons: editButton,
+      content: <ul className="history">
+        {comments}
+      </ul>,
+      footer: <form onsubmit={ctrl.addComment(study, field)}>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <textarea placeholder="Leave a comment" oninput={m.withAttr("value", ctrl.updateEdits(study, field, "comment"))}>{ctrl.getEdits(study, field, "comment") || ""}</textarea>
+              </td>
+              <td>
+                <button type="submit" className="btn">Post</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    });
   }
-
-  return (
-    <div className={"studyModalView " + field}>
-      {field}
-    </div>
-  );
 };
 
 StudiesTable.cellViews = {};
@@ -455,32 +448,26 @@ function fileDropdown(ctrl, study, type) {
     var rows = _.map(files, function(file) {
       var fileIsActive = active.file === file;
       if (fileIsActive) {
-        modal = <div className="studyModalView">
-          <header>
-            <span className="modalTitle fileName">{file.get("name")}</span>
-            <button type="button" className="btn edit"><span className="icon icon_edit"></span></button>
-          </header>
-
-          <ul className="history">
-          </ul>
-
-          <footer>
-            <form>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <textarea placeholder="Leave a comment"></textarea>
-                    </td>
-                    <td>
-                      <button type="submit" className="btn">Post</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
-          </footer>
-        </div>
+        ctrl.controllers.studyCommentAndEditModal.open(true);
+        modal = Modal.view(ctrl.controllers.studyCommentAndEditModal, {
+          label: file.get("name"),
+          buttons: <button type="button" className="btn edit"><span className="icon icon_edit"></span></button>,
+          content: <ul className="history"></ul>,
+          footer: <form>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <textarea placeholder="Leave a comment"></textarea>
+                  </td>
+                  <td>
+                    <button type="submit" className="btn">Post</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        });
       }
 
       return <tr onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className={fileIsActive ? "active" : ""}>
@@ -608,6 +595,26 @@ function arrayFieldCurrentState(field, ctrl, study) {
     return i >= variables.length;
   }));
   return variables;
+};
+
+var oldMouseDown = document.onmousedown;
+document.onmousedown = function(e) {
+  var node = e.target;
+  var parentNodes = [node];
+  while (node.parentNode) {
+    node = node.parentNode;
+    parentNodes.push(node);
+  }
+
+  _.each(StudiesTable.instances, function(instance) {
+    if (!_.contains(parentNodes, instance.studiesEl)) {
+      instance.active({});
+    }
+  });
+  if (_.isFunction(oldMouseDown)) {
+    oldMouseDown(e);
+  }
+  m.redraw();
 };
 
 module.exports = StudiesTable;

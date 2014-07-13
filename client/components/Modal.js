@@ -16,6 +16,7 @@ Modal.controller = function(options) {
 
   this.open = m.prop(false);
   this.className = options.className || "";
+  this.wrapper = options.wrapper;
 
   var _this = this;
   this.toggle = function(e) {
@@ -37,23 +38,40 @@ Modal.controller = function(options) {
   };
 };
 
-Modal.view = function(ctrl, content, label, footer) {
+Modal.view = function(ctrl, options) {
+  options = options || {};
+
   if (ctrl.open()) {
+    if (options.footer) {
+      var footer = <tfoot><tr><td>{options.footer}</td></tr></tfoot>;
+    }
+    if (options.buttons !== false) {
+      var buttons = options.buttons || <button className="btn xClose" onclick={ctrl.toggle}><span className="icon icon_close"/></button>;
+      buttons = <td className="modalActions">{buttons}</td>;
+    }
+    var body = <table>
+      <thead><tr><th>
+        <table><tbody><tr>
+          <td className="modalHeading">
+            {options.label}
+          </td>
+          {buttons}
+        </tr></tbody></table>
+      </th></tr></thead>
+      <tbody><tr><td>{options.content}
+      </td></tr></tbody>
+      {footer}
+    </table>
+
+    if (options.wrapper) {
+      options.wrapper.children = [body];
+      options.wrapper.attrs.className = (options.wrapper.attrs.className || "") + " modalWrapper";
+      body = options.wrapper;
+    }
+
     return (
       <div className={"Modal " + ctrl.className} config={ctrl.config}>
-        <table>
-          <thead><tr><th>
-            <table><tbody><tr>
-              <td className="modalHeading">
-                <h1>{label}</h1>
-              </td>
-              <td className="modalActions"><button className="btn xClose" onclick={ctrl.toggle}><span className="icon icon_close"/></button></td>
-            </tr></tbody></table>
-          </th></tr></thead>
-          <tbody><tr><td>{content}
-          </td></tr></tbody>
-          <tfoot><tr><td>Footer</td></tr></tfoot>
-        </table>
+        {body}
       </div>
     );
   }
