@@ -33,10 +33,10 @@ var StudyModel = CurateBaseModel.extend({
     ],
     "badges": ["data", "methods"],
     "files": [
-      {type: "data", name: "Google", url: "google.com"},
-      {type: "data", name: "Yahoo", url: "yahoo.com"},
-      {type: "materials", name: "Cisco", url: "cisco.com"},
-      {type: "registration", name: "Apple", url: "apple.com"}
+      {type: "data", name: "Google.docx", url: "google.com"},
+      {type: "data", name: "Yahoo.docx", url: "yahoo.com"},
+      {type: "materials", name: "Cisco.docx", url: "cisco.com"},
+      {type: "registration", name: "Apple.docx", url: "apple.com"}
     ]
   },
   effectSizeKeyMap: {
