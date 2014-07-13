@@ -20,7 +20,7 @@ LoginPage.controller = function(options) {
   var _this = this;
   this.login = function(e) {
     e.preventDefault();
-    if (_this.email() === "sdemjanenko@curatescience.org" && _this.password() === "rabbitears") {
+    if (_this.email() === "stephen@curatescience.org" && _this.password() === "rabbitears") {
       CS.user = {};
       m.route("/");
     }
