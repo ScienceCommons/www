@@ -341,8 +341,11 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
       );
     });
 
-    if (ctrl.article.get("id") === study.get("article_id")) {
-      var editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
+    var editButton;
+    if (field === "authors") {
+      editButton = false;
+    } else if (ctrl.article.get("id") === study.get("article_id")) {
+      editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
     }
 
     return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
