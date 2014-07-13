@@ -125,7 +125,7 @@ StudyFinder.searchView = function(ctrl) {
   return (
     <form onsubmit={ctrl.runSearch}>
       <div className="search">
-        <input placeholder="Find article" type="search" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
+        <input placeholder="Find article" type="text" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
         <button type="submit" className="btn">Search</button>
       </div>
 
