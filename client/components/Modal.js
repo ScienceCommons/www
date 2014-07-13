@@ -44,10 +44,10 @@ Modal.view = function(ctrl, content, label, footer) {
         <table>
           <thead><tr><th>
             <table><tbody><tr>
-              <td className="heading">
+              <td className="modalHeading">
                 <h1>{label}</h1>
               </td>
-              <td><button className="btn xClose" onclick={ctrl.toggle}><span className="icon icon_close"/></button></td>
+              <td className="modalActions"><button className="btn xClose" onclick={ctrl.toggle}><span className="icon icon_close"/></button></td>
             </tr></tbody></table>
           </th></tr></thead>
           <tbody><tr><td>{content}

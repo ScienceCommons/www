@@ -20,26 +20,36 @@
   & > table {
     width: 100%;
     height: 100%;
-  }
 
-  thead {
-    background-color: $light_gray;
-    & > tr > th {
-      border-bottom: 1px solid $gray;
-      padding: 10px 20px;
+    & > thead {
+      background-color: $light_gray;
+      & > tr > th {
+        border-bottom: 1px solid $gray;
 
-      td.heading {
-        width: 100%;
+        td.modalHeading {
+          width: 100%;
+          padding: 10px 20px;
+        }
+        td.modalActions {
+          vertical-align: top;
+          padding: 5px;
+        }
       }
     }
-  }
 
-  tfoot {
-    background-color: $light_gray;
+    & > tfoot {
+      background-color: $light_gray;
 
-    & > tr > td {
-      border-top: 1px solid $gray;
-      padding: 10px 20px;
+      & > tr > td {
+        border-top: 1px solid $gray;
+        padding: 10px 20px;
+      }
+    }
+
+    & > tbody {
+      & > tr > td {
+        vertical-align: top;
+      }
     }
   }
 }
