@@ -486,24 +486,18 @@ function fileDropdown(ctrl, study, type) {
             wrapper: <form onsubmit={ctrl.handleFileEditSubmit(study, file)} />
           });
         } else {
+          ctrl.controllers.studyFieldCommentForm.comments = file.get("comments");
+          var comments = file.get("comments").map(function(comment) {
+            return (
+              <li>{comment.get("body")}</li>
+            );
+          });
+
           modal = Modal.view(ctrl.controllers.studyCommentAndEditModal, {
             label: file.get("name"),
             buttons: <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>,
-            content: <ul className="history"></ul>,
-            footer: <form>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <textarea placeholder="Leave a comment"></textarea>
-                    </td>
-                    <td>
-                      <button type="submit" className="btn">Post</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
+            content: <ul className="history">{comments}</ul>,
+            footer: CommentForm.view(ctrl.controllers.studyFieldCommentForm)
           });
         }
       }
