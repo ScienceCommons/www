@@ -52,10 +52,9 @@ PillList.controller = function(options) {
     var pills = _this.pills();
     if (toRemove) {
       pills = _.filter(pills, function(pill) {
-        return pill.value === toRemove.value;
+        return pill.value !== toRemove.value;
       });
     } else {
-      var pill = pills.pop();
       _this.controllers.recommendationsTypeahead.pill(pills.pop());
     }
 
