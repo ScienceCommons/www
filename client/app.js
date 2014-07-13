@@ -57,6 +57,8 @@ App.showPage = function(pageName) {
   return Page;
 };
 
+require("fastclick").attach(document.body);
+
 m.route.mode = "pathname";
 m.route(document.getElementById("page"), "/not_found", {
   "/": App.showPage("Home"),
