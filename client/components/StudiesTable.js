@@ -597,8 +597,7 @@ function arrayFieldCurrentState(field, ctrl, study) {
   return variables;
 };
 
-var oldMouseDown = document.onmousedown;
-document.onmousedown = function(e) {
+document.addEventListener("mousedown", function(e) {
   var node = e.target;
   var parentNodes = [node];
   while (node.parentNode) {
@@ -611,10 +610,7 @@ document.onmousedown = function(e) {
       instance.active({});
     }
   });
-  if (_.isFunction(oldMouseDown)) {
-    oldMouseDown(e);
-  }
   m.redraw();
-};
+});
 
 module.exports = StudiesTable;
