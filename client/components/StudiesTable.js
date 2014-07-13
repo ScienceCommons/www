@@ -124,6 +124,18 @@ StudiesTable.controller = function(opts) {
     };
   };
 
+  this.handleFileEditSubmit = function(study, file) {
+    return function(e) {
+      e.preventDefault();
+      var active = _this.active();
+      active.editing = false;
+      _this.active(active);
+      var fileEdits = _this.getEdits(study, "files_"+file.get("id"))
+      file.set(fileEdits);
+    };
+  };
+
+
   this.getEdits = function(study, field, attr) {
     var edits = _this.edits();
     var id = study.get("id");
@@ -434,6 +446,12 @@ BadgeDropdowns.disclosure = function(ctrl, study) {
   return fileDropdown(ctrl, study, "disclosure");
 };
 
+function removeFileFromStudy(study, file) {
+  return function(e) {
+    study.get("files").remove(file);
+  };
+};
+
 function fileDropdown(ctrl, study, type) {
   var files = study.filesByType(type);
   var active = ctrl.active();
@@ -445,25 +463,39 @@ function fileDropdown(ctrl, study, type) {
       var fileIsActive = active.file === file;
       if (fileIsActive) {
         ctrl.controllers.studyCommentAndEditModal.open(true);
-        modal = Modal.view(ctrl.controllers.studyCommentAndEditModal, {
-          label: file.get("name"),
-          buttons: <button type="button" className="btn edit"><span className="icon icon_edit"></span></button>,
-          content: <ul className="history"></ul>,
-          footer: <form>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <textarea placeholder="Leave a comment"></textarea>
-                  </td>
-                  <td>
-                    <button type="submit" className="btn">Post</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
-        });
+        if (active.editing) {
+          var edits = ctrl.getEdits(study, "files_"+file.get("id"));
+
+          modal = Modal.view(ctrl.controllers.studyCommentAndEditModal, {
+            label: <button type="submit" className="btn">Done</button>,
+            buttons: <button type="button" className="btn" onclick={removeFileFromStudy(study, file)}><span className="icon icon_delete"></span></button>,
+            content: <div>
+              <input type="text" value={_.isUndefined(edits.name) ? file.get("name") : edits.name} oninput={m.withAttr("value", ctrl.updateEdits(study, "files_"+file.get("id"), "name"))}/>
+              <input type="text" value={_.isUndefined(edits.url) ? file.get("url") : edits.url} oninput={m.withAttr("value", ctrl.updateEdits(study, "files_"+file.get("id"), "url"))}/>
+            </div>,
+            wrapper: <form onsubmit={ctrl.handleFileEditSubmit(study, file)} />
+          });
+        } else {
+          modal = Modal.view(ctrl.controllers.studyCommentAndEditModal, {
+            label: file.get("name"),
+            buttons: <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>,
+            content: <ul className="history"></ul>,
+            footer: <form>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <textarea placeholder="Leave a comment"></textarea>
+                    </td>
+                    <td>
+                      <button type="submit" className="btn">Post</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          });
+        }
       }
 
       return <tr onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className={fileIsActive ? "active" : ""}>
@@ -497,6 +529,7 @@ function handleBadgeDropdownFileClick(ctrl, study, file) {
     e.preventDefault();
     var active = ctrl.active();
     active.file = file;
+    active.editing = false;
     ctrl.active(active);
   };
 };
