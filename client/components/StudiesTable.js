@@ -452,6 +452,16 @@ function removeFileFromStudy(study, file) {
   };
 };
 
+function addFile(ctrl, study, type) {
+  return function(e) {
+    var newFile = study.get("files").add({type: type});
+    var active = ctrl.active();
+    active.editing = true;
+    active.file = newFile;
+    ctrl.active(active);
+  };
+};
+
 function fileDropdown(ctrl, study, type) {
   var files = study.filesByType(type);
   var active = ctrl.active();
@@ -518,7 +528,7 @@ function fileDropdown(ctrl, study, type) {
       {body}
     </div>
     <footer>
-      <button type="button" className="btn">Add a file</button>
+      <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a file</button>
     </footer>
     {modal}
   </div>;
