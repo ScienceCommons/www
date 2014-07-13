@@ -13,9 +13,7 @@
   border: 1px solid $gray;
   border-radius: $btn_radius;
   white-space: normal;
-  overflow: hidden;
   outline: 0;
-  -webkit-overflow-scrolling: touch;
   z-index: 100;
 
   & > table, & > .modalWrapper > table {
@@ -26,6 +24,7 @@
       background-color: $light_gray;
       & > tr > th {
         border-bottom: 1px solid $gray;
+        border-radius: $btn_radius $btn_radius 0 0;
 
         td.modalHeading {
           width: 100%;
@@ -47,7 +46,8 @@
 
       & > tr > td {
         border-top: 1px solid $gray;
-        padding: 10px 20px;
+        padding: 10px;
+        border-radius: 0 0 $btn_radius $btn_radius;
       }
     }
 

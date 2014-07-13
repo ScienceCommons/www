@@ -96,7 +96,7 @@ $column_width: 300px;
     left: 100%;
     right: auto;
     bottom: auto;
-    width: 250px;
+    width: 300px;
     height: 400px;
     margin-left: 4px;
 
@@ -106,28 +106,6 @@ $column_width: 300px;
 
     input {
       width: 100%;
-    }
-
-    tfoot form {
-      table {
-        width: 100%;
-      }
-
-      td {
-        vertical-align: top;
-
-        &:first-child {
-          width: 100%;
-
-          textarea {
-            width: 100%;
-          }
-        }
-      }
-
-      button {
-        margin-left: 5px;
-      }
     }
   }
 
@@ -329,6 +307,19 @@ $column_width: 300px;
         &:not(:last-child) {
           border-right: 1px solid $gray;
         }
+      }
+    }
+  }
+
+  .CommentForm {
+    border: none;
+    padding: 0;
+
+    td.commentSubmit {
+      width: 61px;
+
+      button {
+        padding: 5px 10px;
       }
     }
   }

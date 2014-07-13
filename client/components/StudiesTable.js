@@ -11,6 +11,7 @@ var Spinner = require("./Spinner.js");
 var Modal = require("../components/Modal.js");
 var Badge = require("../components/Badge.js");
 var StudyFinder = require("../components/StudyFinder.js");
+var CommentForm = require("../components/CommentForm.js");
 
 var StudiesTable = {};
 StudiesTable.instances = {};
@@ -20,6 +21,7 @@ StudiesTable.controller = function(opts) {
   StudiesTable.instances[this.id] = this;
 
   this.article = opts.article;
+  this.user = opts.user;
   this.active = m.prop({study_id: false, field: false, editing: false, dropdown: false});
   this.expanded = m.prop({}); // study_id's
   this.newStudy = m.prop(false);
@@ -187,6 +189,9 @@ StudiesTable.controller = function(opts) {
 
   this.controllers.studyFinderModal = new Modal.controller();
   this.controllers.studyCommentAndEditModal = new Modal.controller();
+  this.controllers.studyFieldCommentForm = new CommentForm.controller({
+    user: this.user
+  });
 
   this.controllers.studyFinder = new StudyFinder.controller({
     selectStudy: this.addReplication
@@ -329,6 +334,7 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
       wrapper: <form onsubmit={ctrl.handleEditSubmit(study, field)} />
     });
   } else {
+    ctrl.controllers.studyFieldCommentForm.comments = study.getComments(field);
     var comments = study.getComments(field).map(function(comment) {
       return (
         <li>{comment.get("body")}</li>
@@ -345,20 +351,7 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
       content: <ul className="history">
         {comments}
       </ul>,
-      footer: <form onsubmit={ctrl.addComment(study, field)}>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <textarea placeholder="Leave a comment" oninput={m.withAttr("value", ctrl.updateEdits(study, field, "comment"))}>{ctrl.getEdits(study, field, "comment") || ""}</textarea>
-              </td>
-              <td>
-                <button type="submit" className="btn">Post</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
+      footer: CommentForm.view(ctrl.controllers.studyFieldCommentForm)
     });
   }
 };

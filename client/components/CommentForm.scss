@@ -1,0 +1,92 @@
+@import "../variables.scss";
+
+.CommentForm {
+  border-radius: 8px;
+  border: 1px solid $gray;
+  background: $light_gray;
+  padding: 15px;
+
+  & > table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    td {
+      vertical-align: top;
+    }
+
+    td.commentUserSelect {
+      width: 50px;
+      padding: 10px;
+      border: 1px solid $gray;
+      border-right: none;
+      border-radius: $btn_radius  0 0 $btn_radius;
+      background: white;
+
+      .btn_subtle:hover {
+        color: inherit;
+      }
+    }
+
+    td.commentBodyTextarea {
+      border: 1px solid $gray;
+      border-left: none;
+      border-radius: 0 $btn_radius $btn_radius 0;
+      background: white;
+
+      textarea {
+        padding: 17px 10px 10px 10px;
+        width: 100%;
+        border: 0;
+        resize: none;
+        overflow: hidden;
+        border-radius: 0 $btn_radius $btn_radius 0;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    td.commentSubmit {
+      width: 82px;
+      padding-left: 10px;
+
+      button {
+        padding: 12px 20px;
+      }
+    }
+  }
+
+  .DropdownSelect {
+    position: relative;
+
+    .dropdownContent {
+      padding: 0;
+      left: -5px;
+
+      li {
+        height: 34px;
+        width: 34px;
+        padding: 0;
+      }
+    }
+
+    .btn {
+      border: 0;
+      background: none;
+      padding: 0;
+    }
+  }
+
+  .userImage, .icon_person {
+    height: 30px;
+    width: 30px;
+  }
+
+  .icon_person {
+    font-size: 34px;
+    text-align: middle;
+    vertical-align: baseline;
+  }
+}

@@ -5,91 +5,32 @@
     .commentContent {
       overflow: hidden;
     }
+
+    .userImage, .icon_person {
+      height: 30px;
+      width: 30px;
+      text-align: center;
+      margin-right: 15px;
+      float: left;
+    }
+
+    .userImage.initials {
+      border-radius: 50%;
+      color: white;
+      line-height: 32px;
+      background-color: $purple;
+      font-size: 18px !important;
+    }
+
+    .icon_person {
+      font-size: 34px;
+      width: 30px;
+      text-align: middle;
+      vertical-align: baseline;
+    }
   }
-  
+
   .CommentList {
     margin-top: 20px;
-  }
-
-  .userImage, .icon_person {
-    height: 30px;
-    width: 30px;
-    text-align: center;
-    margin-right: 15px;
-    float: left;
-  }
-
-  .userImage.initials {
-    border-radius: 50%;
-    color: white;
-    line-height: 32px;
-    background-color: $purple;
-    font-size: 18px !important;
-  }
-
-  .icon_person {
-    font-size: 34px;
-    width: 30px;
-    text-align: middle;
-    vertical-align: baseline;
-  }
-
-  .CommentForm {
-    border-radius: 8px;
-    border: 1px solid $gray;
-    background: $light_gray;
-    padding: 15px;
-
-    .commentWrapper {
-      background: white;
-      border: 1px solid $gray;
-      border-radius: $btn_radius;
-      padding-right: 20px;
-      padding: 5px;
-      overflow: hidden;
-    }
-
-    div.textareaWrapper {
-      overflow: hidden;
-    }
-
-    textarea {
-      margin-left: 40px;
-      padding-top: 7px;
-      height: 23px;
-      width: 100%;
-      border: 0;
-      resize: vertical;
-
-      &:focus {
-        outline: none;
-      }
-    }
-
-    .btn.post {
-      float: right;
-      padding: 12px 20px;
-      margin-left: 10px;
-    }
-
-    .DropdownSelect {
-      position: absolute;
-
-      .dropdownContent {
-        padding: 0;
-        left: -5px;
-
-        li {
-          height: 30px;
-          width: 30px;
-        }
-      }
-
-      .btn {
-        border: 0;
-        background: none;
-        padding: 0;
-      }
-    }
   }
 }

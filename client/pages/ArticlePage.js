@@ -40,7 +40,7 @@ ArticlePage.controller = function(options) {
   options = _.extend({id: "ArticlePage"}, options);
   this.controllers.layout = new Layout.controller(options);
   this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: this.user});
-  this.controllers.studiesTable = new StudiesTable.controller({article: article});
+  this.controllers.studiesTable = new StudiesTable.controller({article: article, user: this.user});
   this.controllers.tagsList = new PillList.controller({
     editable: this.editing,
     model: this.article
