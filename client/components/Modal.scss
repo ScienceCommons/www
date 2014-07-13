@@ -1,6 +1,7 @@
 @import "../variables.scss";
 
 .Modal {
+  background-color: white;
   width: 500px;
   height: 500px;
   position: fixed;
@@ -16,31 +17,29 @@
   outline: 0;
   -webkit-overflow-scrolling: touch;
 
-  & > .wrapper {
-    z-index: 6;
-    display: table;
-    height: 100%;
+  & > table {
     width: 100%;
-    background: white;
+    height: 100%;
+  }
 
-    header {
-      display: table-row;
-      height: 1px;
-      background-color: $light_gray;
+  thead {
+    background-color: $light_gray;
+    & > tr > th {
       border-bottom: 1px solid $gray;
       padding: 10px 20px;
-      border-radius: $btn_radius $btn_radius 0 0;
 
-      .xClose {
-        position: absolute;
-        right: 10px;
-        top: 10px;
+      td.heading {
+        width: 100%;
       }
     }
+  }
 
-    .modalContents {
-      display: table-row;
-      height: 100%;
+  tfoot {
+    background-color: $light_gray;
+
+    & > tr > td {
+      border-top: 1px solid $gray;
+      padding: 10px 20px;
     }
   }
 }

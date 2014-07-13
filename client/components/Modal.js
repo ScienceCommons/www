@@ -37,19 +37,23 @@ Modal.controller = function(options) {
   };
 };
 
-Modal.view = function(ctrl, content, label) {
+Modal.view = function(ctrl, content, label, footer) {
   if (ctrl.open()) {
     return (
       <div className={"Modal " + ctrl.className} config={ctrl.config}>
-        <div className="wrapper">
-          <header>
-            <h1>{label}</h1>
-            <button className="btn xClose" onclick={ctrl.toggle}><span className="icon icon_close"/></button>
-          </header>
-          <div className="modalContent">
-            {content}
-          </div>
-        </div>
+        <table>
+          <thead><tr><th>
+            <table><tbody><tr>
+              <td className="heading">
+                <h1>{label}</h1>
+              </td>
+              <td><button className="btn xClose" onclick={ctrl.toggle}><span className="icon icon_close"/></button></td>
+            </tr></tbody></table>
+          </th></tr></thead>
+          <tbody><tr><td>{content}
+          </td></tr></tbody>
+          <tfoot><tr><td>Footer</td></tr></tfoot>
+        </table>
       </div>
     );
   }
