@@ -15,22 +15,23 @@
       position: relative;
     }
 
-    .logo_td {
+    .bannerLogo {
       width: 200px;
     }
 
-    .user_bar_tr {
+    .bannerUserBar{
       width: 70px;
     }
 
     .Search {
       position: relative;
-      padding: 10px 3%;
+        margin-right: 50px;
 
       input {
-        height: 35px;
+        height: 45px;
         font-size: 24px;
         width: 100%;
+        box-sizing: border-box;
       }
     }
 

@@ -29,9 +29,9 @@ DefaultLayout.view = function(ctrl, content) {
         <table className="banner">
           <tbody>
             <tr>
-              <td className="logo_td"><a href="/" config={m.route} className="logoLink">{new Logo.view()}</a></td>
-              <td>{new Search.view(ctrl.controllers.search)}</td>
-              <td className="user_bar_td">{new UserBar.view(ctrl.controllers.userBar)}</td>
+              <td className="bannerLogo"><a href="/" config={m.route} className="logoLink">{new Logo.view()}</a></td>
+              <td className="bannerSearch">{new Search.view(ctrl.controllers.search)}</td>
+              <td className="bannerUserBar">{new UserBar.view(ctrl.controllers.userBar)}</td>
             </tr>
           </tbody>
         </table>
