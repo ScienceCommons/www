@@ -178,7 +178,7 @@ BaseData.Model.prototype.set = function(attr, val, options) {
     });
 
     if (options.server) {
-      this._serverState = _.extend({}, this._serverState, attr);
+      this._serverState = _.extend({}, this._serverState, _.omit(attr, _.keys(this.relations)));
     }
   }
 
@@ -419,9 +419,13 @@ BaseData.Collection.prototype.add = function(data, options) {
       var sync = this.sync("create", newModel, {url: this.url()})
       sync.then(newModel.set);
       sync.then(function(data) {
-        newModel._serverState = _.extend({}, data);
+        newModel._serverState = _.extend({}, _.omit(data, _.keys(newModel.relations)));
       });
     }
+  }
+
+  if (!options.silent) {
+    this.redraw();
   }
   // merge otherwise?
   return newModel;
@@ -470,9 +474,10 @@ BaseData.Collection.prototype.model = BaseData.Model;
 BaseData.Collection.prototype.error = function() {};
 
 BaseData.Collection.prototype.fetch = function(options) {
+  options = options || {};
   this.loading = true;
 
-  var res =  m.request({method: "GET", url: _.result(this, "url"), background: true, data: options, deserialize: maybeJSON});
+  var res =  m.request({method: "GET", url: _.result(this, "url"), background: true, data: options.data, deserialize: maybeJSON});
   var _this = this;
   res.then(function() {
     _this.loading = false;
