@@ -345,8 +345,18 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
 
         <footer>
           <form onsubmit={ctrl.addComment(study, field)}>
-            <textarea oninput={m.withAttr("value", ctrl.updateEdits(study, field, "comment"))}>{ctrl.getEdits(study, field, "comment") || ""}</textarea>
-            <button type="submit" className="btn">Post</button>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <textarea oninput={m.withAttr("value", ctrl.updateEdits(study, field, "comment"))}>{ctrl.getEdits(study, field, "comment") || ""}</textarea>
+                  </td>
+                  <td>
+                    <button type="submit" className="btn">Post</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </form>
         </footer>
       </div>
@@ -456,8 +466,18 @@ function fileDropdown(ctrl, study, type) {
 
           <footer>
             <form>
-              <textarea></textarea>
-              <button type="submit" className="btn">Post</button>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <textarea></textarea>
+                    </td>
+                    <td>
+                      <button type="submit" className="btn">Post</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </form>
           </footer>
         </div>
