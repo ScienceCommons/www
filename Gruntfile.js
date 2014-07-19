@@ -114,9 +114,6 @@ module.exports = function (grunt) {
           path: PRODUCTION_PATH+"/assets",
           filename: "[name].js"
         },
-         externals: {
-          "mithril": "m"
-        },
         plugins: [
           new webpack.optimize.OccurenceOrderPlugin(),
           new webpack.optimize.DedupePlugin()
