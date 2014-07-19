@@ -207,7 +207,7 @@ module.exports = function (grunt) {
     },
     open: {
       server: {
-        url: "http://localhost:<%= connect.options.port %>"
+        url: "http://localhost:<%= connect.options.port %>/#/"
       }
     },
     aws: grunt.file.readJSON('./aws.json'),
