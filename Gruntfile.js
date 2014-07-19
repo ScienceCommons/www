@@ -103,9 +103,6 @@ module.exports = function (grunt) {
         output: {
           path: DEVELOPMENT_PATH+"/assets",
           filename: "[name].js"
-        },
-        externals: {
-          "mithril": "m"
         }
       },
       production: {
