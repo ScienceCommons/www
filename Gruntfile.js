@@ -129,12 +129,14 @@ module.exports = function (grunt) {
     copy: {
       development: {
         files: [
-          {src: "client/favicon.ico", dest: DEVELOPMENT_PATH + "/favicon.ico"}
+          {src: "client/favicon.ico", dest: DEVELOPMENT_PATH + "/favicon.ico"},
+          {src: "client/google_auth.jpg", dest: DEVELOPMENT_PATH + "/google_auth.jpg"}
         ]
       },
       production: {
         files: [
-          {src: "client/favicon.ico", dest: PRODUCTION_PATH + "/favicon.ico"}
+          {src: "client/favicon.ico", dest: PRODUCTION_PATH + "/favicon.ico"},
+          {src: "client/google_auth.jpg", dest: PRODUCTION_PATH + "/google_auth.jpg"}
         ]
       }
     },
@@ -234,6 +236,10 @@ module.exports = function (grunt) {
           {
             src: './build/production/public/favicon.ico',
             dest: 'favicon.ico'
+          },
+          {
+            src: './build/production/public/google_auth.jpg',
+            dest: 'google_auth.jpg'
           },
           {
             src: './build/production/public/assets/*',
