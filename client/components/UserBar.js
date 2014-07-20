@@ -33,6 +33,13 @@ UserBar.view = function(ctrl) {
       <li className="separator"></li>,
       <li onclick={route("/articles/new")}>Add an article</li>
     ];
+
+    if (user.get("admin")) {
+      extras = extras.concat([
+        <li className="separator"></li>,
+        <li onclick={route("/admin")}>Admin</li>
+      ]);
+    }
   }
 
   var dropdownContent = (

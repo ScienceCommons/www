@@ -11,6 +11,7 @@ var App = {};
 
 App.pages = {
   NotFound: require("./pages/NotFoundPage.js"),
+  Admin: require("./pages/AdminPage.js"),
   About: require("./pages/AboutPage.js"),
   Article: require("./pages/ArticlePage.js"),
   Author: require("./pages/AuthorPage.js"),
@@ -41,6 +42,9 @@ App.showPage = function(pageName) {
       this.currentPage = App.pages["Login"];
       this.controllers.page = new this.currentPage.controller({user: App.user});
       m.route("/login");
+    } else if (pageName === "Admin" && !App.user.get("admin")) {
+      this.currentPage = App.pages["NotFound"];
+      this.controllers.page = new this.currentPage.controller({user: App.user});
     } else {
       this.currentPage = App.pages[pageName];
       this.controllers.page = new this.currentPage.controller({user: App.user});
@@ -70,6 +74,7 @@ m.route(document.getElementById("page"), "/not_found", {
   "/authors/:authorId": App.showPage("Author"),
   "/login": App.showPage("Login"),
   "/about": App.showPage("About"),
+  "/admin": App.showPage("Admin"),
   "/bookmarks": App.showPage("Bookmarks"),
   "/logout": App.showPage("Logout"),
   "/signup": App.showPage("Signup"),
