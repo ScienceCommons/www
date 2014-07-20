@@ -24,6 +24,7 @@ var UserCollection = CurateBaseCollection.extend({
       var t1 = _.now();
       _this.loading = false;
       _this.total = res.total;
+      _this.query = options.query;
       _this.from = res.from;
       _this.reset(res.documents);
       ga('send', 'timing', 'Users', 'Fetch', t1-t0, "/users?q="+options.query+"&from="+res.from);

@@ -29,7 +29,7 @@ AdminPage.controller = function(options) {
 
 AdminPage.view = function(ctrl) {
   var results;
-  if (ctrl.query()) {
+  if (ctrl.query() && ctrl.users.query === ctrl.query()) {
     if (ctrl.users.loading) {
       results = "Searching...";
     } else if (ctrl.users.error) {
