@@ -9,6 +9,7 @@ var CurateBaseModel = BaseModel.extend({
     options = options || {};
     options.config = function(xhr) {
       xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.withCredentials = true;
     };
     return BaseModel.prototype.sync.call(this, method, model, options);
   }

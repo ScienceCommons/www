@@ -9,6 +9,7 @@ var CurateBaseCollection = BaseCollection.extend({
     options = options || {};
     options.config = function(xhr) {
       xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.withCredentials = true;
     };
     return BaseCollection.prototype.sync.call(this, method, collection, options);
   }
