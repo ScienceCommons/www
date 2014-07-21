@@ -1,2 +1,20 @@
+@import "../variables.scss";
+
 #AdminPage {
+  text-align: center;
+
+  div.results {
+    position: relative;
+    margin-top: 20px;
+
+    .Spinner {
+      margin-top: 20px;
+    }
+  }
+
+  table.userActionTable {
+    th, td {
+      padding: 10px;
+    }
+  }
 }

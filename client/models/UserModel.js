@@ -3,6 +3,7 @@
 "use strict";
 
 var _ = require("underscore");
+var m = require("mithril");
 
 var CurateBaseModel = require("./CurateBaseModel.js");
 var CommentModel = require("./CommentModel.js");
@@ -63,6 +64,13 @@ var UserModel = CurateBaseModel.extend({
     } else {
       this.set("bookmarks", this.get("bookmarks").concat([article.get("id")]));
     }
+  },
+  urlRoot: "https://api.curatescience.org/users",
+  toggleAdmin: function() {
+    var _this = this;
+    var req = this.sync("create", {}, {url: this.url() + "/toggle_admin", data: {state: !this.get("admin")}});
+    req.then(function(data) { _this.set(data); }, this.error);
+    return req;
   }
 });
 

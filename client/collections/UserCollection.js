@@ -1,6 +1,8 @@
 "use strict";
 
 var _ = require("underscore");
+var m = require("mithril");
+
 var CurateBaseCollection = require("./CurateBaseCollection.js");
 
 var UserCollection = CurateBaseCollection.extend({
@@ -35,6 +37,14 @@ var UserCollection = CurateBaseCollection.extend({
     });
 
     return res;
+  },
+  fetchAdmins: function() {
+    var _this = this;
+    var req = this.sync("read", {}, {url: "https://api.curatescience.org/users/admins"});
+    req.then(function(res) {
+      _this.reset(res);
+    });
+    return req;
   }
 });
 
