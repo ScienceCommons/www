@@ -10,6 +10,7 @@ var Layout = require("../layouts/DefaultLayout.js");
 var OnUnload = require("../utils/OnUnload.js");
 var UserCollection = require("../collections/UserCollection.js");
 var Spinner = require("../components/Spinner.js");
+var User = require("../models/UserModel.js");
 
 var AdminPage = {};
 
@@ -19,18 +20,47 @@ AdminPage.controller = function(options) {
   this.user = options.user;
   this.controllers.layout = new Layout.controller(options);
 
-  this.query = m.prop("");
   this.admins = new UserCollection([]);
   this.admins.fetchAdmins();
+  this.betaMailList = new UserCollection([]);
+  this.betaMailList.fetchBetaMailList();
   this.users = new UserCollection([]);
+
+  this.query = m.prop("");
+  this.newUserName = m.prop("");
+  this.newUserEmail = m.prop("");
+  this.addingUser = m.prop(false);
+  this.addingUserError = m.prop(null);
+  this.newUser = new User({});
 
   var _this = this;
   this.findUser = function(e) {
     e.preventDefault();
     _this.users.search({query: _this.query()});
   };
+
   this.addUser = function(e) {
     e.preventDefault();
+    if (_this.addingUser()) {
+      return;
+    }
+    _this.addingUser(true);
+    _this.addingUserError(null);
+    _this.newUser.save().then(function() {
+      _this.addingUser(false);
+      _this.newUser = new User({});
+      m.redraw();
+    }, function(err) {
+      _this.addingUser(false);
+      _this.addingUserError(err.error);
+      m.redraw();
+    });
+  };
+
+  this.inviteBetaUser = function(user) {
+    return function(e) {
+      user.save();
+    };
   };
 };
 
@@ -47,6 +77,23 @@ AdminPage.view = function(ctrl) {
       }
     }
   }
+
+  var betaRows = ctrl.betaMailList.map(function(user) {
+    return <tr>
+      <td>{user.get("email")}</td>
+      <td>
+        <button type="button" onclick={ctrl.inviteBetaUser(user)} disabled={!!user.get("id")}>
+          {user.get("id") ? "Invited" : "Invite"}
+        </button>
+      </td>
+    </tr>
+  });
+
+  var betaTable = <table className="betaMailList center">
+    <tbody>
+      {betaRows}
+    </tbody>
+  </table>;
 
   var content = (
     <div>
@@ -65,10 +112,14 @@ AdminPage.view = function(ctrl) {
 
       <h3>Add a user</h3>
       <form onsubmit={ctrl.addUser}>
-        <input type="text" placeholder="Name"/>
-        <input type="email" placeholder="Email"/>
-        <button type="submit">Add</button>
+        {ctrl.addingUserError()}
+        <input type="text" placeholder="Name" value={ctrl.newUser.get("name")} oninput={m.withAttr("value", ctrl.newUser.setter("name"))}/>
+        <input type="email" placeholder="Email" value={ctrl.newUser.get("email")} oninput={m.withAttr("value", ctrl.newUser.setter("email"))}/>
+        <button type="submit" disabled={ctrl.addingUser()}>{ctrl.addingUser() ? "Adding..." : "Add"}</button>
       </form>
+
+      <h3>Beta mail list</h3>
+      {betaTable}
     </div>
   );
 

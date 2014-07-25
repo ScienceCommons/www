@@ -45,6 +45,14 @@ var UserCollection = CurateBaseCollection.extend({
       _this.reset(res);
     });
     return req;
+  },
+  fetchBetaMailList: function() {
+    var _this = this;
+    var req = this.sync("read", {}, {url: "https://api.curatescience.org/users/beta_mail_list"});
+    req.then(function(res) {
+      _this.reset(res);
+    });
+    return req;
   }
 });
 

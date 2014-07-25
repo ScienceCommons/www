@@ -12,9 +12,13 @@
     }
   }
 
-  table.userActionTable {
+  table.userActionTable, table.betaMailList {
     th, td {
       padding: 10px;
     }
+  }
+
+  table.betaMailList td {
+    text-align: left;
   }
 }
