@@ -6,7 +6,7 @@
     "dist": "dist",
     "mainOutput": "main",
     "dependencies": {
-        "mithril": "0.1.18",
+        "mithril": "0.1.19",
         "underscore": "1.6.0",
         "vague-time": "1.0.1",
         "elasticsearch": "2.2.0",
