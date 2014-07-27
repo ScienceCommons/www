@@ -15,14 +15,21 @@ Comment.view = function(ctrl) {
   if (!_.isEmpty(comment.get("replies"))) {
     var replies = new CommentList.view({comments: comment.get("replies")});
   }
+  if (comment.get("owner_id") === ctrl.user.get("id")) {
+    var deleteButton = <button type="button" className="btn" onclick={ctrl.reply}>Delete</button>;
+  }
 
   return (
     <div className="Comment">
       {comment.get("image")}
       <div className="commentContent">
         <h5>{comment.get("authorName")} - {comment.get("timeAgo")}</h5>
-        <p>{comment.get("body")}</p>
-        <label onclick={ctrl.reply}><span className="icon icon_reply"></span> Reply</label>
+        <p>{comment.get("comment")}</p>
+
+        <div className="btn_group">
+          <button type="button" className="btn" onclick={ctrl.reply}><span className="icon icon_reply"></span> Reply</button>
+          {deleteButton}
+        </div>
 
         {replies}
       </div>
@@ -34,7 +41,7 @@ var CommentList = {};
 
 CommentList.view = function(ctrl) {
   var comments = ctrl.comments.map(function(comment) {
-    return new Comment.view({comment: comment, reply: function() { alert("reply clicked"); }});
+    return new Comment.view({comment: comment, user: ctrl.user, reply: function() { alert("reply clicked"); }});
   });
 
   return (
@@ -47,6 +54,7 @@ CommentList.view = function(ctrl) {
 var CommentBox = {};
 
 CommentBox.controller = function(options) {
+  this.user = options.user;
   this.comments = options.comments;
   this.commentFormController = new CommentForm.controller({user: options.user, comments: this.comments});
   this.interval = setInterval(m.redraw, 60000); // redraw every minute for time-stamps
@@ -60,7 +68,7 @@ CommentBox.view = function(ctrl) {
   return (
     <div className="CommentBox">
       {new CommentForm.view(ctrl.commentFormController)}
-      {new CommentList.view({comments: ctrl.comments})}
+      {new CommentList.view({comments: ctrl.comments, user: ctrl.user})}
     </div>
   );
 };

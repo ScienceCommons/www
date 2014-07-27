@@ -29,11 +29,10 @@ CommentForm.controller = function(options) {
   this.handleSubmit = function(e) {
     e.preventDefault();
     _this.comments.add({
-      "author": _this.user,
-      "date": "4-1-2014",
-      "body": _this.body(),
+      "owner_id": _this.user.get("id"),
+      "comment": _this.body(),
       "anonymous": _this.anonymous()
-    });
+    }, {sync: true});
     _this.body("");
   };
 

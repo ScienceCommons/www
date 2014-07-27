@@ -6,7 +6,7 @@ var CurateBaseModel = require("./CurateBaseModel.js");
 var ArticleModel = CurateBaseModel.extend({
   relations: {
     "authors_denormalized": {type: "many", collection: require("../collections/AuthorCollection.js")},
-    "comments": {type: "many", model: require("./CommentModel.js")},
+    "comments": {type: "many", collection: require("../collections/CommentCollection.js"), urlAction: "comments"},
     "studies": {type: "many", model: require("./StudyModel.js"), urlAction: "studies"}
   },
   defaults: {
@@ -16,7 +16,7 @@ var ArticleModel = CurateBaseModel.extend({
     "doi": "",
     "publication_date": "",
     "journal": "",
-    "comments": [
+    /*"comments": [
       {
         "anonymous": true,
         "date": "4-1-2014",
@@ -35,7 +35,7 @@ var ArticleModel = CurateBaseModel.extend({
         "body": "Im gonna see if I can replicate it"
       }
     ],
-    /*"studies": [
+    "studies": [
       {
         "id": "1",
         "authors": "Zhong et al.",

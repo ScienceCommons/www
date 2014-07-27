@@ -33,6 +33,7 @@ ArticlePage.controller = function(options) {
     this.article.initializeAssociations();
     this.article.fetch();
     this.article.get("studies").fetch();
+    this.article.get("comments").fetch();
     this.editing = m.prop(false);
   }
   window.article = this.article;

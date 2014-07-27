@@ -12,8 +12,8 @@ var CommentModel = CurateBaseModel.extend({
     replies: {type: "many"} // model is defined below
   },
   defaults: {
-    "userId": "",
-    "body": "",
+    "owner_id": "",
+    "comment": "",
     "anonymous": false
     // ts
   },
@@ -39,8 +39,12 @@ var CommentModel = CurateBaseModel.extend({
       if (this.get("anonymous")) {
         return <span className="icon icon_person"></span>;
       } else {
-        return this.get("author").get("image");
+        var author = this.get("author");
+        if (author && author.get("image")) {
+          return author.get("image");
+        }
       }
+      return <span className="icon icon_person"></span>;
     }
   }
 });
