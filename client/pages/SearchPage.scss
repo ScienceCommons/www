@@ -21,12 +21,6 @@
         padding: 10px 20px;
       }
 
-      th:first-child {
-        border-right: 1px solid $gray;
-        padding-left: 30px;
-        width: 200px;
-      }
-
       ul.sortBy {
         float: right;
 
@@ -53,34 +47,6 @@
       &:last-child {
         width: 100%;
       }
-
-      &:first-child {
-        border-right: 1px solid $gray;
-        background-color: $light_gray;
-
-        li {
-          padding-left: 30px;
-        }
-      }
-    }
-  }
-
-  td.filter > ul {
-    list-style: none;
-    width: 100%;
-
-    & > li {
-      padding: 10px;
-      border-bottom: 1px solid $gray;
-    }
-
-    label {
-      display: block;
-      white-space: nowrap;
-    }
-
-    button.active {
-      background-color: $blue;
     }
   }
 }
