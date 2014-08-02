@@ -466,7 +466,7 @@ function addFile(ctrl, study, type) {
 function fileDropdown(ctrl, study, type) {
   var files = study.filesByType(type);
   var active = ctrl.active();
-  var body = "Add some files";
+  var body = <table className="files"><tbody><tr><td>No files</td></tr></tbody></table>;
   var modal;
 
   if (files.length > 0) {
