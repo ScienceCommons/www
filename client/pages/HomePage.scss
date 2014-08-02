@@ -29,12 +29,22 @@
     padding: 20px 0;
     cursor: pointer;
 
+    .title {
+      height: 32px;
+      text-overflow: ellipsis;
+    }
+
+    .authors {
+      height: 16px;
+      text-overflow: ellipsis;
+    }
+
     &:hover {
       background-color: $light_gray;
     }
 
     ul.badges {
-      width: 280px;
+      width: 200px;
       height: 45px;
       padding: 5px 0;
       margin: auto;
