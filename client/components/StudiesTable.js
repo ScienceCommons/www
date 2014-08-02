@@ -12,6 +12,7 @@ var Modal = require("../components/Modal.js");
 var Badge = require("../components/Badge.js");
 var StudyFinder = require("../components/StudyFinder.js");
 var CommentForm = require("../components/CommentForm.js");
+var CommentList = require("../components/CommentList.js");
 
 var StudiesTable = {};
 StudiesTable.instances = {};
@@ -164,10 +165,10 @@ StudiesTable.controller = function(opts) {
       e.preventDefault();
 
       var comment = {
-        body: _this.getEdits(study, field, "comment")
+        comment: _this.getEdits(study, field, "comment")
       };
 
-      if (!_.isEmpty(comment.body)) {
+      if (!_.isEmpty(comment.comment)) {
         study.getComments(field).add(comment, {sync: true});
         _this.updateEdits(study, field, "comment")("");
       } else {
@@ -349,7 +350,7 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
     ctrl.controllers.studyFieldCommentForm.comments = study.getComments(field);
     var comments = study.getComments(field).map(function(comment) {
       return (
-        <li>{comment.get("body")}</li>
+        <li>{comment.get("comment")}</li>
       );
     });
 
@@ -363,9 +364,7 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
     return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
       label: field,
       buttons: editButton,
-      content: <ul className="history">
-        {comments}
-      </ul>,
+      content: new CommentList.view({comments: study.getComments(field), user: ctrl.user}),
       footer: CommentForm.view(ctrl.controllers.studyFieldCommentForm)
     });
   }
@@ -489,14 +488,14 @@ function fileDropdown(ctrl, study, type) {
           ctrl.controllers.studyFieldCommentForm.comments = file.get("comments");
           var comments = file.get("comments").map(function(comment) {
             return (
-              <li>{comment.get("body")}</li>
+              <li>{comment.get("comment")}</li>
             );
           });
 
           modal = Modal.view(ctrl.controllers.studyCommentAndEditModal, {
             label: file.get("name"),
             buttons: <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>,
-            content: <ul className="history">{comments}</ul>,
+            content: new CommentList.view({comments: file.get("comments"), user: ctrl.user}),
             footer: CommentForm.view(ctrl.controllers.studyFieldCommentForm)
           });
         }

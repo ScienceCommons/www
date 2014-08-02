@@ -1,0 +1,43 @@
+@import "../variables.scss";
+
+.CommentList {
+  margin-top: 20px;
+}
+
+.Comment {
+  .commentHeader {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    & > * {
+      line-height: 30px;
+    }
+  }
+
+  .commentContent {
+    overflow: hidden;
+  }
+
+  .userImage, .icon_person {
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    margin-right: 15px;
+    float: left;
+  }
+
+  .userImage.initials {
+    border-radius: 50%;
+    color: white;
+    line-height: 32px;
+    background-color: $purple;
+    font-size: 18px !important;
+  }
+
+  .icon_person {
+    font-size: 34px;
+    width: 30px;
+    text-align: middle;
+    vertical-align: baseline;
+  }
+}

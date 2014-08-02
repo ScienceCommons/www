@@ -20,8 +20,8 @@ var FileModel = CurateBaseModel.extend({
     name: "",
     url: "",
     comments: [
-      {body: "This file has a comment"},
-      {body: "This file has a second comment"}
+      {comment: "This file has a comment"},
+      {comment: "This file has a second comment"}
     ]
   }
 });

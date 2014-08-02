@@ -18,7 +18,9 @@ var CommentModel = CurateBaseModel.extend({
     // ts
   },
   initialize: function() {
-    if (!this.get("ts")) {
+    if (this.get("created_at")) {
+      this.set("ts", this.get("created_at")*1000, {silent: true});
+    } else if (!this.get("ts")) {
       this.set("ts", _.now(), {silent: true});
     }
   },

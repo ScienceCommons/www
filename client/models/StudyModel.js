@@ -28,8 +28,8 @@ var StudyModel = CurateBaseModel.extend({
     "power": 86,
     "effect_size": {d: 1.08},
     "effect_size_comments": [
-      {body: "Foo"},
-      {body: "This is a test"},
+      {comment: "Foo"},
+      {comment: "This is a test"},
     ],
     "badges": ["data", "methods"],
     "files": [

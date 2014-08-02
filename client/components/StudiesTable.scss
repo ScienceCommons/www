@@ -108,6 +108,21 @@ $column_width: 300px;
     input {
       width: 100%;
     }
+
+    .CommentList {
+      padding: 0 10px;
+
+      .Comment {
+        background-color: $light_gray;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        border-radius: $btn_radius;
+
+        p {
+          margin-top: 0;
+        }
+      }
+    }
   }
 
   ul {
