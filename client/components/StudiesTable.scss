@@ -39,6 +39,7 @@ $column_width: 300px;
   .cell {
     border-bottom: 1px solid $gray;
     position: relative;
+    cursor: pointer;
   }
 
   .study .cell:not(.replication_path) {
