@@ -18,6 +18,9 @@ LogoutPage.controller = function(options) {
   options.user.logout().then(function() {
     delete CS.user;
     m.route("/login");
+  }, function() {
+    delete CS.user;
+    m.route("/login");
   });
 };
 

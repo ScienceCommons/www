@@ -24,6 +24,7 @@ App.pages = {
   Signup: require("./pages/SignupPage.js")
 };
 
+window.App = App;
 App.showPage = function(pageName) {
   var Page = {};
 
