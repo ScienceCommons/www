@@ -49,7 +49,7 @@ HomePage.controller = function(options) {
 
 HomePage.articleView = function(article) {
   return (
-    <div className="articleView" onclick={visitArticle(article)}>
+    <div className="articleView" onclick={visitArticle(article)} title={article.get("title")}>
       <div className="title">{article.get("title")}</div>
       <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
       <ul className="badges">
