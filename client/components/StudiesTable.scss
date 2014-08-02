@@ -115,13 +115,19 @@ $column_width: 300px;
     }
 
     .CommentList {
-      padding: 0 10px;
+      margin-top: 0;
+      padding: 10px;
+      overflow-y: auto;
+      height: 274px;
 
       .Comment {
         background-color: $light_gray;
         padding: 5px 10px;
-        margin-bottom: 10px;
         border-radius: $btn_radius;
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
 
         p {
           margin-top: 0;
