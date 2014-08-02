@@ -13,8 +13,8 @@ Comment.view = function(ctrl) {
   if (!_.isEmpty(comment.get("replies"))) {
     var replies = new CommentList.view({comments: comment.get("replies")});
   }
-  if (comment.get("owner_id") === ctrl.user.get("id")) {
-    var deleteButton = <button type="button" className="btn" onclick={ctrl.reply}>Delete</button>;
+  if (ctrl.onDelete && comment.get("owner_id") === ctrl.user.get("id")) {
+    var deleteButton = <button type="button" className="btn" onclick={ctrl.onDelete}>Delete</button>;
   }
   if (ctrl.reply) {
     var replyButton = <button type="button" className="btn" onclick={ctrl.reply}><span className="icon icon_reply"></span> Reply</button>;
@@ -44,7 +44,12 @@ var CommentList = {};
 
 CommentList.view = function(ctrl) {
   var comments = ctrl.comments.map(function(comment) {
-    return new Comment.view({comment: comment, user: ctrl.user, reply: (ctrl.reply ? reply : false)});
+    return new Comment.view({
+      comment: comment,
+      user: ctrl.user,
+      reply: (ctrl.reply ? reply : false),
+      onDelete: onDelete(ctrl.comments, comment)
+    });
   });
 
   return (
@@ -58,6 +63,14 @@ module.exports = CommentList;
 
 // helpers
 
-function reply () {
+function reply() {
   alert("reply clicked");
+}
+
+function onDelete(collection, comment) {
+  return function (e) {
+    if (confirm("This will delete your comment")) {
+      collection.remove(comment, {sync: true});
+    }
+  };
 }
