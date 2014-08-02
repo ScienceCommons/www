@@ -31,22 +31,22 @@ UserBar.view = function(ctrl) {
   if (user.canEdit()) {
     var extras = [
       <li className="separator"></li>,
-      <li onclick={route("/articles/new")}>Add an article</li>
+      routeLi("/articles/new", "Add an article")
     ];
 
     if (user.get("admin")) {
       extras = extras.concat([
         <li className="separator"></li>,
-        <li onclick={route("/admin")}>Admin</li>
+        routeLi("/admin", "Admin")
       ]);
     }
   }
 
   var dropdownContent = (
     <ul>
-      <li onclick={route("/profile")}>Profile</li>
-      <li onclick={route("/bookmarks")}>Bookmarks</li>
-      <li onclick={route("/logout")}>Log out</li>
+      {routeLi("/profile", "Profile")}
+      {routeLi("/bookmarks", "Bookmarks")}
+      {routeLi("/logout", "Log out")}
       {extras}
     </ul>
   );
@@ -56,6 +56,10 @@ UserBar.view = function(ctrl) {
       <li>{new Dropdown.view(ctrl.controllers.dropdown, dropdownContent)}</li>
     </ul>
   );
+};
+
+function routeLi(path, name) {
+  return <li onclick={route(path)} className={m.route() === path ? "selected" : ""}>{name}</li>;
 };
 
 function route(path) {

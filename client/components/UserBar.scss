@@ -62,5 +62,10 @@
       border-top: 1px solid $dark;
       padding: 0;
     }
+
+    ul:not(:hover) li.selected {
+      color: white;
+      background: $gray;
+    }
   }
 }
