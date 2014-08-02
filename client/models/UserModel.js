@@ -27,7 +27,6 @@ var UserModel = CurateBaseModel.extend({
     "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis nulla in turpis luctus rutrum. Quisque adipiscing leo fringilla enim luctus ultricies. Fusce iaculis augue tincidunt eleifend condimentum. Vestibulum commodo massa ut vulputate aliquam. Etiam eu ante id est varius auctor. Sed fermentum at purus ac pellentesque. Duis nibh est, ornare ac tellus a, fermentum porta velit. In in risus et orci rhoncus egestas.\n\nNulla facilisi. Proin iaculis, nisl dictum consequat tincidunt, lectus arcu tincidunt magna, a placerat purus dui vitae dui. Maecenas fermentum luctus sodales. Cras vestibulum, erat in gravida tristique, augue ante scelerisque diam, non porta sem metus.",
     "bookmarks": [12552, 35395] // article ids
   },
-  logout: function() {},
   computeds: {
     facebookUrl: function() {
       return "https://www.facebook.com/" + this.get("facebook");
@@ -71,6 +70,9 @@ var UserModel = CurateBaseModel.extend({
     var req = this.sync("create", {}, {url: this.url() + "/toggle_admin", data: {state: !this.get("admin")}});
     req.then(function(data) { _this.set(data); }, this.error);
     return req;
+  },
+  logout: function() {
+    return this.sync("read", {}, {url: "https://www.curatescience.org/users/sign_out.json"});
   }
 });
 

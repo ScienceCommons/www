@@ -15,10 +15,10 @@ LogoutPage.controller = function(options) {
   OnUnload(this);
   this.controllers.layout = new Layout.controller(_.extend({id: "LogoutPage"}, options));
 
-  setTimeout(function() { // fake server request time
+  options.user.logout().then(function() {
     delete CS.user;
     m.route("/login");
-  }, 2000);
+  });
 };
 
 LogoutPage.view = function(ctrl) {
