@@ -355,15 +355,17 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
     });
 
     var editButton;
-    if (field === "authors") {
-      editButton = false;
-    } else if (ctrl.article.get("id") === study.get("article_id")) {
-      editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
+    if (App.user.canEdit()) {
+      if (field === "authors") {
+        editButton = false;
+      } else if (ctrl.article.get("id") === study.get("article_id")) {
+        editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
+      }
     }
 
     return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
       label: field,
-      buttons: editButton,
+      buttons: editButton || false,
       content: new CommentList.view({comments: study.getComments(field), user: ctrl.user}),
       footer: CommentForm.view(ctrl.controllers.studyFieldCommentForm)
     });
@@ -492,9 +494,13 @@ function fileDropdown(ctrl, study, type) {
             );
           });
 
+          if (App.user.canEdit()) {
+            var modalEditButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
+          }
+
           modal = Modal.view(ctrl.controllers.studyCommentAndEditModal, {
             label: file.get("name"),
-            buttons: <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>,
+            buttons: modalEditButton || false,
             content: new CommentList.view({comments: file.get("comments"), user: ctrl.user}),
             footer: CommentForm.view(ctrl.controllers.studyFieldCommentForm)
           });
@@ -519,14 +525,18 @@ function fileDropdown(ctrl, study, type) {
     </tbody></table>;
   };
 
+  if (App.user.canEdit()) {
+    var filesFooter = <footer>
+      <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a file</button>
+    </footer>;
+  }
+
   return <div className="dropdown">
     <header>{BadgeHeaders[type]}</header>
     <div className="body">
       {body}
     </div>
-    <footer>
-      <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a file</button>
-    </footer>
+    {filesFooter}
     {modal}
   </div>;
 };
