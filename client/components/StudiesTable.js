@@ -501,11 +501,15 @@ function fileDropdown(ctrl, study, type) {
         }
       }
 
+      var numComments = file.get("comments").length;
+      if (numComments > 0) {
+        var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
+      }
       return <tr onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className={fileIsActive ? "active" : ""}>
         <td className="fileName">{file.get("name")}</td>
         <td className="buttons">
+          {commentMarker}
           <button type="button" className="btn" title="Download"><span className="icon icon_download"></span></button>
-          <button type="button" className="btn"><span className="icon icon_comment"></span></button>
         </td>
       </tr>;
     });
