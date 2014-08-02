@@ -17,6 +17,7 @@ var UserModel = CurateBaseModel.extend({
   defaults: {
     "email": "",
     "name": "",
+    "password": "f662c13e-0a4d-11e4-a0d0-b2227cce2b54", // placeholder password
     "first_name": "",
     "middle_name": "",
     "last_name": "",

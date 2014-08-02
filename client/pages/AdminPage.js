@@ -46,7 +46,7 @@ AdminPage.controller = function(options) {
     }
     _this.addingUser(true);
     _this.addingUserError(null);
-    _this.newUser.save().then(function() {
+    _this.newUser.save({data: {user: _this.newUser.toJSON()}}).then(function() {
       _this.addingUser(false);
       _this.newUser = new User({});
       m.redraw();
