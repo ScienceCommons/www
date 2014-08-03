@@ -37,6 +37,9 @@ Dropdown.controller = function(options) {
 
   this.contentConfig = function(el, isInitialized) {
     _this.contentEl = el;
+    if (!isInitialized) {
+      ScrollIntoView(el);
+    }
   };
 
   this.buttonConfig = function(el, isInitialized) {
@@ -50,19 +53,13 @@ Dropdown.view = function(ctrl, content, label) {
   }
 
   return (
-    <div className={"Dropdown " + ctrl.className} config={Dropdown.config}>
+    <div className={"Dropdown " + ctrl.className}>
       <button type="button" className="btn btn_subtle" onmousedown={ctrl.toggle} config={ctrl.buttonConfig}>
         {label || ctrl.label}
       </button>
       {dropdownContent}
     </div>
   );
-};
-
-Dropdown.config = function(el, isInitialized, context) {
-  if (!isInitialized) {
-    ScrollIntoView(el);
-  }
 };
 
 document.addEventListener("mousedown", closeDropdownsOnMousedown);
