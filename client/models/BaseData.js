@@ -20,10 +20,7 @@ BaseData.Model = function(data, options) {
   this._errors = {};
   _.bindAll(this, "set", "save");
 
-  if (this.options.initializeAssociations !== false) {
-    // might need to init given the data
-    this.initializeAssociations();
-  }
+  this.associations = _.extend({}, this.options.inverseOf);
 
   this.attributes = {};
   if (this.defaults) {
@@ -78,29 +75,6 @@ BaseData.Model.prototype.hasErrors = function(attr) {
   return !_.isEmpty(this.errors(attr));
 };
 
-BaseData.Model.prototype.initializeAssociations = function() {
-  if (_.isUndefined(this.associations)) {
-    this.associations = _.extend({}, this.options.inverseOf);
-  }
-
-  var _this = this;
-  _.each(this.relations, function(relation, key) {
-    if (_.isUndefined(_this.associations[key])) {
-      var inverseOf = {};
-      if (relation.inverseOf) {
-        inverseOf[relation.inverseOf] = _this;
-      }
-
-      if (relation.type === "many") {
-        var relCollection = relationCollection(relation);
-        _this.associations[key] = new relCollection([], {baseUrl: _.bind(_this.url, _this), urlAction: relation.urlAction, silent: true, inverseOf: inverseOf});
-      } else {
-        _this.associations[key] = new (relation.model || BaseData.Model)({}, {silent: true, inverseOf: inverseOf});
-      }
-    }
-  });
-};
-
 BaseData.Model.prototype.get = function(attr, forceAttributes) {
   if (_.isUndefined(attr)) {
     return this.attributes;
@@ -119,10 +93,23 @@ BaseData.Model.prototype.get = function(attr, forceAttributes) {
     }
   }
 
-  if (this.associations) {
-    res = this.associations[attr];
-    if (!_.isUndefined(res)) {
-      return res;
+  res = this.associations[attr];
+  if (!_.isUndefined(res)) {
+    return res;
+  }
+
+  if (this.relations && this.relations[attr]) {
+    var relation = this.relations[attr];
+    var inverseOf = {};
+    if (relation.inverseOf) {
+      inverseOf[relation.inverseOf] = this;
+    }
+
+    if (relation.type === "many") {
+      var relCollection = relationCollection(relation);
+      return this.associations[attr] = new relCollection([], {baseUrl: _.bind(this.url, this), urlAction: relation.urlAction, silent: true, inverseOf: inverseOf});
+    } else {
+      return this.associations[attr] = new (relation.model || BaseData.Model)({}, {silent: true, inverseOf: inverseOf});
     }
   }
 
@@ -140,21 +127,23 @@ BaseData.Model.prototype.set = function(attr, val, options) {
   if (_.isString(attr)) {
     var relation = this.relations[attr];
     if (!_.isUndefined(relation)) {
-      if (!this.associations) {
-        this.initializeAssociations();
+      var inverseOf = {};
+      if (relation.inverseOf) {
+        inverseOf[relation.inverseOf] = this;
       }
+
       if (relation.type === "many") {
         if (this.associations[attr]) {
           this.associations[attr].reset(val, {silent: true}); // its a Collection
         } else {
           var Collection = relationCollection(relation);
-          this.associations[attr] = new Collection(val, {silent: true, inverseOf: relation.inverseOf});
+          this.associations[attr] = new Collection(val, {silent: true, inverseOf: inverseOf});
         }
       } else {
         if (this.associations[attr]) {
           this.associations[attr].set(val, {silent: true});
         } else {
-          this.associations[attr] = new relation.model(val, {silent: true, inverseOf: relation.inverseOf});
+          this.associations[attr] = new (relation.model||BaseData.Model)(val, {silent: true, inverseOf: inverseOf});
         }
       }
     } else if (this.computeds[attr] && this.computeds[attr].set ) {
@@ -339,7 +328,6 @@ BaseData.Collection = function(data, options) {
   this._byId = {};
 
   this.modelOptions = {
-    initializeAssociations: false,
     inverseOf: options.inverseOf,
     silent: true
   };
