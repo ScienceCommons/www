@@ -7,6 +7,8 @@ var _ = require("underscore");
 var m = require("mithril");
 var cx = require("../utils/ClassSet.js");
 
+var ScrollIntoView = require("../utils/ScrollIntoView.js");
+
 var Modal = {};
 
 Modal.instances = {};
@@ -35,6 +37,10 @@ Modal.controller = function(options) {
 
   this.config = function(el, isInitialized) {
     _this.el = el;
+
+    if (!isInitialized) {
+      ScrollIntoView(el);
+    }
   };
 };
 

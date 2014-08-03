@@ -13,6 +13,7 @@ var Badge = require("../components/Badge.js");
 var StudyFinder = require("../components/StudyFinder.js");
 var CommentForm = require("../components/CommentForm.js");
 var CommentList = require("../components/CommentList.js");
+var ScrollIntoView = require("../utils/ScrollIntoView.js");
 
 var StudiesTable = {};
 StudiesTable.instances = {};
@@ -531,7 +532,7 @@ function fileDropdown(ctrl, study, type) {
     </footer>;
   }
 
-  return <div className="dropdown">
+  return <div className="dropdown" config={fileDropdownConfig}>
     <header>{BadgeHeaders[type]}</header>
     <div className="body">
       {body}
@@ -539,6 +540,12 @@ function fileDropdown(ctrl, study, type) {
     {filesFooter}
     {modal}
   </div>;
+};
+
+function fileDropdownConfig(el, isInitialized, context) {
+  if (!isInitialized) {
+    ScrollIntoView(el);
+  }
 };
 
 function handleBadgeDropdownFileClick(ctrl, study, file) {

@@ -7,6 +7,8 @@ var _ = require("underscore");
 var m = require("mithril");
 var cx = require("../utils/ClassSet.js");
 
+var ScrollIntoView = require("../utils/ScrollIntoView.js");
+
 var Dropdown = {};
 
 Dropdown.instances = {};
@@ -48,13 +50,19 @@ Dropdown.view = function(ctrl, content, label) {
   }
 
   return (
-    <div className={"Dropdown " + ctrl.className}>
+    <div className={"Dropdown " + ctrl.className} config={Dropdown.config}>
       <button type="button" className="btn btn_subtle" onmousedown={ctrl.toggle} config={ctrl.buttonConfig}>
         {label || ctrl.label}
       </button>
       {dropdownContent}
     </div>
   );
+};
+
+Dropdown.config = function(el, isInitialized, context) {
+  if (!isInitialized) {
+    ScrollIntoView(el);
+  }
 };
 
 document.addEventListener("mousedown", function(e) {
