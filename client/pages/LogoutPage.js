@@ -17,10 +17,12 @@ LogoutPage.controller = function(options) {
 
   options.user.logout().then(function() {
     delete CS.user;
-    m.route("/login");
+    window.location.hash="";
+    window.location.pathname="/login";
   }, function() {
     delete CS.user;
-    m.route("/login");
+    window.location.hash="";
+    window.location.pathname="/login";
   });
 };
 
