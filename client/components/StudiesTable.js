@@ -318,9 +318,15 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
     cellContents.attrs.onclick = ctrl.toggleModal(study, field, options)
   }
 
+  var numComments = study.getComments(field).length;
+  if (numComments > 0) {
+    var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
+  }
+
   return (
     <div className={"cell " + field + (modal ? " active" : "")}>
       {cellContents}
+      {commentMarker}
       {modal}
     </div>
   );
