@@ -36,7 +36,6 @@ App.showPage = function(pageName) {
       delete App.user;
     } else if (CS.user && !App.user) {
       App.user = new UserModel(CS.user);
-      App.user.initializeAssociations();
     }
 
     if (!App.user && pageName !== "Login") {

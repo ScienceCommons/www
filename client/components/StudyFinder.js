@@ -22,7 +22,6 @@ StudyFinder.controller = function(options) {
   var _this = this;
   this.selectArticle = function(article) {
     return function() {
-      article.initializeAssociations();
       _this.selectedArticle = article;
       article.get("studies").fetch();
     };

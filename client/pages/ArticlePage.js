@@ -26,11 +26,9 @@ ArticlePage.controller = function(options) {
 
   if (m.route.param("articleId") === "new" && this.user.canEdit()) {
     this.article = new ArticleModel({});
-    this.article.initializeAssociations();
     this.editing = m.prop(true);
   } else {
     this.article = new ArticleModel({id: m.route.param("articleId")});
-    this.article.initializeAssociations();
     this.article.fetch();
     this.article.get("studies").fetch();
     this.article.get("comments").fetch();
