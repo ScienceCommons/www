@@ -83,7 +83,14 @@ Modal.view = function(ctrl, options) {
   }
 };
 
-document.addEventListener("mousedown", function(e) {
+document.addEventListener("mousedown", closeModalsOnMousedown);
+document.addEventListener("touchstart", closeModalsOnMousedown);
+
+module.exports = Modal;
+
+// helpers
+
+function closeModalsOnMousedown(e) {
   var node = e.target;
   var parentNodes = [node];
   while (node.parentNode) {
@@ -97,6 +104,4 @@ document.addEventListener("mousedown", function(e) {
     }
   });
   m.redraw();
-});
-
-module.exports = Modal;
+}

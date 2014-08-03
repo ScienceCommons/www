@@ -65,7 +65,14 @@ Dropdown.config = function(el, isInitialized, context) {
   }
 };
 
-document.addEventListener("mousedown", function(e) {
+document.addEventListener("mousedown", closeDropdownsOnMousedown);
+document.addEventListener("touchstart", closeDropdownsOnMousedown);
+
+module.exports = Dropdown;
+
+// helpers
+
+function closeDropdownsOnMousedown(e) {
   var node = e.target;
   var parentNodes = [node];
   while (node.parentNode) {
@@ -79,6 +86,4 @@ document.addEventListener("mousedown", function(e) {
     }
   });
   m.redraw();
-});
-
-module.exports = Dropdown;
+}

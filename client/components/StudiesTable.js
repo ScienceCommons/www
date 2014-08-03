@@ -655,7 +655,14 @@ function arrayFieldCurrentState(field, ctrl, study) {
   return variables;
 };
 
-document.addEventListener("mousedown", function(e) {
+document.addEventListener("mousedown", closeActiveOnMousedown);
+document.addEventListener("touchstart", closeActiveOnMousedown);
+
+module.exports = StudiesTable;
+
+//helpers
+
+function closeActiveOnMousedown(e) {
   var node = e.target;
   var parentNodes = [node];
   while (node.parentNode) {
@@ -669,6 +676,4 @@ document.addEventListener("mousedown", function(e) {
     }
   });
   m.redraw();
-});
-
-module.exports = StudiesTable;
+};
