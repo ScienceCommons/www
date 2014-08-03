@@ -54,7 +54,7 @@ HomePage.articleView = function(article) {
       <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
       <ul className="badges">
         <li title="Data &amp; Syntax">{Badge.view({badge: "data", active: true})}</li>
-        <li title="Materials">{Badge.view({badge: "methods", active: true})}</li>
+        <li title="Materials">{Badge.view({badge: "materials", active: true})}</li>
         <li title="Registration">{Badge.view({badge: "registration"})}</li>
         <li title="Disclosure">{Badge.view({badge: "disclosure"})}</li>
       </ul>

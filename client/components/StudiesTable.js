@@ -391,7 +391,6 @@ StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
 var BadgeHeaders = {
   "data": "Data & Syntax",
   "materials": "Materials",
-  "methods": "Materials",
   "registration": "Registration",
   "disclosure": "Disclosure"
 };
@@ -403,7 +402,7 @@ StudiesTable.cellViews.badges = function(ctrl, study) {
     var dropdown = BadgeDropdowns[activeBadge](ctrl, study);
   }
 
-  var badges = _.map(["data", "methods", "registration", "disclosure"], function(badge) {
+  var badges = _.map(["data", "materials", "registration", "disclosure"], function(badge) {
 
     return <li onclick={StudiesTable.cellViews.handleBadgeClick(ctrl, study, badge)} className={activeBadge === badge ?  "active" : ""} title={BadgeHeaders[badge]}>
       {Badge.view({badge: badge, active: study.hasBadge(badge)})}
@@ -436,7 +435,7 @@ BadgeDropdowns.data = function(ctrl, study) {
   return fileDropdown(ctrl, study, "data");
 };
 
-BadgeDropdowns.methods = function(ctrl, study) {
+BadgeDropdowns.materials = function(ctrl, study) {
   return fileDropdown(ctrl, study, "materials");
 };
 

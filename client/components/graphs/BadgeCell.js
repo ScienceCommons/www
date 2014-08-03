@@ -34,8 +34,8 @@ BadgeCell.view = function(ctrl) {
         <li onclick={ctrl.toggle("data")}>
           {new Badge.view({badge: "data", active: ctrl.study.hasBadge("data")})}
         </li>
-        <li onclick={ctrl.toggle("methods")}>
-          {new Badge.view({badge: "methods", active: ctrl.study.hasBadge("methods")})}
+        <li onclick={ctrl.toggle("materials")}>
+          {new Badge.view({badge: "materials", active: ctrl.study.hasBadge("materials")})}
         </li>
         <li onclick={ctrl.toggle("registration")}>
           {new Badge.view({badge: "registration", active: ctrl.study.hasBadge("registration")})}

@@ -2,9 +2,9 @@
 
 "use strict";
 
-var MethodsIcon = {};
+var MaterialsIcon = {};
 
-MethodsIcon.view = function(ctrl) {
+MaterialsIcon.view = function(ctrl) {
   if (ctrl.size === "small") {
     return (
       <g className="svg_icon">
@@ -28,4 +28,4 @@ MethodsIcon.view = function(ctrl) {
   }
 };
 
-module.exports = MethodsIcon;
+module.exports = MaterialsIcon;

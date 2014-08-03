@@ -10,7 +10,7 @@ var Badge = {};
 Badge.icons = {
   data: require("./icons/DataIcon.js"),
   disclosure: require("./icons/DisclosureIcon.js"),
-  methods: require("./icons/MethodsIcon.js"),
+  materials: require("./icons/MaterialsIcon.js"),
   registration: require("./icons/RegistrationIcon.js"),
   reproducible: require("./icons/ReproducibleIcon.js")
 };

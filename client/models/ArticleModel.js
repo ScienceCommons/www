@@ -39,7 +39,7 @@ var ArticleModel = CurateBaseModel.extend({
       {
         "id": "1",
         "authors": "Zhong et al.",
-        "badges": ["data", "methods", "registration", "disclosure"],
+        "badges": ["data", "materials", "registration", "disclosure"],
         "closed": true, // for testing the replication graph
         "replications": [
           {"id": "2", "authors": "Feng et al."},
