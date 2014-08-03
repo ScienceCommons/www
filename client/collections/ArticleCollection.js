@@ -10,7 +10,7 @@ var ArticleCollection = CurateBaseCollection.extend({
     this.loading = false;
   },
   search: function(options) {
-    var url = "https://api.curatescience.org/articles?q=" + options.query;
+    var url = "https://www.curatescience.org/articles?q=" + options.query;
     if (!_.isUndefined(options.from)) {
       url = url + "&from=" + options.from;
     }

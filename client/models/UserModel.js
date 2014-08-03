@@ -65,7 +65,7 @@ var UserModel = CurateBaseModel.extend({
       this.set("bookmarks", this.get("bookmarks").concat([article.get("id")]));
     }
   },
-  urlRoot: "https://api.curatescience.org/users",
+  urlRoot: "https://www.curatescience.org/users",
   toggleAdmin: function() {
     var _this = this;
     var req = this.sync("create", {}, {url: this.url() + "/toggle_admin", data: {state: !this.get("admin")}});

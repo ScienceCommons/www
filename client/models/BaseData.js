@@ -438,7 +438,7 @@ BaseData.Collection.prototype.remove = function(model, options) {
   delete this._byId[model.get("id")];
 
   if (options.sync && !model.isNew()) {
-    var sync = this.sync("delete", model, {url: this.url() + "/" + model.get("id")})
+    var sync = model.destroy();
     var _this = this;
     sync.then(function() {}, function(err) {
       console.log("Failed to delete", err);
@@ -549,6 +549,10 @@ function relationCollection(relation) {
 
 // taken from https://github.com/lhorie/mithril.js/issues/86
 function maybeJSON(data) {
+  if (_.isEmpty(data)) {
+    return "";
+  }
+
   try {
     return JSON.parse(data);
   } catch (e) { //handle runtime error

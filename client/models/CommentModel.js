@@ -48,7 +48,8 @@ var CommentModel = CurateBaseModel.extend({
       }
       return <span className="icon icon_person"></span>;
     }
-  }
+  },
+  urlRoot: "https://www.curatescience.org/comments"
 });
 
 CommentModel.prototype.relations.replies.model = CommentModel; // had to do this because of self reference

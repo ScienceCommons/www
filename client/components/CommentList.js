@@ -13,7 +13,7 @@ Comment.view = function(ctrl) {
   if (!_.isEmpty(comment.get("replies"))) {
     var replies = new CommentList.view({comments: comment.get("replies")});
   }
-  if (ctrl.onDelete && comment.get("owner_id") === ctrl.user.get("id")) {
+  if (ctrl.onDelete && (comment.get("owner_id") === ctrl.user.get("id") || ctrl.user.get("admin"))) {
     var deleteButton = <button type="button" className="btn" onclick={ctrl.onDelete}>Delete</button>;
   }
   if (ctrl.reply) {
@@ -69,7 +69,11 @@ function reply() {
 
 function onDelete(collection, comment) {
   return function (e) {
-    if (confirm("This will delete your comment")) {
+    var confirmMessage = "This will delete your comment";
+    if (comment.get("owner_id") !== App.user.get("id")) {
+      confirmMessage = "This will delete the user's comment";
+    }
+    if (confirm(confirmMessage)) {
       collection.remove(comment, {sync: true});
     }
   };
