@@ -1,5 +1,9 @@
 @import "../variables.scss";
 
+.modal_open {
+  overflow: hidden;
+}
+
 .Modal {
   background-color: white;
   width: 500px;
