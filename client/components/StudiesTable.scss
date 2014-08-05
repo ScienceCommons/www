@@ -45,6 +45,12 @@ $column_width: 300px;
     border-bottom: 1px solid $gray;
     position: relative;
     cursor: pointer;
+
+    & > .icon_comment {
+      position: absolute;
+      right: -2px;
+      top: 2px;
+    }
   }
 
   .study .cell:not(.replication_path) {
