@@ -387,7 +387,7 @@ StudiesTable.cellViews = {};
 
 StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
   if (!options.replication) {
-    var addReplicationLink = <span class="add_replication" onclick={ctrl.openStudyFinder(study)}></span>;
+    var addReplicationLink = <span class="add_replication" onclick={ctrl.openStudyFinder(study)} title="Add replication"></span>;
   }
 
   var count = study.get("replications").length;
