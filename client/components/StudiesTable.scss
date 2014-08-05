@@ -94,11 +94,11 @@ $column_width: 300px;
     border-top: 1px solid $gray;
   }
 
-  .authors, .badges {
+  .cell.authors, .cell.badges {
     height: 70px;
   }
 
-  .independent_variables, .dependent_variables, .n, .power, .effect_size {
+  .cell.independent_variables, .cell.dependent_variables, .cell.n, .cell.power, .cell.effect_size {
     height: 60px;
   }
 

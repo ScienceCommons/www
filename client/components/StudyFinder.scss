@@ -5,6 +5,7 @@
 
   .search {
     text-align: center;
+    margin-bottom: 10px;
 
     .btn {
       margin-left: 10px;
@@ -16,9 +17,23 @@
     padding: 0 20px;
   }
 
-  .article:hover {
-    background-color: $blue;
-    color: white;
-    cursor: pointer;
+  .article {
+    padding: 10px;
+    border-top: 1px solid $gray;
+
+    .title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .authors {
+      font-size: 14px;
+    }
+
+    &:hover {
+      background-color: $blue;
+      color: white;
+      cursor: pointer;
+    }
   }
 }

@@ -100,7 +100,7 @@ StudyFinder.searchView = function(ctrl) {
   var articles = ctrl.matchingArticles;
   var results;
   if (!ctrl.submitted()) {
-    results = "Lookup the article with the study you would like to add as a replication.";
+    results = "";
   } else if (articles.loading) {
     results = Spinner.view();
   } else if (articles.total === 0) {
@@ -109,7 +109,8 @@ StudyFinder.searchView = function(ctrl) {
     var list = articles.map(function(article) {
       return (
         <li className="article" onclick={ctrl.selectArticle(article)}>
-          <h3>{article.get("title")}</h3>
+          <div className="title">{article.get("title")}</div>
+          <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
         </li>
       );
     });
@@ -124,6 +125,7 @@ StudyFinder.searchView = function(ctrl) {
   return (
     <form onsubmit={ctrl.runSearch}>
       <div className="search">
+        <div>Find the article, then pick the study.</div>
         <input placeholder="Find article" type="text" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
         <button type="submit" className="btn">Search</button>
       </div>
