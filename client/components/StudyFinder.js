@@ -22,12 +22,13 @@ StudyFinder.controller = function(options) {
   var _this = this;
   this.selectArticle = function(article) {
     return function() {
-      _this.selectedArticle = article;
-      article.get("studies").fetch();
+      if (_this.selectedArticle === article) {
+        _this.selectedArticle = null;
+      } else {
+        _this.selectedArticle = article;
+        article.get("studies").fetch();
+      }
     };
-  };
-  this.deselectArticle = function() {
-    _this.selectedArticle = null;
   };
 
   this.runSearch = function(e) {
@@ -45,7 +46,7 @@ StudyFinder.controller = function(options) {
 
 StudyFinder.view = function(ctrl) {
   var content;
-  if (ctrl.selectedArticle) {
+  if (false && ctrl.selectedArticle) {
     content = StudyFinder.articleView(ctrl, ctrl.selectedArticle);
   } else {
     content = StudyFinder.searchView(ctrl);
@@ -62,10 +63,12 @@ StudyFinder.articleView = function(ctrl, article) {
   var content;
 
   if (studies.loading) {
-    content = Spinner.view();
-  } else if (studies.length === 0) {
+    var spinner = Spinner.view();
+  }
+
+  if (studies.length === 0 && !studies.loading) {
     content = "This article has no studies.";
-  } else {
+  } else if (studies.length > 0) {
     var list = studies.map(function(study) {
       return (
         <li>
@@ -87,10 +90,8 @@ StudyFinder.articleView = function(ctrl, article) {
   }
 
   return (
-    <div>
-      <button type="button" className="btn" onclick={ctrl.deselectArticle}><span className="icon icon_left_arrow"/></button>
-      <h3>{article.get("title")}</h3>
-      <h5>{article.get("authorLastNames")}</h5>
+    <div className="articleView">
+      {spinner}
       {content}
     </div>
   );
@@ -107,10 +108,20 @@ StudyFinder.searchView = function(ctrl) {
     results = "No articles found"
   } else {
     var list = articles.map(function(article) {
+      var arrow;
+      if (ctrl.selectedArticle === article) {
+        var expandedContent = StudyFinder.articleView(ctrl, article);
+        arrow = <span className="icon icon_up_caret arrow"></span>;
+      } else {
+        arrow = <span className="icon icon_down_caret arrow"></span>;
+      }
+
       return (
         <li className="article" onclick={ctrl.selectArticle(article)}>
           <div className="title">{article.get("title")}</div>
           <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
+          {expandedContent}
+          {arrow}
         </li>
       );
     });
