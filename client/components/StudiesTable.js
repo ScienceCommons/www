@@ -246,20 +246,22 @@ StudiesTable.view = function(ctrl) {
   }
 
   // add study column
+  if (ctrl.article.get("studies").length > 0 || ctrl.newStudy()) {
+    var header = <header>
+      <div className="cell replication_path">Replication path</div>
+      <div className="cell authors">Authors</div>
+      <div className="cell badges"></div>
+      <div className="cell independent_variables">Independent Variables</div>
+      <div className="cell dependent_variables">Dependent Variables</div>
+      <div className="cell n">N <span className="icon icon_person"></span></div>
+      <div className="cell power">Power</div>
+      <div className="cell effect_size">Effect Size</div>
+    </header>;
+  }
 
   return (
     <div className="StudiesTable">
-      <header>
-        <div className="cell replication_path">Replication path</div>
-        <div className="cell authors">Authors</div>
-        <div className="cell badges"></div>
-        <div className="cell independent_variables">Independent Variables</div>
-        <div className="cell dependent_variables">Dependent Variables</div>
-        <div className="cell n">N <span className="icon icon_person"></span></div>
-        <div className="cell power">Power</div>
-        <div className="cell effect_size">Effect Size</div>
-      </header>
-
+      {header}
       {content}
       {studyFinderModal}
     </div>
@@ -318,9 +320,11 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
     cellContents.attrs.onclick = ctrl.toggleModal(study, field, options)
   }
 
-  var numComments = study.getComments(field).length;
-  if (numComments > 0) {
-    var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
+  if (study.getComments(field)) {
+    var numComments = study.getComments(field).length;
+    if (numComments > 0) {
+      var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
+    }
   }
 
   return (
