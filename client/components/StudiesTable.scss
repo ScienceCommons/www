@@ -29,10 +29,17 @@ $column_width: 300px;
   }
 
   .discardStudy {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: $red;
+    display: none;
+  }
+
+  .study:hover {
+    .discardStudy {
+      display: initial;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: $red;
+    }
   }
 
   .btn.addStudy {
