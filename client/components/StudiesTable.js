@@ -191,9 +191,9 @@ StudiesTable.controller = function(opts) {
       if (study.get("article_id") === replicationStudy.get("article_id")) {
         alert("You are picking another study in this article to be a replication.  That is not allowed.");
       } else if (study.get("replications").get(replicationStudy.get("id"))) {
-        study.get("replications").remove(replicationStudy);
+        study.get("replications").remove(replicationStudy, {sync: true});
       } else {
-        study.get("replications").add(replicationStudy);
+        study.get("replications").add(replicationStudy, {sync: true});
         //_this.controllers.studyFinderModal.open(false);
         var expanded = _this.expanded();
         var id = study.get("id");

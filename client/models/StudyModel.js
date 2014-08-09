@@ -18,7 +18,7 @@ var StudyModel = CurateBaseModel.extend({
     n_comments: {type: "many", model: CommentModel},
     power_comments: {type: "many", model: CommentModel},
     effect_size_comments: {type: "many", model: CommentModel},
-    replications: {type: "many"} // model is defined below
+    replications: {type: "many", urlAction: "replications"} // model is defined below
   },
   defaults: {
     "authors": ["Zhong", "Wang"],
