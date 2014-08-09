@@ -112,7 +112,8 @@ module.exports = function (grunt) {
         },
         output: {
           path: PRODUCTION_PATH+"/assets",
-          filename: "[name].js"
+          filename: "[name].js",
+          publicPath: "https://s3.amazonaws.com/www.curatescience.org/assets/"
         },
         plugins: [
           new webpack.optimize.OccurenceOrderPlugin(),
