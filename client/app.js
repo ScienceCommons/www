@@ -63,6 +63,7 @@ App.showPage = function(pageName) {
 
 require("fastclick").attach(document.body);
 
+window.location.hash = window.location.hash || "/";
 m.route.mode = "hash";
 m.route(document.getElementById("page"), "/not_found", {
   "/": App.showPage("Home"),
