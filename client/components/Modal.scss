@@ -22,6 +22,7 @@
   box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.25);
 
   & > table, & > .modalWrapper > table {
+    table-layout: fixed;
     width: 100%;
     height: 100%;
 
@@ -60,6 +61,12 @@
       & > tr > td {
         vertical-align: top;
       }
+    }
+
+    div.modalContent {
+      overflow: auto;
+      max-height: 459px;
+      border-radius: $btn_radius;
     }
   }
 }

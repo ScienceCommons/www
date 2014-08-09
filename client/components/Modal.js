@@ -72,8 +72,8 @@ Modal.view = function(ctrl, options) {
           {buttons}
         </tr></tbody></table>
       </th></tr></thead>
-      <tbody><tr><td>{options.content}
-      </td></tr></tbody>
+      <tbody><tr><td><div className="modalContent">{options.content}
+      </div></td></tr></tbody>
       {footer}
     </table>
 
