@@ -7,6 +7,7 @@ var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/DefaultLayout.js");
 
 var _ = require("underscore");
+var m = require("mithril");
 
 var ProfilePage = {};
 
@@ -15,53 +16,34 @@ ProfilePage.controller = function(options) {
   options = _.extend({id: "ProfilePage"}, options);
   this.controllers.layout= new Layout.controller(options);
   this.user = options.user;
+  this.editing = m.prop(false);
+  window.user = this.user;
+
+  var _this = this;
+  this.editClick = function() {
+    _this.editing(true);
+  };
+
+  this.saveClick = function() {
+    _this.user.save();
+    _this.editing(false);
+  };
+
+  this.discardClick = function() {
+    _this.user.set(_this.user._serverState);
+    _this.editing(false);
+  };
 };
 
-ProfilePage.detailsView = function(user) {
+ProfilePage.detailsView = function(ctrl, user) {
   var areasOfStudy = _.map(user.get("areas_of_study"), function(area) {
     return <div className="section">{area}</div>;
   });
 
   return (
     <div className="details">
-      <button type="button" className="editOrFollow">{user.get("id") === CS.user.id ? "Settings": "Follow"}</button>
-      <h1 className="h1 section">{user.get("fullName")}</h1>
-      <div className="section">
-        <div className="col span_1_of_2">
-          <h3>About</h3>
-          {user.get("about")}
-        </div>
-        <div className="col span_1_of_2">
-          <div className="areasOfStudy">
-            <h3>Areas of Study</h3>
-            {areasOfStudy}
-          </div>
-
-          <div className="contacts">
-            <h3>Contact</h3>
-
-            <div className="section">
-              <span className="icon icon_twitter"></span>
-              <a href={user.get("twitterUrl")}>{user.get("twitter")}</a>
-            </div>
-
-            <div className="section">
-              <span className="icon icon_facebook"></span>
-              <a href={user.get("facebookUrl")}>{user.get("facebook")}</a>
-            </div>
-
-            <div className="section">
-              <span className="icon icon_mail"></span>
-              <a href={"mailto:" + user.get("email")}>{user.get("email")}</a>
-            </div>
-
-            <div className="section">
-              <span className="icon icon_comment"></span>
-              Send a message
-            </div>
-          </div>
-        </div>
-      </div>
+      <h1 className="h1 section" placeholder="Name goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", user.setter("name"))}>{user.get("name")}</h1>
+      <h3 className="h3 section">{user.get("email")}</h3>
     </div>
   );
 };
@@ -115,14 +97,27 @@ ProfilePage.recentContributionsView = function(user) {
 ProfilePage.view = function(ctrl) {
   var user = ctrl.user;
 
+  var editButtons;
+  if (ctrl.editing()) {
+    editButtons = [
+      <button type="button" className="btn" onclick={ctrl.saveClick}>Save</button>,
+      <button type="button" className="btn" onclick={ctrl.discardClick}>Discard</button>,
+    ];
+  } else {
+    editButtons = <button type="button" className="btn" onclick={ctrl.editClick}>Edit</button>;
+  }
+
   var content = (
     <div className="section">
       <div className="col span_1_of_2">
-        {ProfilePage.detailsView(ctrl.user)}
+        {ProfilePage.detailsView(ctrl, ctrl.user)}
         {ProfilePage.articlesView(ctrl.user)}
       </div>
       <div className="col span_1_of_2">
         {ProfilePage.recentContributionsView(ctrl.user)}
+      </div>
+      <div className="btn_group editButtons">
+        {editButtons}
       </div>
     </div>
   );
