@@ -139,8 +139,8 @@ ArticlePage.view = function(ctrl) {
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("title"))}>{article.get("title")}</h2>
-            <h3>Authors</h3>
-            <p className="authors">{authors} {year}</p>
+            <div>{article.get("year")}</div>
+            <div className="authors">{authors}</div>  
 
             <h3>Abstract</h3>
             <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("abstract"))}>{article.get("abstract")}</p>
