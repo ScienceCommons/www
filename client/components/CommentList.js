@@ -10,7 +10,7 @@ var Comment = {};
 
 Comment.view = function(ctrl) {
   var comment = ctrl.comment;
-  if (!_.isEmpty(comment.get("replies"))) {
+  if (!comment.get("replies").isEmpty()) {
     var replies = new CommentList.view({comments: comment.get("replies")});
   }
   if (ctrl.onDelete && (comment.get("owner_id") === ctrl.user.get("id") || ctrl.user.get("admin"))) {
