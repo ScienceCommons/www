@@ -117,6 +117,9 @@ StudyFinder.searchView = function(ctrl) {
     results = "No articles found"
   } else {
     var list = articles.map(function(article) {
+      if (ctrl.parentStudy && ctrl.parentStudy().get("article_id") === article.get("id")) {
+        return;
+      }
       var arrow;
       if (ctrl.selectedArticle === article) {
         var expandedContent = StudyFinder.articleView(ctrl, article);
