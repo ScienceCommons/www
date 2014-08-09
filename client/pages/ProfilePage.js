@@ -17,7 +17,6 @@ ProfilePage.controller = function(options) {
   this.controllers.layout= new Layout.controller(options);
   this.user = options.user;
   this.editing = m.prop(false);
-  window.user = this.user;
 
   var _this = this;
   this.editClick = function() {
