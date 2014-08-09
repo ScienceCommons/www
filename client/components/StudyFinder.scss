@@ -23,7 +23,7 @@
     padding-right: 30px;
     border-top: 1px solid $gray;
 
-    & > .arrow {
+    header > .arrow {
       position: absolute;
       font-size: 18px;
       font-weight: bold;
@@ -40,16 +40,27 @@
       font-size: 14px;
     }
 
-    &:hover {
-      background-color: $blue;
-      color: white;
+    header:hover {
       cursor: pointer;
+
+      .icon.arrow {
+        color: $blue;
+      }
     }
 
     .articleView {
       position: relative;
       margin-top: 20px;
       padding-left: 20px;
+
+      .btn {
+        margin-right: 10px;
+
+        &.active {
+          background-color: $blue;
+          color: white;
+        }
+      }
     }
 
     .Spinner {

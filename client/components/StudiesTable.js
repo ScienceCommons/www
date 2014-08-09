@@ -185,14 +185,16 @@ StudiesTable.controller = function(opts) {
     };
   };
 
-  this.addReplication = function(replicationStudy) {
+  this.toggleReplication = function(replicationStudy) {
     var study = _this.studyFinderStudy();
     if (study) {
       if (study.get("article_id") === replicationStudy.get("article_id")) {
         alert("You are picking another study in this article to be a replication.  That is not allowed.");
+      } else if (study.get("replications").get(replicationStudy.get("id"))) {
+        study.get("replications").remove(replicationStudy);
       } else {
         study.get("replications").add(replicationStudy);
-        _this.controllers.studyFinderModal.open(false);
+        //_this.controllers.studyFinderModal.open(false);
         var expanded = _this.expanded();
         var id = study.get("id");
         expanded[id] = true;
@@ -208,7 +210,8 @@ StudiesTable.controller = function(opts) {
   });
 
   this.controllers.studyFinder = new StudyFinder.controller({
-    selectStudy: this.addReplication
+    selectStudy: this.toggleReplication,
+    parentStudy: this.studyFinderStudy
   });
 
   this.studiesConfig = function(el, isInitialized) {

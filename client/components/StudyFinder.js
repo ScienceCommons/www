@@ -8,6 +8,7 @@ var m = require("mithril");
 var SearchResults = require("./SearchResults.js");
 var ArticleCollection = require("../collections/ArticleCollection.js");
 var Spinner = require("./Spinner.js");
+var cx = require("../utils/ClassSet.js");
 
 var StudyFinder = {};
 
@@ -17,6 +18,7 @@ StudyFinder.controller = function(options) {
   this.matchingArticles = new ArticleCollection();
   this.selectedArticle = null;
   this.selectStudy = options.selectStudy;
+  this.parentStudy = options.parentStudy;
 
 
   var _this = this;
@@ -69,15 +71,22 @@ StudyFinder.articleView = function(ctrl, article) {
   if (studies.length === 0 && !studies.loading) {
     content = "This article has no studies.";
   } else if (studies.length > 0) {
+    var parentReplications = false;
+    if (ctrl.parentStudy && ctrl.parentStudy()) {
+      parentReplications = ctrl.parentStudy().get("replications");
+    }
     var list = studies.map(function(study) {
+      var classes = cx({
+        btn: true,
+        btn_subtle: true,
+        active: parentReplications && parentReplications.get(study.get("id"))
+      });
       return (
         <li>
-          {study.get("authors").join(", ")}
-          {study.get("independent_variables").join(", ")}
-          {study.get("dependent_variables").join(", ")}
-          {study.get("n")}
-          {study.get("power")}
-          <button type="button" className="btn" onclick={ctrl.clickStudyButton(study)}>Add as replication</button>
+          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)}>
+            <span className="icon icon_replication"></span>
+          </button>
+          {study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")}
         </li>
       );
     });
@@ -117,11 +126,13 @@ StudyFinder.searchView = function(ctrl) {
       }
 
       return (
-        <li className="article" onclick={ctrl.selectArticle(article)}>
-          <div className="title">{article.get("title")}</div>
-          <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
+        <li className="article">
+          <header onclick={ctrl.selectArticle(article)}>
+            <div className="title">{article.get("title")}</div>
+            <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
+            {arrow}
+          </header>
           {expandedContent}
-          {arrow}
         </li>
       );
     });
