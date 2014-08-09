@@ -27,19 +27,19 @@ module.exports = function (grunt) {
     loader: "style!css!sass"
   }, {
     test: /\.gif/,
-    loader: "url-loader?minetype=image/gif"
+    loader: "url-loader?limit=10000&minetype=image/gif"
   }, {
     test: /\.jpg/,
-    loader: "url-loader?minetype=image/jpg"
+    loader: "url-loader?limit=10000&minetype=image/jpg"
   }, {
     test: /\.png/,
-    loader: "url-loader?minetype=image/png"
+    loader: "url-loader?limit=10000&minetype=image/png"
   }, {
     test: /\.js$/,
     loader: "msx-loader"
   }, {
     test: /\.woff$/,
-    loader: "url-loader?prefix=/assets/&minetype=application/font-woff"
+    loader: "url-loader?prefix=/assets/&limit=10000&minetype=application/font-woff"
   }, {
     test: /\.ttf$/,
     loader: "file-loader?prefix=/assets/"
