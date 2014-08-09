@@ -314,15 +314,6 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
     contents = study.get(field);
   }
 
-  // also include indicators
-  var cellContents = <div className="cellContents">
-    {contents}
-  </div>
-
-  if (field !== "badges" && field !== "replication_path") {
-    cellContents.attrs.onclick = ctrl.toggleModal(study, field, options)
-  }
-
   if (study.getComments(field)) {
     var numComments = study.getComments(field).length;
     if (numComments > 0) {
@@ -330,10 +321,20 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
     }
   }
 
+  // also include indicators
+  var cellContents = <div className="cellContents">
+    {contents}
+    {commentMarker}
+  </div>
+
+  if (field !== "badges" && field !== "replication_path") {
+    cellContents.attrs.onclick = ctrl.toggleModal(study, field, options)
+  }
+
+
   return (
     <div className={"cell " + field + (modal ? " active" : "")}>
       {cellContents}
-      {commentMarker}
       {modal}
     </div>
   );
