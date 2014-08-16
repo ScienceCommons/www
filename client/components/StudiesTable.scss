@@ -71,6 +71,19 @@ $column_width: 300px;
     }
   }
 
+  .study.replication .cell:not(.replication_path) .cellContents {
+    background-color: $replication_background;
+  }
+
+  .study:not(.replication) {
+    z-index: 1;
+
+    &.expanded .cellGroup {
+      box-shadow: 5px 0 5px -2px $gray;
+    }
+  }
+
+
   .cell:not(.replication_path):not(.badges) .cellContents:hover {
     background-color: $light_blue;
     color: white;

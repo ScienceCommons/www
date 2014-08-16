@@ -273,7 +273,7 @@ StudiesTable.view = function(ctrl) {
 
 StudiesTable.studyView = function(ctrl, study, options) {
   var options = options || {};
-  var cells = _.map(["replication_path", "authors", "badges", "independent_variables", "dependent_variables", "n", "power", "effect_size"], function(field) {
+  var cells = _.map(["authors", "badges", "independent_variables", "dependent_variables", "n", "power", "effect_size"], function(field) {
     return StudiesTable.studyCellView(ctrl, study, field, options);
   });
 
@@ -289,12 +289,16 @@ StudiesTable.studyView = function(ctrl, study, options) {
   var classes = cx({
     "study": true,
     "new": options.new,
-    "replication": options.replication
+    "replication": options.replication,
+    "expanded": ctrl.expanded()[study.get("id")]
   });
 
   return (
     <li className={classes}>
-      {cells}
+      {StudiesTable.studyCellView(ctrl, study, "replication_path", options)}
+      <div className="cellGroup">
+        {cells}
+      </div>
       {saveButtons}
     </li>
   );
