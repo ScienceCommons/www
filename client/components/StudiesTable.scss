@@ -62,6 +62,7 @@ $column_width: 300px;
     text-align: center;
     height: 100%;
     width: 100%;
+    transition: all 0.3s ease;
 
     & > .icon_comment {
       position: absolute;
@@ -332,6 +333,7 @@ $column_width: 300px;
     & > li {
       height: 69px; // 70-1 otherwise the bottom border looks weird
       position: relative;
+      transition: background-color 0.3s ease;
 
       &:hover {
         background-color: $light_blue;
