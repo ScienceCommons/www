@@ -13,6 +13,7 @@ var ArticleModel = CurateBaseModel.extend({
     "title": "",
     "abstract": "",
     "tags": ["Moral purity", "Physical cleansing", "Cleansing products"],
+    "badges": ["data", "materials"],
     "doi": "",
     "publication_date": "",
     "journal": "",
@@ -127,6 +128,13 @@ var ArticleModel = CurateBaseModel.extend({
       data: {id: this.get("id")},
       url: this.url() + "/bookmark"
     });
+  },
+  hasBadge: function(name) {
+    if (this.get("studies").length > 0) {
+      return this.get("studies").all(function(study) { return study.hasBadge(name); });
+    } else {
+      return _.contains(this.get("badges"), name);
+    }
   },
 });
 
