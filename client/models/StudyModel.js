@@ -80,7 +80,11 @@ var StudyModel = CurateBaseModel.extend({
     return this.get(field+"_comments");
   },
   hasBadge: function(name) {
-    return _.contains(this.get("badges"), name);
+    if (this.get("files").length > 0) {
+      return this.get("files").any(function(file) { return file.get("type") === name; });
+    } else {
+      return _.contains(this.get("badges"), name);
+    }
   },
   hasComments: function(field) {
     var comments = this.getComments(field);
