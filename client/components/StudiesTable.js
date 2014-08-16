@@ -277,13 +277,15 @@ StudiesTable.studyView = function(ctrl, study, options) {
     return StudiesTable.studyCellView(ctrl, study, field, options);
   });
 
-  if (options.new || study.hasChanges()) {
-    var saveButtons = [
-      <button type="button" className="btn saveStudy" onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
-      <button type="button" className="btn discardStudy" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
-    ];
-  } else if (!options.new) {
-    var saveButtons = <button type="button" className="btn discardStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
+  if (!options.replication) {
+    if (options.new || study.hasChanges()) {
+      var saveButtons = [
+        <button type="button" className="btn saveStudy" onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
+        <button type="button" className="btn discardStudy" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
+      ];
+    } else if (!options.new) {
+      var saveButtons = <button type="button" className="btn discardStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
+    }
   }
 
   var classes = cx({
