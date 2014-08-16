@@ -113,6 +113,7 @@ h6, .h6 {
   border-radius: $btn_radius;
   min-width: 30px;
   padding: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover {
     background: $dark;
@@ -142,6 +143,7 @@ h6, .h6 {
   @include subtle;
   padding: 5px;
   border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 [contenteditable=false] {
