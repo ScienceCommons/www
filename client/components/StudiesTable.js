@@ -379,12 +379,21 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
     }
 
     return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
-      label: field,
+      label: ModalLabels[field] || field,
       buttons: editButton || false,
       content: new CommentList.view({comments: study.getComments(field), user: ctrl.user}),
       footer: CommentForm.view(ctrl.controllers.studyFieldCommentForm)
     });
   }
+};
+
+var ModalLabels = {
+  authors: "Authors",
+  independent_variables: "Independent Variables",
+  dependent_variables: "Dependent Variables",
+  n: "Sample Size",
+  power: "Power",
+  effect_size: "Effect Size"
 };
 
 StudiesTable.cellViews = {};
