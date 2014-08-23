@@ -84,6 +84,10 @@ $column_width: 300px;
     }
   }
 
+  .study.active {
+    z-index: 2;
+  }
+
   .study.replication + .study:not(.replication) .cellGroup {
     box-shadow: -5px 0 5px -2px $gray;
   }

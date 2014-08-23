@@ -292,7 +292,8 @@ StudiesTable.studyView = function(ctrl, study, options) {
     "study": true,
     "new": options.new,
     "replication": options.replication,
-    "expanded": ctrl.expanded()[study.get("id")]
+    "expanded": ctrl.expanded()[study.get("id")],
+    "active": ctrl.active().study_id === study.get("id")
   });
 
   return (
