@@ -2,6 +2,8 @@
 
 "use strict";
 
+var _ = require("underscore");
+
 var CurateBaseModel = require("./CurateBaseModel.js");
 
 var AuthorModel = CurateBaseModel.extend({
@@ -12,8 +14,8 @@ var AuthorModel = CurateBaseModel.extend({
   },
   pill: function() {
     return {
-      label: this.get("last_name"),
-      value: this.get()
+      label: _.compact([this.get("first_name"), this.get("middle_name"), this.get("last_name")]).join(" "),
+      value: this
     };
   }
 });

@@ -47,16 +47,7 @@ ArticlePage.controller = function(options) {
 
   this.controllers.authorsList = new PillList.controller({
     editable: this.editing,
-    collection: this.article.get("authors"),
-    getter: function(val) {
-      var authors = [
-        new AuthorModel({last_name: "Coe", first_name: "Ben"}),
-        new AuthorModel({last_name: "Demjanenko", first_name: "Stephen"})
-      ];
-      return _.map(authors, function(author) {
-        return author.pill();
-      });
-    }
+    collection: this.article.get("authors")
   });
 
   this.editClick = function() {
@@ -140,7 +131,7 @@ ArticlePage.view = function(ctrl) {
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("title"))}>{article.get("title")}</h2>
             <div>{article.get("year")}</div>
-            <div className="authors">{authors}</div>  
+            <div className="authors">{authors}</div>
 
             <h3>Abstract</h3>
             <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("abstract"))}>{article.get("abstract")}</p>

@@ -15,18 +15,8 @@
   .authors .PillList .pill {
     color: black;
     background: none;
-    border: none;
-    padding: 0;
+    border: 1px solid $gray;
     font-size: 16px;
-    margin: 0;
-
-    &:last-child:not(:first-child):before {
-      content: "\00a0& ";
-    }
-
-    &:not(:first-child):not(:last-child):before {
-      content: ", ";
-    }
   }
 
   .journal, .doi, .tags, .peerReview {
