@@ -84,6 +84,9 @@ $column_width: 300px;
     }
   }
 
+  .study.replication + .study:not(.replication) .cellGroup {
+    box-shadow: -5px 0 5px -2px $gray;
+  }
 
   .cell:not(.replication_path):not(.badges) .cellContents:hover {
     background-color: $light_blue;
