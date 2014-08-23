@@ -102,8 +102,8 @@ ArticlePage.view = function(ctrl) {
       article.get("year")
     ]).join(", ");
 
-    var peerReviewers = _.map(article.get("reviewers"), function(reviewer, i) {
-      return <li key={"peerReviewer"+i} contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(i))}>{reviewer}</li>;
+    var peerReviewers = _.map(article.get("reviewers").filter(function(reviewer) { return !_.isEmpty(reviewer); }).concat([""]), function(reviewer, i) {
+      return <li key={"peerReviewer_"+i} placeholder="Add a reviewer" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(i))}>{reviewer}</li>;
     });
 
     var tags = new PillList.view(ctrl.controllers.tagsList);
@@ -191,7 +191,6 @@ ArticlePage.view = function(ctrl) {
               <h5>Reviewers</h5>
               <ul className="reviewers">
                 {peerReviewers}
-                <li key={"peerReviewer"+peerReviewers.length} placeholder="Add a reviewer" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(peerReviewers.length))}></li>
               </ul>
             </div>
           </div>
