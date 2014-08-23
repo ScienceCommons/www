@@ -15,9 +15,7 @@ Typeahead.controller = function(options) {
   this.userInput = m.prop(options.value || "");
   this.pill = m.prop({label: this.userInput(), value: this.userInput()})
   this.submit = options.submit;
-  this.getter = options.getter || function() {
-    return [{label: "apple", value: "apple"}, {label: "pear", value: "pear"}];
-  };
+  this.getter = options.getter || function() { return []; };
 
   if (!this.submit) {
     throw("Typeahead: options.submit is required");
