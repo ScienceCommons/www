@@ -312,7 +312,7 @@ $column_width: 300px;
       .files {
         width: 100%;
 
-        tr:hover {
+        tr:not(.noFiles):hover {
           background-color: $light_blue;
 
           td.fileName {
