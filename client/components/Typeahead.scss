@@ -13,11 +13,11 @@
 
     li {
       padding: 2px 10px;
-    }
 
-    li.selected {
-      color: white;
-      background-color: $dark;
+      &.selected, &:hover {
+        color: white;
+        background-color: $dark;
+      }
     }
   }
 }

@@ -103,7 +103,7 @@ Typeahead.view = function(ctrl) {
   var list;
   if (ctrl.open() && !_.isEmpty(ctrl.recommendations())) {
     var recommendations = _.map(ctrl.recommendations(), function(recommendation, i) {
-      return <li className={i === ctrl.index() ? "selected" : ""} >{recommendation.label}</li>;
+      return <li className={i === ctrl.index() ? "selected" : ""} onclick={ctrl.handleRecommendationClick(recommendation)}>{recommendation.label}</li>;
     });
     list = <ul className="recommendations">{recommendations}</ul>;
   }
