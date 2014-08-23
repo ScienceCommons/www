@@ -110,9 +110,10 @@ PillList.controller = function(options) {
 };
 
 PillList.view = function(ctrl) {
+  var pills;
   if (ctrl.editable()) {
     if (ctrl.editing()) {
-      var pills = _.map(ctrl.pills(), function(pill) {
+      pills = _.map(ctrl.pills(), function(pill) {
         return PillList.pillView(pill, {onRemoveClick: ctrl.onRemoveClick});
       });
       return (
@@ -122,7 +123,7 @@ PillList.view = function(ctrl) {
         </ul>
       );
     } else {
-      var pills = _.map(ctrl.pills(), function(pill) {
+      pills = _.map(ctrl.pills(), function(pill) {
         return PillList.pillView(pill, {onRemoveClick: ctrl.onRemoveClick});
       });
       return (
@@ -133,7 +134,7 @@ PillList.view = function(ctrl) {
       );
     }
   } else {
-    var pills = _.map(ctrl.pills(), PillList.pillView);
+    pills = _.map(ctrl.pills(), PillList.pillView);
     return (
       <ul className="PillList">
         {pills}
