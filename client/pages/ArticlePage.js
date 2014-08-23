@@ -113,11 +113,11 @@ ArticlePage.view = function(ctrl) {
       var editButtons;
       if (ctrl.editing()) {
         editButtons = [
-          <button type="button" className="btn" onclick={ctrl.saveClick}>Save</button>,
-          <button type="button" className="btn" onclick={ctrl.discardClick}>Discard</button>,
+          <button type="button" className="btn" key="save" onclick={ctrl.saveClick}>Save</button>,
+          <button type="button" className="btn" key="discard" onclick={ctrl.discardClick}>Discard</button>,
         ];
       } else {
-        editButtons = <button type="button" className="btn" onclick={ctrl.editClick}>Edit</button>;
+        editButtons = <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>;
       }
     }
 
@@ -149,7 +149,7 @@ ArticlePage.view = function(ctrl) {
           <div className="col span_1_of_4 text_right">
             <div className="btn_group">
               {editButtons}
-              <button type="button" title="Bookmark article" className={"btn bookmark " + (ctrl.user.hasArticleBookmarked(article) ? "active" : "")} onclick={toggleBookmark(article, ctrl.user)}><span className="icon icon_bookmark"></span></button>
+              <button type="button" key="bookmark" title="Bookmark article" className={"btn bookmark " + (ctrl.user.hasArticleBookmarked(article) ? "active" : "")} onclick={toggleBookmark(article, ctrl.user)}><span className="icon icon_bookmark"></span></button>
             </div>
 
             <div className="journal">

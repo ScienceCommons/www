@@ -99,11 +99,11 @@ ProfilePage.view = function(ctrl) {
   var editButtons;
   if (ctrl.editing()) {
     editButtons = [
-      <button type="button" className="btn" onclick={ctrl.saveClick}>Save</button>,
-      <button type="button" className="btn" onclick={ctrl.discardClick}>Discard</button>,
+      <button type="button" className="btn" key="save" onclick={ctrl.saveClick}>Save</button>,
+      <button type="button" className="btn" key="discard" onclick={ctrl.discardClick}>Discard</button>,
     ];
   } else {
-    editButtons = <button type="button" className="btn" onclick={ctrl.editClick}>Edit</button>;
+    editButtons = <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>;
   }
 
   var content = (
