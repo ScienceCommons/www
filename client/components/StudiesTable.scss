@@ -28,18 +28,19 @@ $column_width: 300px;
     background-color: $green;
   }
 
-  .discardStudy {
+  .discardStudy, .deleteStudy {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: $red;
+  }
+
+  .deleteStudy {
     display: none;
   }
 
-  .study:hover {
-    .discardStudy {
-      display: initial;
-      position: absolute;
-      top: 0;
-      right: 0;
-      background-color: $red;
-    }
+  .study:hover .deleteStudy {
+    display: initial;
   }
 
   .btn.addStudy {

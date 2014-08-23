@@ -284,7 +284,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
         <button type="button" className="btn discardStudy" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
       ];
     } else if (!options.new) {
-      var saveButtons = <button type="button" className="btn discardStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
+      var saveButtons = <button type="button" className="btn deleteStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
     }
   }
 
