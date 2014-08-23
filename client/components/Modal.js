@@ -44,7 +44,7 @@ Modal.controller = function(options) {
       ElementClass(document.body).add("modal_open");
 
       context.onunload = function() {
-        if (!_.any(Modal.instances, function(modal) { return modal.open(); })) {
+        if (!_.any(Modal.instances, function(modal) { return modal.open() && modal.el !== el; })) {
           ElementClass(document.body).remove("modal_open");
         }
       };
