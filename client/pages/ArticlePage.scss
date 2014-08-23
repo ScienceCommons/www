@@ -17,6 +17,10 @@
     background: none;
     border: 1px solid $gray;
     font-size: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 
   .journal, .doi, .tags, .peerReview {
