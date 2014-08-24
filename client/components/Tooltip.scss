@@ -9,6 +9,7 @@ $tooltip_arrow_width: 5px;
   z-index: 100;
   opacity: 1;
   transition: opacity 300ms ease;
+  background-color: white;
 
   &.closing {
     opacity: 0;
