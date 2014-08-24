@@ -13,6 +13,7 @@ var Spinner = require("../components/Spinner.js");
 var PillList = require("../components/PillList.js");
 var StudiesTable = require("../components/StudiesTable.js");
 var CommentBox = require("../components/CommentBox.js");
+var Tooltip = require("../components/Tooltip.js");
 
 var ArticleModel = require("../models/ArticleModel.js");
 var AuthorModel = require("../models/AuthorModel.js");
@@ -98,7 +99,14 @@ ArticlePage.view = function(ctrl) {
     });
 
     var tags = new PillList.view(ctrl.controllers.tagsList);
-    var authors = new PillList.view(ctrl.controllers.authorsList);
+    var authors = new PillList.view(ctrl.controllers.authorsList, {
+      pillAttrs: {
+        "config": Tooltip.config
+      },
+      perPillAttrs: {
+        "data-tooltip-title": function(pill) { return pill.label; }
+      }
+    });
 
     if (ctrl.user.canEdit()) {
       var editButtons;
