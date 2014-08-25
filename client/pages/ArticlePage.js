@@ -99,14 +99,7 @@ ArticlePage.view = function(ctrl) {
     });
 
     var tags = new PillList.view(ctrl.controllers.tagsList);
-    var authors = new PillList.view(ctrl.controllers.authorsList, {
-      pillAttrs: {
-        "config": Tooltip.config
-      },
-      perPillAttrs: {
-        "data-tooltip-title": function(pill) { return pill.label; }
-      }
-    });
+    var authors = new PillList.view(ctrl.controllers.authorsList, { pillView: authorPillView });
 
     if (ctrl.user.canEdit()) {
       var editButtons;
@@ -209,5 +202,14 @@ function toggleBookmark(article, user) {
     return user.toggleArticleBookmark(article);
   };
 };
+
+function authorPillView(pill, options) {
+  options = options || {};
+
+  if (options.onRemoveClick) {
+    var removeIcon = <span className="icon icon_removed" onclick={options.onRemoveClick(pill)}></span>
+  }
+  return <li className="pill" config={Tooltip.config} data-tooltip-title={pill.label}>{pill.label} {removeIcon}</li>
+}
 
 module.exports = ArticlePage;

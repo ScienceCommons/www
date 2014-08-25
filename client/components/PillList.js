@@ -115,7 +115,7 @@ PillList.view = function(ctrl, options) {
   if (ctrl.editable()) {
     if (ctrl.editing()) {
       pills = _.map(ctrl.pills(), function(pill) {
-        return PillList.pillView(pill, {onRemoveClick: ctrl.onRemoveClick, attrs: options.pillAttrs, perPillAttrs:options.perPillAttrs});
+        return (options.pillView || PillList.pillView)(pill, {onRemoveClick: ctrl.onRemoveClick});
       });
       return (
         <ul className="PillList editing" onclick={ctrl.handleDivClick}>
@@ -125,7 +125,7 @@ PillList.view = function(ctrl, options) {
       );
     } else {
       pills = _.map(ctrl.pills(), function(pill) {
-        return PillList.pillView(pill, {onRemoveClick: ctrl.onRemoveClick, attrs: options.pillAttrs, perPillAttrs: options.perPillAttrs});
+        return (options.pillView || PillList.pillView)(pill, {onRemoveClick: ctrl.onRemoveClick});
       });
       return (
         <ul className="PillList">
@@ -136,7 +136,7 @@ PillList.view = function(ctrl, options) {
     }
   } else {
     pills = _.map(ctrl.pills(), function(pill) {
-      return PillList.pillView(pill, {attrs: options.pillAttrs, perPillAttrs: options.perPillAttrs});
+      return (options.pillView || PillList.pillView)(pill);
     });
     return (
       <ul className="PillList">
@@ -148,18 +148,11 @@ PillList.view = function(ctrl, options) {
 
 PillList.pillView = function(pill, options) {
   options = options || {};
-  var computed = {};
 
   if (options.onRemoveClick) {
     var removeIcon = <span className="icon icon_removed" onclick={options.onRemoveClick(pill)}></span>
   }
-  if (options.perPillAttrs) {
-    var computed = _.reduce(options.perPillAttrs, function(hash, fn, attr) {
-      hash[attr] = fn(pill);
-      return hash;
-    }, {});
-  }
-  return m("li", _.extend({}, options.attrs, computed, {className: "pill"}), [pill.label, removeIcon]);
+  return <li className="pill">{pill.label} {removeIcon}</li>
 };
 
 module.exports = PillList;
