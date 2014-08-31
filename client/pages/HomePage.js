@@ -24,23 +24,10 @@ HomePage.controller = function(options) {
   }, options));
   this.controllers.search= new Search.controller({});
 
-  this.mostCuratedArticles = [
-    new ArticleModel({
-      title: "Feeling the future: Experimental evidence for anomalous retroactive influences on congnition and affect",
-      authors_denormalized: [{lastName: "Bern"}],
-      publication_date: "2011-6-1"
-    }, {silent: true}),
-    new ArticleModel({
-      title: "Automaticity of social behavior: Direct effects of trait construct and stereotype activiation on action",
-      authors_denormalized: [{lastName: "Bargh"}, {lastName: "Chen"}, {lastName: "Burrows"}],
-      publication_date: "1996-6-1"
-    }, {silent: true}),
-    new ArticleModel({
-      title: "Coherent arbitrariness: Stable demand curves without stable preference",
-      authors_denormalized: [{lastName: "Airely"}],
-      publication_date: "2003-6-1"
-    }, {silent: true})
-  ];
+  this.recentlyAddedArticles = new ArticleCollection([], {
+    url: "https://curatescience.org/articles/recently_added"
+  });
+  this.recentlyAddedArticles.fetch();
   this.recentlyCuratedArticles = new ArticleCollection([], {
     url: "https://curatescience.org/articles/recent"
   });
@@ -63,7 +50,7 @@ HomePage.articleView = function(article) {
 };
 
 HomePage.view = function(ctrl) {
-  var mostCuratedArticlesContent = _.map(ctrl.mostCuratedArticles, HomePage.articleView);
+  var recentlyAddedArticlesContent = ctrl.recentlyAddedArticles.map(HomePage.articleView);
 
   var recentlyUpdatedArticlesContent;
   if (ctrl.recentlyCuratedArticles.loading) {
@@ -80,8 +67,8 @@ HomePage.view = function(ctrl) {
 
       <div className="section">
         <div className="col span_1_of_2 articles">
-          <h2>Most Curated</h2>
-          {mostCuratedArticlesContent}
+          <h2>Recently Added</h2>
+          {recentlyAddedArticlesContent}
         </div>
         <div className="col span_1_of_2 articles">
           <h2>Recently Updated</h2>
