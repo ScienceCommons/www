@@ -50,7 +50,12 @@ HomePage.articleView = function(article) {
 };
 
 HomePage.view = function(ctrl) {
-  var recentlyAddedArticlesContent = ctrl.recentlyAddedArticles.map(HomePage.articleView);
+  var recentlyAddedArticlesContent;
+  if (ctrl.recentlyAddedArticles.loading) {
+    recentlyAddedArticlesContent = Spinner.view();
+  } else {
+    recentlyAddedArticlesContent = ctrl.recentlyAddedArticles.map(HomePage.articleView);
+  }
 
   var recentlyUpdatedArticlesContent;
   if (ctrl.recentlyCuratedArticles.loading) {
