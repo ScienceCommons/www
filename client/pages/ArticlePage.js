@@ -13,7 +13,7 @@ var Spinner = require("../components/Spinner.js");
 var PillList = require("../components/PillList.js");
 var StudiesTable = require("../components/StudiesTable.js");
 var CommentBox = require("../components/CommentBox.js");
-var Tooltip = require("../components/Tooltip.js");
+var Popover = require("../components/Popover.js");
 
 var ArticleModel = require("../models/ArticleModel.js");
 var AuthorModel = require("../models/AuthorModel.js");
@@ -209,7 +209,7 @@ function authorPillView(pill, options) {
   if (options.onRemoveClick) {
     var removeIcon = <span className="icon icon_removed" onclick={options.onRemoveClick(pill)}></span>
   }
-  return <li className="pill" config={Tooltip.config} data-tooltip-title={pill.label}>{pill.label} {removeIcon}</li>
+  return <li className="pill" config={Popover.configForView({title: pill.label, content: Spinner.view()})}>{pill.label} {removeIcon}</li>
 }
 
 module.exports = ArticlePage;
