@@ -12,11 +12,13 @@ var AuthorModel = CurateBaseModel.extend({
     last_name: "",
     middle_name: ""
   },
+  computeds: {
+    fullName: function() {
+      return _.compact([this.get("first_name"), this.get("middle_name"), this.get("last_name")]).join(" ");
+    }
+  },
   pill: function() {
-    return {
-      label: _.compact([this.get("first_name"), this.get("middle_name"), this.get("last_name")]).join(" "),
-      value: this
-    };
+    return { label: this.get("fullName"), value: this };
   }
 });
 
