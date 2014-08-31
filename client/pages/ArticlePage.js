@@ -78,7 +78,7 @@ ArticlePage.controller = function(options) {
     return function(val) {
       var reviewers = _this.article.get("reviewers");
       reviewers[num] = val;
-      _this.article.set("reviewers", reviewers);
+      _this.article.set("reviewers", _.compact(reviewers));
     };
   };
 };
