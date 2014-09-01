@@ -73,7 +73,7 @@ var UserModel = CurateBaseModel.extend({
     return req;
   },
   logout: function() {
-    return this.sync("read", {}, {url: "https://www.curatescience.org/users/sign_out.json"});
+    return this.sync("read", {}, {url: "https://www.curatescience.org/log_out"});
   }
 });
 
