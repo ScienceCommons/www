@@ -576,7 +576,7 @@ var extend = function(protoProps, staticProps) {
   // Add prototype properties (instance properties) to the subclass,
   // if supplied.
   if (protoProps) {
-    if (_.isFunction(protoProps.relations)) {
+    if (_.isArray(protoProps.relations)) {
       _.extend(child.prototype, _.omit(protoProps, "relations"));
     } else {
       _.extend(child.prototype, protoProps);
