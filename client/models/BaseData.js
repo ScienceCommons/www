@@ -11,6 +11,9 @@ var m = require("mithril");
 
 ////////////// MODEL ////////////////
 
+var loaded = {};
+var waitingForDependency = [];
+
 var BaseData = {
   redraw: _.throttle(m.redraw, 16, {leading: false})
 };
@@ -572,12 +575,37 @@ var extend = function(protoProps, staticProps) {
 
   // Add prototype properties (instance properties) to the subclass,
   // if supplied.
-  if (protoProps) _.extend(child.prototype, protoProps);
+  if (protoProps) {
+    if (_.isFunction(protoProps.relations)) {
+      _.extend(child.prototype, _.omit(protoProps, "relations"));
+    } else {
+      _.extend(child.prototype, protoProps);
+    }
+  }
 
   // Set a convenience property in case the parent's prototype is needed
   // later.
   child.__super__ = parent.prototype;
   child.prototype.initCache(child);
+
+  if (protoProps.name) {
+    loaded[protoProps.name] = true;
+    if (_.isArray(protoProps.relations)) {
+      if (_.all(_.first(protoProps.relations, protoProps.relations.length-1), function(dependency) { return loaded[dependency]; })) {
+        _.extend(child.prototype, {relations: _.last(protoProps.relations)()});
+      } else {
+        waitingForDependency.push(protoProps.relations.concat([child]));
+      }
+    }
+    var finished = [];
+    _.each(waitingForDependency, function(waitingModel) {
+      if (_.all(_.first(waitingModel, waitingModel.length-2), function(dependency) { return loaded[dependency]; })) {
+        _.extend(_.last(waitingModel).prototype, {relations: waitingModel[waitingModel.length-2]()});
+        finished.push(waitingModel);
+      }
+    });
+    waitingForDependency = _.without(waitingForDependency, finished);
+  }
 
   return child;
 };
