@@ -20,7 +20,10 @@ LoginPage.view = function(ctrl) {
   var content = (
     <div>
       <a href="/auth/google_oauth2">
-        <div class="Y3d isa Ndb" title="Sign in with Google" role="button" tabindex="0"><div class="Ega"></div><div class="tLb">Sign in</div></div>
+        <div className="Y3d isa Ndb" title="Sign in with Google" role="button" tabindex="0">
+          <div className="Ega"></div>
+          <div className="tLb">Sign in</div>
+        </div>
       </a>
     </div>
   );
