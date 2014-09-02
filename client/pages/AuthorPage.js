@@ -18,6 +18,22 @@ AuthorPage.controller = function(options) {
   this.controllers.layout = new Layout.controller(options);
   this.loading = m.prop(true);
   this.author = new AuthorModel();
+  this.author.set("articles", [
+    {
+      title: "Feeling the future: Experimental evidence for anomalous retroactive influences on congnition and affect",
+      authors_denormalized: [{lastName: "Bern"}],
+      publication_date: "2011-6-1"
+    }, {
+      title: "Automaticity of social behavior: Direct effects of trait construct and stereotype activiation on action",
+      authors_denormalized: [{lastName: "Bargh"}, {lastName: "Chen"}, {lastName: "Burrows"}],
+      publication_date: "1996-6-1"
+    },
+    {
+      title: "Coherent arbitrariness: Stable demand curves without stable preference",
+      authors_denormalized: [{lastName: "Airely"}],
+      publication_date: "2003-6-1"
+    }
+  ]);
   window.author = this.author;
 };
 

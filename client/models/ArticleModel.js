@@ -5,18 +5,11 @@ var CurateBaseModel = require("./CurateBaseModel.js");
 
 var ArticleModel = CurateBaseModel.extend({
   name: "Article",
-  relations: ["Author", "AuthorCollection", function() {
-    return {
-      "authors_denormalized": {type: "many", collection: require("../collections/AuthorCollection.js")},
-      "comments": {type: "many", collection: require("../collections/CommentCollection.js"), urlAction: "comments"},
-      "studies": {type: "many", model: require("./StudyModel.js"), urlAction: "studies"}
-    };
-  }],
-  //relations: {
-  //  "authors_denormalized": {type: "many", collection: require("../collections/AuthorCollection.js")},
-  //  "comments": {type: "many", collection: require("../collections/CommentCollection.js"), urlAction: "comments"},
-  //  "studies": {type: "many", model: require("./StudyModel.js"), urlAction: "studies"}
-  //},
+  relations: {
+    "authors_denormalized": {type: "many", collection: require("../collections/AuthorCollection.js")},
+    "comments": {type: "many", collection: require("../collections/CommentCollection.js"), urlAction: "comments"},
+    "studies": {type: "many", model: require("./StudyModel.js"), urlAction: "studies"}
+  },
   defaults: {
     "title": "",
     "abstract": "",
