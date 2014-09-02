@@ -45,6 +45,10 @@ App.showPage = function(pageName) {
     } else if (pageName === "Admin" && !App.user.get("admin")) {
       this.currentPage = App.pages["NotFound"];
       this.controllers.page = new this.currentPage.controller({user: App.user});
+    } else if (App.user && pageName === "Login") {
+      this.currentPage = App.pages["Home"];
+      this.controllers.page = new this.currentPage.controller({user: App.user});
+      m.route("/");
     } else {
       this.currentPage = App.pages[pageName];
       this.controllers.page = new this.currentPage.controller({user: App.user});
