@@ -8,6 +8,7 @@ var CommentModel = require("./CommentModel.js");
 var FileModel = require("./FileModel.js");
 
 var StudyModel = CurateBaseModel.extend({
+  name: "Study",
   relations: {
     //authors: {type: "many", model: require("./UserModel.js")},
     //comments: {type: "many", model: CommentModel},

@@ -6,6 +6,7 @@ var m = require("mithril");
 var CurateBaseCollection = require("./CurateBaseCollection.js");
 
 var UserCollection = CurateBaseCollection.extend({
+  name: "UserCollection",
   model: require("../models/UserModel.js"),
   initialize: function() {
     this.total = 0;

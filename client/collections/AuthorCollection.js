@@ -5,6 +5,7 @@ var m = require("mithril");
 var CurateBaseCollection = require("./CurateBaseCollection.js");
 
 var AuthorCollection = CurateBaseCollection.extend({
+  name: "AuthorCollection",
   model: require("../models/AuthorModel.js"),
   authorLastNames: function() {
     var lastNames = this.authorLastNamesList();

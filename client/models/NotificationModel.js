@@ -4,7 +4,9 @@
 
 var CurateBaseModel = require("./CurateBaseModel.js");
 
-var NotificationModel = CurateBaseModel.extend({});
+var NotificationModel = CurateBaseModel.extend({
+  name: "Notification"
+});
 
 
 module.exports = NotificationModel;

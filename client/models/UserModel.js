@@ -9,6 +9,7 @@ var CurateBaseModel = require("./CurateBaseModel.js");
 var CommentModel = require("./CommentModel.js");
 
 var UserModel = CurateBaseModel.extend({
+  name: "User",
   relations: {
     "articles": {type: "many", model: require("./ArticleModel.js")},
     "comments": {type: "many", model: CommentModel},

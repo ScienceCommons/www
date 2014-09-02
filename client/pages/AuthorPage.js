@@ -25,7 +25,7 @@ AuthorPage.view = function(ctrl) {
   var author = ctrl.author;
   var articles = author.get("articles");
   if (articles.length > 0) {
-    var articlesList = _.map(articles, AuthorPage.articleView);
+    var articlesList = articles.map(AuthorPage.articleView);
     var articlesContent = (
       <div>
         <h3>{articles.length} Article{articles.length > 1 ? "s" : ""}</h3>
@@ -48,7 +48,7 @@ AuthorPage.view = function(ctrl) {
 };
 
 AuthorPage.articleView = function(article) {
-  return <h5>{article.title}</h5>;
+  return <h5>{article.get("title")}</h5>;
 };
 
 module.exports = AuthorPage;

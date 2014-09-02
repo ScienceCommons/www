@@ -4,6 +4,7 @@ var _ = require("underscore");
 var CurateBaseCollection = require("./CurateBaseCollection.js");
 
 var ArticleCollection = CurateBaseCollection.extend({
+  name: "ArticleCollection",
   model: require("../models/ArticleModel.js"),
   initialize: function() {
     this.total = 0;

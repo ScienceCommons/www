@@ -7,9 +7,12 @@ var _ = require("underscore");
 var CurateBaseModel = require("./CurateBaseModel.js");
 
 var AuthorModel = CurateBaseModel.extend({
-  //relations: {
-  //  "articles": {type: "many", model: require("./ArticleModel.js"), urlAction: "articles"}
-  //},
+  name: "Author",
+  relations: ["Article", function() {
+    return {
+      "articles": {type: "many", model: require("./ArticleModel.js"), urlAction: "articles"}
+    };
+  }],
   defaults: {
     first_name: "John",
     last_name: "Smith",
