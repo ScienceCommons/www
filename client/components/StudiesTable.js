@@ -640,11 +640,13 @@ StudiesTable.modalEditors.authors.view = _.partial(arrayFieldEditView, "authors"
 StudiesTable.modalEditors.authors.onsubmit = _.partial(arrayFieldSubmit, "authors");
 
 function arrayFieldCellView(field, ctrl, study) {
-  var items = _.map(study.get(field), function(variable) {
-    return <li>{variable}</li>;
-  });
+  if (field !== "authors" || ctrl.article.get("id") !== study.get("article_id")) {
+    var items = _.map(study.get(field), function(variable) {
+      return <li>{variable}</li>;
+    });
 
-  return <ul>{items}</ul>;
+    return <ul>{items}</ul>;
+  }
 };
 
 function arrayFieldEditView(field, ctrl, study) {
