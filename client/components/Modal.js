@@ -5,7 +5,6 @@ require("./Modal.scss");
 
 var _ = require("underscore");
 var m = require("mithril");
-var ElementClass = require("element-class");
 var cx = require("../utils/ClassSet.js");
 
 var ScrollIntoView = require("../utils/ScrollIntoView.js");
@@ -41,11 +40,11 @@ Modal.controller = function(options) {
 
     if (!isInitialized) {
       ScrollIntoView(el);
-      ElementClass(document.body).add("modal_open");
+      document.body.classList.add("modal_open");
 
       context.onunload = function() {
         if (!_.any(Modal.instances, function(modal) { return modal.open() && modal.el !== el; })) {
-          ElementClass(document.body).remove("modal_open");
+          document.body.classList.remove("modal_open");
         }
       };
     }
