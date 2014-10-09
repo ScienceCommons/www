@@ -98,15 +98,8 @@ module.exports = Modal;
 // helpers
 
 function closeModalsOnMousedown(e) {
-  var node = e.target;
-  var parentNodes = [node];
-  while (node.parentNode) {
-    node = node.parentNode;
-    parentNodes.push(node);
-  }
-
   _.each(Modal.instances, function(modal) {
-    if (modal.open() && !_.contains(parentNodes, modal.el)) {
+    if (modal.open() && !modal.el.contains(e.target)) {
       modal.close();
     }
   });

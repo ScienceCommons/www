@@ -70,15 +70,8 @@ module.exports = Dropdown;
 // helpers
 
 function closeDropdownsOnMousedown(e) {
-  var node = e.target;
-  var parentNodes = [node];
-  while (node.parentNode) {
-    node = node.parentNode;
-    parentNodes.push(node);
-  }
-
   _.each(Dropdown.instances, function(dropdown) {
-    if (dropdown.open() && !_.contains(parentNodes, dropdown.buttonEl) && !_.contains(parentNodes, dropdown.contentEl)) {
+    if (dropdown.open() && !dropdown.buttonEl.contains(e.target) && !dropdown.contentEl.contains(e.target)) {
       dropdown.close();
     }
   });

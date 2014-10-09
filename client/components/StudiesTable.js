@@ -689,15 +689,8 @@ module.exports = StudiesTable;
 //helpers
 
 function closeActiveOnMousedown(e) {
-  var node = e.target;
-  var parentNodes = [node];
-  while (node.parentNode) {
-    node = node.parentNode;
-    parentNodes.push(node);
-  }
-
   _.each(StudiesTable.instances, function(instance) {
-    if (!_.contains(parentNodes, instance.studiesEl)) {
+    if (!instance.studiesEl.contains(e.target)) {
       instance.active({});
     }
   });
