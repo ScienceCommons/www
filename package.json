@@ -9,8 +9,7 @@
         "mithril": "0.1.21",
         "underscore": "1.6.0",
         "vague-time": "1.0.1",
-        "fastclick": "1.0.3",
-        "element-class": "0.1.1"
+        "fastclick": "1.0.3"
     },
     "devDependencies": {
         "grunt": "0.4.5",
