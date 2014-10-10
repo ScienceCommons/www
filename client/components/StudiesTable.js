@@ -690,7 +690,7 @@ module.exports = StudiesTable;
 
 function closeActiveOnMousedown(e) {
   _.each(StudiesTable.instances, function(instance) {
-    if (!instance.studiesEl.contains(e.target)) {
+    if (instance.studiesEl && !instance.studiesEl.contains(e.target)) {
       instance.active({});
     }
   });
