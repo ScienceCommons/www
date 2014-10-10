@@ -23,9 +23,10 @@ InvitePage.controller = function(options) {
     e.preventDefault();
     _this.newInvite.save().then(function() {
       _this.saving(false);
-      if (_this.newInvite.get("id")) {
+      if (_this.newInvite.get("inviter_id")) {
         _this.newInvite = new InviteModel();
       }
+      m.redraw();
     });
     _this.saving(true);
   };
@@ -45,7 +46,7 @@ InvitePage.view = function(ctrl) {
       <div>
         <input type="text" placeholder="Email" value={ctrl.newInvite.get("email")} oninput={m.withAttr("value", ctrl.newInvite.setter("email"))}/>
       </div>
-      <button className="btn invite" type="submit" disabled={ctrl.saving()}>Invite</button>
+      <button className="btn invite" type="submit" disabled={ctrl.saving()}>{ctrl.saving() ? "Inviting...": "Invite"}</button>
     </form>;
   } else {
     var no_invites_message = <p>Please wait to get more invites.</p>;
