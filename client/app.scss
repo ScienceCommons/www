@@ -119,6 +119,10 @@ h6, .h6 {
     background: $dark;
     color: white;
   }
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .btn_group {
