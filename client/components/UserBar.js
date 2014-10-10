@@ -28,18 +28,25 @@ UserBar.view = function(ctrl) {
     return <ul className="UserBar"/>;
   }
 
-  if (user.canEdit()) {
-    var extras = [
-      <li className="separator"></li>,
-      routeLi("/articles/new", "Add an article")
-    ];
+  var extras = [];
+  if (user.canInvite()) {
+    extras.push(routeLi("/invite", "Invite a friend"));
+  }
 
-    if (user.get("admin")) {
-      extras = extras.concat([
-        <li className="separator"></li>,
-        routeLi("/admin", "Admin")
-      ]);
-    }
+  if (user.canEdit()) {
+    extras.push(routeLi("/articles/new", "Add an article"));
+  }
+
+  var adminExtras = []
+  if (user.get("admin")) {
+    adminExtras.push(routeLi("/admin", "Admin"));
+  }
+
+  if (extras.length > 0) {
+    extras.unshift(<li className="separator"></li>);
+  }
+  if (adminExtras.length > 0) {
+    adminExtras.unshift(<li className="separator"></li>);
   }
 
   var dropdownContent = (
@@ -48,6 +55,7 @@ UserBar.view = function(ctrl) {
       {routeLi("/bookmarks", "Bookmarks")}
       {routeLi("/logout", "Log out")}
       {extras}
+      {adminExtras}
     </ul>
   );
 
