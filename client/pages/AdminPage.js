@@ -25,36 +25,12 @@ AdminPage.controller = function(options) {
   this.betaMailList = new UserCollection([]);
   this.betaMailList.fetchBetaMailList();
   this.users = new UserCollection([]);
-
   this.query = m.prop("");
-  this.newUserName = m.prop("");
-  this.newUserEmail = m.prop("");
-  this.addingUser = m.prop(false);
-  this.addingUserError = m.prop(null);
-  this.newUser = new User({});
 
   var _this = this;
   this.findUser = function(e) {
     e.preventDefault();
     _this.users.search({query: _this.query()});
-  };
-
-  this.addUser = function(e) {
-    e.preventDefault();
-    if (_this.addingUser()) {
-      return;
-    }
-    _this.addingUser(true);
-    _this.addingUserError(null);
-    _this.newUser.save({data: {user: _this.newUser.toJSON()}}).then(function() {
-      _this.addingUser(false);
-      _this.newUser = new User({});
-      m.redraw();
-    }, function(err) {
-      _this.addingUser(false);
-      _this.addingUserError(err.error);
-      m.redraw();
-    });
   };
 
   this.inviteBetaUser = function(user) {
@@ -109,14 +85,6 @@ AdminPage.view = function(ctrl) {
       <div className="results">
         {searchResults}
       </div>
-
-      <h3>Add a user</h3>
-      <form onsubmit={ctrl.addUser}>
-        {ctrl.addingUserError()}
-        <input type="text" placeholder="Name" value={ctrl.newUser.get("name")} oninput={m.withAttr("value", ctrl.newUser.setter("name"))}/>
-        <input type="email" placeholder="Email" value={ctrl.newUser.get("email")} oninput={m.withAttr("value", ctrl.newUser.setter("email"))}/>
-        <button type="submit" disabled={ctrl.addingUser()}>{ctrl.addingUser() ? "Adding..." : "Add"}</button>
-      </form>
 
       <h3>Beta mail list</h3>
       {betaTable}
