@@ -17,7 +17,7 @@ UserBar.controller = function(options) {
   if (this.user) {
     this.controllers.dropdown = new Dropdown.controller({
       className: "user",
-      label: <img src={this.user.get("gravatarUrl")} />
+      label: this.user.get("email")
     });
   }
 };
