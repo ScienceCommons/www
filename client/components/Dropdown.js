@@ -19,6 +19,7 @@ Dropdown.controller = function(options) {
   this.open = m.prop(false);
   this.className = options.className || "";
   this.label = options.label;
+  this.caret = _.isUndefined(options.caret) ? true : options.caret;
 
   var _this = this;
   this.toggle = function(e) {
@@ -52,10 +53,14 @@ Dropdown.view = function(ctrl, content, label) {
     var dropdownContent = <div className="dropdownContent" config={ctrl.contentConfig}>{content}</div>;
   }
 
+  if (ctrl.caret) {
+    var caret = <span className="icon icon_down_caret arrow"></span>;
+  }
+
   return (
     <div className={"Dropdown " + ctrl.className}>
       <button type="button" className="btn btn_subtle" onmousedown={ctrl.toggle} config={ctrl.buttonConfig}>
-        {label || ctrl.label}
+        {label || ctrl.label} {caret}
       </button>
       {dropdownContent}
     </div>
