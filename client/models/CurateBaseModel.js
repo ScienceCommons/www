@@ -2,6 +2,7 @@
 
 "use strict";
 
+var _ = require("underscore");
 var BaseModel = require("./BaseData.js").Model;
 
 var CurateBaseModel = BaseModel.extend({
@@ -11,7 +12,12 @@ var CurateBaseModel = BaseModel.extend({
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.withCredentials = true;
     };
-    return BaseModel.prototype.sync.call(this, method, model, options);
+    return BaseModel.prototype.sync.call(this, method, model, _.extend(options, {
+      unwrapError: function(response) {
+        model.resetErrors();
+        model.addError(undefined, response.error);
+      }
+    }));
   }
 });
 
