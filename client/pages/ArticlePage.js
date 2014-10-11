@@ -35,6 +35,7 @@ ArticlePage.controller = function(options) {
     this.article.get("comments").fetch();
     this.editing = m.prop(false);
   }
+  this.saving = m.prop(false);
   window.article = this.article;
 
   options = _.extend({id: "ArticlePage"}, options);
@@ -58,7 +59,16 @@ ArticlePage.controller = function(options) {
   };
 
   this.saveClick = function() {
+    _this.saving(true);
     var res = _this.article.save();
+    res.then(function() {
+      _this.saving(false);
+    }, function() {
+      _this.saving(false);
+      if (!_this.article.hasErrors()) {
+        _this.editing(false);
+      }
+    });
     if (_this.article.isNew()) {
       res.then(function() {
         if (!_this.article.isNew()) {
@@ -66,12 +76,16 @@ ArticlePage.controller = function(options) {
         }
       });
     }
-    _this.editing(false);
   };
 
   this.discardClick = function() {
-    _this.article.set(_this.article._serverState);
-    _this.editing(false);
+    if (_this.article.isNew()) {
+      m.route("/articles/new");
+    } else {
+      _this.article.set(_this.article._serverState);
+      _this.editing(false);
+      _this.saving(false);
+    }
   };
 
   this.updateReviewerNum = function(num) {
@@ -105,8 +119,8 @@ ArticlePage.view = function(ctrl) {
       var editButtons;
       if (ctrl.editing()) {
         editButtons = [
-          <button type="button" className="btn" key="save" onclick={ctrl.saveClick}>Save</button>,
-          <button type="button" className="btn" key="discard" onclick={ctrl.discardClick}>Discard</button>,
+          <button type="button" className="btn" key="save" onclick={ctrl.saveClick} disabled={ctrl.saving()}>{ctrl.saving() ? "Saving..." : "Save"}</button>,
+          <button type="button" className="btn" key="discard" onclick={ctrl.discardClick} disabled={ctrl.saving()}>Discard</button>,
         ];
       } else {
         editButtons = <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>;
@@ -126,8 +140,19 @@ ArticlePage.view = function(ctrl) {
       commentsList = new CommentBox.view(ctrl.controllers.commentBox);
     }
 
+    if (article.hasErrors()) {
+      var errors = _.map(article.errors(), function(error) {
+        return <li>{error}</li>;
+      });
+
+      var errorMessage = <ul class="errors">
+        {errors}
+      </ul>;
+    }
+
     content = (
       <div>
+        {errorMessage}
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("title"))}>{article.get("title")}</h2>
