@@ -32,7 +32,7 @@ var StudyModel = CurateBaseModel.extend({
       {comment: "Foo"},
       {comment: "This is a test"},
     ],
-    "badges": ["data", "materials"],
+    "badges": [],
     "files": [
       {type: "data", name: "Google.docx", url: "google.com"},
       {type: "data", name: "Yahoo.docx", url: "yahoo.com"},
