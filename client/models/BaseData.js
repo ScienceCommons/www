@@ -64,6 +64,12 @@ BaseData.Model.prototype.addError = function(attr, message) {
   } else {
     delete this._errors[attr];
   }
+  this.redraw();
+};
+
+BaseData.Model.prototype.resetErrors = function() {
+  this._errors = {};
+  this.redraw();
 };
 
 BaseData.Model.prototype.errors = function(attr) {
@@ -613,4 +619,3 @@ var extend = function(protoProps, staticProps) {
 BaseData.Model.extend = BaseData.Collection.extend = extend;
 
 module.exports = BaseData;
-
