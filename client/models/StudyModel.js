@@ -19,7 +19,7 @@ var StudyModel = CurateBaseModel.extend({
     n_comments: {type: "many", model: CommentModel},
     power_comments: {type: "many", model: CommentModel},
     effect_size_comments: {type: "many", model: CommentModel},
-    replications: {type: "many", urlAction: "replications"} // model is defined below
+    replications: {type: "many", model: require("./ReplicationModel.js"), urlAction: "replications"} // model is defined below
   },
   defaults: {
     "authors": ["Zhong", "Wang"],
@@ -80,6 +80,20 @@ var StudyModel = CurateBaseModel.extend({
   getComments: function(field) {
     return this.get(field+"_comments");
   },
+  addReplication: function(replicationStudy) {
+    if (this.get("article_id") !== replicationStudy.get("article_id")) {
+      this.get("replications").add({
+        article_id: this.get("article_id"),
+        replicating_study_id: replicationStudy.get("id"),
+        study_id: this.get("id"),
+        replicating_study: replicationStudy
+      }, {sync: true});
+    }
+  },
+  removeReplication: function(replicationStudy) {
+    var existing = this.get("replications").find(function(replication) { return replication.get("replicating_study_id") === replicationStudy.get("id"); });
+    this.get("replications").remove(existing, {sync: true});
+  },
   hasBadge: function(name) {
     if (this.get("files").length > 0) {
       return this.get("files").any(function(file) { return file.get("type") === name; });
@@ -107,7 +121,5 @@ var StudyModel = CurateBaseModel.extend({
     });
   }
 });
-
-StudyModel.prototype.relations.replications.model = StudyModel; // had to do this because of self reference
 
 module.exports = StudyModel;

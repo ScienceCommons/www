@@ -190,15 +190,17 @@ StudiesTable.controller = function(opts) {
     if (study) {
       if (study.get("article_id") === replicationStudy.get("article_id")) {
         alert("You are picking another study in this article to be a replication.  That is not allowed.");
-      } else if (study.get("replications").get(replicationStudy.get("id"))) {
-        study.get("replications").remove(replicationStudy, {sync: true});
       } else {
-        study.get("replications").add(replicationStudy, {sync: true});
-        //_this.controllers.studyFinderModal.open(false);
-        var expanded = _this.expanded();
-        var id = study.get("id");
-        expanded[id] = true;
-        _this.expanded(expanded);
+        if (study.get("replications").find(function(replication) { return replication.get("replicating_study_id") === replicationStudy.get("id"); })) {
+          study.removeReplication(replicationStudy);
+        } else {
+          study.addReplication(replicationStudy);
+          //_this.controllers.studyFinderModal.open(false);
+          var expanded = _this.expanded();
+          var id = study.get("id");
+          expanded[id] = true;
+          _this.expanded(expanded);
+        }
       }
     }
   };
@@ -227,8 +229,11 @@ StudiesTable.view = function(ctrl) {
     var studies = ctrl.article.get("studies").map(function(study) {
       if (ctrl.expanded()[study.get("id")]) {
         var replications = study.get("replications").map(function(replication) {
-          return StudiesTable.studyView(ctrl, replication, {replication: true});
+          return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true});
         });
+        if (replications.length === 0) {
+          ctrl.expanded({});
+        }
       }
       return [StudiesTable.studyView(ctrl, study), replications];
     });
