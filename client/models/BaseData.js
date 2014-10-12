@@ -142,17 +142,25 @@ BaseData.Model.prototype.set = function(attr, val, options) {
       }
 
       if (relation.type === "many") {
-        if (this.associations[attr]) {
-          this.associations[attr].reset(val, {silent: true}); // its a Collection
+        if (val instanceof BaseData.Collection) {
+          this.associations[attr] = val;
         } else {
-          var Collection = relationCollection(relation);
-          this.associations[attr] = new Collection(val, {silent: true, inverseOf: inverseOf});
+          if (this.associations[attr]) {
+            this.associations[attr].reset(val, {silent: true}); // its a Collection
+          } else {
+            var Collection = relationCollection(relation);
+            this.associations[attr] = new Collection(val, {baseUrl: _.bind(this.url, this), urlAction: relation.urlAction, silent: true, inverseOf: inverseOf});
+          }
         }
       } else {
-        if (this.associations[attr]) {
-          this.associations[attr].set(val, {silent: true});
+        if (val instanceof BaseData.Model) {
+          this.associations[attr] = val;
         } else {
-          this.associations[attr] = new (relation.model||BaseData.Model)(val, {silent: true, inverseOf: inverseOf});
+          if (this.associations[attr]) {
+            this.associations[attr].set(val, {silent: true});
+          } else {
+            this.associations[attr] = new (relation.model||BaseData.Model)(val, {silent: true, inverseOf: inverseOf});
+          }
         }
       }
     } else if (this.computeds[attr] && this.computeds[attr].set ) {
@@ -597,6 +605,7 @@ var extend = function(protoProps, staticProps) {
   if (protoProps.name) {
     loaded[protoProps.name] = true;
   }
+
   if (_.isArray(protoProps.relations)) {
     if (_.all(_.first(protoProps.relations, protoProps.relations.length-1), function(dependency) { return loaded[dependency]; })) {
       child.prototype.relations = _.last(protoProps.relations)();
