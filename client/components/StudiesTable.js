@@ -352,10 +352,10 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
   );
 };
 
-StudiesTable.studyModalView = function(ctrl, study, field) {
+StudiesTable.studyModalView = function(ctrl, study, field, options) {
   ctrl.controllers.studyCommentAndEditModal.open(true);
 
-  if (ctrl.active().editing) {
+  if (ctrl.active().editing && !options.replication) {
     var inputs;
     if (StudiesTable.modalEditors[field]) {
       inputs = StudiesTable.modalEditors[field].view(ctrl, study);
@@ -382,7 +382,7 @@ StudiesTable.studyModalView = function(ctrl, study, field) {
     });
 
     var editButton;
-    if (App.user.canEdit()) {
+    if (App.user.canEdit() && !options.replication) {
       if (field === "authors") {
         editButton = false;
       } else if (ctrl.article.get("id") === study.get("article_id")) {
@@ -430,11 +430,11 @@ var BadgeHeaders = {
   "disclosure": "Disclosure"
 };
 
-StudiesTable.cellViews.badges = function(ctrl, study) {
+StudiesTable.cellViews.badges = function(ctrl, study, options) {
   var active = ctrl.active();
   if (active.study_id === study.get("id") && active.field === "badges") {
     var activeBadge = active.badge;
-    var dropdown = BadgeDropdowns[activeBadge](ctrl, study);
+    var dropdown = BadgeDropdowns[activeBadge](ctrl, study, options);
   }
 
   var badges = _.map(["data", "materials", "registration", "disclosure"], function(badge) {
@@ -466,20 +466,20 @@ StudiesTable.cellViews.handleBadgeClick = function(ctrl, study, badge) {
 };
 
 var BadgeDropdowns = {};
-BadgeDropdowns.data = function(ctrl, study) {
-  return fileDropdown(ctrl, study, "data");
+BadgeDropdowns.data = function(ctrl, study, options) {
+  return fileDropdown(ctrl, study, "data", options);
 };
 
-BadgeDropdowns.materials = function(ctrl, study) {
-  return fileDropdown(ctrl, study, "materials");
+BadgeDropdowns.materials = function(ctrl, study, options) {
+  return fileDropdown(ctrl, study, "materials", options);
 };
 
-BadgeDropdowns.registration = function(ctrl, study) {
-  return fileDropdown(ctrl, study, "registration");
+BadgeDropdowns.registration = function(ctrl, study, options) {
+  return fileDropdown(ctrl, study, "registration", options);
 };
 
-BadgeDropdowns.disclosure = function(ctrl, study) {
-  return fileDropdown(ctrl, study, "disclosure");
+BadgeDropdowns.disclosure = function(ctrl, study, options) {
+  return fileDropdown(ctrl, study, "disclosure", options);
 };
 
 function removeFileFromStudy(study, file) {
@@ -498,7 +498,7 @@ function addFile(ctrl, study, type) {
   };
 };
 
-function fileDropdown(ctrl, study, type) {
+function fileDropdown(ctrl, study, type, options) {
   var files = study.filesByType(type);
   var active = ctrl.active();
   var body = <table className="files"><tbody><tr className="noFiles"><td>No files</td></tr></tbody></table>;
@@ -560,7 +560,7 @@ function fileDropdown(ctrl, study, type) {
     </tbody></table>;
   };
 
-  if (App.user.canEdit()) {
+  if (App.user.canEdit() && !options.replication) {
     var filesFooter = <footer>
       <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a file</button>
     </footer>;
