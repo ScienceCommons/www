@@ -85,9 +85,7 @@ $column_width: 300px;
   }
 
   .study.active {
-    .Modal, .badges.dropdown {
-      z-index: 2;
-    }
+    z-index: 2;
   }
 
   .study.replication + .study:not(.replication) .cellGroup {
