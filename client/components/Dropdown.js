@@ -76,7 +76,7 @@ module.exports = Dropdown;
 
 function closeDropdownsOnMousedown(e) {
   _.each(Dropdown.instances, function(dropdown) {
-    if (dropdown.open() && !dropdown.buttonEl.contains(e.target) && !dropdown.contentEl.contains(e.target)) {
+    if (dropdown.open() && dropdown.buttonEl && dropdown.contentEl && !dropdown.buttonEl.contains(e.target) && !dropdown.contentEl.contains(e.target)) {
       dropdown.close();
     }
   });

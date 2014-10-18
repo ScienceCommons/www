@@ -99,7 +99,7 @@ module.exports = Modal;
 
 function closeModalsOnMousedown(e) {
   _.each(Modal.instances, function(modal) {
-    if (modal.open() && !modal.el.contains(e.target)) {
+    if (modal.open() && modal.el && !modal.el.contains(e.target)) {
       modal.close();
     }
   });
