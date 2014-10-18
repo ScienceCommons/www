@@ -63,11 +63,14 @@ ArticlePage.controller = function(options) {
     var res = _this.article.save();
     res.then(function() {
       _this.saving(false);
+      _this.editing(false);
+      m.redraw();
     }, function() {
       _this.saving(false);
       if (!_this.article.hasErrors()) {
         _this.editing(false);
       }
+      m.redraw();
     });
     if (_this.article.isNew()) {
       res.then(function() {
@@ -127,10 +130,6 @@ ArticlePage.view = function(ctrl) {
       }
     }
 
-    if (!_.isEmpty(article.get("year"))) {
-      var year = "(" + article.get("year") + ")";
-    }
-
     var studiesTable, commentsList;
     if (article.isNew()) {
       studiesTable = <h5>You must save this new article before you can add studies.</h5>;
@@ -156,7 +155,7 @@ ArticlePage.view = function(ctrl) {
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("title"))}>{article.get("title")}</h2>
-            <div>{article.get("year")}</div>
+            <div contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("publication_date"))}>{article.get("publication_date")}</div>
             <div className="authors">{authors}</div>
 
             <h3>Abstract</h3>
