@@ -105,6 +105,9 @@ var StudyModel = CurateBaseModel.extend({
     var comments = this.getComments(field);
     return comments && comments.length > 0;
   },
+  commentable: function(field) {
+    return _.contains(["independent_variables", "dependent_variables", "n", "power", "effect_size"], field);
+  },
   hasPendingEdits: function(field) {
     return false;
   },

@@ -257,7 +257,7 @@ StudiesTable.view = function(ctrl) {
   if (ctrl.article.get("studies").length > 0 || ctrl.newStudy()) {
     var header = <header>
       <div className="cell replication_path">Replication path</div>
-      <div className="cell authors">Authors</div>
+      <div className="cell number">Number</div>
       <div className="cell badges"></div>
       <div className="cell independent_variables">Independent Variables</div>
       <div className="cell dependent_variables">Dependent Variables</div>
@@ -278,7 +278,7 @@ StudiesTable.view = function(ctrl) {
 
 StudiesTable.studyView = function(ctrl, study, options) {
   var options = options || {};
-  var cells = _.map(["authors", "badges", "independent_variables", "dependent_variables", "n", "power", "effect_size"], function(field) {
+  var cells = _.map(["number", "badges", "independent_variables", "dependent_variables", "n", "power", "effect_size"], function(field) {
     return StudiesTable.studyCellView(ctrl, study, field, options);
   });
 
@@ -374,18 +374,20 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
       wrapper: <form onsubmit={ctrl.handleEditSubmit(study, field)} />
     });
   } else {
-    ctrl.controllers.studyFieldCommentForm.comments = study.getComments(field);
-    var comments = study.getComments(field).map(function(comment) {
-      return (
-        <li>{comment.get("comment")}</li>
-      );
-    });
+    if (study.commentable(field)) {
+      ctrl.controllers.studyFieldCommentForm.comments = study.getComments(field);
+      var comments = study.getComments(field).map(function(comment) {
+        return (
+          <li>{comment.get("comment")}</li>
+        );
+      });
+      var modalContent = new CommentList.view({comments: study.getComments(field), user: ctrl.user});
+      var modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
+    }
 
     var editButton;
     if (App.user.canEdit() && !options.replication) {
-      if (field === "authors") {
-        editButton = false;
-      } else if (ctrl.article.get("id") === study.get("article_id")) {
+      if (ctrl.article.get("id") === study.get("article_id")) {
         editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
       }
     }
@@ -393,14 +395,14 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
     return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
       label: ModalLabels[field] || field,
       buttons: editButton || false,
-      content: new CommentList.view({comments: study.getComments(field), user: ctrl.user}),
-      footer: CommentForm.view(ctrl.controllers.studyFieldCommentForm)
+      content: modalContent,
+      footer: modalFooter
     });
   }
 };
 
 var ModalLabels = {
-  authors: "Authors",
+  number: "Number",
   independent_variables: "Independent Variables",
   dependent_variables: "Dependent Variables",
   n: "Sample Size",
@@ -639,13 +641,8 @@ StudiesTable.modalEditors.dependent_variables = {};
 StudiesTable.modalEditors.dependent_variables.view = _.partial(arrayFieldEditView, "dependent_variables");
 StudiesTable.modalEditors.dependent_variables.onsubmit = _.partial(arrayFieldSubmit, "dependent_variables");
 
-StudiesTable.cellViews.authors = _.partial(arrayFieldCellView, "authors");
-StudiesTable.modalEditors.authors = {};
-StudiesTable.modalEditors.authors.view = _.partial(arrayFieldEditView, "authors");
-StudiesTable.modalEditors.authors.onsubmit = _.partial(arrayFieldSubmit, "authors");
-
 function arrayFieldCellView(field, ctrl, study) {
-  if (field !== "authors" || ctrl.article.get("id") !== study.get("article_id")) {
+  if (field !== "number" || ctrl.article.get("id") !== study.get("article_id")) {
     var items = _.map(study.get(field), function(variable) {
       return <li>{variable}</li>;
     });
