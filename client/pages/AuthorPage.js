@@ -116,16 +116,23 @@ AuthorPage.view = function(ctrl) {
       </ul>;
     }
 
+    var name;
+    if (ctrl.editing()) {
+      name = [
+        <span placeholder="First name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("first_name"))}>{author.get("first_name")}</span>,
+        <span placeholder="Middle name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("middle_name"))}>{author.get("middle_name")}</span>,
+        <span placeholder="Last name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("last_name"))}>{author.get("last_name")}</span>,
+      ];
+    } else {
+      name = author.get("fullName");
+    }
+
     content = (
       <div>
         {errorMessage}
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
-            <h2 className="h1">
-              <span placeholder="First name here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("first_name"))}>{author.get("first_name")}</span>
-              <span placeholder="Middle name here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("middle_name"))}>{author.get("middle_name")}</span>
-              <span placeholder="Last name here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("last_name"))}>{author.get("last_name")}</span>
-            </h2>
+            <h2 className="h1">{name}</h2>
           </div>
           <div className="col span_1_of_4 text_right">
             <div className="btn_group">
