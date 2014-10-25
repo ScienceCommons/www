@@ -55,6 +55,10 @@ $column_width: 300px;
     cursor: pointer;
   }
 
+  header .cell, .cell.replication_path {
+    cursor: auto;
+  }
+
   .study .cell:not(.replication_path) {
     border-right: 1px solid $gray;
   }
