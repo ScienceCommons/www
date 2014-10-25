@@ -13,52 +13,132 @@ var AuthorModel = require("../models/AuthorModel.js");
 var AuthorPage = {};
 
 AuthorPage.controller = function(options) {
-  OnUnload(this);
   options = _.extend({id: "AuthorPage"}, options);
-  this.controllers.layout = new Layout.controller(options);
-  this.loading = m.prop(true);
-  this.author = new AuthorModel();
-  this.author.set("articles", [
-    {
-      title: "Feeling the future: Experimental evidence for anomalous retroactive influences on congnition and affect",
-      authors_denormalized: [{lastName: "Bern"}],
-      publication_date: "2011-6-1"
-    }, {
-      title: "Automaticity of social behavior: Direct effects of trait construct and stereotype activiation on action",
-      authors_denormalized: [{lastName: "Bargh"}, {lastName: "Chen"}, {lastName: "Burrows"}],
-      publication_date: "1996-6-1"
-    },
-    {
-      title: "Coherent arbitrariness: Stable demand curves without stable preference",
-      authors_denormalized: [{lastName: "Airely"}],
-      publication_date: "2003-6-1"
-    }
-  ]);
+  OnUnload(this);
+  this.user = options.user;
+  this.editing = m.prop(false);
+  this.saving = m.prop(false);
+
+  if (m.route.param("authorId") === "new" && this.user.canEdit()) {
+    this.author = new AuthorModel({});
+    this.editing(true);
+  } else {
+    this.author = new AuthorModel({id: m.route.param("authorId")});
+    this.author.fetch();
+    this.author.get("articles").fetch();
+  }
   window.author = this.author;
+
+  var _this = this;
+  this.controllers.layout = new Layout.controller(options);
+
+  this.editClick = function() {
+    if (_this.user.canEdit()) {
+      _this.editing(true);
+    }
+  };
+
+  this.saveClick = function() {
+    _this.saving(true);
+    var res = _this.author.save();
+    res.then(function() {
+      _this.saving(false);
+      _this.editing(false);
+      m.redraw();
+    }, function() {
+      _this.saving(false);
+      if (!_this.author.hasErrors()) {
+        _this.editing(false);
+      }
+      m.redraw();
+    });
+    if (_this.author.isNew()) {
+      res.then(function() {
+        if (!_this.author.isNew()) {
+          m.route("/authors/" + _this.author.get("id"));
+        }
+      });
+    }
+  };
+
+  this.discardClick = function() {
+    if (_this.author.isNew()) {
+      m.route("/authors/new");
+    } else {
+      _this.author.set(_this.author._serverState);
+      _this.editing(false);
+      _this.saving(false);
+    }
+  };
 };
 
 AuthorPage.view = function(ctrl) {
   var author = ctrl.author;
-  var articles = author.get("articles");
-  if (articles.length > 0) {
-    var articlesList = articles.map(AuthorPage.articleView);
-    var articlesContent = (
+  var content;
+
+  if (author.loading) {
+    content = Spinner.view();
+  } else {
+    var articles = author.get("articles");
+    var articlesContent;
+    if (articles.loading) {
+      articlesContent = Spinner.view();
+    } else if (articles.length > 0) {
+      articlesContent = (
+        <div>
+          <h3>{articles.length} Article{articles.length > 1 ? "s" : ""}</h3>
+          <ul>
+            {articles.map(AuthorPage.articleView)}
+          </ul>
+        </div>
+      );
+    }
+
+    if (ctrl.user.canEdit()) {
+      var editButtons;
+      if (ctrl.editing()) {
+        editButtons = [
+          <button type="button" className="btn" key="save" onclick={ctrl.saveClick} disabled={ctrl.saving()}>{ctrl.saving() ? "Saving..." : "Save"}</button>,
+          <button type="button" className="btn" key="discard" onclick={ctrl.discardClick} disabled={ctrl.saving()}>Discard</button>,
+        ];
+      } else {
+        editButtons = <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>;
+      }
+    }
+
+    if (author.hasErrors()) {
+      var errors = _.map(author.errors(), function(error) {
+        return <li>{error}</li>;
+      });
+
+      var errorMessage = <ul class="errors">
+        {errors}
+      </ul>;
+    }
+
+    content = (
       <div>
-        <h3>{articles.length} Article{articles.length > 1 ? "s" : ""}</h3>
-        <ul>
-          {articlesList}
-        </ul>
+        {errorMessage}
+        <div className="section articleHeader">
+          <div className="col span_3_of_4 titleAndAbstract">
+            <h2 className="h1">
+              <span placeholder="First name here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("first_name"))}>{author.get("first_name")}</span>
+              <span placeholder="Middle name here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("middle_name"))}>{author.get("middle_name")}</span>
+              <span placeholder="Last name here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("last_name"))}>{author.get("last_name")}</span>
+            </h2>
+          </div>
+          <div className="col span_1_of_4 text_right">
+            <div className="btn_group">
+              {editButtons}
+            </div>
+          </div>
+        </div>
+        <div className="section">
+          {articlesContent}
+        </div>
       </div>
     );
   }
-
-  var content = (
-    <div>
-      <h1 className="h1">{author.get("fullName")}</h1>
-      <h5>{author.get("email")}</h5>
-      {articlesContent}
-    </div>
-  );
 
   return new Layout.view(ctrl.controllers.layout, content);
 };
