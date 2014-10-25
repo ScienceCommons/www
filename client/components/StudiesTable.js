@@ -87,6 +87,9 @@ StudiesTable.controller = function(opts) {
         active.study_id = id;
         active.field = field;
       }
+      if (study.isNew()) {
+        active.editing = true;
+      }
       _this.active(active);
     };
   };
