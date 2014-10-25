@@ -21,34 +21,34 @@ module.exports = function (grunt) {
 
   var loaders = [{
     test: /\.css$/,
-    loader: "style-loader!css-loader"
+    loader: "style!css"
   }, {
     test: /\.s[ac]ss$/,
     loader: "style!css!sass"
   }, {
     test: /\.gif/,
-    loader: "url-loader?limit=10000&minetype=image/gif"
+    loader: "url?limit=10000&minetype=image/gif"
   }, {
     test: /\.jpg/,
-    loader: "url-loader?limit=10000&minetype=image/jpg"
+    loader: "url?limit=10000&minetype=image/jpg"
   }, {
     test: /\.png/,
-    loader: "url-loader?limit=10000&minetype=image/png"
+    loader: "url?limit=10000&minetype=image/png"
   }, {
     test: /\.js$/,
-    loader: "msx-loader"
+    loader: "msx"
   }, {
     test: /\.woff$/,
-    loader: "url-loader?prefix=/assets/&limit=10000&minetype=application/font-woff"
+    loader: "url?prefix=/assets/&limit=10000&minetype=application/font-woff"
   }, {
     test: /\.ttf$/,
-    loader: "file-loader?prefix=/assets/"
+    loader: "file?prefix=/assets/"
   }, {
     test: /\.eot$/,
-    loader: "file-loader?prefix=/assets/"
+    loader: "file?prefix=/assets/"
   }, {
     test: /\.svg$/,
-    loader: "file-loader?prefix=/assets/"
+    loader: "file?prefix=/assets/"
   }];
 
   var handle404 = function(src) {
@@ -103,7 +103,11 @@ module.exports = function (grunt) {
         output: {
           path: DEVELOPMENT_PATH+"/assets",
           filename: "[name].js"
-        }
+        },
+        plugins: [
+          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.optimize.DedupePlugin()
+        ]
       },
       production: {
         debug: false,
