@@ -14,13 +14,12 @@ var AuthorModel = CurateBaseModel.extend({
     };
   }],
   defaults: {
-    first_name: "John",
-    last_name: "Smith",
-    middle_name: "Rob",
+    first_name: "",
+    last_name: "",
+    middle_name: "",
     orcid: "",
-    affiliation: "",
-    email: "john.rob.smith@gmail.com",
-    is_user: ""
+    job_title: "",
+    affiliations: []
   },
   computeds: {
     fullName: function() {
@@ -29,7 +28,8 @@ var AuthorModel = CurateBaseModel.extend({
   },
   pill: function() {
     return { label: this.get("fullName"), value: this };
-  }
+  },
+  urlRoot: "https://www.curatescience.org/authors",
 });
 
 module.exports = AuthorModel;
