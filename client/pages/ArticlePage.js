@@ -116,7 +116,7 @@ ArticlePage.view = function(ctrl) {
     });
 
     var tags = new PillList.view(ctrl.controllers.tagsList);
-    var authors = new PillList.view(ctrl.controllers.authorsList, { pillView: authorPillView });
+    var authors = new PillList.view(ctrl.controllers.authorsList, { pillView: authorPillView, placeholder: "No authors" });
 
     if (ctrl.user.canEdit()) {
       var editButtons;

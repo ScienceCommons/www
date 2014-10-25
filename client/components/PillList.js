@@ -124,9 +124,12 @@ PillList.view = function(ctrl, options) {
         </ul>
       );
     } else {
-      pills = _.map(ctrl.pills(), function(pill) {
+      pills = _.map(_.compact(ctrl.pills()), function(pill) {
         return (options.pillView || PillList.pillView)(pill, {onRemoveClick: ctrl.onRemoveClick});
       });
+      if (pills.length === 0 && options.placeholder) {
+        pills = <li className="pill placeholder">{options.placeholder}</li>;
+      }
       return (
         <ul className="PillList">
           {pills}
@@ -135,9 +138,12 @@ PillList.view = function(ctrl, options) {
       );
     }
   } else {
-    pills = _.map(ctrl.pills(), function(pill) {
+    pills = _.map(_.compact(ctrl.pills()), function(pill) {
       return (options.pillView || PillList.pillView)(pill);
     });
+    if (pills.length === 0 && options.placeholder) {
+      pills = <li className="pill placeholder">{options.placeholder}</li>;
+    }
     return (
       <ul className="PillList">
         {pills}

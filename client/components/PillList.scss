@@ -18,6 +18,11 @@ ul.PillList {
     line-height: 20px;
     margin: 2px;
 
+    &.placeholder {
+      border: none !important;
+      padding-left: 0;
+    }
+
     .icon_removed {
       font-size: 18px;
     }
@@ -27,4 +32,3 @@ ul.PillList {
     }
   }
 }
-
