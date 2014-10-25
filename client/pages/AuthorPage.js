@@ -131,8 +131,9 @@ AuthorPage.view = function(ctrl) {
       <div>
         {errorMessage}
         <div className="section articleHeader">
-          <div className="col span_3_of_4 titleAndAbstract">
-            <h2 className="h1">{name}</h2>
+          <div className="col span_3_of_4">
+            <h2 className="h2">{name}</h2>
+            <h5 className="h5" placeholder="Job title here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
           </div>
           <div className="col span_1_of_4 text_right">
             <div className="btn_group">
