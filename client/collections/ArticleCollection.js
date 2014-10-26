@@ -26,7 +26,7 @@ var ArticleCollection = CurateBaseCollection.extend({
       _this.from = res.from;
       _this.reset(res.documents);
       ga('send', 'timing', 'SearchResults', 'Fetch', t1-t0, "/articles?q="+options.query+"&from="+res.from);
-  });
+    });
 
     return res;
   }
