@@ -29,7 +29,15 @@ var AuthorCollection = CurateBaseCollection.extend({
     }
   },
   search: function(options) {
-    var url = "https://www.curatescience.org/authors?q=" + options.query;
+    var query = options.query;
+    if (_.isEmpty(query)) {
+      return;
+    }
+
+    if (options.partial) {
+      query = "*" + query + "*";
+    }
+    var url = "https://www.curatescience.org/authors?q=" + query;
     if (!_.isUndefined(options.from)) {
       url = url + "&from=" + options.from;
     }
@@ -43,7 +51,7 @@ var AuthorCollection = CurateBaseCollection.extend({
       _this.total = res.total;
       _this.from = res.from;
       _this.reset(res.documents);
-      ga('send', 'timing', 'AuthorCollection', 'Search', t1-t0, "/authors?q="+options.query+"&from="+res.from);
+      ga('send', 'timing', 'AuthorCollection', 'Search', t1-t0, "/authors?q="+query+"&from="+res.from);
     });
 
     return res;
