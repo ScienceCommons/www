@@ -120,7 +120,7 @@ PillList.view = function(ctrl, options) {
       return (
         <ul className="PillList editing" onclick={ctrl.handleDivClick}>
           {pills}
-          <li className="pill" config={Typeahead.config}>{new Typeahead.view(ctrl.controllers.recommendationsTypeahead)}</li>
+          <li className="pill" key="typeahead" config={Typeahead.config}>{new Typeahead.view(ctrl.controllers.recommendationsTypeahead)}</li>
         </ul>
       );
     } else {
