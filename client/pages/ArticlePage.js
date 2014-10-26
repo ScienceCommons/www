@@ -11,9 +11,9 @@ var OnUnload = require("../utils/OnUnload.js");
 
 var Spinner = require("../components/Spinner.js");
 var PillList = require("../components/PillList.js");
+var AuthorList = require("../components/AuthorList.js");
 var StudiesTable = require("../components/StudiesTable.js");
 var CommentBox = require("../components/CommentBox.js");
-var Popover = require("../components/Popover.js");
 
 var ArticleModel = require("../models/ArticleModel.js");
 var AuthorModel = require("../models/AuthorModel.js");
@@ -47,7 +47,7 @@ ArticlePage.controller = function(options) {
     model: this.article
   });
 
-  this.controllers.authorsList = new PillList.controller({
+  this.controllers.authorsList = new AuthorList.controller({
     editable: this.editing,
     collection: this.article.get("authors")
   });
@@ -60,7 +60,7 @@ ArticlePage.controller = function(options) {
 
   this.saveClick = function() {
     _this.saving(true);
-    var res = _this.article.save();
+    var res = _this.article.save({include: ["authors"]});
     res.then(function() {
       _this.saving(false);
       _this.editing(false);
@@ -117,7 +117,7 @@ ArticlePage.view = function(ctrl) {
 
     var tags = new PillList.view(ctrl.controllers.tagsList);
     if (!article.loading) {
-      var authors = new PillList.view(ctrl.controllers.authorsList, { pillView: authorPillView, placeholder: "No authors" });
+      var authors = new AuthorList.view(ctrl.controllers.authorsList, { placeholder: "No authors" });
     }
 
     if (ctrl.user.canEdit()) {
@@ -228,14 +228,5 @@ function toggleBookmark(article, user) {
     return user.toggleArticleBookmark(article);
   };
 };
-
-function authorPillView(pill, options) {
-  options = options || {};
-
-  if (options.onRemoveClick) {
-    var removeIcon = <span className="icon icon_removed" onclick={options.onRemoveClick(pill)}></span>
-  }
-  return <li className="pill" config={Popover.configForView({title: pill.label, content: Spinner.view()})}>{pill.label} {removeIcon}</li>
-}
 
 module.exports = ArticlePage;

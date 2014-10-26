@@ -11,9 +11,12 @@
     padding-left: 0;
     padding-right: 0;
 
-    li {
+    & > li {
+      position: relative;
       padding: 2px 10px;
+    }
 
+    &:not(.loading) li {
       &.selected, &:hover {
         color: white;
         background-color: $dark;

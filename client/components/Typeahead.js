@@ -6,25 +6,52 @@ require("./Typeahead.scss");
 var _ = require("underscore");
 var m = require("mithril");
 
+var Spinner = require("./Spinner.js");
+
 var Typeahead = {};
 
 Typeahead.controller = function(options) {
   this.open = m.prop(false);
-  this.recommendations = m.prop([]); // cached recommendations
   this.index = m.prop(-1); // used for selecting a recommendation
   this.userInput = m.prop(options.value || "");
   this.pill = m.prop({label: this.userInput(), value: this.userInput()})
   this.submit = options.submit;
-  this.getter = options.getter || function() { return []; };
+  this.extras = options.extras;
 
-  if (!this.submit) {
-    throw("Typeahead: options.submit is required");
+  var _this = this;
+  if (options.collection) {
+    var search = _.debounce(options.collection.search, 300); // expects search method & debounces it since there is typing
+    this.getter = function(val) {
+      _this.open(!_.isEmpty(val));
+      options.collection.loading = true;
+      search({query: val, partial: true});
+    };
+    this.recommendations = options.collection;
+    this.recommendationView = options.recommendationView;
   }
+  // else {
+  //   this.recommendations = m.prop([]); // cached recommendations
+  //   this.getter = function(val) {
+  //     if (_.isEmpty(val)) {
+  //       _this.recommendations([]);
+  //     } else {
+  //       _this.recommendations(options.getter ? options.getter(val) : [val]);
+  //     }
+  //   };
+  //   this.recommendationView = function(recommendation) { return recommendation.label; };
+  // }
+
+
+  // if (!this.submit) {
+  //   throw("Typeahead: options.submit is required");
+  // }
 
   var _this = this;
   this.handleSubmit = function(e) {
     e.preventDefault();
-    if (_this.submit(_this.pill())) { // allow the submit function to cancel
+    var recommendation = _this.recommendations.at(_this.index());
+    if (recommendation) {
+      _this.submit(recommendation);
       _this.clear();
     }
   };
@@ -37,6 +64,7 @@ Typeahead.controller = function(options) {
   this.handleRecommendationClick = function(val) {
     return function() {
       _this.submit(val);
+      _this.clear();
     };
   };
 
@@ -51,11 +79,7 @@ Typeahead.controller = function(options) {
     _this.userInput(val);
     _this.pill({label: val, value: val});
     _this.index(-1);
-    if (_.isEmpty(val)) {
-      _this.recommendations([]);
-    } else {
-      _this.recommendations(_this.getter(val));
-    }
+    _this.getter(val);
   };
 
   this.handleKeydown = function(e) {
@@ -64,32 +88,32 @@ Typeahead.controller = function(options) {
       e.preventDefault();
       _this.open(_this.userInput().length > 0);
       var newIndex = _this.index() + 1;
-      if (newIndex >= _this.recommendations().length) {
+      if (newIndex >= _this.recommendations.length) {
         newIndex = -1;
       }
       _this.index(newIndex);
       if (_this.index() === -1 || _.isEmpty(_this.userInput())) {
         _this.pill({label: _this.userInput(), value: _this.userInput()});
       } else {
-        _this.pill(_this.recommendations()[_this.index()]);
+        _this.pill(_this.recommendations.at(_this.index()));
       }
     } else if (e.keyCode === 38) { // up arrow
       e.preventDefault();
       _this.open(_this.userInput().length > 0);
       newIndex = _this.index()-1;
       if (newIndex < -1) {
-        newIndex = _this.recommendations().length - 1;
+        newIndex = _this.recommendations.length - 1;
       }
       _this.index(newIndex);
       if (_this.index() === -1 || _.isEmpty(_this.userInput())) {
         _this.pill({label: _this.userInput(), value: _this.userInput()});
       } else {
-        _this.pill(_this.recommendations()[_this.index()]);
+        _this.pill(_this.recommendations.at(_this.index()));
       }
     } else if (e.keyCode === 27) { // escape
       if (_this.open()) {
         _this.open(false);
-      } else {
+      } else if (options.onkeydown) {
         options.onkeydown(e);
       }
     } else if (options.onkeydown) { // give other components access
@@ -100,18 +124,33 @@ Typeahead.controller = function(options) {
 };
 
 Typeahead.view = function(ctrl) {
-  var list;
-  if (ctrl.open() && !_.isEmpty(ctrl.recommendations())) {
-    var recommendations = _.map(ctrl.recommendations(), function(recommendation, i) {
-      return <li className={i === ctrl.index() ? "selected" : ""} onclick={ctrl.handleRecommendationClick(recommendation)}>{recommendation.label}</li>;
-    });
-    list = <ul className="recommendations">{recommendations}</ul>;
+  var content;
+
+  if (ctrl.open()) {
+    var recommendations = ctrl.recommendations;
+    if (recommendations.loading) {
+      content = (
+        <ul className="recommendations loading">
+          <li>{Spinner.view()}</li>
+        </ul>
+      );
+    } else {
+      var list = recommendations.map(function(recommendation, i) {
+        return <li className={i === ctrl.index() ? "selected" : ""} onclick={ctrl.handleRecommendationClick(recommendation)}>{ctrl.recommendationView(recommendation)}</li>;
+      });
+      list = list.concat(_.map(ctrl.extras, function(extra, i) {
+        return <li className={(list.length + i) === ctrl.index() ? "selected" : ""} onclick={extra.handleClick(ctrl.userInput())}>{extra.label}</li>;
+      }));
+      content = <ul className="recommendations">{list}</ul>;
+    }
   }
 
-  return <form className="Typeahead" onsubmit={ctrl.handleSubmit}>
-    <input type="text" value={ctrl.pill().label} oninput={m.withAttr("value", ctrl.handleInput)} onkeydown={ctrl.handleKeydown} />
-    {list}
-  </form>
+  return (
+    <form className="Typeahead" onsubmit={ctrl.handleSubmit} config={Typeahead.config}>
+      <input key="typeahead" type="text" value={ctrl.pill().label} oninput={m.withAttr("value", ctrl.handleInput)} onkeydown={ctrl.handleKeydown} />
+      {content}
+    </form>
+  );
 };
 
 Typeahead.config = function(el, isInitialized) {

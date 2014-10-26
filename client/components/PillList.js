@@ -22,7 +22,7 @@ PillList.controller = function(options) {
     };
   } else if (options.collection) {
     this.pills = function() {
-      return _.map(options.collection.get(), function(model) {
+      return options.collection.map(function(model) {
         return model.pill();
       });
     };
@@ -89,49 +89,49 @@ PillList.controller = function(options) {
     _this.editing(!_this.editing());
   };
 
-  this.controllers.recommendationsTypeahead = new Typeahead.controller({
-    getter: options.getter,
-    submit: this.addPill,
-    onkeydown: function(e) {
-      if (e.keyCode === 188) { // comma
-        e.preventDefault();
-        _this.addPill(_this.controllers.recommendationsTypeahead.pill());
-      } else if (e.keyCode === 8 && _.isEmpty(_this.controllers.recommendationsTypeahead.pill().label)) {  // backspace
-        e.preventDefault();
-        if (!_.isEmpty(_this.pills()) )  {
-          _this.removePill();
-        }
-      } else if (e.keyCode === 27) { // escape
-        e.preventDefault();
-        _this.editing(false);
-      }
-    }
-  });
+  if (options.typeahead) {
+    this.controllers.recommendationsTypeahead = options.typeahead;
+  } else {
+    this.controllers.recommendationsTypeahead = new Typeahead.controller({ getter: options.getter });
+  }
+  this.controllers.recommendationsTypeahead.submit = this.controllers.recommendationsTypeahead.submit || this.addPill;
+  // this.controllers.recommendationsTypeahead.onkeydown = function(e) {
+  //   if (e.keyCode === 188) { // comma
+  //     e.preventDefault();
+  //     _this.addPill(_this.controllers.recommendationsTypeahead.pill());
+  //   } else if (e.keyCode === 8 && _.isEmpty(_this.controllers.recommendationsTypeahead.pill().label)) {  // backspace
+  //     e.preventDefault();
+  //     if (!_.isEmpty(_this.pills()) )  {
+  //       _this.removePill();
+  //     }
+  //   } else if (e.keyCode === 27) { // escape
+  //     e.preventDefault();
+  //     _this.editing(false);
+  //   }
+  // };
 };
 
 PillList.view = function(ctrl, options) {
   options = options || {};
+  options.pillView = options.pillView || PillList.pillView;
   var pills;
   if (ctrl.editable()) {
+    pills = _.map(ctrl.pills(), function(pill) {
+      return options.pillView(pill, {onRemoveClick: ctrl.onRemoveClick});
+    });
     if (ctrl.editing()) {
-      pills = _.map(ctrl.pills(), function(pill) {
-        return (options.pillView || PillList.pillView)(pill, {onRemoveClick: ctrl.onRemoveClick});
-      });
       return (
-        <ul className="PillList editing" onclick={ctrl.handleDivClick}>
+        <ul className={"PillList editing " + (options.className||"")} onclick={ctrl.handleDivClick}>
           {pills}
-          <li className="pill" key="typeahead" config={Typeahead.config}>{new Typeahead.view(ctrl.controllers.recommendationsTypeahead)}</li>
+          <li className="pill">{Typeahead.view(ctrl.controllers.recommendationsTypeahead)}</li>
         </ul>
       );
     } else {
-      pills = _.map(_.compact(ctrl.pills()), function(pill) {
-        return (options.pillView || PillList.pillView)(pill, {onRemoveClick: ctrl.onRemoveClick});
-      });
       if (pills.length === 0 && options.placeholder) {
         pills = <li className="pill placeholder">{options.placeholder}</li>;
       }
       return (
-        <ul className="PillList">
+        <ul className={"PillList " + (options.className||"")}>
           {pills}
           <li><span className="icon icon_add" onclick={ctrl.toggleEditMode}></span></li>
         </ul>
@@ -139,13 +139,13 @@ PillList.view = function(ctrl, options) {
     }
   } else {
     pills = _.map(_.compact(ctrl.pills()), function(pill) {
-      return (options.pillView || PillList.pillView)(pill);
+      return options.pillView(pill);
     });
     if (pills.length === 0 && options.placeholder) {
       pills = <li className="pill placeholder">{options.placeholder}</li>;
     }
     return (
-      <ul className="PillList">
+      <ul className={"PillList " + (options.className||"")}>
         {pills}
       </ul>
     );

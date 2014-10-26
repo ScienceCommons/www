@@ -7,6 +7,9 @@ var CurateBaseCollection = require("./CurateBaseCollection.js");
 var AuthorCollection = CurateBaseCollection.extend({
   name: "AuthorCollection",
   model: require("../models/AuthorModel.js"),
+  initialize: function() {
+    _.bindAll(this, "search");
+  },
   authorLastNames: function() {
     var lastNames = this.authorLastNamesList();
     if (lastNames.length > 1) {
@@ -31,6 +34,7 @@ var AuthorCollection = CurateBaseCollection.extend({
   search: function(options) {
     var query = options.query;
     if (_.isEmpty(query)) {
+      this.reset([]);
       return;
     }
 
@@ -44,16 +48,21 @@ var AuthorCollection = CurateBaseCollection.extend({
     var _this = this;
     var t0 = _.now();
     this.loading = true;
-    var res = this.sync("read", this, {url: url})
+    var XHRid = _.uniqueId();
+    this._searchXHRid = XHRid;
+    var res = this.sync("read", this, {url: url});
     res.then(function(res) {
       var t1 = _.now();
-      _this.loading = false;
-      _this.total = res.total;
-      _this.from = res.from;
-      _this.reset(res.documents);
+      if (XHRid === _this._searchXHRid) { // otherwise there is a new xhr
+        _this.loading = false;
+        _this.total = res.total;
+        _this.from = res.from;
+        _this.reset(res.documents);
+      }
       ga('send', 'timing', 'AuthorCollection', 'Search', t1-t0, "/authors?q="+query+"&from="+res.from);
     });
 
+    m.redraw();
     return res;
   }
 });
