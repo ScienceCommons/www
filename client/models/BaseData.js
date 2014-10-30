@@ -398,6 +398,12 @@ BaseData.Collection.prototype._resetFromServer = function(data) {
   this.reset(data, {server: true});
 };
 
+BaseData.Collection.prototype.hasChanges = function() {
+  return _.any(this.models, function (model) {
+    return model.hasChanges();
+  });
+};
+
 BaseData.Collection.prototype.initializeModelType = function(data, options) {
   options = options || {};
   if (this.types && data[this.typeAttr] && this.types[data[this.typeAttr]]) {
