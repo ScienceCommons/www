@@ -24,7 +24,9 @@ var AuthorCollection = CurateBaseCollection.extend({
   etAl: function(num) {
     num = num || 1;
     if (this.length > 0) {
-      if (this.length > num) {
+      if (this.length === 1) {
+        return this.first().get("last_name");
+      } else if (this.length > num) {
         return _.map(this.first(num), function(author) { return author.get("last_name"); }).join(", ") + " et al.";
       } else {
         return _.map(this.first(this.length - 1), function(author) { return author.get("last_name"); }).join(", ") + " & " + this.last().get("last_name");
