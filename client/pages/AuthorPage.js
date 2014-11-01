@@ -152,7 +152,7 @@ AuthorPage.view = function(ctrl) {
 };
 
 AuthorPage.articleView = function(article) {
-  return <h5>{article.get("title")}</h5>;
+  return <h5><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></h5>;
 };
 
 module.exports = AuthorPage;
