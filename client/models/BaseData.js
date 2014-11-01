@@ -227,11 +227,15 @@ BaseData.Model.prototype.url = function() {
 
 BaseData.Model.prototype.toJSON = function(options) {
   options = options || {};
+  var res = this.attributes;
   if (options.only) {
-    return _.pick(this.attributes, options.only);
-  } else {
-    return this.attributes;
+    res = _.pick(res, options.only);
   }
+  var _this = this;
+  _.each(options.include, function(attr) {
+    res[attr] = _this.get(attr).toJSON();
+  });
+  return res;
 };
 
 // Map from CRUD to HTTP
@@ -261,7 +265,7 @@ BaseData.sync = function(method, model, options) {
 
   // Ensure that we have the appropriate request data.
   if (options.data == null && model && (method === "create" || method === "update" || method === "patch")) {
-    params.data = model.toJSON();
+    params.data = model.toJSON({include: options.include});
     if (model.serialize) {
       params.data = _.pick(params.data, model.serialize);
     }
