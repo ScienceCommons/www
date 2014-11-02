@@ -521,8 +521,8 @@ function fileDropdown(ctrl, study, type, options) {
             label: <button type="submit" className="btn">Done</button>,
             buttons: <button type="button" className="btn" onclick={removeFileFromStudy(study, file)}><span className="icon icon_delete"></span></button>,
             content: <div>
-              <input type="text" value={_.isUndefined(edits.name) ? file.get("name") : edits.name} oninput={m.withAttr("value", ctrl.updateEdits(study, "files_"+file.get("id"), "name"))}/>
-              <input type="text" value={_.isUndefined(edits.url) ? file.get("url") : edits.url} oninput={m.withAttr("value", ctrl.updateEdits(study, "files_"+file.get("id"), "url"))}/>
+              <input type="text" placeholder="Label goes here" value={_.isUndefined(edits.name) ? file.get("name") : edits.name} oninput={m.withAttr("value", ctrl.updateEdits(study, "files_"+file.get("id"), "name"))}/>
+              <input type="text" placeholder="URL goes here" value={_.isUndefined(edits.url) ? file.get("url") : edits.url} oninput={m.withAttr("value", ctrl.updateEdits(study, "files_"+file.get("id"), "url"))}/>
             </div>,
             wrapper: <form onsubmit={ctrl.handleFileEditSubmit(study, file)} />
           });
