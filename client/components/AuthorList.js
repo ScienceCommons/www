@@ -115,9 +115,16 @@ function pillView(pill, options) {
 
   var author = pill.value;
   var popoverTitle = <a href={"/authors/"+author.get("id")} config={m.route}>{author.get("fullName")}</a>
+  var affiliations = _.map(author.get("affiliations"), function(affiliation) {
+    return <li>{affiliation}</li>;
+  });
+  
   var popoverContent = (
     <div>
       <h6>{author.get("job_title")}</h6>
+      <ul className="affiliations">
+        {affiliations}
+      </ul>
     </div>
   );
   return <li className="pill" config={Popover.configForView({title: popoverTitle, content: popoverContent})}>{pill.label} {removeIcon}</li>
