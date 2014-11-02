@@ -5,14 +5,14 @@
 var _ = require("underscore");
 var CurateBaseModel = require("./CurateBaseModel.js");
 var CommentModel = require("./CommentModel.js");
-var FileModel = require("./FileModel.js");
+var LinkModel = require("./LinkModel.js");
 
 var StudyModel = CurateBaseModel.extend({
   name: "Study",
   relations: {
     //authors: {type: "many", model: require("./UserModel.js")},
     //comments: {type: "many", model: CommentModel},
-    files: {type: "many", model: FileModel},
+    links: {type: "many", model: LinkModel},
     authors_comments: {type: "many", model: CommentModel},
     independent_variables_comments: {type: "many", model: CommentModel},
     dependent_variables_comments: {type: "many", model: CommentModel},
@@ -33,7 +33,7 @@ var StudyModel = CurateBaseModel.extend({
       {comment: "This is a test"},
     ],
     "badges": [],
-    "files": [
+    "links": [
       {type: "data", name: "Google.docx", url: "google.com"},
       {type: "data", name: "Yahoo.docx", url: "yahoo.com"},
       {type: "materials", name: "Cisco.docx", url: "cisco.com"},
@@ -95,8 +95,8 @@ var StudyModel = CurateBaseModel.extend({
     this.get("replications").remove(existing, {sync: true});
   },
   hasBadge: function(name) {
-    if (this.get("files").length > 0) {
-      return this.get("files").any(function(file) { return file.get("type") === name; });
+    if (this.get("links").length > 0) {
+      return this.get("links").any(function(link) { return link.get("type") === name; });
     } else {
       return _.contains(this.get("badges"), name);
     }
@@ -118,9 +118,9 @@ var StudyModel = CurateBaseModel.extend({
   destroy: function() {
     throw("Study.create must be done through the collection: article.get('studies')");
   },
-  filesByType: function(type) {
-    return this.get("files").filter(function(file) {
-      return file.get("type") === type;
+  linksByType: function(type) {
+    return this.get("links").filter(function(link) {
+      return link.get("type") === type;
     });
   }
 });

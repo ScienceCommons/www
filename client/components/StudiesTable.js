@@ -43,7 +43,7 @@ StudiesTable.controller = function(opts) {
     if (_this.newStudy() === false) {
       // error we shouldn't hit this
     } else {
-      _this.article.get("studies").add(_this.newStudy(), {sync: true});
+      _this.article.get("studies").add(_this.newStudy(), {sync: true, include: ["links"]});
       _this.newStudy(false);
     }
   };
@@ -55,7 +55,7 @@ StudiesTable.controller = function(opts) {
 
   this.saveStudy = function(study) {
     return function(e) {
-      study.save();
+      study.save({include: ["links"]});
     };
   };
 
@@ -135,7 +135,7 @@ StudiesTable.controller = function(opts) {
       var active = _this.active();
       active.editing = false;
       _this.active(active);
-      var fileEdits = _this.getEdits(study, "files_"+file.get("id"))
+      var fileEdits = _this.getEdits(study, "links_"+file.get("id"))
       file.set(fileEdits);
     };
   };
@@ -489,13 +489,13 @@ BadgeDropdowns.disclosure = function(ctrl, study, options) {
 
 function removeFileFromStudy(study, file) {
   return function(e) {
-    study.get("files").remove(file);
+    study.get("links").remove(file);
   };
 };
 
 function addFile(ctrl, study, type) {
   return function(e) {
-    var newFile = study.get("files").add({type: type});
+    var newFile = study.get("links").add({type: type});
     var active = ctrl.active();
     active.editing = true;
     active.file = newFile;
@@ -504,25 +504,25 @@ function addFile(ctrl, study, type) {
 };
 
 function fileDropdown(ctrl, study, type, options) {
-  var files = study.filesByType(type);
+  var links = study.linksByType(type);
   var active = ctrl.active();
-  var body = <table className="files"><tbody><tr className="noFiles"><td>No files</td></tr></tbody></table>;
+  var body = <table className="files"><tbody><tr className="noFiles"><td>No links</td></tr></tbody></table>;
   var modal;
 
-  if (files.length > 0) {
-    var rows = _.map(files, function(file) {
+  if (links.length > 0) {
+    var rows = _.map(links, function(file) {
       var fileIsActive = active.file === file;
       if (fileIsActive) {
         ctrl.controllers.studyCommentAndEditModal.open(true);
         if (active.editing) {
-          var edits = ctrl.getEdits(study, "files_"+file.get("id"));
+          var edits = ctrl.getEdits(study, "links_"+file.get("id"));
 
           modal = Modal.view(ctrl.controllers.studyCommentAndEditModal, {
             label: <button type="submit" className="btn">Done</button>,
             buttons: <button type="button" className="btn" onclick={removeFileFromStudy(study, file)}><span className="icon icon_delete"></span></button>,
             content: <div>
-              <input type="text" placeholder="Label goes here" value={_.isUndefined(edits.name) ? file.get("name") : edits.name} oninput={m.withAttr("value", ctrl.updateEdits(study, "files_"+file.get("id"), "name"))}/>
-              <input type="text" placeholder="URL goes here" value={_.isUndefined(edits.url) ? file.get("url") : edits.url} oninput={m.withAttr("value", ctrl.updateEdits(study, "files_"+file.get("id"), "url"))}/>
+              <input type="text" placeholder="Label goes here" value={_.isUndefined(edits.name) ? file.get("name") : edits.name} oninput={m.withAttr("value", ctrl.updateEdits(study, "links_"+file.get("id"), "name"))}/>
+              <input type="text" placeholder="URL goes here" value={_.isUndefined(edits.url) ? file.get("url") : edits.url} oninput={m.withAttr("value", ctrl.updateEdits(study, "links_"+file.get("id"), "url"))}/>
             </div>,
             wrapper: <form onsubmit={ctrl.handleFileEditSubmit(study, file)} />
           });
@@ -567,7 +567,7 @@ function fileDropdown(ctrl, study, type, options) {
 
   if (App.user.canEdit() && !options.replication) {
     var filesFooter = <footer>
-      <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a file</button>
+      <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a link</button>
     </footer>;
   }
 

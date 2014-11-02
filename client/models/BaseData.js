@@ -409,7 +409,7 @@ BaseData.Collection.prototype._resetFromServer = function(data) {
 
 BaseData.Collection.prototype.hasChanges = function() {
   return _.any(this.models, function (model) {
-    return model.hasChanges();
+    return model.isNew() || model.hasChanges();
   });
 };
 
