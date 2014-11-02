@@ -26,8 +26,15 @@ AdminPage.controller = function(options) {
   this.betaMailList.fetchBetaMailList();
   this.users = new UserCollection([]);
   this.query = m.prop("");
+  this.dbStatsLoading = m.prop(true);
+  this.dbStats = m.request({method: "GET", url: "/admin/db_stats", background: true});
 
   var _this = this;
+  this.dbStats.then(function() {
+    _this.dbStatsLoading(false);
+    m.redraw();
+  });
+
   this.findUser = function(e) {
     e.preventDefault();
     _this.users.search({query: _this.query()});
@@ -88,6 +95,9 @@ AdminPage.view = function(ctrl) {
 
       <h3>Beta mail list</h3>
       {betaTable}
+
+      <h3>Database stats for the last day</h3>
+      {dbStatsView(ctrl.dbStats(), ctrl.dbStatsLoading())}
     </div>
   );
 
@@ -126,5 +136,25 @@ var userActionTable = function(ctrl, users) {
   </table>;
 };
 
-module.exports = AdminPage;
+var dbStatsView = function(stats, loading) {
+  var rows;
+  if (loading) {
+    rows = <tr><td colspan="4">{Spinner.view()}</td></tr>;
+  } else {
+    rows = _.map(stats, function(val, key) {
+      return <tr>
+        <td>{key}</td>
+        <td>{val.total}</td>
+        <td>{val.last_day.created}</td>
+        <td>{val.last_day.updated}</td>
+      </tr>;
+    });
+  }
 
+  return <table className="dbStats center">
+    <thead><tr><th>Key</th><th>Total</th><th>Created</th><th>Updated</th></tr></thead>
+    <tbody>{rows}</tbody>
+  </table>;
+};
+
+module.exports = AdminPage;

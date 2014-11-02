@@ -12,7 +12,7 @@
     }
   }
 
-  table.userActionTable, table.betaMailList {
+  table.userActionTable, table.betaMailList, table.dbStats {
     th, td {
       padding: 10px;
     }
@@ -20,5 +20,17 @@
 
   table.betaMailList td {
     text-align: left;
+  }
+
+  table.dbStats {
+    position: relative;
+    
+    td {
+      text-align: right;
+    }
+
+    td:first-child {
+      text-align: left;
+    }
   }
 }
