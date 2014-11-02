@@ -286,7 +286,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
   });
 
   if (!options.replication) {
-    if (options.new || study.hasChanges()) {
+    if (options.new || study.hasChanges({include: ["links"]})) {
       var saveButtons = [
         <button type="button" className="btn saveStudy" onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
         <button type="button" className="btn discardStudy" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
