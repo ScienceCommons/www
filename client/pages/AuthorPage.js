@@ -8,6 +8,7 @@ var m = require("mithril");
 var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/DefaultLayout.js");
 var Spinner = require("../components/Spinner.js");
+var ListEditor = require("../components/ListEditor.js");
 var AuthorModel = require("../models/AuthorModel.js");
 
 var AuthorPage = {};
@@ -31,6 +32,16 @@ AuthorPage.controller = function(options) {
 
   var _this = this;
   this.controllers.layout = new Layout.controller(options);
+  this.controllers.affiliationList = new ListEditor.controller({
+    editing: _this.editing,
+    items: function(val) {
+      if (_.isUndefined(val)) {
+        return _this.author.get("affiliations") || [];
+      } else {
+        _this.author.set("affiliations", val);
+      }
+    }
+  })
 
   this.editClick = function() {
     if (_this.user.canEdit()) {
@@ -134,6 +145,10 @@ AuthorPage.view = function(ctrl) {
           <div className="col span_3_of_4">
             <h2 className="h2">{name}</h2>
             <h5 className="h5" placeholder="Job title here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
+            <div className="affiliations">
+              <h4>Affiliations</h4>
+              {ListEditor.view(ctrl.controllers.affiliationList, {placeholder: "Add an affiliation"})}
+            </div>
           </div>
           <div className="col span_1_of_4 text_right">
             <div className="btn_group">
