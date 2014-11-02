@@ -321,10 +321,15 @@ BaseData.Model.prototype.destroy = function(options) {
 };
 
 BaseData.Model.prototype.hasChanges = function(options) {
+  options = options || {};
   var clientState = this.get();
-  return _.any(this._serverState, function(val, attr) {
+  var hasChangedAttributes = _.any(this._serverState, function(val, attr) {
     return clientState[attr] !== val;
   });
+  if (hasChangedAttributes) return true;
+  var _this = this;
+  if (_.any(options.include, function(association) { return _this.get(association).hasChanges(); })) return true;
+  return false;
 };
 
 BaseData.Model.prototype.isNew = function() {
