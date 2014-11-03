@@ -22,23 +22,13 @@ var StudyModel = CurateBaseModel.extend({
     replications: {type: "many", model: require("./ReplicationModel.js"), urlAction: "replications"} // model is defined below
   },
   defaults: {
-    "authors": ["Zhong", "Wang"],
+    "authors": [],
     "independent_variables": [],
     "dependent_variables": [],
-    "n": 27,
-    "power": 86,
-    "effect_size": {d: 1.08},
-    "effect_size_comments": [
-      {comment: "Foo"},
-      {comment: "This is a test"},
-    ],
-    "badges": [],
-    "links": [
-      {type: "data", name: "Google.docx", url: "google.com"},
-      {type: "data", name: "Yahoo.docx", url: "yahoo.com"},
-      {type: "materials", name: "Cisco.docx", url: "cisco.com"},
-      {type: "registration", name: "Apple.docx", url: "apple.com"}
-    ]
+    "n": "",
+    "power": "",
+    "effect_size": {},
+    "badges": []
   },
   effectSizeKeyMap: {
     "d": "d",
