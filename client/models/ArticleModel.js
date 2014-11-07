@@ -9,7 +9,7 @@ var ArticleModel = CurateBaseModel.extend({
     "authors_denormalized": {type: "many", collection: require("../collections/AuthorCollection.js")},
     "authors": {type: "many", collection: require("../collections/AuthorCollection.js")},
     "comments": {type: "many", collection: require("../collections/CommentCollection.js"), urlAction: "comments"},
-    "studies": {type: "many", model: require("./StudyModel.js"), urlAction: "studies"}
+    "studies": {type: "many", collection: require("../collections/StudyCollection.js"), urlAction: "studies"}
   },
   defaults: {
     "title": "",
