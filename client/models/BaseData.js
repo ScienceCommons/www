@@ -398,6 +398,10 @@ BaseData.Collection.prototype.reset = function(data, options) {
   this.length = models.length;
   this._byId = _byId;
 
+  if (this.comparator) {
+    this.sort();
+  }
+
   if (!options.silent) {
     this.redraw();
   }
@@ -431,7 +435,13 @@ BaseData.Collection.prototype.add = function(data, options) {
     } else {
       newModel = this.initializeModelType(data, _.extend({}, this.modelOptions, options));
     }
-    this.models = this.models.concat([newModel]);
+    if (this.comparator) { // assumes its already sorted
+      var index = this.sortedIndex(this.comparator, newModel);
+      this.models = this.models.concat([]);
+      this.models.splice(index+1, 0, newModel);
+    } else {
+      this.models = this.models.concat([newModel]);
+    }
     this.length++;
     this._byId[newModel.get("id")] = newModel; // I might need event listeners for change:id to update this field
 
@@ -481,12 +491,12 @@ BaseData.Collection.prototype.get = function(id) {
 };
 
 BaseData.Collection.prototype.sort = function() {
-  this.models = _.sortBy(this.models, this.comparator);
+  if (_.isString(this.comparator) || this.comparator.length === 1) {
+    this.models = this.sortBy(this.comparator, this);
+  } else {
+    this.models.sort(_.bind(this.comparator, this));
+  }
   this.redraw();
-};
-
-BaseData.Collection.prototype.comparator = function(model) {
-  return this.get("id") || 0;
 };
 
 BaseData.Collection.prototype.model = BaseData.Model;
@@ -536,7 +546,7 @@ var methods = ['forEach', 'each', 'map', 'collect', 'reduce', 'foldl',
   'reject', 'every', 'all', 'some', 'any', 'include', 'contains', 'invoke',
   'max', 'min', 'toArray', 'size', 'first', 'head', 'take', 'initial', 'rest',
   'tail', 'drop', 'last', 'without', 'difference', 'indexOf', 'shuffle',
-  'lastIndexOf', 'isEmpty', 'chain', 'sample'];
+  'lastIndexOf', 'isEmpty', 'chain', 'sample', 'sortedIndex'];
 
   // Mix in each Underscore method as a proxy to `Collection#models`.
   _.each(methods, function(method) {
