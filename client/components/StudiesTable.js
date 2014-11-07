@@ -558,7 +558,7 @@ function fileDropdown(ctrl, study, type, options) {
         <td className="fileName">{file.get("name")}</td>
         <td className="buttons">
           {commentMarker}
-          <button type="button" className="btn" title="Download"><span className="icon icon_download"></span></button>
+          <button type="button" className="btn" title="Download" onclick={downloadFile(file)}><span className="icon icon_download"></span></button>
         </td>
       </tr>;
     });
@@ -703,4 +703,16 @@ function closeActiveOnMousedown(e) {
     }
   });
   m.redraw();
-};
+}
+
+function downloadFile(file) {
+  return function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (file.get("url").match(/^https?:\/\//)) {
+      window.open(file.get("url"));
+    } else {
+      window.open("https://" + file.get("url"));
+    }
+  };
+}
