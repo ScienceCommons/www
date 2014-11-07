@@ -11,6 +11,7 @@ var StudyModel = CurateBaseModel.extend({
   name: "Study",
   relations: {
     //authors: {type: "many", model: require("./UserModel.js")},
+    "authors": {type: "many", collection: require("../collections/AuthorCollection.js")},
     //comments: {type: "many", model: CommentModel},
     links: {type: "many", model: LinkModel},
     authors_comments: {type: "many", model: CommentModel},
@@ -112,7 +113,11 @@ var StudyModel = CurateBaseModel.extend({
     return this.get("links").filter(function(link) {
       return link.get("type") === type;
     });
+  },
+  etAl: function(num) {
+    return (this.get("article") ? this.get("article") : this).get("authors").etAl(num);
   }
+
 });
 
 module.exports = StudyModel;

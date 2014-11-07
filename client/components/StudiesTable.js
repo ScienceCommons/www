@@ -600,6 +600,13 @@ function handleBadgeDropdownFileClick(ctrl, study, file) {
   };
 };
 
+StudiesTable.cellViews.number = function(ctrl, study) {
+  return <ul>
+    <li>{study.etAl(1)}</li>
+    <li>{study.get("number")}</li>
+  </ul>;
+};
+
 StudiesTable.cellViews.effect_size = function(ctrl, study) {
   return study.get("displayEffectSize");
 };
