@@ -339,7 +339,7 @@ $column_width: 300px;
 
         .fileName {
           width: 100%;
-          text-overflow:ellipsis;
+          word-break: break-word;
         }
 
         .buttons {
