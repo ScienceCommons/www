@@ -55,7 +55,10 @@ StudiesTable.controller = function(opts) {
 
   this.saveStudy = function(study) {
     return function(e) {
-      study.save({include: ["links"]});
+      study.save({include: ["links"]}).then(function() {
+        _this.article.get("studies").sort();
+      });
+      _this.article.get("studies").sort();
     };
   };
 
