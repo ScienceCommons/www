@@ -28,6 +28,7 @@ var StudyModel = CurateBaseModel.extend({
     "dependent_variables": [],
     "n": "",
     "power": "",
+    "number": "",
     "effect_size": {},
     "badges": []
   },
