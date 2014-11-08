@@ -54,6 +54,12 @@ Popover.configForView = function(options) {
       //});
     }
     el._popover.options = options;
+    if (el._popover.options.forceOpen) {
+      el._popover.open("forcedOpen");
+    }
+    if (el._popover.open() === "forcedOpen" && !options.forceOpen) {
+      onLeave(el);
+    }
     m.render(el._popover.el, Popover.view(el._popover, el._popover.options));
   };
 };
@@ -75,12 +81,16 @@ function onEnter(el) {
 var delay = 300;
 function onLeave(el) {
   return function(e) {
-    el._popover.open("closing");
-    el._popover.timeout = setTimeout(function() {
-      el._popover.timeout = null;
-      el._popover.open(false);
+    if (el._popover.options.forceOpen) {
+      el._popover.open("forcedOpen");
+    } else {
+      el._popover.open("closing");
+      el._popover.timeout = setTimeout(function() {
+        el._popover.timeout = null;
+        el._popover.open(false);
+        m.render(el._popover.el, Popover.view(el._popover, el._popover.options));
+      }, delay);
       m.render(el._popover.el, Popover.view(el._popover, el._popover.options));
-    }, delay);
-    m.render(el._popover.el, Popover.view(el._popover, el._popover.options));
+    }
   };
 }
