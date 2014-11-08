@@ -325,11 +325,17 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
     var modal = StudiesTable.studyModalView(ctrl, study, field, options);
   }
 
-  var contents;
+  var contents = [];
+  if (study.hasErrors(field)) {
+    var errorsList = _.map(study.errors(field), function(message) {
+      return <li>{message}</li>;
+    });
+    contents.push(<ul className="errors">{errorsList}</ul>);
+  }
   if (StudiesTable.cellViews[field]) {
-    contents = StudiesTable.cellViews[field](ctrl, study, options);
+    contents.push(StudiesTable.cellViews[field](ctrl, study, options));
   } else {
-    contents = study.get(field);
+    contents.push(study.get(field));
   }
 
   if (study.getComments(field)) {

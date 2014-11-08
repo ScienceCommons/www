@@ -146,7 +146,7 @@ ArticlePage.view = function(ctrl) {
         return <li>{error}</li>;
       });
 
-      var errorMessage = <ul class="errors">
+      var errorMessage = <ul className="errors">
         {errors}
       </ul>;
     }

@@ -16,6 +16,11 @@ var CurateBaseModel = BaseModel.extend({
       unwrapError: function(response) {
         model.resetErrors();
         model.addError(undefined, response.error);
+        _.each(response.messages, function(messages, key) {
+          _.each(messages, function(message) {
+            model.addError(key, message);
+          });
+        });
       }
     }));
   }
