@@ -146,7 +146,7 @@ AuthorPage.view = function(ctrl) {
             <h2 className="h2">{name}</h2>
             <h5 className="h5" placeholder="Job title here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
             <div className="affiliations">
-              <h4>Affiliations</h4>
+              <h4>Affiliations{(author.get("affiliations")||[]).length === 0 ? ": Unknown" : ""}</h4>
               {ListEditor.view(ctrl.controllers.affiliationList, {placeholder: "Add an affiliation"})}
             </div>
           </div>
