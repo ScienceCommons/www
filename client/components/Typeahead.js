@@ -16,7 +16,7 @@ Typeahead.controller = function(options) {
   this.userInput = m.prop(options.value || "");
   this.pill = m.prop({label: this.userInput(), value: this.userInput()})
   this.submit = options.submit;
-  this.extras = options.extras;
+  this.extras = options.extras || [];
 
   var _this = this;
   if (options.collection) {
@@ -49,10 +49,17 @@ Typeahead.controller = function(options) {
   var _this = this;
   this.handleSubmit = function(e) {
     e.preventDefault();
-    var recommendation = _this.recommendations.at(_this.index());
-    if (recommendation) {
-      _this.submit(recommendation);
-      _this.clear();
+    if (_this.index() < _this.recommendations.length) {
+      var recommendation = _this.recommendations.at(_this.index());
+      if (recommendation) {
+        _this.submit(recommendation);
+        _this.clear();
+      }
+    } else {
+      var extra = _this.extras[_this.index()-_this.recommendations.length];
+      if (extra) {
+        extra.handleClick(_this.userInput())();
+      }
     }
   };
 
@@ -88,11 +95,11 @@ Typeahead.controller = function(options) {
       e.preventDefault();
       _this.open(_this.userInput().length > 0);
       var newIndex = _this.index() + 1;
-      if (newIndex >= _this.recommendations.length) {
+      if (newIndex >= (_this.recommendations.length + _this.extras.length)) {
         newIndex = -1;
       }
       _this.index(newIndex);
-      if (_this.index() === -1 || _.isEmpty(_this.userInput())) {
+      if (_this.index() === -1 || _.isEmpty(_this.userInput()) || _this.index() >= _this.recommendations.length) {
         _this.pill({label: _this.userInput(), value: _this.userInput()});
       } else {
         _this.pill(_this.recommendations.at(_this.index()));
@@ -102,10 +109,10 @@ Typeahead.controller = function(options) {
       _this.open(_this.userInput().length > 0);
       newIndex = _this.index()-1;
       if (newIndex < -1) {
-        newIndex = _this.recommendations.length - 1;
+        newIndex = _this.recommendations.length + _this.extras.length - 1;
       }
       _this.index(newIndex);
-      if (_this.index() === -1 || _.isEmpty(_this.userInput())) {
+      if (_this.index() === -1 || _.isEmpty(_this.userInput()) || _this.index() >= _this.recommendations.length) {
         _this.pill({label: _this.userInput(), value: _this.userInput()});
       } else {
         _this.pill(_this.recommendations.at(_this.index()));
