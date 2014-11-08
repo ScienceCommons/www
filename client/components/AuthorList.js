@@ -114,11 +114,16 @@ function pillView(pill, options) {
   }
 
   var author = pill.value;
-  var popoverTitle = <a href={"/authors/"+author.get("id")} config={m.route}>{author.get("fullName")}</a>
+  var popoverTitle;
+  if (author.get("id")) {
+    popoverTitle = <a href={"/authors/"+author.get("id")} config={m.route}>{author.get("fullName")}</a>;
+  } else {
+    popoverTitle = author.get("fullName");
+  }
   var affiliations = _.map(author.get("affiliations"), function(affiliation) {
     return <li>{affiliation}</li>;
   });
-  
+
   var popoverContent = (
     <div>
       <h6>{author.get("job_title")}</h6>
