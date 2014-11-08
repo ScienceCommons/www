@@ -20,6 +20,8 @@ var AuthorList = {};
 AuthorList.controller = function(options) {
   this.searchResults = new AuthorCollection();
   this.collection = options.collection;
+  this.editable = options.editable;
+  this.editingDenormalized = m.prop(false);
 
   var _this = this;
   this.controllers = {};
@@ -53,18 +55,76 @@ AuthorList.controller = function(options) {
   this.controllers.PillList = new PillList.controller({
     typeahead: this.controllers.Typeahead,
     collection: this.collection, // authors
-    editable: options.editable
+    editable: this.editable
   });
 
   this.handleNewAuthorSubmit = function(e) {
     e.preventDefault();
     _this.newAuthor.save().then(function() {
       _this.controllers.Typeahead.clear();
+      _this.collection.reindex();
       _this.collection.add(_this.newAuthor);
       _this.newAuthor = null;
+      _this.editingDenormalized(false);
     }, function() {
       // error
     })
+  };
+
+  this.pillView = function(pill, options) {
+    options = options || {};
+
+    if (options.onRemoveClick) {
+      var removeIcon = <span className="icon icon_removed" onclick={options.onRemoveClick(pill)}></span>
+    }
+
+    var author = pill.value;
+    var popoverTitle;
+    var popoverContent;
+
+    if (author.get("id")) {
+      popoverTitle = <a href={"/authors/"+author.get("id")} config={m.route}>{author.get("fullName")}</a>;
+      var affiliations = _.map(author.get("affiliations"), function(affiliation) {
+        return <li>{affiliation}</li>;
+      });
+      popoverContent = (
+        <div>
+          <h6>{author.get("job_title")}</h6>
+          <ul className="affiliations">
+            {affiliations}
+          </ul>
+        </div>
+      );
+    } else {
+      if (_this.editingDenormalized() === author) {
+        popoverContent = newAuthorForm(_this, author, {type: "denormalized", cancel: function() {
+          author.reset();
+          _this.newAuthor = null;
+          _this.editingDenormalized(false);
+        }});
+      } else {
+        popoverTitle = author.get("fullName");
+
+        if (_this.editable()) {
+          var addInformationButton = <button type="button" onclick={_this.handleDenormalizedAddInformation(author)}>Add information</button>;
+        }
+        popoverContent = (
+          <div>
+            <p>We do not have any data for this author.</p>
+            {addInformationButton}
+          </div>
+        );
+      }
+    }
+    return <li className="pill" config={Popover.configForView({title: popoverTitle, content: popoverContent, forceOpen: _this.editingDenormalized() === author})}>{pill.label} {removeIcon}</li>
+  };
+
+  this.handleDenormalizedAddInformation = function(author) {
+    return function(e) {
+      author.set("fullName", author.get("fullName"));
+      _this.newAuthor = author;
+      _this.editingDenormalized(author);
+    };
   };
 };
 
@@ -76,28 +136,19 @@ AuthorList.view = function(ctrl, options) {
         return <li>{error}</li>;
       });
 
-      var errorMessage = <ul class="errors">
+      var errorMessage = <ul className="errors">
         {errors}
       </ul>;
     }
 
     var createAuthorModal = Modal.view(ctrl.controllers.CreateAuthorModal, {
       label: "Add an author",
-      content: <form onsubmit={ctrl.handleNewAuthorSubmit}>
-        {errorMessage}
-        <h3>
-          <span placeholder="First name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("first_name"))}>{author.get("first_name")}</span>
-          <span placeholder="Middle name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("middle_name"))}>{author.get("middle_name")}</span>
-          <span placeholder="Last name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("last_name"))}>{author.get("last_name")}</span>
-        </h3>
-        <h5 className="h5" placeholder="Job title here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
-        <button type="submit" className="btn">Add author</button>
-      </form>
+      content: newAuthorForm(ctrl, author)
     });
   }
 
   return <div className="AuthorList">
-    {PillList.view(ctrl.controllers.PillList, _.extend({pillView: pillView}, options))}
+    {PillList.view(ctrl.controllers.PillList, _.extend({pillView: ctrl.pillView}, options))}
     {createAuthorModal}
   </div>;
 };
@@ -106,31 +157,31 @@ module.exports = AuthorList;
 
 // helpers
 
-function pillView(pill, options) {
+function newAuthorForm(ctrl, author, options) {
   options = options || {};
+  if (author.hasErrors()) {
+    var errors = _.map(author.errors(), function(error) {
+      return <li>{error}</li>;
+    });
 
-  if (options.onRemoveClick) {
-    var removeIcon = <span className="icon icon_removed" onclick={options.onRemoveClick(pill)}></span>
+    var errorMessage = <ul className="errors">
+      {errors}
+    </ul>;
   }
 
-  var author = pill.value;
-  var popoverTitle;
-  if (author.get("id")) {
-    popoverTitle = <a href={"/authors/"+author.get("id")} config={m.route}>{author.get("fullName")}</a>;
-  } else {
-    popoverTitle = author.get("fullName");
+  if (options.cancel) {
+    var cancelButton = <button type="button" className="btn" onclick={options.cancel}>Cancel</button>;
   }
-  var affiliations = _.map(author.get("affiliations"), function(affiliation) {
-    return <li>{affiliation}</li>;
-  });
 
-  var popoverContent = (
-    <div>
-      <h6>{author.get("job_title")}</h6>
-      <ul className="affiliations">
-        {affiliations}
-      </ul>
-    </div>
-  );
-  return <li className="pill" config={Popover.configForView({title: popoverTitle, content: popoverContent})}>{pill.label} {removeIcon}</li>
-}
+  return <form onsubmit={ctrl.handleNewAuthorSubmit}>
+    {errorMessage}
+    <h3>
+      <span placeholder="First name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("first_name"))}>{author.get("first_name")}</span>
+      <span placeholder="Middle name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("middle_name"))}>{author.get("middle_name")}</span>
+      <span placeholder="Last name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("last_name"))}>{author.get("last_name")}</span>
+    </h3>
+    <h5 className="h5" placeholder="Job title here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
+    <button type="submit" className="btn">{options.type === "denormalized" ? "Save" : "Add author"}</button>
+    {cancelButton}
+  </form>;
+};
