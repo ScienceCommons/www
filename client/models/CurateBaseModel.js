@@ -12,9 +12,9 @@ var CurateBaseModel = BaseModel.extend({
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.withCredentials = true;
     };
-    return BaseModel.prototype.sync.call(this, method, model, _.extend(options, {
+    var res = BaseModel.prototype.sync.call(this, method, model, _.extend(options, {
       unwrapError: function(response) {
-        model.resetErrors();
+        //model.resetErrors();
         model.addError(undefined, response.error);
         _.each(response.messages, function(messages, key) {
           _.each(messages, function(message) {
@@ -23,6 +23,10 @@ var CurateBaseModel = BaseModel.extend({
         });
       }
     }));
+    res.then(function() {
+      model.resetErrors();
+    });
+    return res;
   }
 });
 
