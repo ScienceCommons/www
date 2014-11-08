@@ -382,13 +382,27 @@ BaseData.Collection.prototype.reset = function(data, options) {
   var existingModel;
 
   for (var i = 0; i < len; i++) {
-    if (data[i].id && this.get(data[i].id)) {
-      existingModel = this.get(data[i].id);
-      existingModel.set(data[i], {silent: true, server: options.server});
-      models[i] = existingModel;
-      _byId[existingModel.get("id")] = existingModel;
+    newModel = null;
+    if (data[i] instanceof BaseData.Model) {
+      existingModel = this.get(data[i].get("id"));
+      if (existingModel) {
+        existingModel = data[i];
+        models[i] = existingModel;
+        _byId[existingModel.get("id")] = existingModel;
+      } else {
+        newModel = data[i];
+      }
     } else {
-      newModel = this.initializeModelType(data[i], _.extend({}, this.modelOptions, {server: options.server}));
+      if (data[i].id && this.get(data[i].id)) {
+        existingModel = this.get(data[i].id);
+        existingModel.set(data[i], {silent: true, server: options.server});
+        models[i] = existingModel;
+        _byId[existingModel.get("id")] = existingModel;
+      } else {
+        newModel = this.initializeModelType(data[i], _.extend({}, this.modelOptions, {server: options.server}));
+      }
+    }
+    if (newModel) {
       models[i] = newModel;
       _byId[newModel.get("id")] = newModel;
     }
@@ -405,6 +419,16 @@ BaseData.Collection.prototype.reset = function(data, options) {
   if (!options.silent) {
     this.redraw();
   }
+};
+
+BaseData.Collection.prototype.reindex = function() {
+  this._byId = {};
+  var _this = this;
+  this.each(function(model) {
+    if (model.get("id")) {
+      _this._byId[model.get("id")] = model;
+    }
+  });
 };
 
 BaseData.Collection.prototype._resetFromServer = function(data) {
@@ -428,13 +452,21 @@ BaseData.Collection.prototype.initializeModelType = function(data, options) {
 
 BaseData.Collection.prototype.add = function(data, options) {
   options = options || {};
-  if (!data.id || _.isUndefined(this._byId[data.id])) { // don't allow duplicate id's
-    var newModel;
-    if (data instanceof BaseData.Model) {
-      newModel = data;
-    } else {
-      newModel = this.initializeModelType(data, _.extend({}, this.modelOptions, options));
-    }
+  var newModel;
+  if (data instanceof BaseData.Model) {
+    newModel = data;
+  }
+
+  var addAllowed = false;
+  if (newModel) {
+    addAllowed = _.isUndefined(this._byId[newModel.get("id")]);
+  } else {
+    addAllowed = !data.id || _.isUndefined(this._byId[data.id]);
+  }
+
+
+  if (addAllowed) { // don't allow duplicate id's
+    newModel = newModel || this.initializeModelType(data, _.extend({}, this.modelOptions, options));
     if (this.comparator) { // assumes its already sorted
       var index = this.sortedIndex(this.comparator, newModel);
       this.models = this.models.concat([]);
