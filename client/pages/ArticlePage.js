@@ -85,7 +85,7 @@ ArticlePage.controller = function(options) {
     if (_this.article.isNew()) {
       m.route("/articles/new");
     } else {
-      _this.article.set(_this.article._serverState);
+      _this.article.reset({include: ["authors"]});
       _this.editing(false);
       _this.saving(false);
     }
