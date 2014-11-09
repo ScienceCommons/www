@@ -146,10 +146,10 @@ BaseData.Model.prototype.set = function(attr, val, options) {
           this.associations[attr] = val;
         } else {
           if (this.associations[attr]) {
-            this.associations[attr].reset(val, {silent: true}); // its a Collection
+            this.associations[attr].reset(val, {silent: true, server: options.server}); // its a Collection
           } else {
             var Collection = relationCollection(relation);
-            this.associations[attr] = new Collection(val, {baseUrl: _.bind(this.url, this), urlAction: relation.urlAction, silent: true, inverseOf: inverseOf});
+            this.associations[attr] = new Collection(val, {baseUrl: _.bind(this.url, this), urlAction: relation.urlAction, silent: true, server: options.server, inverseOf: inverseOf});
           }
         }
       } else {
@@ -157,9 +157,9 @@ BaseData.Model.prototype.set = function(attr, val, options) {
           this.associations[attr] = val;
         } else {
           if (this.associations[attr]) {
-            this.associations[attr].set(val, {silent: true});
+            this.associations[attr].set(val, {silent: true, server: options.server});
           } else {
-            this.associations[attr] = new (relation.model||BaseData.Model)(val, {silent: true, inverseOf: inverseOf});
+            this.associations[attr] = new (relation.model||BaseData.Model)(val, {silent: true, server: options.server, inverseOf: inverseOf});
           }
         }
       }
@@ -180,7 +180,7 @@ BaseData.Model.prototype.set = function(attr, val, options) {
   } else { // its an object
     options = val || options;
     _.each(attr, function(obj_val, key) {
-      _this.set(key, obj_val, {silent: true}); // let the outside set trigger the redraw
+      _this.set(key, obj_val, {silent: true, server: options.server}); // let the outside set trigger the redraw
     });
 
     if (options.server) {
@@ -370,8 +370,16 @@ BaseData.Collection.prototype.initCache = function() {};
 BaseData.Collection.prototype.typeAttr = "type";
 
 BaseData.Collection.prototype.reset = function(data, options) {
+  if (_.isUndefined(data) && this._serverState) {
+    return this.reset(this._serverState, options);
+  }
+
   data = data || [];
   options = options || {};
+
+  if (options.server) {
+    this._serverState = data;
+  }
 
   var models = [];
   var len = data.length;
@@ -436,8 +444,11 @@ BaseData.Collection.prototype._resetFromServer = function(data) {
 };
 
 BaseData.Collection.prototype.hasChanges = function() {
+  if (this._serverState && this.length !== this._serverState.length) {
+    return true;
+  }
   return _.any(this.models, function (model) {
-    return model.isNew() || model.hasChanges();
+    return model.hasChanges();
   });
 };
 
