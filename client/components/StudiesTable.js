@@ -64,7 +64,7 @@ StudiesTable.controller = function(opts) {
 
   this.resetStudy = function(study) {
     return function(e) {
-      study.set(study._serverState);
+      study.reset({include: ["links"]});
     };
   };
 
