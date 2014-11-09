@@ -336,8 +336,13 @@ BaseData.Model.prototype.isNew = function() {
   return _.isUndefined(this.get("id"));
 };
 
-BaseData.Model.prototype.reset = function() {
+BaseData.Model.prototype.reset = function(options) {
+  options = options || {};
   this.set(this._serverState);
+  var _this = this;
+  _.each(options.include, function(relation) {
+    _this.get(relation).reset();
+  });
 };
 
 //////// COLLECTION /////////
