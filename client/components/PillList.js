@@ -93,8 +93,8 @@ PillList.controller = function(options) {
     this.controllers.recommendationsTypeahead = options.typeahead;
   } else {
     this.controllers.recommendationsTypeahead = new Typeahead.controller({ getter: options.getter });
+    this.controllers.recommendationsTypeahead.submit = this.addPill;
   }
-  this.controllers.recommendationsTypeahead.submit = this.controllers.recommendationsTypeahead.submit || this.addPill;
   // this.controllers.recommendationsTypeahead.onkeydown = function(e) {
   //   if (e.keyCode === 188) { // comma
   //     e.preventDefault();

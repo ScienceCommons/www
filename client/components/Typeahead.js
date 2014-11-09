@@ -28,6 +28,8 @@ Typeahead.controller = function(options) {
     };
     this.recommendations = options.collection;
     this.recommendationView = options.recommendationView;
+  } else {
+    this.recommendations = [];
   }
   // else {
   //   this.recommendations = m.prop([]); // cached recommendations
@@ -49,18 +51,19 @@ Typeahead.controller = function(options) {
   var _this = this;
   this.handleSubmit = function(e) {
     e.preventDefault();
-    if (_this.index() < _this.recommendations.length) {
+    if (_this.recommendations.length > 0 && _this.index() < _this.recommendations.length) {
       var recommendation = _this.recommendations.at(_this.index());
       if (recommendation) {
         _this.submit(recommendation);
-        _this.clear();
+        return _this.clear();
       }
     } else {
       var extra = _this.extras[_this.index()-_this.recommendations.length];
       if (extra) {
-        extra.handleClick(_this.userInput())();
+        return extra.handleClick(_this.userInput())();
       }
     }
+    _this.submit(_this.pill());
   };
 
   this.handleBlur = function() {
@@ -86,7 +89,9 @@ Typeahead.controller = function(options) {
     _this.userInput(val);
     _this.pill({label: val, value: val});
     _this.index(-1);
-    _this.getter(val);
+    if (_.isFunction(_this.getter)) {
+      _this.getter(val);
+    }
   };
 
   this.handleKeydown = function(e) {
