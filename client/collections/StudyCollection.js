@@ -6,7 +6,7 @@ var StudyCollection = CurateBaseCollection.extend({
   name: "StudyCollection",
   model: require("../models/StudyModel.js"),
   comparator: function(model) {
-    return parseInt(model.get("number"), 10);
+    return model.get("number").toString();
   }
 });
 
