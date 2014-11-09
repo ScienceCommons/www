@@ -14,7 +14,7 @@ var ArticleModel = CurateBaseModel.extend({
   defaults: {
     "title": "",
     "abstract": "",
-    "tags": ["Moral purity", "Physical cleansing", "Cleansing products"],
+    "tags": [],
     "badges": [],
     "doi": "",
     "publication_date": "",
