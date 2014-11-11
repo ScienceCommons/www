@@ -90,14 +90,6 @@ ArticlePage.controller = function(options) {
       _this.saving(false);
     }
   };
-
-  this.updateReviewerNum = function(num) {
-    return function(val) {
-      var reviewers = _this.article.get("reviewers");
-      reviewers[num] = val;
-      _this.article.set("reviewers", _.compact(reviewers));
-    };
-  };
 };
 
 ArticlePage.view = function(ctrl) {
@@ -110,10 +102,6 @@ ArticlePage.view = function(ctrl) {
       article.get("journal"),
       article.get("year")
     ]).join(", ");
-
-    var peerReviewers = _.map(article.get("reviewers").filter(function(reviewer) { return !_.isEmpty(reviewer); }).concat([""]), function(reviewer, i) {
-      return <li key={"peerReviewer_"+i} placeholder="Add a reviewer" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", ctrl.updateReviewerNum(i))}>{reviewer}</li>;
-    });
 
     var tags = new PillList.view(ctrl.controllers.tagsList);
     if (!article.loading) {
@@ -193,23 +181,10 @@ ArticlePage.view = function(ctrl) {
         </div>
 
         <div className="section">
-          <div className="col span_3_of_4">
+          <div className="col span_4_of_4">
             <div>
               <h3>Comments</h3>
               {commentsList}
-            </div>
-          </div>
-          <div className="col span_1_of_4">
-            <div className="peerReview">
-              <h3>Peer Review</h3>
-              <div className="actionEditor">
-                <h5>Action Editor</h5>
-                <p className="field" placeholder="Action editor goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("action_editor"))}>{article.get("action_editor")}</p>
-              </div>
-              <h5>Reviewers</h5>
-              <ul className="reviewers">
-                {peerReviewers}
-              </ul>
             </div>
           </div>
         </div>
