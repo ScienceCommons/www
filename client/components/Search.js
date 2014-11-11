@@ -17,7 +17,7 @@ Search.controller = function(options) {
   var _this = this;
   this.updateSearch = function(e) {
     e.preventDefault();
-    m.route("/query/"+_this.query());
+    m.route("/query/"+encodeURIComponent(_this.query()));
   };
 };
 
