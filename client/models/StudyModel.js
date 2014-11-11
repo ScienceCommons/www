@@ -107,9 +107,7 @@ var StudyModel = CurateBaseModel.extend({
   create: function() {
     throw("Study.create must be done through the collection: article.get('studies')");
   },
-  destroy: function() {
-    throw("Study.create must be done through the collection: article.get('studies')");
-  },
+  destroy: false, // Study.create must be done through the collection: article.get('studies')")
   linksByType: function(type) {
     return this.get("links").filter(function(link) {
       return link.get("type") === type;
