@@ -516,7 +516,12 @@ BaseData.Collection.prototype.remove = function(model, options) {
   delete this._byId[model.get("id")];
 
   if (options.sync && !model.isNew()) {
-    var sync = model.destroy();
+    var sync;
+    if (model.destroy) {
+      sync = model.destroy();
+    } else {
+      sync = this.sync("delete", model, {url: this.url() + "/" + model.get("id")})
+    }
     var _this = this;
     sync.then(function() {}, function(err) {
       console.log("Failed to delete", err);
@@ -524,6 +529,7 @@ BaseData.Collection.prototype.remove = function(model, options) {
     });
   }
   this.redraw();
+  return sync;
 };
 
 BaseData.Collection.prototype.at = function(index) {
