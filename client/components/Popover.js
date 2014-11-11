@@ -8,10 +8,18 @@ var m = require("mithril");
 
 var Popover = {};
 
+Popover.instances = {};
+
 Popover.controller = function() {
+  this.id = _.uniqueId();
   this.options = {};
   this.open = m.prop(false);
   this.el = document.createElement("div");
+
+  var _this = this;
+  this.onunload = function() {
+    Popover.instances[_this.id] = null;
+  };
 };
 
 Popover.view = function(ctrl, options) {
@@ -35,15 +43,18 @@ Popover.configForView = function(options) {
     if (!isInitialized) {
       el.style.position = "relative";
       el._popover = new Popover.controller();
+      Popover.instances[el._popover.id] = el;
       el.appendChild(el._popover.el);
 
       var enterFn = onEnter(el);
       var leaveFn = onLeave(el);
       el.addEventListener("mouseenter", enterFn);
+      el.addEventListener("click", enterFn); // for touch
       el.addEventListener("mouseleave", leaveFn);
 
       context.onunload = function() {
-        el.removeEventListener("mousedown", enterFn);
+        el.removeEventListener("mouseenter", enterFn);
+        el.removeEventListener("click", enterFn);
         el.removeEventListener("mouseleave", leaveFn);
       };
 
@@ -93,4 +104,16 @@ function onLeave(el) {
       m.render(el._popover.el, Popover.view(el._popover, el._popover.options));
     }
   };
+}
+
+document.addEventListener("mousedown", closePopoversOnMousedown);
+document.addEventListener("touchstart", closePopoversOnMousedown);
+
+
+function closePopoversOnMousedown(e) {
+  _.each(Popover.instances, function(el) {
+    if (el._popover.open() && !el.contains(e.target)) {
+      onLeave(el)();
+    }
+  });
 }
