@@ -21,17 +21,17 @@ $column_width: 300px;
     white-space: normal;
   }
 
-  .saveStudy {
+  .saveButtons {
     position: absolute;
     top: 0;
     left: 0;
+  }
+
+  .saveStudy {
     background-color: $green;
   }
 
   .discardStudy, .deleteStudy {
-    position: absolute;
-    top: 0;
-    right: 0;
     background-color: $red;
   }
 

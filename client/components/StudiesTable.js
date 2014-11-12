@@ -313,7 +313,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
       <div className="cellGroup">
         {cells}
       </div>
-      {saveButtons}
+      <div className="btn_group saveButtons">{saveButtons}</div>
     </li>
   );
 };
