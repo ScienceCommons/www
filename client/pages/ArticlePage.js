@@ -58,6 +58,19 @@ ArticlePage.controller = function(options) {
     }
   };
 
+  this.deleteClick = function() {
+    var confirmation = confirm("This will permanently delete the article");
+    if (confirmation) {
+      _this.saving(true);
+      _this.article.destroy().then(function() {
+        _this.saving(false);
+        m.route("/");
+      }, function(err) {
+        _this.saving(false);
+      });
+    }
+  };
+
   this.saveClick = function() {
     _this.saving(true);
     var res = _this.article.save({include: ["authors"]});
@@ -116,7 +129,10 @@ ArticlePage.view = function(ctrl) {
           <button type="button" className="btn" key="discard" onclick={ctrl.discardClick} disabled={ctrl.saving()}>Discard</button>,
         ];
       } else {
-        editButtons = <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>;
+        editButtons = [
+          <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>,
+          <button type="button" className="btn" key="delete" onclick={ctrl.deleteClick}>Delete</button>,
+        ];
       }
     }
 
