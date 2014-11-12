@@ -15,11 +15,7 @@ var LinkModel = CurateBaseModel.extend({
   urlRoot: "/links",
   defaults: {
     name: "",
-    url: "",
-    comments: [
-      {comment: "This link has a comment"},
-      {comment: "This link has a second comment"}
-    ]
+    url: ""
   }
 });
 
