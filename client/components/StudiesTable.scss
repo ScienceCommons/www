@@ -27,12 +27,14 @@ $column_width: 300px;
     left: 0;
   }
 
-  .deleteStudy {
+  .deleteStudy, .unlinkReplication {
     display: none;
   }
 
-  .study:hover .deleteStudy {
-    display: initial;
+  .study:hover {
+    .deleteStudy, .unlinkReplication {
+      display: initial;
+    }
   }
 
   .btn.addStudy {
