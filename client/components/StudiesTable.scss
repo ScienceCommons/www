@@ -27,14 +27,6 @@ $column_width: 300px;
     left: 0;
   }
 
-  .saveStudy {
-    background-color: $green;
-  }
-
-  .discardStudy, .deleteStudy {
-    background-color: $red;
-  }
-
   .deleteStudy {
     display: none;
   }
