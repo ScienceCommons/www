@@ -6,8 +6,8 @@
     "dist": "dist",
     "mainOutput": "main",
     "dependencies": {
-        "mithril": "0.1.22",
-        "underscore": "1.6.0",
+        "mithril": "0.1.24",
+        "underscore": "1.7.0",
         "vague-time": "1.1.0",
         "fastclick": "1.0.3"
     },
