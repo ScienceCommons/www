@@ -77,6 +77,15 @@ StudiesTable.controller = function(opts) {
     };
   };
 
+  this.unlinkReplication = function(study, replication) {
+    return function(e) {
+      var confirmation = confirm("This will permanently unlink the replication");
+      if (confirmation) {
+        study.get("replications").remove(replication, {sync: true});
+      }
+    };
+  };
+
   this.toggleModal = function(study, field) {
     return function() {
       var active = _this.active();
@@ -235,7 +244,7 @@ StudiesTable.view = function(ctrl) {
     var studies = ctrl.article.get("studies").map(function(study) {
       if (ctrl.expanded()[study.get("id")]) {
         var replications = study.get("replications").map(function(replication) {
-          return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true});
+          return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true, replicationModel: replication, parentStudy: study});
         });
         if (replications.length === 0) {
           ctrl.expanded({});
@@ -288,9 +297,12 @@ StudiesTable.studyView = function(ctrl, study, options) {
     return StudiesTable.studyCellView(ctrl, study, field, options);
   });
 
-  if (!options.replication) {
+  var saveButtons;
+  if (options.replication) {
+    var saveButtons = <button type="button" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>;
+  } else {
     if (options.new || study.hasChanges({include: ["links"]})) {
-      var saveButtons = [
+      saveButtons = [
         <button type="button" className="btn saveStudy" onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
         <button type="button" className="btn discardStudy" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
       ];
