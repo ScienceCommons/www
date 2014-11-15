@@ -443,7 +443,7 @@ StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
 
   var count = study.get("replications").length;
   if (count > 0) {
-    var replicationCountLink = <span className="icon icon_replication count" onclick={ctrl.toggleExpanded(study)}>{count}</span>;
+    var replicationCountLink = <span className="icon icon_replication count" onclick={ctrl.toggleExpanded(study)} title="Show/Hide replications">{count}</span>;
   }
 
   return [addReplicationLink, replicationCountLink];
