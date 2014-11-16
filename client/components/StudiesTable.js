@@ -45,6 +45,9 @@ StudiesTable.controller = function(opts) {
     } else {
       _this.article.get("studies").add(_this.newStudy(), {sync: true, include: ["links"]});
       _this.newStudy(false);
+      var edits = _this.edits();
+      edits[undefined] = {};
+      _this.edits(edits);
     }
   };
 
