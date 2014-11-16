@@ -591,6 +591,17 @@ BaseData.Collection.prototype.redraw = BaseData.redraw;
 
 BaseData.Collection.prototype.sync = BaseData.sync;
 
+BaseData.Collection.prototype.where = function(attrs, first) {
+  var matches = _.matches(attrs);
+  return this[first ? 'find' : 'filter'](function(model) {
+    return matches(model.attributes);
+  });
+};
+
+BaseData.Collection.prototype.findWhere = function(attrs) {
+  return this.where(attrs, true);
+};
+
 // Underscore methods that we want to implement on the Collection.
 // Taken from Backbone
 // indexOf is not optimized for sort
