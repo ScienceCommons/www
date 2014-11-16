@@ -475,7 +475,7 @@ BaseData.Collection.prototype.add = function(data, options) {
 
   var addAllowed = false;
   if (newModel) {
-    addAllowed = _.isUndefined(this._byId[newModel.get("id")]);
+    addAllowed = _.isUndefined(newModel.get("id")) || _.isUndefined(this._byId[newModel.get("id")]);
   } else {
     addAllowed = !data.id || _.isUndefined(this._byId[data.id]);
   }
