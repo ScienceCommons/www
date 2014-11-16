@@ -484,9 +484,9 @@ BaseData.Collection.prototype.add = function(data, options) {
   if (addAllowed) { // don't allow duplicate id's
     newModel = newModel || this.initializeModelType(data, _.extend({}, this.modelOptions, options));
     if (this.comparator) { // assumes its already sorted
-      var index = this.sortedIndex(this.comparator, newModel);
+      var index = this.sortedIndex(newModel, this.comparator);
       this.models = this.models.concat([]);
-      this.models.splice(index+1, 0, newModel);
+      this.models.splice(index, 0, newModel);
     } else {
       this.models = this.models.concat([newModel]);
     }
@@ -602,6 +602,14 @@ BaseData.Collection.prototype.findWhere = function(attrs) {
   return this.where(attrs, true);
 };
 
+BaseData.Collection.prototype.sortedIndex = function(newModel, comparator, context) {
+  if (_.isString(comparator)) {
+    return _.sortedIndex(this.models, newModel, function(model) { return model.get(comparator)}, context);
+  } else {
+    return _.sortedIndex(this.models, newModel, comparator, context);
+  }
+}
+
 // Underscore methods that we want to implement on the Collection.
 // Taken from Backbone
 // indexOf is not optimized for sort
@@ -611,7 +619,7 @@ var methods = ['forEach', 'each', 'map', 'collect', 'reduce', 'foldl',
   'reject', 'every', 'all', 'some', 'any', 'include', 'contains', 'invoke',
   'max', 'min', 'toArray', 'size', 'first', 'head', 'take', 'initial', 'rest',
   'tail', 'drop', 'last', 'without', 'difference', 'indexOf', 'shuffle',
-  'lastIndexOf', 'isEmpty', 'chain', 'sample', 'sortedIndex'];
+  'lastIndexOf', 'isEmpty', 'chain', 'sample'];
 
   // Mix in each Underscore method as a proxy to `Collection#models`.
   _.each(methods, function(method) {
