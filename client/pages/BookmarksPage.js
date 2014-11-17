@@ -23,8 +23,8 @@ BookmarksPage.view = function(ctrl) {
   var bookmarks = ctrl.user.get("bookmarks");
 
   if (!_.isEmpty(bookmarks)) {
-    var list = _.map(ctrl.user.get("bookmarks"), function(id) {
-      return <li><a href={"/articles/"+id} config={m.route}>{id}</a></li>;
+    var list = ctrl.user.get("bookmarks").map(function(bookmark) {
+      return <li><a href={"/articles/"+bookmark.get("bookmarkable_id")} config={m.route}>{bookmark.get("bookmarkable_id")}</a></li>;
     });
 
     content = (

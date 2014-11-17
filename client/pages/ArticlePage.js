@@ -171,7 +171,7 @@ ArticlePage.view = function(ctrl) {
           <div className="col span_1_of_4 text_right">
             <div className="btn_group">
               {editButtons}
-              <button type="button" key="bookmark" title="Bookmark article" className={"btn bookmark " + (ctrl.user.hasArticleBookmarked(article) ? "active" : "")} onclick={toggleBookmark(article, ctrl.user)}><span className="icon icon_bookmark"></span></button>
+              <button type="button" key="bookmark" title="Bookmark article" className={"btn bookmark " + (ctrl.user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={toggleBookmark(article, ctrl.user)}><span className="icon icon_bookmark"></span></button>
             </div>
 
             <div className="journal">
@@ -216,7 +216,7 @@ ArticlePage.view = function(ctrl) {
 // helpers
 function toggleBookmark(article, user) {
   return function(e) {
-    return user.toggleArticleBookmark(article);
+    return user.get("bookmarks").add({bookmarkable_type: "Article", bookmarkable_id: article.get("id")}, {sync: true});
   };
 };
 
