@@ -14,7 +14,7 @@ var UserModel = CurateBaseModel.extend({
     "articles": {type: "many", model: require("./ArticleModel.js")},
     "comments": {type: "many", model: CommentModel},
     "notifications": {type: "many", model: require("./NotificationModel.js")},
-    "bookmarks": {type: "many", model: CurateBaseModel}
+    "bookmarks": {type: "many", model: require("./BookmarkModel.js")}
   },
   defaults: {
     "email": "",
