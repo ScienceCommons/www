@@ -25,13 +25,14 @@ BookmarksPage.view = function(ctrl) {
 
   if (!_.isEmpty(bookmarks)) {
     var list = ctrl.user.get("bookmarks").map(function(bookmark) {
-      return <li><a href={"/articles/"+bookmark.get("bookmarkable_id")} config={m.route}>{bookmark.get("bookmarkable_id")}</a></li>;
+      return BookmarksPage.views[bookmark.get("bookmarkable_type")](bookmark.get("bookmarkable"));
+      // return <li><a href={"/articles/"+bookmark.get("bookmarkable_id")} config={m.route}>{bookmark.get("bookmarkable_id")}</a></li>;
     });
 
     content = (
       <div>
         <h1>Bookmarks</h1>
-        <ul>
+        <ul className="bookmarks">
           {list}
         </ul>
       </div>
@@ -46,6 +47,14 @@ BookmarksPage.view = function(ctrl) {
   }
 
   return new Layout.view(ctrl.controllers.layout, content);
+};
+
+BookmarksPage.views = {};
+
+BookmarksPage.views.Article = function(article) {
+  return <li className="bookmark articleBookmark">
+    <a href={article.url().replace(window.location.origin, "")} config={m.route}>{article.get("title")}</a>
+  </li>;
 };
 
 module.exports = BookmarksPage;
