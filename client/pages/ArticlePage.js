@@ -216,7 +216,12 @@ ArticlePage.view = function(ctrl) {
 // helpers
 function toggleBookmark(article, user) {
   return function(e) {
-    return user.get("bookmarks").add({bookmarkable_type: "Article", bookmarkable_id: article.get("id")}, {sync: true});
+    var bookmark = user.hasBookmarked("Article", article.get("id"));
+    if (bookmark) {
+      return user.get("bookmarks").remove(bookmark, {sync: true});
+    } else {
+      return user.get("bookmarks").add({bookmarkable_type: "Article", bookmarkable_id: article.get("id")}, {sync: true});
+    }
   };
 };
 

@@ -23,8 +23,8 @@ BookmarksPage.view = function(ctrl) {
   var content;
   var bookmarks = ctrl.user.get("bookmarks");
 
-  if (!_.isEmpty(bookmarks)) {
-    var list = ctrl.user.get("bookmarks").map(function(bookmark) {
+  if (bookmarks.length > 0) {
+    var list = bookmarks.map(function(bookmark) {
       return BookmarksPage.views[bookmark.get("bookmarkable_type")](bookmark.get("bookmarkable"));
       // return <li><a href={"/articles/"+bookmark.get("bookmarkable_id")} config={m.route}>{bookmark.get("bookmarkable_id")}</a></li>;
     });
