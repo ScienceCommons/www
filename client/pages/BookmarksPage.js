@@ -15,6 +15,7 @@ BookmarksPage.controller = function(options) {
   OnUnload(this);
   options = _.extend({id: "BookmarksPage"}, options);
   this.user = options.user;
+  this.user.get("bookmarks").fetch();
   this.controllers.layout = new Layout.controller(options);
 };
 
@@ -39,7 +40,7 @@ BookmarksPage.view = function(ctrl) {
     content = (
       <div>
         <h1>Bookmarks</h1>
-        <p>You don't have any bookmarks</p>
+        <p>You do not have any bookmarks</p>
       </div>
     );
   }
