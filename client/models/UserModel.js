@@ -64,12 +64,16 @@ var UserModel = CurateBaseModel.extend({
   hasBookmarked: function(type, id) {
     return this.get("bookmarks").findWhere({bookmarkable_type: type, bookmarkable_id: id});
   },
-  toggleArticleBookmark: function(article) {
-    if (this.hasArticleBookmarked(article)) {
-      this.set("bookmarks", _.without(this.get("bookmarks"), article.get("id")));
-    } else {
-      this.set("bookmarks", this.get("bookmarks").concat([article.get("id")]));
-    }
+  toggleBookmark: function(type, bookarkable) {
+    var _this = this;
+    return function() {
+      var bookmark = _this.hasBookmarked(type, bookarkable.get("id"));
+      if (bookmark) {
+        return _this.get("bookmarks").remove(bookmark, {sync: true});
+      } else {
+        return _this.get("bookmarks").add({bookmarkable_type: type, bookmarkable_id: bookarkable.get("id")}, {sync: true});
+      }
+    };
   },
   urlRoot: "https://www.curatescience.org/users",
   toggleAdmin: function() {

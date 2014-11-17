@@ -44,7 +44,7 @@ SearchResults.itemView = function(article, user) {
       <td>
         <header><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></header>
         <div className="authors">
-          <button type="button" className={"btn btn_subtle bookmark " + (user.hasArticleBookmarked(article) ? "active" : "")} onclick={toggleBookmark(article, user)}>
+          <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article, user)}>
             <span className="icon icon_bookmark"></span>
           </button>
           ({article.get("year")}) {article.get("authors").etAl(3)}
@@ -89,14 +89,6 @@ SearchResults.view = function(ctrl) {
       {more}
     </div>
   );
-};
-
-// helpers
-
-function toggleBookmark(article, user) {
-  return function(e) {
-    return user.toggleArticleBookmark(article);
-  };
 };
 
 module.exports = SearchResults;
