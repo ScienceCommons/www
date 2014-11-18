@@ -15,7 +15,9 @@ BookmarksPage.controller = function(options) {
   OnUnload(this);
   options = _.extend({id: "BookmarksPage"}, options);
   this.user = options.user;
-  this.user.get("bookmarks").fetch();
+  if (this.user.get("id")) {
+    this.user.get("bookmarks").fetch();
+  }
   this.controllers.layout = new Layout.controller(options);
 };
 
