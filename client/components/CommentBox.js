@@ -3,9 +3,6 @@
 "use strict";
 require("./CommentBox.scss");
 
-var m = require("mithril");
-var _ = require("underscore");
-
 var CommentList = require("./CommentList.js");
 var CommentForm = require("./CommentForm.js");
 
@@ -14,19 +11,17 @@ var CommentBox = {};
 CommentBox.controller = function(options) {
   this.user = options.user;
   this.comments = options.comments;
-  this.commentFormController = new CommentForm.controller({user: options.user, comments: this.comments});
-  this.interval = setInterval(m.redraw, 60000); // redraw every minute for time-stamps
-  var _this = this;
-  this.onunload = function() {
-    clearInterval(_this.interval);
-  };
+  
+  this.controllers = {};
+  this.controllers.commentForm = new CommentForm.controller({user: this.user, comments: this.comments});
+  this.controllers.commentList = new CommentList.controller({user: this.user, comments: this.comments, reply: true});
 };
 
 CommentBox.view = function(ctrl) {
   return (
     <div className="CommentBox">
-      {new CommentForm.view(ctrl.commentFormController)}
-      {new CommentList.view({comments: ctrl.comments, user: ctrl.user, reply: true})}
+      {new CommentForm.view(ctrl.controllers.commentForm)}
+      {new CommentList.view(ctrl.controllers.commentList)}
     </div>
   );
 };

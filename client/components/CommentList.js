@@ -6,18 +6,24 @@ require("./CommentList.scss");
 var m = require("mithril");
 var _ = require("underscore");
 
+var CommentForm = require("./CommentForm.js");
+
 var Comment = {};
 
 Comment.view = function(ctrl) {
   var comment = ctrl.comment;
-  if (!comment.get("replies").isEmpty()) {
-    var replies = new CommentList.view({comments: comment.get("replies")});
+  if (!comment.get("comments").isEmpty()) {
+    var replies = new CommentList.view(ctrl.listController, {comments: comment.get("comments")});
   }
-  if (ctrl.onDelete && (comment.get("owner_id") === ctrl.user.get("id") || ctrl.user.get("admin"))) {
+  if (ctrl.onDelete && (comment.get("owner_id") === ctrl.listController.user.get("id") || ctrl.listController.user.get("admin"))) {
     var deleteButton = <button type="button" className="btn" onclick={ctrl.onDelete}>Delete</button>;
   }
-  if (ctrl.reply) {
-    var replyButton = <button type="button" className="btn" onclick={ctrl.reply}><span className="icon icon_reply"></span> Reply</button>;
+  if (ctrl.listController.reply) {
+    var replyActive = ctrl.listController.replying() === comment;
+    var replyButton = <button type="button" className={"btn " + (replyActive ? "active" : "")} onclick={ctrl.listController.toggleReply(comment)}><span className="icon icon_reply"></span> Reply</button>;
+    if (replyActive) {
+      var replyForm = new CommentForm.view(ctrl.listController.controllers.commentForm);
+    }
   }
 
   return (
@@ -34,6 +40,7 @@ Comment.view = function(ctrl) {
           {deleteButton}
         </div>
 
+        {replyForm}
         {replies}
       </div>
     </div>
@@ -42,30 +49,53 @@ Comment.view = function(ctrl) {
 
 var CommentList = {};
 
-CommentList.view = function(ctrl) {
-  var comments = ctrl.comments.map(function(comment) {
+CommentList.controller = function(options) {
+  this.user = options.user;
+  this.reply = options.reply;
+  this.comments = options.comments;
+  this.replying = m.prop(false);
+
+  this.controllers = {};
+
+  this.interval = setInterval(m.redraw, 60000); // redraw every minute for time-stamps
+  var _this = this;
+  this.onunload = function() {
+    clearInterval(_this.interval);
+  };
+
+  this.toggleReply = function(comment) {
+    return function(e) {
+      if (_this.replying() === false) {
+        _this.replying(comment);
+        _this.controllers.commentForm = new CommentForm.controller({
+          user: _this.user,
+          comments: comment.get("comments"),
+          onAdd: function() { _this.replying(false); }
+        });
+      } else {
+        _this.replying(false);
+        _this.controllers.commentForm = null;
+      }
+    };
+  };
+};
+
+CommentList.view = function(ctrl, options) {
+  options = options || {};
+  var comments = (options.comments || ctrl.comments).map(function(comment) {
     return new Comment.view({
       comment: comment,
-      user: ctrl.user,
-      reply: (ctrl.reply ? reply : false),
-      onDelete: onDelete(ctrl.comments, comment)
+      listController: ctrl,
+      onDelete: onDelete((options.comments || ctrl.comments), comment)
     });
   });
 
-  return (
-    <div className="CommentList">
-      {comments}
-    </div>
-  );
+  return <div className="CommentList">{comments}</div>;
 };
 
 module.exports = CommentList;
 
 // helpers
-
-function reply() {
-  alert("reply clicked");
-}
 
 function onDelete(collection, comment) {
   return function (e) {

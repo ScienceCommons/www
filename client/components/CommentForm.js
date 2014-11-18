@@ -28,12 +28,16 @@ CommentForm.controller = function(options) {
 
   this.handleSubmit = function(e) {
     e.preventDefault();
-    _this.comments.add({
+    var res = _this.comments.add({
       "owner_id": _this.user.get("id"),
       "comment": _this.body(),
       "anonymous": _this.anonymous()
     }, {sync: true});
+
     _this.body("");
+    if (options.onAdd) {
+      options.onAdd();
+    }
   };
 
   this.handleInput = function() {

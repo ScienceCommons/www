@@ -9,20 +9,13 @@ var CurateBaseModel = require("./CurateBaseModel.js");
 
 var CommentModel = CurateBaseModel.extend({
   relations: {
-    replies: {type: "many"} // model is defined below
+    comments: {type: "many", urlAction: "comments"} // model is defined below
   },
   defaults: {
     "owner_id": "",
     "comment": "",
     "anonymous": false
     // ts
-  },
-  initialize: function() {
-    if (this.get("created_at")) {
-      this.set("ts", this.get("created_at")*1000, {silent: true});
-    } else if (!this.get("ts")) {
-      this.set("ts", _.now(), {silent: true});
-    }
   },
   computeds: {
     authorName: function() {
@@ -32,10 +25,16 @@ var CommentModel = CurateBaseModel.extend({
         return this.get("author").get("fullName");
       }
     },
+    date: function() {
+      if (this.get("created_at")) {
+        return new Date(this.get("created_at"));
+      }
+    },
     timeAgo: function() {
-      return vagueTime.get({
-        to: this.get("ts")
-      });
+      var date = this.get("date");
+      if (date) {
+        return vagueTime.get({ to: date });
+      }
     },
     image: function() {
       if (this.get("anonymous")) {
@@ -52,6 +51,6 @@ var CommentModel = CurateBaseModel.extend({
   urlRoot: "https://www.curatescience.org/comments"
 });
 
-CommentModel.prototype.relations.replies.model = CommentModel; // had to do this because of self reference
+CommentModel.prototype.relations.comments.model = CommentModel; // had to do this because of self reference
 
 module.exports = CommentModel;
