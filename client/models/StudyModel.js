@@ -64,6 +64,16 @@ var StudyModel = CurateBaseModel.extend({
         hash[_.keys(this.get("effect_size"))[0]] = val;
         this.set("effect_size", hash);
       }
+    },
+    year: function() {
+      if (this.get("article")) {
+        return this.get("article").get("year");
+      } else {
+        var date = this.get("publication_date");
+        if (date) {
+          return (new Date(date)).getFullYear();
+        }
+      }
     }
   },
   addComment: function(field, comment) {
@@ -116,7 +126,6 @@ var StudyModel = CurateBaseModel.extend({
   etAl: function(num) {
     return (this.get("article") ? this.get("article") : this).get("authors").etAl(num);
   }
-
 });
 
 module.exports = StudyModel;

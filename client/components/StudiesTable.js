@@ -622,8 +622,13 @@ function handleBadgeDropdownFileClick(ctrl, study, file) {
 };
 
 StudiesTable.cellViews.number = function(ctrl, study) {
+  var year = study.get("year");
+  if (year) {
+    year = "(" + year + ")";
+  }
+  
   return <ul>
-    <li>{study.etAl(1)}</li>
+    <li>{study.etAl(1)} {year}</li>
     <li>{study.get("number")}</li>
   </ul>;
 };
