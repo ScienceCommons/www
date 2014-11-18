@@ -82,15 +82,27 @@ CommentList.controller = function(options) {
 
 CommentList.view = function(ctrl, options) {
   options = options || {};
-  var comments = (options.comments || ctrl.comments).map(function(comment) {
-    return new Comment.view({
-      comment: comment,
-      listController: ctrl,
-      onDelete: onDelete((options.comments || ctrl.comments), comment)
+  var comments = (options.comments || ctrl.comments);
+  var commentViews;
+  if (ctrl.where) {
+    commentViews = _.map(comments.where(ctrl.where), function(comment) {
+      return new Comment.view({
+        comment: comment,
+        listController: ctrl,
+        onDelete: onDelete((options.comments || ctrl.comments), comment)
+      });
     });
-  });
+  } else {
+    commentViews = comments.map(function(comment) {
+      return new Comment.view({
+        comment: comment,
+        listController: ctrl,
+        onDelete: onDelete((options.comments || ctrl.comments), comment)
+      });
+    });
+  }
 
-  return <div className="CommentList">{comments}</div>;
+  return <div className="CommentList">{commentViews}</div>;
 };
 
 module.exports = CommentList;

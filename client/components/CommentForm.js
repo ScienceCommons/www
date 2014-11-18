@@ -14,6 +14,7 @@ CommentForm.controller = function(options) {
   this.anonymous = m.prop(false);
   this.user = options.user;
   this.comments = options.comments;
+  this.field = options.field;
 
   this.dropdownSelectController = new DropdownSelect.controller({
     options: [
@@ -31,7 +32,8 @@ CommentForm.controller = function(options) {
     var res = _this.comments.add({
       "owner_id": _this.user.get("id"),
       "comment": _this.body(),
-      "anonymous": _this.anonymous()
+      "anonymous": _this.anonymous(),
+      "field": _this.field
     }, {sync: true});
 
     _this.body("");

@@ -179,23 +179,6 @@ StudiesTable.controller = function(opts) {
     };
   };
 
-  this.addComment = function(study, field) {
-    return function(e) {
-      e.preventDefault();
-
-      var comment = {
-        comment: _this.getEdits(study, field, "comment")
-      };
-
-      if (!_.isEmpty(comment.comment)) {
-        study.getComments(field).add(comment, {sync: true});
-        _this.updateEdits(study, field, "comment")("");
-      } else {
-        throw("Cannot submit an empty comment");
-      }
-    };
-  };
-
   this.openStudyFinder = function(study) {
     return function() {
       _this.studyFinderStudy(study);
@@ -353,11 +336,9 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
     contents.push(study.get(field));
   }
 
-  if (study.getComments(field)) {
-    var numComments = study.getComments(field).length;
-    if (numComments > 0) {
-      var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
-    }
+  var numComments = study.get("comments").where({field: field}).length;
+  if (numComments > 0) {
+    var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
   }
 
   // also include indicators
@@ -381,6 +362,7 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
 
 StudiesTable.studyModalView = function(ctrl, study, field, options) {
   ctrl.controllers.studyCommentAndEditModal.open(true);
+  ctrl.controllers.studyFieldCommentForm.comments = study.get("comments");
 
   if (ctrl.active().editing && !options.replication) {
     var inputs;
@@ -402,13 +384,11 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
     });
   } else {
     if (study.commentable(field)) {
-      ctrl.controllers.studyFieldCommentForm.comments = study.getComments(field);
-      var comments = study.getComments(field).map(function(comment) {
-        return (
-          <li>{comment.get("comment")}</li>
-        );
+      ctrl.controllers.studyFieldCommentForm.field = field;
+      var comments = _.map(study.get("comments").where({field: field}), function(comment) {
+        return <li>{comment.get("comment")}</li>;
       });
-      var modalContent = new CommentList.view({comments: study.getComments(field), user: ctrl.user});
+      var modalContent = new CommentList.view({comments: study.get("comments"), where: {field: field}, user: ctrl.user});
       var modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
     }
 
@@ -626,7 +606,7 @@ StudiesTable.cellViews.number = function(ctrl, study) {
   if (year) {
     year = "(" + year + ")";
   }
-  
+
   return <ul>
     <li>{study.etAl(1)} {year}</li>
     <li>{study.get("number")}</li>

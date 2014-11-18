@@ -10,16 +10,9 @@ var LinkModel = require("./LinkModel.js");
 var StudyModel = CurateBaseModel.extend({
   name: "Study",
   relations: {
-    //authors: {type: "many", model: require("./UserModel.js")},
-    "authors": {type: "many", collection: require("../collections/AuthorCollection.js")},
-    //comments: {type: "many", model: CommentModel},
+    authors: {type: "many", collection: require("../collections/AuthorCollection.js")},
     links: {type: "many", model: LinkModel},
-    authors_comments: {type: "many", model: CommentModel},
-    independent_variables_comments: {type: "many", model: CommentModel},
-    dependent_variables_comments: {type: "many", model: CommentModel},
-    n_comments: {type: "many", model: CommentModel},
-    power_comments: {type: "many", model: CommentModel},
-    effect_size_comments: {type: "many", model: CommentModel},
+    comments: {type: "many", collection: require("../collections/CommentCollection.js"), urlAction: "comments"},
     replications: {type: "many", model: require("./ReplicationModel.js"), urlAction: "replications"} // model is defined below
   },
   defaults: {
@@ -76,12 +69,6 @@ var StudyModel = CurateBaseModel.extend({
       }
     }
   },
-  addComment: function(field, comment) {
-    this.getComments(field).add(comment);
-  },
-  getComments: function(field) {
-    return this.get(field+"_comments");
-  },
   addReplication: function(replicationStudy) {
     if (this.get("article_id") !== replicationStudy.get("article_id")) {
       this.get("replications").add({
@@ -102,10 +89,6 @@ var StudyModel = CurateBaseModel.extend({
     } else {
       return _.contains(this.get("badges"), name);
     }
-  },
-  hasComments: function(field) {
-    var comments = this.getComments(field);
-    return comments && comments.length > 0;
   },
   commentable: function(field) {
     return _.contains(["independent_variables", "dependent_variables", "n", "power", "effect_size"], field);
