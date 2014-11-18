@@ -117,7 +117,22 @@ module.exports = function (grunt) {
         output: {
           path: PRODUCTION_PATH+"/assets",
           filename: "[name].js",
-          publicPath: "https://s3.amazonaws.com/www.curatescience.org/assets/"
+          publicPath: "https://s3.amazonaws.com/<%= aws.bucket %>/assets/"
+        },
+        plugins: [
+          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.optimize.DedupePlugin()
+        ]
+      },
+      test_production: {
+        debug: false,
+        entry: {
+          main: "./client/app.js"
+        },
+        output: {
+          path: PRODUCTION_PATH+"/assets",
+          filename: "[name].js",
+          publicPath: "https://s3.amazonaws.com/<%= aws.test_bucket %>/assets/"
         },
         plugins: [
           new webpack.optimize.OccurenceOrderPlugin(),
@@ -217,7 +232,6 @@ module.exports = function (grunt) {
       options: {
         key: '<%= aws.key %>',
         secret: '<%= aws.secret %>',
-        bucket: '<%= aws.bucket %>',
         access: 'public-read',
         headers: {
           // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
@@ -225,8 +239,39 @@ module.exports = function (grunt) {
           "Expires": new Date(Date.now() + 63072000000).toUTCString()
         }
       },
+      test_production: {
+        options: {
+          gzip: true,
+          bucket: '<%= aws.test_bucket %>'
+        },
+        upload: [
+          {
+            src: './build/production/public/index.html',
+            dest: 'index.html'
+          },
+          {
+            src: './build/production/public/favicon.ico',
+            dest: 'favicon.ico'
+          },
+          {
+            src: './build/production/public/google_auth.jpg',
+            dest: 'google_auth.jpg'
+          },
+          {
+            src: './build/production/public/assets/*',
+            dest: 'assets/'
+          },
+          {
+            src: './build/production/public/assets/assets/*',
+            dest: 'assets/'
+          }
+        ]
+      },
       production: {
-        options: { gzip: true },
+        options: {
+          gzip: true,
+          bucket: '<%= aws.bucket %>'
+        },
         upload: [
           {
             src: './build/production/public/index.html',
@@ -276,7 +321,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask("build:development", ["clean:development", "env:development", "preprocess:development", "copy:development", "webfont", "webpack:development"]);
   grunt.registerTask("build:production", ["clean:production", "env:production", "preprocess:production", "copy:production", "webfont", "webpack:production"]);
-  grunt.registerTask("deploy", ["build:production", "s3:production"]);
+  grunt.registerTask("build:test_production", ["clean:production", "env:production", "preprocess:production", "copy:production", "webfont", "webpack:test_production"]);
+  grunt.registerTask("deploy:production", ["build:production", "s3:production"]);
+  grunt.registerTask("deploy:test_production", ["build:test_production", "s3:test_production"]);
 
   grunt.registerTask("default", []);
 };
