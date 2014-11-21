@@ -31,6 +31,9 @@ var UserModel = CurateBaseModel.extend({
     "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis nulla in turpis luctus rutrum. Quisque adipiscing leo fringilla enim luctus ultricies. Fusce iaculis augue tincidunt eleifend condimentum. Vestibulum commodo massa ut vulputate aliquam. Etiam eu ante id est varius auctor. Sed fermentum at purus ac pellentesque. Duis nibh est, ornare ac tellus a, fermentum porta velit. In in risus et orci rhoncus egestas.\n\nNulla facilisi. Proin iaculis, nisl dictum consequat tincidunt, lectus arcu tincidunt magna, a placerat purus dui vitae dui. Maecenas fermentum luctus sodales. Cras vestibulum, erat in gravida tristique, augue ante scelerisque diam, non porta sem metus.",
     //"bookmarks": [{bookmarkable_type: "Article", bookmarkable_id: "52529"}, {bookmarkable_type: "Article", bookmarkable_id: "51037"}] // article ids
   },
+  initialize: function() {
+    _.bindAll(this, 'toggleAdmin', 'toggleCurator');
+  },
   computeds: {
     facebookUrl: function() {
       return "https://www.facebook.com/" + this.get("facebook");
@@ -78,7 +81,15 @@ var UserModel = CurateBaseModel.extend({
   urlRoot: "https://www.curatescience.org/users",
   toggleAdmin: function() {
     var _this = this;
-    var req = this.sync("create", {}, {url: this.url() + "/toggle_admin", data: {state: !this.get("admin")}});
+    var req = this.sync("create", this, {url: this.url() + "/toggle_admin", data: {state: !this.get("admin")}});
+    this.set({admin: !this.get("admin")});
+    req.then(function(data) { _this.set(data); }, this.error);
+    return req;
+  },
+  toggleCurator: function() {
+    var _this = this;
+    var req = this.sync("create", this, {url: this.url() + "/toggle_curator", data: {state: !this.get("curator")}});
+    this.set({curator: !this.get("curator")});
     req.then(function(data) { _this.set(data); }, this.error);
     return req;
   },

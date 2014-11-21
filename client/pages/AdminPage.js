@@ -106,20 +106,19 @@ AdminPage.view = function(ctrl) {
 
 // helpers
 
-var toggleAdmin = function(user) {
-  return function(e) {
-    user.toggleAdmin();
-  };
-};
-
 var userActionTable = function(ctrl, users) {
   var rows = users.map(function(user) {
     var isAdmin = user.get("admin");
+    var isCurator = user.get("curator");
     return <tr>
       <td>{user.get("name")}</td>
       <td>{user.get("email")}</td>
+      <td>{isCurator ? "Yes" : "No"}</td>
       <td>{isAdmin ? "Yes" : "No"}</td>
-      <td><button type="button" className="btn" onclick={toggleAdmin(user)} disabled={user.get("id") === ctrl.user.get("id")}>{isAdmin ? "Revoke admin" : "Make admin"}</button></td>
+      <td>
+        <button type="button" className="btn" onclick={user.toggleCurator} disabled={user.get("id") === ctrl.user.get("id")}>{isCurator ? "Revoke curator" : "Make curator"}</button>
+        <button type="button" className="btn" onclick={user.toggleAdmin} disabled={user.get("id") === ctrl.user.get("id")}>{isAdmin ? "Revoke admin" : "Make admin"}</button>
+      </td>
     </tr>;
   });
 
@@ -127,6 +126,7 @@ var userActionTable = function(ctrl, users) {
     <thead><tr>
       <th>Name</th>
       <th>Email</th>
+      <th>curator?</th>
       <th>admin?</th>
       <th>Actions</th>
     </tr></thead>
