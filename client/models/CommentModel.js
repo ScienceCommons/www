@@ -19,10 +19,10 @@ var CommentModel = CurateBaseModel.extend({
   },
   computeds: {
     authorName: function() {
-      if (this.get("anonymous") || !this.get("author")) {
+      if (this.get("anonymous") || !this.get("name")) {
         return "Anonymous";
       } else {
-        return this.get("author").get("fullName");
+        return this.get("name");
       }
     },
     date: function() {

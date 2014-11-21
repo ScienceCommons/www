@@ -26,7 +26,7 @@ Comment.view = function(ctrl) {
     }
   }
 
-  var heading = _.compact([comment.get("name"), comment.get("timeAgo")]).join(": ");
+  var heading = _.compact([comment.get("authorName"), comment.get("timeAgo")]).join(": ");
 
   return (
     <div className="Comment">
