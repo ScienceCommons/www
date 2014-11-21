@@ -140,16 +140,18 @@ $column_width: 300px;
     left: 100%;
     right: auto;
     bottom: auto;
-    width: 300px;
-    height: 400px;
+    width: 350px;
+    min-height: 400px;
     margin-left: 4px;
 
-    .inputs {
-      padding: 20px;
-    }
+    .modalContent {
+      .inputs {
+        padding: 20px;
+      }
 
-    input {
-      width: 100%;
+      input {
+        width: 100%;
+      }
     }
 
     .modalContent > .CommentList {
@@ -386,7 +388,6 @@ $column_width: 300px;
     padding: 0;
 
     td.commentSubmit {
-      width: 61px;
 
       button {
         padding: 5px 10px;

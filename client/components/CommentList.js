@@ -26,11 +26,12 @@ Comment.view = function(ctrl) {
     }
   }
 
+  var heading = _.compact([comment.get("authorName"), comment.get("timeAgo")]).join(": ");
+
   return (
     <div className="Comment">
       <div className="commentHeader">
-        {comment.get("image")}
-        <h5>{comment.get("authorName")} - {comment.get("timeAgo")}</h5>
+        <h5>{heading}</h5>
       </div>
       <div className="commentContent">
         <p>{comment.get("comment")}</p>

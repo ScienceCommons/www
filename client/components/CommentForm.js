@@ -5,8 +5,6 @@ require("./CommentForm.scss");
 
 var m = require("mithril");
 
-var DropdownSelect = require("./DropdownSelect.js");
-
 var CommentForm = {};
 
 CommentForm.controller = function(options) {
@@ -15,15 +13,6 @@ CommentForm.controller = function(options) {
   this.user = options.user;
   this.comments = options.comments;
   this.field = options.field;
-
-  this.dropdownSelectController = new DropdownSelect.controller({
-    options: [
-      {value: false, content: <img src={this.user.get("gravatarUrl")} className="userImage" />},
-      {value: true, content: <div className="userImage"><span className="icon icon_person"></span></div>}
-    ],
-    value: this.anonymous,
-    onchange: this.anonymous
-  });
 
   var _this = this;
 
@@ -59,9 +48,13 @@ CommentForm.view = function(ctrl) {
       <table>
         <tbody>
           <tr>
-            <td className="commentUserSelect">{new DropdownSelect.view(ctrl.dropdownSelectController)}</td>
             <td className="commentBodyTextarea"><textarea value={ctrl.body()} oninput={ctrl.handleInput} placeholder="Leave a comment"/></td>
-            <td className="commentSubmit"><button type="submit" className="btn post">Post</button></td>
+            <td className="commentSubmit">
+              <div><button type="submit" className="btn post">Post</button></div>
+              <div className="toggleAnonymous">
+                <label><input type="checkbox" value={ctrl.anonymous()} onchange={m.withAttr("checked", ctrl.anonymous)}/> Anonymous</label>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
