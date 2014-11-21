@@ -179,3 +179,7 @@ table.center {
 button .icon {
   line-height: 0;
 }
+
+button.bookmark.active {
+  color: $blue;
+}

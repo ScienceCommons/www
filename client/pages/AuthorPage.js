@@ -99,7 +99,7 @@ AuthorPage.view = function(ctrl) {
         <div>
           <h3>{articles.length} Article{articles.length > 1 ? "s" : ""}</h3>
           <ul>
-            {articles.map(AuthorPage.articleView)}
+            {articles.map(function(article) { return AuthorPage.articleView(article, ctrl.user); })}
           </ul>
         </div>
       );
@@ -166,8 +166,16 @@ AuthorPage.view = function(ctrl) {
   return new Layout.view(ctrl.controllers.layout, content);
 };
 
-AuthorPage.articleView = function(article) {
-  return <h5><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></h5>;
+AuthorPage.articleView = function(article, user) {
+  return <div>
+    <header><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></header>
+    <div className="authors">
+      <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article)}>
+        <span className="icon icon_bookmark"></span>
+      </button>
+      ({article.get("year")}) {article.authors().etAl(3)}
+    </div>
+  </div>;
 };
 
 module.exports = AuthorPage;
