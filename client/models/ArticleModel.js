@@ -135,6 +135,12 @@ var ArticleModel = CurateBaseModel.extend({
       return _.contains(this.get("badges"), name);
     }
   },
+  authors: function() {
+    if (this.get("authors").length === 0 && this.get("authors_denormalized").length > 0) {
+      return this.get("authors_denormalized");
+    }
+    return this.get("authors");
+  }
 });
 
 module.exports = ArticleModel;

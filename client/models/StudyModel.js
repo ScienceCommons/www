@@ -107,7 +107,7 @@ var StudyModel = CurateBaseModel.extend({
     });
   },
   etAl: function(num) {
-    return (this.get("article") ? this.get("article") : this).get("authors").etAl(num);
+    return (this.get("article") ? this.get("article") : this).authors().etAl(num);
   }
 });
 

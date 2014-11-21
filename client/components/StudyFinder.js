@@ -134,7 +134,7 @@ StudyFinder.searchView = function(ctrl) {
         <li className="article">
           <header onclick={ctrl.selectArticle(article)}>
             <div className="title">{article.get("title")}</div>
-            <div className="authors">({article.get("year")}) {article.get("authors").etAl(3)}</div>
+            <div className="authors">({article.get("year")}) {article.authors().etAl(3)}</div>
             {arrow}
           </header>
           {expandedContent}

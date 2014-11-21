@@ -49,7 +49,7 @@ ArticlePage.controller = function(options) {
 
   this.controllers.authorsList = new AuthorList.controller({
     editable: this.editing,
-    collection: this.article.get("authors")
+    collection: this.article.authors()
   });
 
   this.editClick = function() {
@@ -111,7 +111,7 @@ ArticlePage.view = function(ctrl) {
 
   if (article) {
     document.title = _.compact([
-      article.get("authors").etAl(1),
+      article.authors().etAl(1),
       article.get("journal"),
       article.get("year")
     ]).join(", ");

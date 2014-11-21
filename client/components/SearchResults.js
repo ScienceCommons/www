@@ -47,7 +47,7 @@ SearchResults.itemView = function(article, user) {
           <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article, user)}>
             <span className="icon icon_bookmark"></span>
           </button>
-          ({article.get("year")}) {article.get("authors").etAl(3)}
+          ({article.get("year")}) {article.authors().etAl(3)}
         </div>
       </td>
       <td className="badges">
