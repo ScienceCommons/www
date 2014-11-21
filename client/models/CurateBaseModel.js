@@ -30,4 +30,57 @@ var CurateBaseModel = BaseModel.extend({
   }
 });
 
+if (!_.isUndefined(localStorage)) {
+  CurateBaseModel.prototype.fetch = function(options) {
+    var _this = this;
+    var res = BaseModel.prototype.fetch.call(this, options);
+    if (!this.name) return res;
+
+    if (!this.loaded && !this.isNew()) {
+      try {
+        var key = this.name+"/"+this.get("id");
+        var item = localStorage.getItem(key);
+        pingLocalStorage(key);
+        if (!_.isEmpty(item)) {
+          this.set(JSON.parse(item), {server: true});
+        }
+      } catch (e) {
+        console.log("error", e);
+      }
+    }
+    res.then(function(data) {
+      try {
+        var key = _this.name+"/"+_this.get("id");
+        localStorage.setItem(key, JSON.stringify(_this._serverState));
+        pingLocalStorage(key);
+      } catch (e) {
+        console.log("error", e);
+      }
+    });
+    return res;
+  };
+
+  var pingLocalStorageData = localStorage.getItem("pingLocalStorageData");
+  if (pingLocalStorageData) {
+    pingLocalStorageData = JSON.parse(pingLocalStorageData);
+  }
+}
+
+var maxRecords = 500;
+pingLocalStorageData = pingLocalStorageData || {};
+pingLocalStorageData.records = pingLocalStorageData.records || {};
+pingLocalStorageData.ts = pingLocalStorageData.ts || 0;
+function pingLocalStorage(key) {
+  pingLocalStorageData.records[key] = pingLocalStorageData.records[key] || {numCalls: 0, ts: 0, key: key};
+  pingLocalStorageData.records[key].numCalls++;
+  pingLocalStorageData.records[key].ts = pingLocalStorageData.ts++;
+
+  if (_.size(pingLocalStorageData.records) > maxRecords) {
+    var remove = _.first(_.sortBy(pingLocalStorageData.records, 'ts'));
+    localStorage.removeItem(remove.key);
+    delete pingLocalStorageData.records[remove.key]
+  }
+  localStorage.setItem("pingLocalStorageData", JSON.stringify(pingLocalStorageData));
+}
+
 module.exports = CurateBaseModel;
