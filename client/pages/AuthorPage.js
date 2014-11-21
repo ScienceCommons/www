@@ -81,6 +81,19 @@ AuthorPage.controller = function(options) {
       _this.saving(false);
     }
   };
+
+  this.deleteClick = function() {
+    var confirmation = confirm("This will permanently delete the author");
+    if (confirmation) {
+      _this.saving(true);
+      _this.author.destroy().then(function() {
+        _this.saving(false);
+        m.route("/");
+      }, function(err) {
+        _this.saving(false);
+      });
+    }
+  };
 };
 
 AuthorPage.view = function(ctrl) {
@@ -113,7 +126,10 @@ AuthorPage.view = function(ctrl) {
           <button type="button" className="btn" key="discard" onclick={ctrl.discardClick} disabled={ctrl.saving()}>Discard</button>,
         ];
       } else {
-        editButtons = <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>;
+        editButtons = [
+          <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>,
+          <button type="button" className="btn" key="delete" onclick={ctrl.deleteClick}>Delete</button>,
+        ]
       }
     }
 
