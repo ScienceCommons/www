@@ -176,7 +176,7 @@ ArticlePage.view = function(ctrl) {
 
             <div className="journal">
               <h5>Journal</h5>
-              <p className="field" placeholder="Journal goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("journal"))}>{article.get("journal")}</p>
+              <p className="field" placeholder="Journal goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", article.setter("journal_title"))}>{article.get("journal_title")}</p>
             </div>
 
             <div className="doi">
