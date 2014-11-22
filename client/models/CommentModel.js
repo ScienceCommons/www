@@ -48,7 +48,18 @@ var CommentModel = CurateBaseModel.extend({
       return <span className="icon icon_person"></span>;
     }
   },
-  urlRoot: "https://www.curatescience.org/comments"
+  urlRoot: "https://www.curatescience.org/comments",
+  removeAnonymous: function() {
+    this.set("anonymous", false);
+    var req = this.sync("create", this, {url: this.url()+"/set_non_anonymous"});
+    var _this = this;
+    req.then(function(data) {
+      _this.set(data, {server: true});
+    }, function() {
+      _this.set("anonymous", true);
+    });
+    return req;
+  }
 });
 
 CommentModel.prototype.relations.comments.model = CommentModel; // had to do this because of self reference

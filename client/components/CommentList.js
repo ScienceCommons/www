@@ -25,6 +25,9 @@ Comment.view = function(ctrl) {
       var replyForm = new CommentForm.view(ctrl.listController.controllers.commentForm);
     }
   }
+  if (comment.get("anonymous") && comment.get("owner_id") === ctrl.listController.user.get("id")) {
+    var removeAnonymousButton = <button type="button" className="btn" onclick={removeAnonymous(comment)}>Make non-anonymous</button>;
+  }
 
   var heading = _.compact([comment.get("authorName"), comment.get("timeAgo")]).join(": ");
 
@@ -39,6 +42,7 @@ Comment.view = function(ctrl) {
         <div className="btn_group">
           {replyButton}
           {deleteButton}
+          {removeAnonymousButton}
         </div>
 
         {replyForm}
@@ -120,4 +124,10 @@ function onDelete(collection, comment) {
       collection.remove(comment, {sync: true});
     }
   };
+}
+
+function removeAnonymous(comment) {
+  return function() {
+    comment.removeAnonymous();
+  }
 }

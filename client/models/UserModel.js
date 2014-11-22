@@ -12,7 +12,7 @@ var UserModel = CurateBaseModel.extend({
   name: "User",
   relations: {
     "articles": {type: "many", model: require("./ArticleModel.js")},
-    "comments": {type: "many", model: CommentModel},
+    "comments": {type: "many", model: CommentModel, urlAction: "comments"},
     "notifications": {type: "many", model: require("./NotificationModel.js")},
     "bookmarks": {type: "many", model: require("./BookmarkModel.js")}
   },

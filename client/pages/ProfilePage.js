@@ -3,20 +3,24 @@
 "use strict";
 require("./ProfilePage.scss");
 
-var OnUnload = require("../utils/OnUnload.js");
-var Layout = require("../layouts/DefaultLayout.js");
-
 var _ = require("underscore");
 var m = require("mithril");
+
+var OnUnload = require("../utils/OnUnload.js");
+var Layout = require("../layouts/DefaultLayout.js");
+var CommentList = require("../components/CommentList.js");
 
 var ProfilePage = {};
 
 ProfilePage.controller = function(options) {
   OnUnload(this);
   options = _.extend({id: "ProfilePage"}, options);
-  this.controllers.layout= new Layout.controller(options);
   this.user = options.user;
   this.editing = m.prop(false);
+  this.user.get("comments").fetch();
+
+  this.controllers.layout= new Layout.controller(options);
+  this.controllers.commentList = new CommentList.controller({user: this.user, comments: this.user.get("comments"), reply: true});
 
   var _this = this;
   this.editClick = function() {
@@ -70,25 +74,11 @@ ProfilePage.articlesView = function(user) {
   );
 };
 
-ProfilePage.recentContributionsView = function(user) {
-  var content;
-  if (user.get("comments").length === 0) {
-    content = (
-      <p>
-        You have no comments.
-      </p>
-    );
-  } else {
-    var list = _.map(user.get("comments"), function(comment) {
-      return <li>{comment.body}</li>
-    });
-    content = <ul>{list}</ul>;
-  }
-
+ProfilePage.commentsView = function(ctrl) {
   return (
-    <div className="recentContributions">
-      <h3>Recent Contributions</h3>
-      {content}
+    <div>
+      <h3>Your comments</h3>
+      {new CommentList.view(ctrl.controllers.commentList)}
     </div>
   );
 };
@@ -113,7 +103,7 @@ ProfilePage.view = function(ctrl) {
         {ProfilePage.articlesView(ctrl.user)}
       </div>
       <div className="col span_1_of_2">
-        {ProfilePage.recentContributionsView(ctrl.user)}
+        {ProfilePage.commentsView(ctrl)}
       </div>
       <div className="btn_group editButtons">
         {editButtons}
