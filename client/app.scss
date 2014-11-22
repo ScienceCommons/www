@@ -183,3 +183,16 @@ button .icon {
 button.bookmark.active {
   color: $blue;
 }
+
+// similar to bootstrap alert styling
+.errors {
+  list-style: none;
+
+  & > li {
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    border-radius: $btn_radius;
+    padding: 15px;
+  }
+}

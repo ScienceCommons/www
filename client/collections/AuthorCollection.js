@@ -60,6 +60,12 @@ var AuthorCollection = CurateBaseCollection.extend({
         _this.total = res.total;
         _this.from = res.from;
         _this.reset(res.documents);
+        if (options.without) {
+          var model = _this.get(options.without.get("id"));
+          if (model) {
+            _this.remove(model);
+          }
+        }
       }
       ga('send', 'timing', 'AuthorCollection', 'Search', t1-t0, "/authors?q="+query+"&from="+res.from);
     });

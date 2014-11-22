@@ -9,7 +9,9 @@ var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/DefaultLayout.js");
 var Spinner = require("../components/Spinner.js");
 var ListEditor = require("../components/ListEditor.js");
+var AuthorFinder = require("../components/AuthorFinder.js");
 var AuthorModel = require("../models/AuthorModel.js");
+var Modal = require("../components/Modal.js");
 
 var AuthorPage = {};
 
@@ -41,7 +43,19 @@ AuthorPage.controller = function(options) {
         _this.author.set("affiliations", val);
       }
     }
-  })
+  });
+
+  this.markDuplicate = function(otherAuthor) {
+    if (confirm("Mark this author as a duplicate. This action cannot be undone.")) {
+      _this.author.markDuplicate(otherAuthor);
+    }
+  };
+
+  this.controllers.duplicateAuthorsFinder = new AuthorFinder.controller({
+    onSelect: this.markDuplicate,
+    parentAuthor: _this.author
+  });
+  this.controllers.duplicateAuthorsFinderModal = new Modal.controller();
 
   this.editClick = function() {
     if (_this.user.canEdit()) {
@@ -94,6 +108,10 @@ AuthorPage.controller = function(options) {
       });
     }
   };
+
+  this.markAsDuplicateClick = function() {
+    _this.controllers.duplicateAuthorsFinderModal.open(true);
+  };
 };
 
 AuthorPage.view = function(ctrl) {
@@ -118,7 +136,7 @@ AuthorPage.view = function(ctrl) {
       );
     }
 
-    if (ctrl.user.canEdit()) {
+    if (ctrl.user.canEdit() && !author.markedDuplicate()) {
       var editButtons;
       if (ctrl.editing()) {
         editButtons = [
@@ -138,8 +156,14 @@ AuthorPage.view = function(ctrl) {
         return <li>{error}</li>;
       });
 
-      var errorMessage = <ul class="errors">
+      var errorMessage = <ul className="errors">
         {errors}
+      </ul>;
+    }
+
+    if (author.markedDuplicate()) {
+      var alerts = <ul className="errors">
+        <li>This author is a duplicate.  Please reference the <a href={"/authors/"+author.get("same_as_id")} config={m.route}>primary author</a>.</li>
       </ul>;
     }
 
@@ -154,8 +178,16 @@ AuthorPage.view = function(ctrl) {
       name = author.get("fullName");
     }
 
+    if (ctrl.controllers.duplicateAuthorsFinderModal.open()) {
+      var duplicateAuthorsFinder = new Modal.view(ctrl.controllers.duplicateAuthorsFinderModal, {
+        label: "Find duplicate author",
+        content: new AuthorFinder.view(ctrl.controllers.duplicateAuthorsFinder)
+      });
+    }
+
     content = (
       <div>
+        {alerts}
         {errorMessage}
         <div className="section articleHeader">
           <div className="col span_3_of_4">
@@ -169,11 +201,13 @@ AuthorPage.view = function(ctrl) {
           <div className="col span_1_of_4 text_right">
             <div className="btn_group">
               {editButtons}
+              <button type="button" className="btn" disabled={author.markedDuplicate()} key="markDuplicate" onclick={ctrl.markAsDuplicateClick}>{author.markedDuplicate() ? "Marked" : "Mark"} as duplicate</button>
             </div>
           </div>
         </div>
         <div className="section">
           {articlesContent}
+          {duplicateAuthorsFinder}
         </div>
       </div>
     );

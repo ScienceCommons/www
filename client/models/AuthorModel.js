@@ -21,6 +21,9 @@ var AuthorModel = CurateBaseModel.extend({
     job_title: "",
     affiliations: []
   },
+  initialize: function() {
+    _.bindAll(this, 'markDuplicate');
+  },
   computeds: {
     fullName: {
       get: function() {
@@ -53,6 +56,21 @@ var AuthorModel = CurateBaseModel.extend({
     return { label: this.get("fullName"), value: this };
   },
   urlRoot: "https://www.curatescience.org/authors",
+  markedDuplicate: function() {
+    return !!this.get("same_as_id") && this.get("id") !== this.get("same_as_id");
+  },
+  markDuplicate: function(otherAuthor) {
+    var oldVal = this.get("same_as_id");
+    this.set("same_as_id", otherAuthor.get("id"));
+    var req = this.sync("create", this, {data: {id: this.get("id"), same_as_id: this.get("same_as_id")}, url: this.url()+"/mark_duplicate"});
+    var _this = this;
+    req.then(function(data) {
+      _this.set(data);
+    }, function() {
+      _this.set("same_as_id", oldVal);
+    });
+    return req;
+  }
 });
 
 module.exports = AuthorModel;
