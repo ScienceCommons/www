@@ -15,12 +15,15 @@ var CurateBaseModel = BaseModel.extend({
     var res = BaseModel.prototype.sync.call(this, method, model, _.extend(options, {
       unwrapError: function(response) {
         //model.resetErrors();
+        model.loading = false;
+        model.loaded = false;
         model.addError(undefined, response.error);
         _.each(response.messages, function(messages, key) {
           _.each(messages, function(message) {
             model.addError(key, message);
           });
         });
+        model.redraw();
       }
     }));
     res.then(function() {
