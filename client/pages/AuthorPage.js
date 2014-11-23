@@ -1,6 +1,7 @@
 /** @jsx m */
 
 "use strict";
+require("./AuthorPage.scss");
 
 var _ = require("underscore");
 var m = require("mithril");
@@ -118,8 +119,18 @@ AuthorPage.view = function(ctrl) {
   var author = ctrl.author;
   var content;
 
+  if (author.hasErrors()) {
+    var errors = _.map(author.errors(), function(error) {
+      return <li>{error}</li>;
+    });
+
+    var errorMessage = <ul className="errors">{errors}</ul>;
+  }
+
   if (author.loading) {
     content = Spinner.view();
+  } else if (!author.loaded) {
+    content = errorMessage;
   } else {
     var articles = author.get("articles");
     var articlesContent;
@@ -149,16 +160,6 @@ AuthorPage.view = function(ctrl) {
           <button type="button" className="btn" key="delete" onclick={ctrl.deleteClick}>Delete</button>,
         ]
       }
-    }
-
-    if (author.hasErrors()) {
-      var errors = _.map(author.errors(), function(error) {
-        return <li>{error}</li>;
-      });
-
-      var errorMessage = <ul className="errors">
-        {errors}
-      </ul>;
     }
 
     if (author.markedDuplicate()) {
@@ -206,7 +207,9 @@ AuthorPage.view = function(ctrl) {
           </div>
         </div>
         <div className="section">
-          {articlesContent}
+          <div className="articlesContent">
+            {articlesContent}
+          </div>
           {duplicateAuthorsFinder}
         </div>
       </div>
