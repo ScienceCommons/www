@@ -129,7 +129,7 @@ AuthorPage.view = function(ctrl) {
 
   if (author.loading) {
     content = Spinner.view();
-  } else if (!author.loaded) {
+  } else if (!author.isNew() && !author.loaded) {
     content = errorMessage;
   } else {
     var articles = author.get("articles");
