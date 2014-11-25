@@ -86,14 +86,7 @@ SearchResults.itemViews.Article = function(article, user) {
         ({article.get("year")}) {article.authors().etAl(3)}
       </div>
     </td>
-    <td className="badges">
-      <ul className="badges">
-        <li title="Data &amp; Syntax">{Badge.view({badge: "data", active: article.hasBadge("data")})}</li>
-        <li title="Materials">{Badge.view({badge: "materials", active: article.hasBadge("materials")})}</li>
-        <li title="Registration">{Badge.view({badge: "registration", active: article.hasBadge("registration")})}</li>
-        <li title="Disclosure">{Badge.view({badge: "disclosure", active: article.hasBadge("disclosure")})}</li>
-      </ul>
-    </td>
+    <td></td>
   </tr>;
 };
 
