@@ -9,20 +9,6 @@ ul.PillList {
   }
 
   .pill {
-    white-space: nowrap;
-    border-radius: 4px;
-    background-color: $blue;
-    color: white;
-    padding: 4px;
-    font-size: 12px;
-    line-height: 20px;
-    margin: 2px;
-
-    &.placeholder {
-      border: none !important;
-      padding-left: 0;
-    }
-
     .icon_removed {
       font-size: 18px;
     }

@@ -23,6 +23,10 @@
       &:first-child {
         width: 100%;
       }
+
+      & > header .pill {
+        margin-left: 10px;
+      }
     }
 
     ul.badges {

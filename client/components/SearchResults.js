@@ -7,7 +7,7 @@ var _ = require("underscore");
 var m = require("mithril");
 
 var ArticleModel = require("../models/ArticleModel.js");
-var ArticleCollection = require("../collections/ArticleCollection.js");
+var ArticleCollection = require("../collections/SearchCollection.js");
 var Spinner = require("./Spinner.js");
 var Badge = require("./Badge.js");
 
@@ -17,6 +17,7 @@ SearchResults.controller = function(options) {
   options = options || {};
   this.user = options.user;
   this.results = new ArticleCollection([]);
+  window.results = this.results;
   this.from = m.prop(0);
   this.resultsPerPage = m.prop(20);
 
@@ -38,37 +39,15 @@ SearchResults.controller = function(options) {
   this.fetchResults();
 };
 
-SearchResults.itemView = function(article, user) {
-  return (
-    <tr className="searchResult">
-      <td>
-        <header><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></header>
-        <div className="authors">
-          <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article)}>
-            <span className="icon icon_bookmark"></span>
-          </button>
-          ({article.get("year")}) {article.authors().etAl(3)}
-        </div>
-      </td>
-      <td className="badges">
-        <ul className="badges">
-          <li title="Data &amp; Syntax">{Badge.view({badge: "data", active: article.hasBadge("data")})}</li>
-          <li title="Materials">{Badge.view({badge: "materials", active: article.hasBadge("materials")})}</li>
-          <li title="Registration">{Badge.view({badge: "registration", active: article.hasBadge("registration")})}</li>
-          <li title="Disclosure">{Badge.view({badge: "disclosure", active: article.hasBadge("disclosure")})}</li>
-        </ul>
-      </td>
-    </tr>
-  );
-};
-
 SearchResults.view = function(ctrl) {
   var content;
 
   if (ctrl.results.loading) {
     content = new Spinner.view();
   } else if (ctrl.results.total > 0) {
-    content = <table><tbody>{ctrl.results.map(function(article) { return new SearchResults.itemView(article, ctrl.user); })}</tbody></table>;
+    content = <table><tbody>
+      {ctrl.results.map(function(result) { return new SearchResults.itemViews[result.get("type")](result, ctrl.user); })}
+    </tbody></table>;
   } else {
     content = <h3>Sorry, no results were found</h3>;
   }
@@ -89,6 +68,50 @@ SearchResults.view = function(ctrl) {
       {more}
     </div>
   );
+};
+
+SearchResults.itemViews = {};
+
+SearchResults.itemViews.Article = function(article, user) {
+  return <tr className="searchResult">
+    <td>
+      <header>
+        <a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a>
+        <span className="pill">Article</span>
+      </header>
+      <div className="authors">
+        <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article)}>
+          <span className="icon icon_bookmark"></span>
+        </button>
+        ({article.get("year")}) {article.authors().etAl(3)}
+      </div>
+    </td>
+    <td className="badges">
+      <ul className="badges">
+        <li title="Data &amp; Syntax">{Badge.view({badge: "data", active: article.hasBadge("data")})}</li>
+        <li title="Materials">{Badge.view({badge: "materials", active: article.hasBadge("materials")})}</li>
+        <li title="Registration">{Badge.view({badge: "registration", active: article.hasBadge("registration")})}</li>
+        <li title="Disclosure">{Badge.view({badge: "disclosure", active: article.hasBadge("disclosure")})}</li>
+      </ul>
+    </td>
+  </tr>;
+};
+
+SearchResults.itemViews.Author = function(author, user) {
+  var article_count = author.get("article_count") || 0;
+  if (article_count > 0) {
+    var article_count_text = article_count + " article" + (article_count > 1 ? "s" : "");
+  }
+  return <tr className="searchResult">
+    <td>
+      <header>
+        <a href={"/authors/"+author.get("id")} config={m.route}>{author.get("fullName")}</a>
+        <span className="pill">Author</span>
+      </header>
+      {article_count_text}
+    </td>
+    <td></td>
+  </tr>;
 };
 
 module.exports = SearchResults;
