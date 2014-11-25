@@ -1,5 +1,8 @@
 "use strict";
 
+var _ = require("underscore");
+window.ga = window.ga || _.noop;
+
 var GoogleAnalytics = {};
 
 GoogleAnalytics.TrackNavigation = function() {
