@@ -216,6 +216,7 @@ button.bookmark.active {
 .feedbackToggle {
   -webkit-transform-origin: right bottom 0;
   -moz-transform-origin: right bottom 0;
+  transform-origin: right bottom 0;
   background-color: $dark;
   color: white;
   border-radius: $btn_radius $btn_radius 0 0;
