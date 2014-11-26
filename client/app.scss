@@ -212,3 +212,27 @@ button.bookmark.active {
     padding-left: 0;
   }
 }
+
+.feedbackToggle {
+  -webkit-transform-origin: right bottom 0;
+  -moz-transform-origin: right bottom 0;
+  background-color: $dark;
+  color: white;
+  border-radius: $btn_radius $btn_radius 0 0;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  position: fixed;
+  right: 0;
+  top: 60%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.feedbackModal {
+  .modalContent {
+    padding: 20px;
+    text-align: center;
+  }
+}
