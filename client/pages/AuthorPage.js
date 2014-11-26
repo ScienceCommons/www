@@ -188,30 +188,24 @@ AuthorPage.view = function(ctrl) {
 
     content = (
       <div>
+        <div className="btn_group authorControls">
+          {editButtons}
+          <button type="button" className="btn" disabled={author.markedDuplicate()} key="markDuplicate" onclick={ctrl.markAsDuplicateClick}>{author.markedDuplicate() ? "Marked" : "Mark"} as duplicate</button>
+        </div>
+
         {alerts}
         {errorMessage}
-        <div className="section articleHeader">
-          <div className="col span_3_of_4">
-            <h2 className="h2">{name}</h2>
-            <h5 className="h5" placeholder="Job title here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
-            <div className="affiliations">
-              <h4>Affiliations{(author.get("affiliations")||[]).length === 0 ? ": Unknown" : ""}</h4>
-              {ListEditor.view(ctrl.controllers.affiliationList, {placeholder: "Add an affiliation"})}
-            </div>
-          </div>
-          <div className="col span_1_of_4 text_right">
-            <div className="btn_group">
-              {editButtons}
-              <button type="button" className="btn" disabled={author.markedDuplicate()} key="markDuplicate" onclick={ctrl.markAsDuplicateClick}>{author.markedDuplicate() ? "Marked" : "Mark"} as duplicate</button>
-            </div>
-          </div>
+        <h2 className="h2">{name}</h2>
+        <h5 className="h5" placeholder="Job title here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
+        <div className="affiliations">
+          <h4>Affiliations{(author.get("affiliations")||[]).length === 0 ? ": Unknown" : ""}</h4>
+          {ListEditor.view(ctrl.controllers.affiliationList, {placeholder: "Add an affiliation"})}
         </div>
-        <div className="section">
-          <div className="articlesContent">
-            {articlesContent}
-          </div>
-          {duplicateAuthorsFinder}
+
+        <div className="articlesContent">
+          {articlesContent}
         </div>
+        {duplicateAuthorsFinder}
       </div>
     );
   }
