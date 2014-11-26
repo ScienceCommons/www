@@ -371,7 +371,7 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
     } else {
       inputs = (
         <div className="inputs">
-          <input type="text" value={_.isUndefined(ctrl.getEdits(study, field, "value")) ? study.get(field) : ctrl.getEdits(study, field, "value")} oninput={m.withAttr("value", ctrl.updateEdits(study, field, "value"))} />
+          <input type="text" config={focusConfig} value={_.isUndefined(ctrl.getEdits(study, field, "value")) ? study.get(field) : ctrl.getEdits(study, field, "value")} oninput={m.withAttr("value", ctrl.updateEdits(study, field, "value"))} />
         </div>
       );
     }
@@ -407,6 +407,12 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
     });
   }
 };
+
+function focusConfig(el, isInitialized) {
+  if (!isInitialized) {
+    el.focus();
+  }
+}
 
 var ModalLabels = {
   number: "Number",
@@ -525,7 +531,7 @@ function fileDropdown(ctrl, study, type, options) {
             label: <button type="submit" className="btn">Done</button>,
             buttons: <button type="button" className="btn" onclick={removeFileFromStudy(study, file)}><span className="icon icon_delete"></span></button>,
             content: <div>
-              <input type="text" placeholder="Label goes here" value={_.isUndefined(edits.name) ? file.get("name") : edits.name} oninput={m.withAttr("value", ctrl.updateEdits(study, "links_"+file.get("id"), "name"))}/>
+              <input type="text" config={focusConfig} placeholder="Label goes here" value={_.isUndefined(edits.name) ? file.get("name") : edits.name} oninput={m.withAttr("value", ctrl.updateEdits(study, "links_"+file.get("id"), "name"))}/>
               <input type="text" placeholder="URL goes here" value={_.isUndefined(edits.url) ? file.get("url") : edits.url} oninput={m.withAttr("value", ctrl.updateEdits(study, "links_"+file.get("id"), "url"))}/>
             </div>,
             wrapper: <form onsubmit={ctrl.handleFileEditSubmit(study, file)} />
@@ -634,7 +640,7 @@ StudiesTable.modalEditors.effect_size.view = function(ctrl, study) {
         <option value="eta_sqr">η²</option>
         <option value="partial_eta_sqr">partial η²</option>
       </select>
-      <input type="text" value={val} oninput={m.withAttr("value", ctrl.updateEdits(study, "effect_size", "value"))} />
+      <input type="text" config={focusConfig} value={val} oninput={m.withAttr("value", ctrl.updateEdits(study, "effect_size", "value"))} />
     </div>
   );
 };
@@ -676,8 +682,9 @@ function arrayFieldEditView(field, ctrl, study) {
     variables.push("");
   }
 
+  var len = _.size(variables);
   var inputs = _.map(variables, function(variable, i) {
-    return <li><input type="text" placeholder="Add another independent variable" value={variable} oninput={m.withAttr("value", ctrl.updateEdits(study, field, i))} /></li>;
+    return <li><input type="text" config={i === len-1 ? focusConfig : undefined} placeholder="Add another independent variable" value={variable} oninput={m.withAttr("value", ctrl.updateEdits(study, field, i))} /></li>;
   });
 
   return (
