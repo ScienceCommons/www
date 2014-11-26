@@ -383,14 +383,41 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
       wrapper: <form onsubmit={ctrl.handleEditSubmit(study, field)} />
     });
   } else {
+    var commentsAndChanges = [];
     if (study.commentable(field)) {
       ctrl.controllers.studyFieldCommentForm.field = field;
-      var comments = _.map(study.get("comments").where({field: field}), function(comment) {
-        return <li>{comment.get("comment")}</li>;
+      commentsAndChanges = study.get("comments").map(function(comment) {
+        if (comment.get("field") === field) {
+          var heading = _.compact([comment.get("authorName"), comment.get("timeAgo")]).join(": ");
+          var commentView = (
+            <li className="Comment">
+              <div><span className="pill">Comment</span></div>
+              <header>{heading}</header>
+              <p>{comment.get("comment")}</p>
+            </li>
+          );
+          return {date: comment.get("created_at"), view: commentView};
+        }
       });
-      var modalContent = new CommentList.view({comments: study.get("comments"), where: {field: field}, user: ctrl.user});
       var modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
     }
+
+    commentsAndChanges = commentsAndChanges.concat(study.get("model_updates").map(function(model_update) {
+      if (model_update.hasFieldChanges(field)) {
+        var heading = _.compact([model_update.get("user"), model_update.get("timeAgo")]).join(": ");
+        var state = model_update.get("model_changes")[field];
+        var updateView = (
+          <li className="modelUpdate">
+            <div><span className="pill">Update</span></div>
+            <header>{heading}</header>
+            <p>{state[0]} => {state[1]}</p>
+          </li>
+        );
+        return {date: model_update.get("created_at"), view: updateView};
+      }
+    }));
+
+    var modalContent = <ul className="commentsAndHistory">{_.chain(commentsAndChanges).compact().sortBy('date').pluck('view').value().reverse()}</ul>;
 
     var editButton;
     if (App.user.canEdit() && !options.replication) {

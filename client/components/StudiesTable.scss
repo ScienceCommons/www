@@ -394,4 +394,15 @@ $column_width: 300px;
       }
     }
   }
+
+  ul.commentsAndHistory {
+    margin: 10px;
+
+    & > li {
+      background: $light_gray;
+      border-radius: $btn_radius;
+      padding: 10px;
+      margin: 10px
+    }
+  }
 }
