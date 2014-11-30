@@ -3,6 +3,7 @@
 "use strict";
 require("./app.scss");
 
+window.m = require("mithril");
 var UserModel = require("./models/UserModel.js");
 var GoogleAnalytics = require("./utils/GoogleAnalytics.js");
 var OnUnload = require("./utils/OnUnload.js");
