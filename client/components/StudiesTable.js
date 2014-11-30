@@ -283,17 +283,21 @@ StudiesTable.studyView = function(ctrl, study, options) {
     return StudiesTable.studyCellView(ctrl, study, field, options);
   });
 
-  var saveButtons;
+  var saveButtons = [];
   if (options.replication) {
-    var saveButtons = <button type="button" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>;
+    saveButtons.push(<button type="button" key="unlink" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>);
   } else {
     if (options.new || study.hasChanges({include: ["links"]})) {
-      saveButtons = [
-        <button type="button" className="btn saveStudy" onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
-        <button type="button" className="btn discardStudy" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
-      ];
+      if (study.saving) {
+        saveButtons.push(<button type="button" key="save" className="btn saveStudy" disabled={true} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Saving...</button>);
+      } else {
+        saveButtons = [
+          <button type="button" className="btn saveStudy" key="save" disabled={study.saving} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
+          <button type="button" className="btn discardStudy" key="discard" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
+        ];
+      }
     } else if (!options.new) {
-      var saveButtons = <button type="button" className="btn deleteStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
+      saveButtons = <button type="button" key="delete" className="btn deleteStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
     }
   }
 
