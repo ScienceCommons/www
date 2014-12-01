@@ -69,7 +69,9 @@ StudyFinder.articleView = function(ctrl, article) {
   }
 
   if (studies.length === 0 && !studies.loading) {
-    content = "This article has no studies.";
+    content = (
+      <div> This article has no studies. <a href={article.url()}>Go to article</a> to add a study.</div>
+    )
   } else if (studies.length > 0) {
     var parentReplications = false;
     if (ctrl.parentStudy && ctrl.parentStudy()) {
@@ -89,7 +91,7 @@ StudyFinder.articleView = function(ctrl, article) {
             <span className="icon icon_replication"></span>
             <span> {study.get("number")}</span>
 	  </button>
-	  //{study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")}
+	  {/*study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")*/}
         </li>
       );
     });
