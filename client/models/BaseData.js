@@ -557,7 +557,7 @@ BaseData.Collection.prototype.fetch = function(options) {
   options = options || {};
   this.loading = true;
 
-  var res =  m.request({method: "GET", url: _.result(this, "url"), background: true, data: options.data, deserialize: maybeJSON});
+  var res = this.sync("read", this, options);
   var _this = this;
   res.then(function() {
     _this.loading = false;
