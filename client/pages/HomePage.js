@@ -25,11 +25,11 @@ HomePage.controller = function(options) {
   this.controllers.search= new Search.controller({});
 
   this.recentlyAddedArticles = new ArticleCollection([], {
-    url: "https://curatescience.org/articles/recently_added"
+    url: "https://www.curatescience.org/articles/recently_added"
   });
   this.recentlyAddedArticles.fetch({data: {limit: 5}});
   this.recentlyCuratedArticles = new ArticleCollection([], {
-    url: "https://curatescience.org/articles/recent"
+    url: "https://www.curatescience.org/articles/recent"
   });
   this.recentlyCuratedArticles.fetch({data: {limit: 5}});
 };
