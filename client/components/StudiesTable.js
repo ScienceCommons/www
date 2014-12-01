@@ -730,7 +730,7 @@ function arrayFieldEditView(field, ctrl, study) {
 
   var len = _.size(variables);
   var inputs = _.map(variables, function(variable, i) {
-    return <li><input type="text" config={i === len-1 ? focusConfig : undefined} placeholder="Add another independent variable" value={variable} oninput={m.withAttr("value", ctrl.updateEdits(study, field, i))} /></li>;
+    return <li><input type="text" config={i === 0 ? focusConfig : undefined} placeholder="Add another independent variable" value={variable} oninput={m.withAttr("value", ctrl.updateEdits(study, field, i))} /></li>;
   });
 
   return (
