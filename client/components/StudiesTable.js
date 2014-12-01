@@ -31,6 +31,21 @@ StudiesTable.controller = function(opts) {
   this.studyFinderStudy = m.prop(false);
 
   var _this = this;
+
+  var oldUnload = this.onunload;
+  this.onunload = function(e) {
+    if (_this.article.hasChanges()) {
+      if (!confirm("You have unsaved changes on this article.  Do you wish to navigate away without saving?")) {
+        return e.preventDefault();
+      }
+    } else if (_this.article.get("studies").any(function(study) { return study.hasChanges(); })) {
+      if (!confirm("You have unsaved changes on studies.  Do you wish to navigate away without saving?")) {
+        return e.preventDefault();
+      }
+    }
+    oldUnload.call(_this);
+  };
+
   this.addStudy = function() {
     if (_this.newStudy() !== false) {
       // warn that existing new study must be saved or removed

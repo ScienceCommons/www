@@ -46,6 +46,16 @@ AuthorPage.controller = function(options) {
     }
   });
 
+  var oldUnload = this.onunload;
+  this.onunload = function(e) {
+    if (_this.author.hasChanges()) {
+      if (!confirm("You have unsaved changes on this author.  Do you wish to navigate away without saving?")) {
+        return e.preventDefault();
+      }
+    }
+    oldUnload.call(_this);
+  };
+
   this.markDuplicate = function(otherAuthor) {
     if (confirm("Mark this author as a duplicate. This action cannot be undone.")) {
       _this.author.markDuplicate(otherAuthor);
