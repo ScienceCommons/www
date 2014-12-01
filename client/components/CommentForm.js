@@ -22,7 +22,9 @@ CommentForm.controller = function(options) {
       "owner_id": _this.user.get("id"),
       "comment": _this.body(),
       "anonymous": _this.anonymous(),
-      "field": _this.field
+      "field": _this.field,
+      "name": _this.user.get("fullName"),
+      "created_at": (new Date()).toString()
     }, {sync: true});
 
     _this.body("");
