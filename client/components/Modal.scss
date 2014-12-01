@@ -7,7 +7,6 @@
 .Modal {
   background-color: white;
   width: 500px;
-  min-height: 500px;
   position: fixed;
   top: 50px;
   left: 0;
@@ -66,6 +65,7 @@
     div.modalContent {
       overflow: auto;
       max-height: 459px;
+      min-height: 150px;
       border-radius: $btn_radius;
     }
   }
