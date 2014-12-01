@@ -87,8 +87,9 @@ StudyFinder.articleView = function(ctrl, article) {
         <li>
           <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)}>
             <span className="icon icon_replication"></span>
-          </button>
-          {study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")}
+            <span> {study.get("number")}</span>
+	  </button>
+	  //{study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")}
         </li>
       );
     });
