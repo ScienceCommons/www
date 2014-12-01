@@ -8,6 +8,8 @@ var m = require("mithril");
 var SearchResults = require("./SearchResults.js");
 var ArticleCollection = require("../collections/ArticleCollection.js");
 var Spinner = require("./Spinner.js");
+var Tooltip = require("./Tooltip.js");
+var Popover = require("./Popover.js");
 var cx = require("../utils/ClassSet.js");
 
 var StudyFinder = {};
@@ -85,11 +87,12 @@ StudyFinder.articleView = function(ctrl, article) {
           return replication.get("replicating_study_id") === study.get("id")
         })
       });
+  
       return (
         <li>
           <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)}>
-            <span className="icon icon_replication"></span>
-            <span> {study.get("number")}</span>
+              <span>+</span>
+	      <span className="icon icon_replication"> {study.get("number")}</span>
 	  </button>
 	  {/*study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")*/}
         </li>
