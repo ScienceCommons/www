@@ -29,6 +29,13 @@ Modal.controller = function(options) {
     _this.open(false);
   };
 
+  this.closeOnEscape = function(e) {
+    if (e.keyCode === 27) { // escape
+      _this.close();
+      m.redraw();
+    }
+  };
+
   this.id = _.uniqueId();
   Modal.instances[this.id] = this;
   this.onunload = function() {
@@ -41,8 +48,10 @@ Modal.controller = function(options) {
     if (!isInitialized) {
       ScrollIntoView(el);
       document.body.classList.add("modal_open");
+      el.addEventListener("keydown", _this.closeOnEscape);
 
       context.onunload = function() {
+        el.removeEventListener("keydown", _this.closeOnEscape);
         if (!_.any(Modal.instances, function(modal) { return modal.open() && modal.el !== el; })) {
           document.body.classList.remove("modal_open");
         }
