@@ -129,19 +129,19 @@ AuthorPage.view = function(ctrl) {
   var author = ctrl.author;
   var content;
 
-  if (author.hasErrors()) {
-    var errors = _.map(author.errors(), function(error) {
-      return <li>{error}</li>;
-    });
-
-    var errorMessage = <ul className="errors">{errors}</ul>;
-  }
-
   if (author.loading) {
     content = Spinner.view();
-  } else if (!author.isNew() && !author.loaded) {
-    content = errorMessage;
+  } else if (author.not_found) {
+    content = content = <ul className="errors"><li>Author not found</li></ul>;
   } else {
+    if (author.hasErrors()) {
+      var errors = _.map(author.errors(), function(error) {
+        return <li>{error}</li>;
+      });
+
+      var errorMessage = <ul className="errors">{errors}</ul>;
+    }
+
     var articles = author.get("articles");
     var articlesContent;
     if (articles.loading) {

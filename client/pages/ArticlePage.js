@@ -109,7 +109,7 @@ ArticlePage.view = function(ctrl) {
   var article = ctrl.article;
   var content;
 
-  if (article) {
+  if (article && !article.not_found) {
     document.title = _.compact([
       article.authors().etAl(1),
       article.get("journal"),
@@ -207,7 +207,7 @@ ArticlePage.view = function(ctrl) {
       </div>
     );
   } else {
-    content = <h1>Article not found</h1>;
+    content = <ul className="errors"><li>Article not found</li></ul>;
   }
 
   return new Layout.view(ctrl.controllers.layout, content);
