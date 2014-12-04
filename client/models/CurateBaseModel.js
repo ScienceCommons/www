@@ -13,10 +13,14 @@ var CurateBaseModel = BaseModel.extend({
       xhr.withCredentials = true;
     };
     var res = BaseModel.prototype.sync.call(this, method, model, _.extend(options, {
-      unwrapError: function(response) {
-        //model.resetErrors();
+      extract: function(xhr) {
+        model.resetErrors();
         model.loading = false;
         model.loaded = false;
+        model.not_found = xhr.status === 404;
+        return xhr.responseText;
+      },
+      unwrapError: function(response) {
         model.addError(undefined, response.error);
         _.each(response.messages, function(messages, key) {
           _.each(messages, function(message) {
@@ -26,9 +30,6 @@ var CurateBaseModel = BaseModel.extend({
         model.redraw();
       }
     }));
-    res.then(function() {
-      model.resetErrors();
-    });
     return res;
   }
 });
