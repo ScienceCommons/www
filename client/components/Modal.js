@@ -48,10 +48,10 @@ Modal.controller = function(options) {
     if (!isInitialized) {
       ScrollIntoView(el);
       document.body.classList.add("modal_open");
-      el.addEventListener("keydown", _this.closeOnEscape);
+      document.body.addEventListener("keydown", _this.closeOnEscape);
 
       context.onunload = function() {
-        el.removeEventListener("keydown", _this.closeOnEscape);
+        document.body.removeEventListener("keydown", _this.closeOnEscape);
         if (!_.any(Modal.instances, function(modal) { return modal.open() && modal.el !== el; })) {
           document.body.classList.remove("modal_open");
         }
