@@ -654,14 +654,29 @@ function handleBadgeDropdownFileClick(ctrl, study, file) {
 };
 
 StudiesTable.cellViews.number = function(ctrl, study) {
-  var year = study.get("year");
-  if (year) {
-    year = "(" + year + ")";
+  if (study.get("replication_of").length > 0) {
+    var originalStudy = study.get("replication_of").first().get("study");
+    var originalYear = originalStudy.get("year");
+    if (originalYear) {
+      originalYear = "(" + originalYear + ")";
+    }
+    var replicates = <li>
+      Replicating: <a href={"/articles/"+originalStudy.get("article_id")} config={m.route}>{originalStudy.etAl(1)} {originalYear}</a>
+    </li>;
+  }
+
+  if (ctrl.article.get("id") !== study.get("article_id")) {
+    var year = study.get("year");
+    if (year) {
+      year = "(" + year + ")";
+    }
+    var etAl = <li>{study.etAl(1)} {year}</li>
   }
 
   return <ul>
-    <li>{study.etAl(1)} {year}</li>
+    {etAl}
     <li>{study.get("number")}</li>
+    {replicates}
   </ul>;
 };
 

@@ -14,7 +14,8 @@ var StudyModel = CurateBaseModel.extend({
     links: {type: "many", model: LinkModel},
     comments: {type: "many", collection: require("../collections/CommentCollection.js"), urlAction: "comments"},
     model_updates: {type: "many", collection: require("../collections/ModelUpdatesCollection.js")},
-    replications: {type: "many", model: require("./ReplicationModel.js"), urlAction: "replications"} // model is defined below
+    replications: {type: "many", model: require("./ReplicationModel.js"), urlAction: "replications"},
+    replication_of: {type: "many", model: require("./ReplicationModel.js"), urlAction: "replication_of"}
   },
   defaults: {
     "authors": [],

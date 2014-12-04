@@ -31,7 +31,7 @@ ArticlePage.controller = function(options) {
   } else {
     this.article = new ArticleModel({id: m.route.param("articleId")});
     this.article.fetch();
-    this.article.get("studies").fetch({data: {replications: true, comments: true, model_updates: true}});
+    this.article.get("studies").fetch({data: {replications: true, comments: true, model_updates: true, replication_of: true}});
     this.article.get("comments").fetch();
     this.editing = m.prop(false);
   }
