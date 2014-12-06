@@ -73,6 +73,9 @@ SearchResults.view = function(ctrl) {
 SearchResults.itemViews = {};
 
 SearchResults.itemViews.Article = function(article, user) {
+  if (article.get("journal_title")) {
+    var journalTitle = "- " + article.get("journal_title");
+  }
   return <tr className="searchResult">
     <td>
       <header>
@@ -83,7 +86,7 @@ SearchResults.itemViews.Article = function(article, user) {
         <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article)}>
           <span className="icon icon_bookmark"></span>
         </button>
-        ({article.get("year")}) {article.authors().etAl(3)}
+        ({article.get("year")}) {article.authors().etAl(3)} {journalTitle}
       </div>
     </td>
     <td></td>
