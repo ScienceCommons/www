@@ -12,7 +12,7 @@ var LinkModel = CurateBaseModel.extend({
   relations: {
     comments: {type: "many", model: CommentModel, urlAction: "comments"},
   },
-  urlRoot: "/links",
+  urlRoot: "https://www.curatescience.org/links",
   defaults: {
     name: "",
     url: ""
