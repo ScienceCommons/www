@@ -130,11 +130,15 @@ StudyFinder.searchView = function(ctrl) {
         arrow = <span className="icon icon_down_caret arrow"></span>;
       }
 
+      if (article.get("journal_title")) {
+        var journalTitle = "- " + article.get("journal_title");
+      }
+
       return (
         <li className="article">
           <header onclick={ctrl.selectArticle(article)}>
             <div className="title">{article.get("title")}</div>
-            <div className="authors">({article.get("year")}) {article.authors().etAl(3)}</div>
+            <div className="authors">({article.get("year")}) {article.authors().etAl(3)} {journalTitle}</div>
             {arrow}
           </header>
           {expandedContent}
