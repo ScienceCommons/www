@@ -425,11 +425,12 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
       if (model_update.hasFieldChanges(field)) {
         var heading = _.compact([model_update.get("user"), model_update.get("timeAgo")]).join(": ");
         var state = model_update.get("model_changes")[field];
+        var diffView = StudiesTable.modelUpdateViews[field] || StudiesTable.modelUpdateViews.default;
         var updateView = (
           <li className="modelUpdate">
             <div><span className="pill">Update</span></div>
             <header>{heading}</header>
-            <p>{state[0]} => {state[1]}</p>
+            <p>{diffView(state)}</p>
           </li>
         );
         return {date: model_update.get("created_at"), view: updateView};
@@ -727,6 +728,19 @@ StudiesTable.modalEditors.dependent_variables = {};
 StudiesTable.modalEditors.dependent_variables.view = _.partial(arrayFieldEditView, "dependent_variables");
 StudiesTable.modalEditors.dependent_variables.onsubmit = _.partial(arrayFieldSubmit, "dependent_variables");
 
+StudiesTable.modelUpdateViews = {};
+StudiesTable.modelUpdateViews.default = function(state) {
+  return state[0] + " => " + state[1];
+};
+StudiesTable.modelUpdateViews.effect_size = function(state) {
+  var oldVal = _.first(_.pairs(state[0]));
+  oldVal[0] = effectSizeSymbol[oldVal[0]];
+  var newVal = _.first(_.pairs(state[1]));
+  newVal[0] = effectSizeSymbol[newVal[0]];
+  return oldVal.join(": ") + " => " + newVal.join(": ");
+};
+
+
 function arrayFieldCellView(field, ctrl, study) {
   if (field !== "number" || ctrl.article.get("id") !== study.get("article_id")) {
     var items = _.map(study.get(field), function(variable) {
@@ -797,3 +811,12 @@ function downloadFile(file) {
     }
   };
 }
+
+var effectSizeSymbol = {
+  d: "d",
+  eta: "η",
+  r: "r",
+  phi: "φ",
+  eta_sqr: "η²",
+  partial_eta_sqr: "partial η²"
+};
