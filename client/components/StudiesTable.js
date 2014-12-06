@@ -285,9 +285,9 @@ StudiesTable.view = function(ctrl) {
 
   return (
     <div className="StudiesTable">
+      {studyFinderModal}
       {header}
       {content}
-      {studyFinderModal}
     </div>
   );
 };
