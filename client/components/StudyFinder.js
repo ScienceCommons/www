@@ -88,9 +88,7 @@ StudyFinder.articleView = function(ctrl, article) {
       var classes = cx({
         btn: true,
         btn_subtle: true,
-        active: parentReplications && parentReplications.find(function(replication) {
-          return replication.get("replicating_study_id") === study.get("id")
-        })
+        active: replicationActive 
       });
   
       var parentStudy = ctrl.parentStudy();
