@@ -94,7 +94,7 @@ StudyFinder.articleView = function(ctrl, article) {
       console.log(article);
       return (
         <li>
-          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)} title={"Add " + study.get("article").etAl(3) + " (" + study.get("year") + ") " + study.get("number") + " as a replication of " + parentStudy.etAl(3) + " (" + parentStudy.get("year") +") "+ parentStudy.get("number")}>
+          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)} title={"Add " + study.etAl(3) + " (" + study.get("year") + ") " + study.get("number") + " as a replication of " + parentStudy.etAl(3) + " (" + parentStudy.get("year") +") "+ parentStudy.get("number")}>
               <span>+</span>
 	      <span className="icon icon_replication"> {study.get("number")}</span>
 	  </button>
