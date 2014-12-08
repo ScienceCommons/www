@@ -79,7 +79,12 @@ StudyFinder.articleView = function(ctrl, article) {
     if (ctrl.parentStudy && ctrl.parentStudy()) {
       parentReplications = ctrl.parentStudy().get("replications");
     }
+   
     var list = studies.map(function(study) {
+      var replicationActive = parentReplications && parentReplications.find(
+	function(replication) {
+          return replication.get("replicating_study_id") === study.get("id")
+        })
       var classes = cx({
         btn: true,
         btn_subtle: true,
@@ -89,13 +94,10 @@ StudyFinder.articleView = function(ctrl, article) {
       });
   
       var parentStudy = ctrl.parentStudy();
-      console.log(study);
-      console.log(parentStudy);
-      console.log(article);
       return (
         <li>
-          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)} title={"Add " + study.etAl(3) + " (" + study.get("year") + ") " + study.get("number") + " as a replication of " + parentStudy.etAl(3) + " (" + parentStudy.get("year") +") "+ parentStudy.get("number")}>
-              <span>+</span>
+          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)} title={(replicationActive ? "Remove " : "Add ") + study.etAl(3) + " (" + study.get("year") + ") " + study.get("number") + " as a replication of " + parentStudy.etAl(3) + " (" + parentStudy.get("year") +") "+ parentStudy.get("number")}>
+              <span>{replicationActive ? "-" : "+" }</span>
 	      <span className="icon icon_replication"> {study.get("number")}</span>
 	  </button>
 	  {/*study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")*/}
