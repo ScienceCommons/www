@@ -8,9 +8,9 @@ var CurateBaseModel = require("./CurateBaseModel.js");
 
 var AuthorModel = CurateBaseModel.extend({
   name: "Author",
-  relations: ["Article", function() {
+  relations: ["ArticleCollection", function() {
     return {
-      "articles": {type: "many", model: require("./ArticleModel.js"), urlAction: "articles"}
+      "articles": {type: "many", collection: require("../collections/ArticleCollection.js"), urlAction: "articles"}
     };
   }],
   defaults: {
