@@ -22,7 +22,7 @@ PillList.controller = function(options) {
     };
   } else if (options.collection) {
     this.pills = function() {
-      return options.collection.map(function(model) {
+      return _.result(options, "collection").map(function(model) {
         return model.pill();
       });
     };
@@ -39,7 +39,7 @@ PillList.controller = function(options) {
       if (options.model) {
         options.model.set((options.attr || "tags"), values);
       } else if (options.collection) {
-        options.collection.add(newPill.value);
+        _.result(options, "collection").add(newPill.value);
       } else {
         pills.push(newPill);
         _this.pills(pills);
@@ -54,7 +54,7 @@ PillList.controller = function(options) {
     var pills = _this.pills();
     if (toRemove) {
       if (options.collection) {
-        return options.collection.remove(toRemove.value);
+        return _.result(options, "collection").remove(toRemove.value);
       }
 
       pills = _.filter(pills, function(pill) {
@@ -62,8 +62,8 @@ PillList.controller = function(options) {
       });
     } else {
       if (options.collection) {
-        _this.controllers.recommendationsTypeahead.pill(options.collection.last().pill());
-        return options.collection.remove(options.collection.last());
+        _this.controllers.recommendationsTypeahead.pill(_.result(options, "collection").last().pill());
+        return _.result(options, "collection").remove(_.result(options, "collection").last());
       }
       _this.controllers.recommendationsTypeahead.pill(pills.pop());
     }

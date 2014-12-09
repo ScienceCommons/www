@@ -27,7 +27,7 @@ AuthorList.controller = function(options) {
   this.controllers = {};
   this.controllers.Typeahead = new Typeahead.controller({
     collection: this.searchResults,
-    submit: this.collection.add, // need to add create options
+    submit: _.result(this, "collection").add, // need to add create options
     extras: [{
       label: "Add a new author",
       handleClick: function(val) {
@@ -62,8 +62,8 @@ AuthorList.controller = function(options) {
     e.preventDefault();
     _this.newAuthor.save().then(function() {
       _this.controllers.Typeahead.clear();
-      _this.collection.reindex();
-      _this.collection.add(_this.newAuthor);
+      _.result(_this, "collection").reindex();
+      _.result(_this, "collection").add(_this.newAuthor);
       _this.newAuthor = null;
       _this.editingDenormalized(false);
     }, function() {

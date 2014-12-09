@@ -49,7 +49,7 @@ ArticlePage.controller = function(options) {
 
   this.controllers.authorsList = new AuthorList.controller({
     editable: this.editing,
-    collection: this.article.authors()
+    collection: this.article.authors
   });
 
   this.editClick = function() {
