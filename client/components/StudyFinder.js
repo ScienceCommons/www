@@ -94,11 +94,14 @@ StudyFinder.articleView = function(ctrl, article) {
       var parentStudy = ctrl.parentStudy();
       return (
         <li>
-          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)} title={(replicationActive ? "Remove " : "Add ") + study.etAl(3) + " (" + study.get("year") + ") " + study.get("number") + " as a replication of " + parentStudy.etAl(3) + " (" + parentStudy.get("year") +") "+ parentStudy.get("number")}>
-              <span>{replicationActive ? "-" : "+" }</span>
-	      <span className="icon icon_replication"> {study.get("number")}</span>
+          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)} 
+	  title={(replicationActive ? "Remove " : "Add ") + study.etAl(3) + " (" + study.get("year") + ") " + 
+		 study.get("number") + " as a replication of " + parentStudy.etAl(3) + " (" + parentStudy.get("year") +
+		 ") "+ parentStudy.get("number")}>
+              <span className={replicationActive ? "glyphicon glyphicon-minus" : "glyphicon glyphicon-plus"}></span> 
+	      <span className="icon icon_replication"></span>
+	      <span> {study.get("number")}</span>
 	  </button>
-	  {/*study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")*/}
         </li>
       );
     });

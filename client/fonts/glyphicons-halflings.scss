@@ -1,0 +1,26 @@
+
+// Import the fonts
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: 
+       url("./fonts/glyphicons-halflings-regular.eot") format("embedded-opentype"),
+       url("./fonts/glyphicons-halflings-regular.woff") format("woff"),
+       url("./fonts/glyphicons-halflings-regular.ttf") format("truetype"),
+       url("./fonts/glyphicons-halflings-regular.svg") format("svg"); 
+}
+
+// Catchall baseclass
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-minus                  { &:before { content: "\2212"; } }
+.glyphicon-plus                   { &:before { content: "\2b"; } }
