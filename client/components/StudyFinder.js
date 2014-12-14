@@ -72,7 +72,7 @@ StudyFinder.articleView = function(ctrl, article) {
 
   if (studies.length === 0 && !studies.loading) {
     content = (
-      <div> This article has no studies. <a href={article.url()}>Go to article</a> to add a study.</div>
+      <div> This article has no studies. <a href={"#/articles/"+article.id}>Go to article</a> to add a study.</div>
     )
   } else if (studies.length > 0) {
     var parentReplications = false;
