@@ -8,8 +8,6 @@ var m = require("mithril");
 var SearchResults = require("./SearchResults.js");
 var ArticleCollection = require("../collections/ArticleCollection.js");
 var Spinner = require("./Spinner.js");
-var Tooltip = require("./Tooltip.js");
-var Popover = require("./Popover.js");
 var cx = require("../utils/ClassSet.js");
 
 var StudyFinder = {};
