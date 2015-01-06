@@ -21,10 +21,10 @@ module.exports = function (grunt) {
 
   var loaders = [{
     test: /\.css$/,
-    loader: "style!css"
+    loader: "style!css!autoprefixer-loader?browsers=last 2 version"
   }, {
     test: /\.s[ac]ss$/,
-    loader: "style!css!sass"
+    loader: "style!css!autoprefixer-loader?browsers=last 2 version!sass"
   }, {
     test: /\.gif/,
     loader: "url?limit=10000&minetype=image/gif"
