@@ -263,8 +263,9 @@ StudiesTable.view = function(ctrl) {
   }
 
   if (ctrl.studyFinderStudy()) {
+    var study = ctrl.studyFinderStudy();
     var studyFinderModal = Modal.view(ctrl.controllers.studyFinderModal, {
-      label: "Add a replication",
+      label: "Add a replication to " + study.etAl(1) + " (" + study.get("year") +") "+  study.get("number"),
       content: new StudyFinder.view(ctrl.controllers.studyFinder)
     });
   }

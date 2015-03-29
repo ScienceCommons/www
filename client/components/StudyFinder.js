@@ -69,26 +69,37 @@ StudyFinder.articleView = function(ctrl, article) {
   }
 
   if (studies.length === 0 && !studies.loading) {
-    content = "This article has no studies.";
+    content = (
+      <div> This article has no studies. <a href={"#/articles/"+article.id}>Go to article</a> to add a study.</div>
+    )
   } else if (studies.length > 0) {
     var parentReplications = false;
     if (ctrl.parentStudy && ctrl.parentStudy()) {
       parentReplications = ctrl.parentStudy().get("replications");
     }
+   
     var list = studies.map(function(study) {
+      var replicationActive = parentReplications && parentReplications.find(
+	function(replication) {
+          return replication.get("replicating_study_id") === study.get("id")
+        })
       var classes = cx({
         btn: true,
         btn_subtle: true,
-        active: parentReplications && parentReplications.find(function(replication) {
-          return replication.get("replicating_study_id") === study.get("id")
-        })
+        active: replicationActive 
       });
+  
+      var parentStudy = ctrl.parentStudy();
       return (
         <li>
-          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)}>
-            <span className="icon icon_replication"></span>
-          </button>
-          {study.get("independent_variables").join(", ")} vs {study.get("dependent_variables").join(", ")}
+          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)} 
+	  title={(replicationActive ? "Remove " : "Add ") + study.etAl(3) + " (" + study.get("year") + ") " + 
+		 study.get("number") + " as a replication of " + parentStudy.etAl(3) + " (" + parentStudy.get("year") +
+		 ") "+ parentStudy.get("number")}>
+              <span className={replicationActive ? "glyphicon glyphicon-minus" : "glyphicon glyphicon-plus"}></span> 
+	      <span className="icon icon_replication"></span>
+	      <span> {study.get("number")}</span>
+	  </button>
         </li>
       );
     });
