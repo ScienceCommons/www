@@ -16,5 +16,16 @@ Then
     grunt serve
 ```
 
-Presently there is no server component.  connect presently serves the assets.
-Down the road we will need an actual server so we can handle user registration/authorization
+In order to compile the icons you will need [fontforge](http://fontforge.github.io/en-US/) installed.
+
+The Gruntfile is set up to compile and deploy the assets to Amazon Web Services S3. In order to deploy to your S3 account you will need to set the environment variables:
+```
+$AWS_S3_KEY
+$AWS_S3_SECRET
+$AWS_S3_TEST_BUCKET
+$AWS_S3_BUCKET
+```
+and then run the grunt task:
+```
+grunt deploy:production
+```
