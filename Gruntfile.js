@@ -117,7 +117,7 @@ module.exports = function (grunt) {
         output: {
           path: PRODUCTION_PATH+"/assets",
           filename: "[name].js",
-          publicPath: "https://s3.amazonaws.com/<%= aws.bucket %>/assets/"
+          publicPath: "https://s3.amazonaws.com/"+ process.env.AWS_S3_BUCKET +"/assets/"
         },
         plugins: [
           new webpack.optimize.OccurenceOrderPlugin(),
@@ -132,7 +132,7 @@ module.exports = function (grunt) {
         output: {
           path: PRODUCTION_PATH+"/assets",
           filename: "[name].js",
-          publicPath: "https://s3.amazonaws.com/<%= aws.test_bucket %>/assets/"
+          publicPath: "https://s3.amazonaws.com/"+ process.env.AWS_S3_TEST_BUCKET +"/assets/"
         },
         plugins: [
           new webpack.optimize.OccurenceOrderPlugin(),
