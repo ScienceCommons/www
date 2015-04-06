@@ -117,7 +117,7 @@ module.exports = function (grunt) {
         output: {
           path: PRODUCTION_PATH+"/assets",
           filename: "[name].js",
-          publicPath: "https://s3.amazonaws.com/<%= aws.bucket %>/assets/"
+          publicPath: "https://s3.amazonaws.com/"+ process.env.AWS_S3_BUCKET +"/assets/"
         },
         plugins: [
           new webpack.optimize.OccurenceOrderPlugin(),
@@ -132,7 +132,7 @@ module.exports = function (grunt) {
         output: {
           path: PRODUCTION_PATH+"/assets",
           filename: "[name].js",
-          publicPath: "https://s3.amazonaws.com/<%= aws.test_bucket %>/assets/"
+          publicPath: "https://s3.amazonaws.com/"+ process.env.AWS_S3_TEST_BUCKET +"/assets/"
         },
         plugins: [
           new webpack.optimize.OccurenceOrderPlugin(),
@@ -227,11 +227,10 @@ module.exports = function (grunt) {
         url: "http://localhost:<%= connect.options.port %>/#/"
       }
     },
-    aws: grunt.file.readJSON('./aws.json'),
     s3: {
       options: {
-        key: '<%= aws.key %>',
-        secret: '<%= aws.secret %>',
+        key: process.env.AWS_S3_KEY,
+        secret: process.env.AWS_S3_SECRET,
         access: 'public-read',
         headers: {
           // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
@@ -242,7 +241,7 @@ module.exports = function (grunt) {
       test_production: {
         options: {
           gzip: true,
-          bucket: '<%= aws.test_bucket %>'
+          bucket: process.env.AWS_S3_TEST_BUCKET
         },
         upload: [
           {
@@ -270,7 +269,7 @@ module.exports = function (grunt) {
       production: {
         options: {
           gzip: true,
-          bucket: '<%= aws.bucket %>'
+          bucket: process.env.AWS_S3_BUCKET
         },
         upload: [
           {
