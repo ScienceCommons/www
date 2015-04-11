@@ -35,10 +35,9 @@ UserBar.view = function(ctrl) {
 
   if (user.canEdit()) {
     extras.push(routeLi("/articles/new", "Add an article"));
-    extras.push(routeLi("/authors/new", "Add an author"));
   }
 
-  var adminExtras = []
+  var adminExtras = [];
   if (user.get("admin")) {
     adminExtras.push(routeLi("/admin", "Admin"));
   }
