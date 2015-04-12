@@ -181,9 +181,9 @@ AuthorPage.view = function(ctrl) {
     var name;
     if (ctrl.editing()) {
       name = [
-        <span placeholder="First name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("first_name"))}>{author.get("first_name")}</span>,
-        <span placeholder="Middle name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("middle_name"))}>{author.get("middle_name")}</span>,
-        <span placeholder="Last name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("last_name"))}>{author.get("last_name")}</span>,
+        <span placeholder="First name here" contenteditable="true" oninput={m.withAttr("textContent", author.setter("first_name"))}>{author.get("first_name")}</span>,
+        <span placeholder="Middle name here" contenteditable="true" oninput={m.withAttr("textContent", author.setter("middle_name"))}>{author.get("middle_name")}</span>,
+        <span placeholder="Last name here" contenteditable="true" oninput={m.withAttr("textContent", author.setter("last_name"))}>{author.get("last_name")}</span>,
       ];
     } else {
       name = author.get("fullName");
@@ -206,7 +206,7 @@ AuthorPage.view = function(ctrl) {
         {alerts}
         {errorMessage}
         <h2 className="h2">{name}</h2>
-        <h5 className="h5" placeholder="Job title here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
+        <h5 className="h5" placeholder="Job title here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", author.setter("job_title"))}>{author.get("job_title")}</h5>
         <div className="affiliations">
           <h4>Affiliations{(author.get("affiliations")||[]).length === 0 ? ": Unknown" : ""}</h4>
           {ListEditor.view(ctrl.controllers.affiliationList, {placeholder: "Add an affiliation"})}

@@ -45,7 +45,7 @@ ProfilePage.detailsView = function(ctrl, user) {
 
   return (
     <div className="details">
-      <h1 className="h1 section" placeholder="Name goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerText", user.setter("name"))}>{user.get("name")}</h1>
+      <h1 className="h1 section" placeholder="Name goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", user.setter("name"))}>{user.get("name")}</h1>
       <h3 className="h3 section">{user.get("email")}</h3>
     </div>
   );
@@ -61,7 +61,7 @@ ProfilePage.articlesView = function(user) {
     );
   } else {
     var list = _.map(user.get("articles"), function(article) {
-      return <li>{article.title}</li>
+      return <li>{article.title}</li>;
     });
     content = <ul>{list}</ul>;
   }

@@ -208,6 +208,19 @@ BaseData.Model.prototype.setter = function(attr) {
   }
 };
 
+BaseData.Model.prototype.customSetter = function(attr, f) {
+  var _this = this;
+  if (_.isString(attr)) {
+    return function(val){
+      _this.set(attr, f(val));
+    };
+  } else {
+    return function(val){
+      _this.set(f(val));
+    };
+  }
+};
+
 BaseData.Model.prototype.error = function() {};
 
 BaseData.Model.prototype.serverDestroy = function() {

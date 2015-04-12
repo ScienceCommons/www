@@ -176,11 +176,11 @@ function newAuthorForm(ctrl, author, options) {
   return <form onsubmit={ctrl.handleNewAuthorSubmit}>
     {errorMessage}
     <h3>
-      <span placeholder="First name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("first_name"))}>{author.get("first_name")}</span>
-      <span placeholder="Middle name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("middle_name"))}>{author.get("middle_name")}</span>
-      <span placeholder="Last name here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("last_name"))}>{author.get("last_name")}</span>
+      <span placeholder="First name here" contenteditable="true" oninput={m.withAttr("textContent", author.setter("first_name"))}>{author.get("first_name")}</span>
+      <span placeholder="Middle name here" contenteditable="true" oninput={m.withAttr("textContent", author.setter("middle_name"))}>{author.get("middle_name")}</span>
+      <span placeholder="Last name here" contenteditable="true" oninput={m.withAttr("textContent", author.setter("last_name"))}>{author.get("last_name")}</span>
     </h3>
-    <h5 className="h5" placeholder="Job title here" contenteditable="true" oninput={m.withAttr("innerText", author.setter("job_title"))}>{author.get("job_title")}</h5>
+    <h5 className="h5" placeholder="Job title here" contenteditable="true" oninput={m.withAttr("textContent", author.setter("job_title"))}>{author.get("job_title")}</h5>
     <button type="submit" className="btn">{options.type === "denormalized" ? "Save" : "Add author"}</button>
     {cancelButton}
   </form>;
