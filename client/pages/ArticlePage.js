@@ -123,11 +123,19 @@ ArticlePage.view = function(ctrl) {
 
     if (ctrl.user.canEdit()) {
       var editButtons;
+      var authorLabel;
+      var yearLabel;
       if (ctrl.editing()) {
         editButtons = [
           <button type="button" className="btn" key="save" onclick={ctrl.saveClick} disabled={ctrl.saving()}>{ctrl.saving() ? "Saving..." : "Save"}</button>,
           <button type="button" className="btn" key="discard" onclick={ctrl.discardClick} disabled={ctrl.saving()}>Discard</button>,
         ];
+        authorLabel = (
+          <h3>Authors</h3>
+        );
+        yearLabel = (
+          <h3>Publication Year</h3>
+        );
       } else {
         editButtons = [
           <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>,
@@ -162,10 +170,10 @@ ArticlePage.view = function(ctrl) {
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("title"))}>{article.get("title")}</h2>
             <div className="year">
-            <h3>Publication Year</h3>
+            {yearLabel}
         <p className="field" placeholder="YYYY format" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}>{article.get("publication_date").substring(0,4)}</p>
             </div>
-            <h3>Authors</h3>
+            {authorLabel}
             <div className="authors">{authors}</div>
 
             <h3>Abstract</h3>
