@@ -5,7 +5,7 @@ ul.PillList {
   display: inline-block;
 
   & > li {
-    display: inline-block;
+      display: inline-block;
   }
 
   .pill {
@@ -17,4 +17,8 @@ ul.PillList {
       color: black;
     }
   }
+}
+span.icon.icon_add {
+    cursor: pointer;
+    margin-left: 5px;
 }

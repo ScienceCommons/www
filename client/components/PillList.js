@@ -133,7 +133,7 @@ PillList.view = function(ctrl, options) {
       return (
         <ul className={"PillList " + (options.className||"")}>
           {pills}
-          <li><span className="icon icon_add" onclick={ctrl.toggleEditMode}></span></li>
+          <li><span className="icon icon_add" title="Add" onclick={ctrl.toggleEditMode}></span></li>
         </ul>
       );
     }

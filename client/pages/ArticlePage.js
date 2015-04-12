@@ -161,6 +161,11 @@ ArticlePage.view = function(ctrl) {
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
             <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("title"))}>{article.get("title")}</h2>
+            <div className="year">
+            <h3>Publication Year</h3>
+        <p className="field" placeholder="YYYY format" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}>{article.get("publication_date").substring(0,4)}</p>
+            </div>
+            <h3>Authors</h3>
             <div className="authors">{authors}</div>
 
             <h3>Abstract</h3>
@@ -177,11 +182,6 @@ ArticlePage.view = function(ctrl) {
               <h5>Journal</h5>
               <p className="field" placeholder="Journal goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("journal_title"))}>{article.get("journal_title")}</p>
             </div>
-            <div className="year">
-              <h5>Publication Year</h5>
-        <p className="field" placeholder="YYYY format" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("publication_date"))}>{article.get("publication_date")}</p>
-            </div>
-
             <div className="doi">
               <h5>DOI</h5>
               <p className="field" placeholder="DOI goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("doi"))}>{article.get("doi")}</p>
