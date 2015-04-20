@@ -108,7 +108,7 @@ var ArticleModel = CurateBaseModel.extend({
   initialize: function(data, options) {
     _.bindAll(this, "bookmark", "authors");
   },
-  urlRoot: "https://www.curatescience.org/articles",
+  urlRoot: "articles",
   computeds: {
     reviewersStr: {
       set: function(val) {

@@ -235,7 +235,7 @@ BaseData.Model.prototype.deallocate = function() {
 };
 
 BaseData.Model.prototype.url = function() {
-  return this.urlRoot+"/"+this.get("id");
+  return API_ROOT + this.urlRoot+"/"+this.get("id");
 };
 
 BaseData.Model.prototype.toJSON = function(options) {

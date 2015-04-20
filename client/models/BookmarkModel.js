@@ -8,7 +8,7 @@ var BookmarkModel = CurateBaseModel.extend({
   relations: {
     "bookmarkable": {type: "one", model: require("./ArticleModel.js")}
   },
-  urlRoot: "https://www.curatescience.org/bookmarks"
+  urlRoot: "bookmarks"
 });
 
 module.exports = BookmarkModel;

@@ -63,7 +63,9 @@ module.exports = function (grunt) {
   };
 
   var DEVELOPMENT_PATH = "build/development";
-  var PRODUCTION_PATH = "build/production/public";
+  var PRODUCTION_PATH = "build/production/";
+  var DEV_API_ROOT = process.env.DEV_API_ROOT;
+  var PROD_API_ROOT = process.env.PROD_API_ROOT;
 
   grunt.initConfig({
     pkg: pkgConfig,

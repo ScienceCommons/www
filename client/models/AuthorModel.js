@@ -55,7 +55,7 @@ var AuthorModel = CurateBaseModel.extend({
   pill: function() {
     return { label: this.get("fullName"), value: this };
   },
-  urlRoot: "https://www.curatescience.org/authors",
+  urlRoot: "authors",
   markedDuplicate: function() {
     return !!this.get("same_as_id") && this.get("id") !== this.get("same_as_id");
   },

@@ -43,7 +43,7 @@ var AuthorCollection = CurateBaseCollection.extend({
     if (options.partial) {
       query = "*" + query + "*";
     }
-    var url = "https://www.curatescience.org/authors?q=" + query;
+    var url = API_ROOT + "authors?q=" + query;
     if (!_.isUndefined(options.from)) {
       url = url + "&from=" + options.from;
     }

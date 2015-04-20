@@ -98,7 +98,7 @@ var StudyModel = CurateBaseModel.extend({
   hasPendingEdits: function(field) {
     return false;
   },
-  urlRoot: "https://www.curatescience.org/studies",
+  urlRoot: "studies",
   create: function() {
     throw("Study.create must be done through the collection: article.get('studies')");
   },

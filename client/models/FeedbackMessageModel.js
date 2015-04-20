@@ -10,7 +10,7 @@ var FeedbackMessageModel = CurateBaseModel.extend({
     message: "",
     details: {}
   },
-  urlRoot: "https://www.curatescience.org/feedback_messages"
+  urlRoot: "feedback_messages"
 });
 
 module.exports = FeedbackMessageModel;

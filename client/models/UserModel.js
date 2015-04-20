@@ -78,7 +78,7 @@ var UserModel = CurateBaseModel.extend({
       }
     };
   },
-  urlRoot: "https://www.curatescience.org/users",
+  urlRoot: "users",
   toggleAdmin: function() {
     var _this = this;
     var req = this.sync("create", this, {url: this.url() + "/toggle_admin", data: {state: !this.get("admin")}});
@@ -94,7 +94,7 @@ var UserModel = CurateBaseModel.extend({
     return req;
   },
   logout: function() {
-    return this.sync("read", {}, {url: "https://www.curatescience.org/log_out"});
+    return this.sync("read", {}, {url: API_ROOT + "log_out"});
   }
 });
 
