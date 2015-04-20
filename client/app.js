@@ -38,7 +38,7 @@ App.showPage = function(pageName) {
       delete App.user;
     } else if (CS.user && !App.user) {
       App.user = new UserModel(CS.user);
-      App.user.get("bookmarks").url = function() { return "https://www.curatescience.org/bookmarks"; };
+      App.user.get("bookmarks").url = function() { return API_ROOT + "bookmarks"; };
       if (App.user.get("id")) {
         App.user.get("bookmarks").fetch();
       }

@@ -14,7 +14,7 @@ var UserCollection = CurateBaseCollection.extend({
     this.error = null;
   },
   search: function(options) {
-    var url = "https://www.curatescience.org/users?q=" + options.query;
+    var url = API_ROOT + "users?q=" + options.query;
     if (!_.isUndefined(options.from)) {
       url = url + "&from=" + options.from;
     }
@@ -41,7 +41,7 @@ var UserCollection = CurateBaseCollection.extend({
   },
   fetchAdmins: function() {
     var _this = this;
-    var req = this.sync("read", {}, {url: "https://www.curatescience.org/users/admins"});
+    var req = this.sync("read", {}, {url: API_ROOT + "users/admins"});
     req.then(function(res) {
       _this.reset(res);
     });
@@ -49,7 +49,7 @@ var UserCollection = CurateBaseCollection.extend({
   },
   fetchBetaMailList: function() {
     var _this = this;
-    var req = this.sync("read", {}, {url: "https://www.curatescience.org/users/beta_mail_list"});
+    var req = this.sync("read", {}, {url: API_ROOT + "users/beta_mail_list"});
     req.then(function(res) {
       _this.reset(res);
     });

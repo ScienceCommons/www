@@ -17,7 +17,11 @@
   <script type="text/javascript">
     var CS = {};
     <!-- @if NODE_ENV='development' -->
-    CS.user = {}; // user data here
+      CS.user = {}; // user data here
+      API_ROOT = "<!-- @echo DEV_API_ROOT -->";
+    <!-- @endif -->
+    <!-- @if NODE_ENV='production' -->
+      API_ROOT = "<!-- @echo PROD_API_ROOT -->";
     <!-- @endif -->
   </script>
 

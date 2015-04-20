@@ -9,7 +9,7 @@ var InviteModel = CurateBaseModel.extend({
   defaults: {
     email: ""
   },
-  urlRoot: "https://www.curatescience.org/invites"
+  urlRoot: "invites"
 });
 
 module.exports = InviteModel;

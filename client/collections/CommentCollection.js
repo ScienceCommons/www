@@ -6,7 +6,7 @@ var CommentCollection = CurateBaseCollection.extend({
   name: "CommentCollection",
   model: require("../models/CommentModel.js")/*,
   url: function() {
-    var url = "https://www.curatescience.org/" + this.commentableType + "/" + this.commentableID + "/comments";
+    var url = API_ROOT + this.commentableType + "/" + this.commentableID + "/comments";
     if (this.field) {
       url = url + "/" + this.field;
     }

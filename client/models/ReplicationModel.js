@@ -12,7 +12,7 @@ var ReplicationModel = CurateBaseModel.extend({
       study: {type: "one", model: require("./StudyModel.js")}
     };
   }],
-  urlRoot: "https://www.curatescience.org/replications",
+  urlRoot: "replications"
 });
 
 module.exports = ReplicationModel;

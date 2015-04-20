@@ -48,7 +48,7 @@ var CommentModel = CurateBaseModel.extend({
       return <span className="icon icon_person"></span>;
     }
   },
-  urlRoot: "https://www.curatescience.org/comments",
+  urlRoot: "comments",
   removeAnonymous: function() {
     this.set("anonymous", false);
     var req = this.sync("create", this, {url: this.url()+"/set_non_anonymous"});
