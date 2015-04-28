@@ -24,10 +24,10 @@ ArticlePage.controller = function(options) {
   OnUnload(this);
   var _this = this;
   this.user = options.user;
-
   if (m.route.param("articleId") === "new" && this.user.canEdit()) {
     this.article = new ArticleModel({});
     this.editing = m.prop(true);
+
   } else {
     this.article = new ArticleModel({id: m.route.param("articleId")});
     this.article.fetch();
@@ -36,8 +36,8 @@ ArticlePage.controller = function(options) {
     this.editing = m.prop(false);
   }
   this.saving = m.prop(false);
+  this.finding = m.prop(false);
   window.article = this.article;
-
   options = _.extend({id: "ArticlePage"}, options);
   this.controllers.layout = new Layout.controller(options);
   this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: this.user});
@@ -94,6 +94,12 @@ ArticlePage.controller = function(options) {
     }
   };
 
+  this.findClick = function() {
+   _this.article.find_doi();
+   document.getElementsByClassName('button_save')[0].focus();
+  };
+
+
   this.discardClick = function() {
     if (_this.article.isNew()) {
       m.route("/articles/new");
@@ -101,6 +107,39 @@ ArticlePage.controller = function(options) {
       _this.article.reset({include: ["authors"]});
       _this.editing(false);
       _this.saving(false);
+      _this.finding(false);
+    }
+  };
+  this.onEnterDoiFind = function(event) {
+      var keyCode = event.keyCode;
+      if(keyCode == '13'){
+        _this.article.find_doi();
+        event.preventDefault();
+      }
+  };
+  
+  this.onTabSendToAuthor = function(event) {
+      var keyCode = event.keyCode;
+      if(keyCode == '9'){
+        if (typeof document.getElementsByClassName('icon_add')[0] !== 'undefined') {
+          document.getElementsByClassName('icon_add')[0].click();
+          event.preventDefault();
+        }
+      }
+  };
+  this.onTabSendToAbstract = function(event) {
+      var keyCode = event.keyCode;
+      if(keyCode == '9'){
+        if (typeof document.getElementsByClassName('icon_add')[0] !== 'undefined') {
+          document.getElementsByClassName('icon_add')[0].click();
+          event.preventDefault();
+        }
+      }
+  };
+  
+  this.focusDOI = function(el, isInitialized) {
+    if (!isInitialized) {
+      document.getElementsByClassName('form_field')[0].focus();
     }
   };
 };
@@ -108,7 +147,6 @@ ArticlePage.controller = function(options) {
 ArticlePage.view = function(ctrl) {
   var article = ctrl.article;
   var content;
-
   if (article && !article.not_found) {
     document.title = _.compact([
       article.authors().etAl(1),
@@ -118,36 +156,54 @@ ArticlePage.view = function(ctrl) {
 
     var tags = new PillList.view(ctrl.controllers.tagsList);
     if (!article.loading) {
-      var authors = new AuthorList.view(ctrl.controllers.authorsList, { placeholder: "No authors" });
+      var authors = new AuthorList.view(ctrl.controllers.authorsList, { placeholder: "(Required, at least one)" });
     }
 
     if (ctrl.user.canEdit()) {
       var editButtons;
+      var findDoiButton;
+      var doiLabel;
       var authorLabel;
       var yearLabel;
+      var titleLabel;
+      var journalLabel;
+      var abstractLabel;
       if (ctrl.editing()) {
         editButtons = [
-          <button type="button" className="btn" key="save" onclick={ctrl.saveClick} disabled={ctrl.saving()}>{ctrl.saving() ? "Saving..." : "Save"}</button>,
-          <button type="button" className="btn" key="discard" onclick={ctrl.discardClick} disabled={ctrl.saving()}>Discard</button>,
+          m("button", {type:"button", className:"btn button_save", key:"save", onclick:ctrl.saveClick, disabled:ctrl.saving()}, [ctrl.saving() ? "Saving..." : "Save"]),
+          m("button", {type:"button", className:"btn", key:"discard", onclick:ctrl.discardClick, disabled:ctrl.saving()}, ["Discard"]),
         ];
+        findDoiButton = m("button", {type:"button", className:"btn", key:"find", onclick:ctrl.findClick, disabled:ctrl.finding(), onkeydown:ctrl.onTabSendToAuthor}, [ctrl.finding() ? "Finding..." : "Retrieve article metadata"]); 
+        doiLabel = (
+          m("h3", {className:"label"}, ["DOI:"])
+        );
         authorLabel = (
-          <h3>Authors</h3>
+          m("h3", {className:"label"}, ["Author(s)*:"])
         );
         yearLabel = (
-          <h3>Publication Year</h3>
+          m("h3", {className:"label"}, ["Publication Year*:"])
+        );
+        titleLabel = (
+          m("h3", {className:"label"}, ["Article title*:"])
+         );
+        journalLabel = (
+          m("h3", {className:"label"}, ["Journal name:"])
+        );
+        abstractLabel = (
+          m("h3", {className:"label"}, ["Abstract:"])
         );
       } else {
         editButtons = [
-          <button type="button" className="btn" key="edit" onclick={ctrl.editClick}>Edit</button>,
-          <button type="button" className="btn" key="delete" onclick={ctrl.deleteClick}>Delete</button>,
+          m("button", {type:"button", className:"btn", key:"edit", onclick:ctrl.editClick}, ["Edit"]),
+          m("button", {type:"button", className:"btn", key:"delete", onclick:ctrl.deleteClick}, ["Delete"]),
         ];
       }
     }
 
     var studiesTable, commentsList;
     if (article.isNew()) {
-      studiesTable = <h5>You must save this new article before you can add studies.</h5>;
-      commentsList = <h5>You must save this new article before you can leave comments.</h5>;
+      studiesTable = m("h5", ["You must save this new article before you can add studies."]);
+      commentsList = m("h5", ["You must save this new article before you can leave comments."]);
     } else {
       studiesTable = new StudiesTable.view(ctrl.controllers.studiesTable);
       commentsList = new CommentBox.view(ctrl.controllers.commentBox);
@@ -155,74 +211,77 @@ ArticlePage.view = function(ctrl) {
 
     if (article.hasErrors()) {
       var errors = _.map(article.errors(), function(error) {
-        return <li>{error}</li>;
+        return m("li", [error]);
       });
 
-      var errorMessage = <ul className="errors">
-        {errors}
-      </ul>;
+      var errorMessage = m("ul", {className:"errors"}, [
+        errors
+      ]);
     }
-
+      
     content = (
-      <div>
-        {errorMessage}
-        <div className="section articleHeader">
-          <div className="col span_3_of_4 titleAndAbstract">
-            <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("title"))}>{article.get("title")}</h2>
-            <div className="year">
-            {yearLabel}
-        <p className="field" placeholder="YYYY format" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}>{article.get("publication_date").substring(0,4)}</p>
-            </div>
-            {authorLabel}
-            <div className="authors">{authors}</div>
+      m("div", [
+        errorMessage,
+        m("div", {className:"section articleHeader"}, [
+          m("div", {className:"col span_3_of_4 titleAndAbstract"}, [
+            m("div", {className:"doi"}, [
+              doiLabel,
+              m("p", {className:"field form_field", placeholder:"(Optional) Input DOI & hit Enter", config: ctrl.focusDOI, contenteditable:ctrl.editing(), oninput:m.withAttr("textContent", article.setter("doi")), onkeydown:ctrl.onEnterDoiFind}, [article.get("doi")]),
+              m("p", {className:"btn_group button_find"}, [
+                findDoiButton
+              ]),
+            ]),
+            authorLabel,
+            m("div", {className:"authors form_field"}, [authors]),
+            m("div", {className:"year"}, [
+            yearLabel,
+            m("p", {className:"field form_field", placeholder:"(Required, YYYY format)", contenteditable:ctrl.editing(), oninput:m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}, [article.get("publication_date").substring(0,4)])
+            ]),
+            m("div", {className:"title"}, [
+              titleLabel,
+              m("p", {className:"form_field field", placeholder:"(Required)", contenteditable:ctrl.editing(), oninput:m.withAttr("textContent", article.setter("title"))}, [article.get("title")])
+            ]),
+            m("div", {className:"journal"}, [
+              journalLabel,
+              m("p", {className:"form_field field", placeholder:"(Optional) If unpublished, leave blank", contenteditable:ctrl.editing(), oninput:m.withAttr("textContent", article.setter("journal_title"))}, [article.get("journal_title")])
+            ]),
+            abstractLabel,
+            m("p", {className:"abstract form_field", placeholder:"Optional", contenteditable:ctrl.editing(), oninput:m.withAttr("textContent", article.setter("abstract")), onkeydown:ctrl.onTabSendToAbstract}, [article.get("abstract")]),
+            m("div", {className:"tags"}, [
+              m("h3", {className:"label"}, ["Tags:"]),
+              m("p", {className:"form_field add_tags"}, [tags])
+            ]),
+              editButtons,
+              m("div", {className:"button_find"}, [
+                m("button", {type:"button", key:"bookmark", title:"Bookmark article", className:"btn bookmark " + (ctrl.user.hasBookmarked("Article", article.get("id")) ? "active" : ""), onclick:ctrl.user.toggleBookmark("Article", article)}, [m("span", {className:"icon icon_bookmark"})])
+              ]),  
+              m("p",{className:"require_la"}, ["*=required field."])
+             ]),
+          ]),
 
-            <h3>Abstract</h3>
-            <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("abstract"))}>{article.get("abstract")}</p>
-          </div>
+        m("div", {className:"section"}, [
+          m("h3", ["Studies and replications"]),
+          studiesTable
+        ]),
 
-          <div className="col span_1_of_4 text_right">
-            <div className="btn_group">
-              {editButtons}
-              <button type="button" key="bookmark" title="Bookmark article" className={"btn bookmark " + (ctrl.user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={ctrl.user.toggleBookmark("Article", article)}><span className="icon icon_bookmark"></span></button>
-            </div>
-
-            <div className="journal">
-              <h5>Journal</h5>
-              <p className="field" placeholder="Journal goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("journal_title"))}>{article.get("journal_title")}</p>
-            </div>
-            <div className="doi">
-              <h5>DOI</h5>
-              <p className="field" placeholder="DOI goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("doi"))}>{article.get("doi")}</p>
-            </div>
-            <div className="tags">
-              <h5>Tags</h5>
-              <p>{tags}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="section">
-          <h3>Studies and replications</h3>
-          {studiesTable}
-        </div>
-
-        <div className="section">
-          <div className="col span_4_of_4">
-            <div>
-              <h3>Comments</h3>
-              {commentsList}
-            </div>
-          </div>
-        </div>
-      </div>
+        m("div", {className:"section"}, [
+          m("div", {className:"col span_4_of_4"}, [
+            m("div", [
+              m("h3", ["Comments"]),
+              commentsList
+            ])
+          ])
+        ])
+      ])
     );
 
   } else {
-    content = <ul className="errors"><li>Article not found</li></ul>;
+    content = m("ul", {className:"errors"}, [m("li", ["Article not found"])]);
   }
 
   return new Layout.view(ctrl.controllers.layout, content);
 };
+
 
 // helpers
 function toggleBookmark(article, user) {
@@ -235,5 +294,6 @@ function toggleBookmark(article, user) {
     }
   };
 };
+
 
 module.exports = ArticlePage;
