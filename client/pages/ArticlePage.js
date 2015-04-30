@@ -72,6 +72,7 @@ ArticlePage.controller = function(options) {
   };
 
   this.saveClick = function() {
+    debugger;
     _this.saving(true);
     var res = _this.article.save({include: ["authors"]});
     res.then(function() {
@@ -101,6 +102,7 @@ ArticlePage.controller = function(options) {
 
 
   this.discardClick = function() {
+    debugger;
     if (_this.article.isNew()) {
       m.route("/articles/new");
     } else {
@@ -113,8 +115,8 @@ ArticlePage.controller = function(options) {
   this.onEnterDoiFind = function(event) {
       var keyCode = event.keyCode;
       if(keyCode == '13'){
-        _this.article.find_doi();
         event.preventDefault();
+        _this.article.find_doi();
       }
   };
   
@@ -122,8 +124,8 @@ ArticlePage.controller = function(options) {
       var keyCode = event.keyCode;
       if(keyCode == '9'){
         if (typeof document.getElementsByClassName('icon_add')[0] !== 'undefined') {
-          document.getElementsByClassName('icon_add')[0].click();
           event.preventDefault();
+          document.getElementsByClassName('icon_add')[0].click();
         }
       }
   };
@@ -131,8 +133,8 @@ ArticlePage.controller = function(options) {
       var keyCode = event.keyCode;
       if(keyCode == '9'){
         if (typeof document.getElementsByClassName('icon_add')[0] !== 'undefined') {
-          document.getElementsByClassName('icon_add')[0].click();
           event.preventDefault();
+          document.getElementsByClassName('icon_add')[0].click();
         }
       }
   };
@@ -168,6 +170,7 @@ ArticlePage.view = function(ctrl) {
       var titleLabel;
       var journalLabel;
       var abstractLabel;
+      var requireLabel;
       if (ctrl.editing()) {
         editButtons = [
           m("button", {type:"button", className:"btn button_save", key:"save", onclick:ctrl.saveClick, disabled:ctrl.saving()}, [ctrl.saving() ? "Saving..." : "Save"]),
@@ -191,6 +194,9 @@ ArticlePage.view = function(ctrl) {
         );
         abstractLabel = (
           m("h3", {className:"label"}, ["Abstract:"])
+        );
+        requireLabel = (
+          m("p",{className:"require_la"}, ["*=required field."])
         );
       } else {
         editButtons = [
@@ -255,7 +261,7 @@ ArticlePage.view = function(ctrl) {
               m("div", {className:"button_find"}, [
                 m("button", {type:"button", key:"bookmark", title:"Bookmark article", className:"btn bookmark " + (ctrl.user.hasBookmarked("Article", article.get("id")) ? "active" : ""), onclick:ctrl.user.toggleBookmark("Article", article)}, [m("span", {className:"icon icon_bookmark"})])
               ]),  
-              m("p",{className:"require_la"}, ["*=required field."])
+              requireLabel
              ]),
           ]),
 
@@ -276,7 +282,14 @@ ArticlePage.view = function(ctrl) {
     );
 
   } else {
-    content = m("ul", {className:"errors"}, [m("li", ["Article not found"])]);
+    if (ctrl.article.hasErrors()) {
+      var errorsList = _.map(ctrl.article.errors(), function(message) {
+        return m("li", [message]);
+      });
+      content = m("ul", {className:"errors"}, [m("li", [errorsList])]);
+      // contents.push(m("ul", {className:"errors"}, [errorsList]));
+    }
+
   }
 
   return new Layout.view(ctrl.controllers.layout, content);

@@ -147,7 +147,7 @@ var ArticleModel = CurateBaseModel.extend({
     req.then(function(data) {
       _this.set(data);
     }, function() {
-      // error
+      _this.errors;
     });
     return req;
     }
