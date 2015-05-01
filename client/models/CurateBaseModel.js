@@ -7,7 +7,6 @@ var BaseModel = require("./BaseData.js").Model;
 
 var CurateBaseModel = BaseModel.extend({
   sync: function(method, model, options) {
-    debugger;
     options = options || {};
     options.config = function(xhr) {
       xhr.setRequestHeader("Content-Type", "application/json");

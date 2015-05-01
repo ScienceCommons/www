@@ -142,7 +142,7 @@ var ArticleModel = CurateBaseModel.extend({
     return this.get("authors");
   },
   find_doi:  function() {
-    var req = this.sync("create", this, {data: {doi: this.get("doi"), year: this.get("publication_date"), title: this.get("title")}, url: this.url() + "/find_doi"}); //API_ROOT + this.urlRoot
+    var req = this.sync("create", this, {data: {doi: this.get("doi"), year: this.get("publication_date"), title: this.get("title")}, url: API_ROOT + "articles/find_doi"}); //API_ROOT + this.urlRoot
     var _this = this; 
     req.then(function(data) {
       _this.set(data);

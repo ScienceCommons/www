@@ -308,7 +308,6 @@ BaseData.Model.prototype.fetch = function(options) {
 BaseData.Model.prototype.save = function(options) {
   options = options || {};
   this.saving = true;
-  debugger;
   var action = this.isNew() ? "create" : "update";
   if (action === "create") {
     options.url = options.url || this.urlRoot;
@@ -316,12 +315,10 @@ BaseData.Model.prototype.save = function(options) {
   var res = this.sync(action, this, options);
   var _this = this;
   res.then(function() {
-    debugger;
     _this.saving = false;
     _this.loaded = true;
   });
   res.then(function(data) {
-  debugger;
     _this.set(data, {server: true});
   }, this.error);
   return res;

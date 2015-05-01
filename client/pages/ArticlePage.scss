@@ -74,6 +74,22 @@
   }
   .require_label {
     display: inline-block;
+    vertical-align: middle;
+    text-align: center;
   }
-
+  .button_save {
+    margin-left: 230px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+    text-align: center;
+  }
+  .button_discard {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 50px;
+    text-align: center;
+    font-size: 18px;
+    width: 100px;
+  }
 }
