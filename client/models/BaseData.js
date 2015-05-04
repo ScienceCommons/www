@@ -310,7 +310,7 @@ BaseData.Model.prototype.save = function(options) {
   this.saving = true;
   var action = this.isNew() ? "create" : "update";
   if (action === "create") {
-    options.url = options.url || this.urlRoot;
+    options.url = options.url || API_ROOT + this.urlRoot;
   }
   var res = this.sync(action, this, options);
   var _this = this;
