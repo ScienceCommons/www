@@ -145,7 +145,7 @@ ArticlePage.controller = function(options) {
 ArticlePage.view = function(ctrl) {
   var article = ctrl.article;
   var content;  
-  if (article && !article.not_found) {
+  if (article) {
     document.title = _.compact([
       article.authors().etAl(1),
       article.get("journal"),
@@ -332,7 +332,6 @@ ArticlePage.view = function(ctrl) {
       content = m("ul", {className:"errors"}, [m("li", [errorsList])]);
       // contents.push(m("ul", {className:"errors"}, [errorsList]));
     }
-
   }
 
   return new Layout.view(ctrl.controllers.layout, content);
