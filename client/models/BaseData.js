@@ -346,7 +346,7 @@ BaseData.Model.prototype.hasChanges = function(options) {
 };
 
 BaseData.Model.prototype.isNew = function() {
-  return _.isUndefined(this.get("id"));
+  return _.isUndefined(this.get("id")) || _.isNull(this.get("id"));
 };
 
 BaseData.Model.prototype.reset = function(options) {

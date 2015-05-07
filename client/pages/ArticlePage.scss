@@ -51,4 +51,45 @@
   p.abstract {
     line-height: 22px;
   }
+
+  .label {
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+    text-align: right;
+  }
+  .form_field {
+    display: inline-block;
+    vertical-align: middle !important;
+    margin-left: 30px !important;
+    min-width: 300px;
+    text-align: left;
+    min-height: 30px !important;
+    font-size: 18px;
+  }
+  .button_find {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .require_label {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .button_save {
+    margin-left: 230px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+    text-align: center;
+  }
+  .button_discard {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 50px;
+    text-align: center;
+    font-size: 18px;
+    width: 100px;
+  }
 }
