@@ -22,7 +22,9 @@ AuthorList.controller = function(options) {
   this.collection = options.collection;
   this.editable = options.editable;
   this.editingDenormalized = m.prop(false);
-
+  if (options.isNewRecord){ 
+    this.isNewRecord = options.isNewRecord;
+  }
   var _this = this;
   this.controllers = {};
   this.controllers.Typeahead = new Typeahead.controller({
@@ -55,7 +57,8 @@ AuthorList.controller = function(options) {
   this.controllers.PillList = new PillList.controller({
     typeahead: this.controllers.Typeahead,
     collection: this.collection, // authors
-    editable: this.editable
+    editable: this.editable, 
+    isNewRecord: this.isNewRecord
   });
 
   this.handleNewAuthorSubmit = function(e) {
