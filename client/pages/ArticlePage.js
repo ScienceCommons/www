@@ -166,8 +166,6 @@ ArticlePage.view = function(ctrl) {
 
     if (!article.loading) {
       if (article.isNew()) {
-        ctrl.controllers.tagsList
-        ctrl.controllers.authorsList
         var tags = new PillList.view(ctrl.controllers.tagsList, { placeholder: "(Optional)" });
         var authors = new AuthorList.view(ctrl.controllers.authorsList, { placeholder: "(Required, at least one)" });
       } else {
