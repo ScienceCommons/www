@@ -10,7 +10,9 @@ var PillList = {};
 
 PillList.controller = function(options) {
   this.controllers = {};
-
+  if (options.isNewRecord){ 
+    this.isNewRecord = options.isNewRecord;
+  }
   this.editable = options.editable;
   this.editing = m.prop(false);
 
@@ -119,6 +121,7 @@ PillList.view = function(ctrl, options) {
     pills = _.map(ctrl.pills(), function(pill) {
       return options.pillView(pill, {onRemoveClick: ctrl.onRemoveClick});
     });
+    
     if (ctrl.editing()) {
       return (
         <ul className={"PillList editing " + (options.className||"")} onclick={ctrl.handleDivClick}>
@@ -130,12 +133,21 @@ PillList.view = function(ctrl, options) {
       if (pills.length === 0 && options.placeholder) {
         pills = <li className="pill placeholder">{options.placeholder}</li>;
       }
-      return (
-        <ul className={"PillList " + (options.className||"")}>
-          {pills}
-          <li><span className="icon icon_add" title="Add" onclick={ctrl.toggleEditMode}></span></li>
-        </ul>
-      );
+      if (ctrl.isNewRecord) {
+        return (
+          <ul className={"PillList " + (options.className||"")}>
+            <li><span className="icon icon_add" title="Add" onclick={ctrl.toggleEditMode}></span></li>
+            {pills}
+          </ul>
+        );
+    } else {
+        return (
+          <ul className={"PillList " + (options.className||"")}>
+            {pills}
+            <li><span className="icon icon_add" title="Add" onclick={ctrl.toggleEditMode}></span></li>
+          </ul>
+        );
+    }
     }
   } else {
     pills = _.map(_.compact(ctrl.pills()), function(pill) {

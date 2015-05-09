@@ -42,14 +42,17 @@ ArticlePage.controller = function(options) {
   this.controllers.layout = new Layout.controller(options);
   this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: this.user});
   this.controllers.studiesTable = new StudiesTable.controller({article: article, user: this.user});
+  
   this.controllers.tagsList = new PillList.controller({
     editable: this.editing,
-    model: this.article
+    model: this.article,
+    isNewRecord: this.article.isNew()
   });
 
   this.controllers.authorsList = new AuthorList.controller({
     editable: this.editing,
-    collection: this.article.authors
+    collection: this.article.authors,
+    isNewRecord: this.article.isNew()
   });
 
   this.editClick = function() {
@@ -136,9 +139,18 @@ ArticlePage.controller = function(options) {
   this.focusDOI = function(el, isInitialized) {
     if (!isInitialized) {
       document.getElementsByClassName('form_field')[0].focus();
-      // return false;
     }
 
+  };
+
+  this.onEnterDoiFind = function(event) {
+    var keyCode = event.keyCode;
+    if(keyCode == '13'){
+      _this.article.find_doi();
+      document.getElementsByClassName('button_save')[0].focus();
+      event.preventDefault();
+      return false;
+    }
   };
 };
 
@@ -152,11 +164,12 @@ ArticlePage.view = function(ctrl) {
       article.get("year")
     ]).join(", ");
 
-    var tags = new PillList.view(ctrl.controllers.tagsList);
     if (!article.loading) {
       if (article.isNew()) {
+        var tags = new PillList.view(ctrl.controllers.tagsList, { placeholder: "(Optional)" });
         var authors = new AuthorList.view(ctrl.controllers.authorsList, { placeholder: "(Required, at least one)" });
       } else {
+        var tags = new PillList.view(ctrl.controllers.tagsList);
         var authors = new AuthorList.view(ctrl.controllers.authorsList, { placeholder: "No authors" });
       }
     }
@@ -200,7 +213,7 @@ ArticlePage.view = function(ctrl) {
           m("p",{className:"require_label"}, ["*=required field."])
         );
         tagLabel = (
-          m("h3", {className:"label"}, ["Tags:"])
+          m("h3", {className:"label", placeholder:"(Optional)"}, ["Tags:"])
         );
       } else {
         editButtons = [
@@ -236,7 +249,7 @@ ArticlePage.view = function(ctrl) {
           <div className="col span_3_of_4 titleAndAbstract">
             <div className="doi">
               {doiLabel}
-              <p className="field form_field" placeholder="(Optional) Input DOI & hit Enter" config={ctrl.focusDOI} contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("doi"))}>{article.get("doi")}</p>
+              <p className="field form_field" placeholder="(Optional) Input DOI &amp; hit Enter" config={ctrl.focusDOI} contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("doi"))} onkeydown={ctrl.onEnterDoiFind}>{article.get("doi")}</p>
               <p className="btn_group button_find">{findDoiButton}</p>
             </div>
             {authorLabel}
@@ -255,7 +268,7 @@ ArticlePage.view = function(ctrl) {
             </div>
             {abstractLabel}
             <p className="abstract form_field" placeholder="(Optional)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("abstract"))} onkeydown={ctrl.onTabSendToAbstract}>{article.get("abstract")}</p>
-            <div className="tags">
+            <div className="tags" >
               {tagLabel}
               <p className="form_field add_tags">
                 {tags}
