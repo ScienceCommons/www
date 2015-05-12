@@ -8,4 +8,4 @@ env:
 before_install:
   - npm install -g grunt grunt-cli
 after_success:
-  - grunt deploy:test_production
+  - grunt deploy:test_production --force
