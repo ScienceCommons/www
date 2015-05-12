@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - '0.10'
+env:
+  global:
+    - AWS_S3_BUCKET=www.curatescience.org AWS_S3_TEST_BUCKET=test.curatescience.org
+    - secure: "IMfJ6x4+njJp8S5u3ukP8QRUdFYhiFoRGCq8K6pGShqKNg27hHd5wgHML+AwrCTlvTuFBo3ntgJqSRdx/XLQRbFPZvYN5g63mZSL0EfyJaPzIJoYEnr2upDhLjES1Grbtj0W5RoxwDNbtnCvTB6sa3ho6ZYeaa8o4pvo6cxWf1Y="
+before_install:
+  - npm install -g grunt grunt-cli
+after_success:
+  - grunt deploy:test_production --force
