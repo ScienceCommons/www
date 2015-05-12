@@ -2,7 +2,4 @@ language: node_js
 node_js:
   - '0.10'
 env:
-  - secure: "RqLrOL0JZCjY6KTBfVrYRedh43pAwsyuPp069NuGnPHxAo/aRyO9hwYnvVwlPRoV2EYeq8ECBNbUe8ov6L4+U2unRucPNvBPo+L0ai+kcw5zzTnYEamRauahgohytte3Ul1xQgXNg6SoPfOmgPD9O8EE4tzB6hXgyjVjp/ZTTZU="
-  - secure: "pPLFPygeiTf/kHwRpLwprmz7igbdt4Jdn/iIQEE/P9mBrMIQE+9VbwUQS2dQrWDgx0C4mS93xyjdzrvJ3OacmHoTLVw+qzGec6AhxcKiS3jyqMNrEGCGxA9mrARTzUmyete7TAlTBWQsg5hMKukVuATTrfUVi/e70VL2kfaW8L4="
-  - AWS_S3_BUCKET=www.curatescience.org
-  - AWS_S3_TEST_BUCKET=test.curatescience.org
+  - AWS_S3_BUCKET=www.curatescience.org AWS_S3_TEST_BUCKET=test.curatescience.org secure: "IMfJ6x4+njJp8S5u3ukP8QRUdFYhiFoRGCq8K6pGShqKNg27hHd5wgHML+AwrCTlvTuFBo3ntgJqSRdx/XLQRbFPZvYN5g63mZSL0EfyJaPzIJoYEnr2upDhLjES1Grbtj0W5RoxwDNbtnCvTB6sa3ho6ZYeaa8o4pvo6cxWf1Y="
