@@ -133,7 +133,10 @@ PillList.view = function(ctrl, options) {
       if (pills.length === 0 && options.placeholder) {
         pills = <li className="pill placeholder">{options.placeholder}</li>;
       }
-      if (ctrl.isNewRecord) {
+      if (ctrl.isNewRecord ) {
+        if (!pills.length > 0) {
+          pills = <li>{options.placeholder}</li>;
+        }
         return (
           <ul className={"PillList " + (options.className||"")}>
             <li><span className="icon icon_add" title="Add" onclick={ctrl.toggleEditMode}></span></li>
