@@ -118,7 +118,11 @@ var ArticleModel = CurateBaseModel.extend({
     year: function() {
       var date = this.get("publication_date");
       if (date) {
-        return (new Date(date)).getFullYear();
+        var currentTimeZoneOffsetInHours = -(new Date().getTimezoneOffset()/60)
+        if(currentTimeZoneOffsetInHours > 0){
+          currentTimeZoneOffsetInHours = "+"+currentTimeZoneOffsetInHours
+        }
+        return (new Date(date + " UTC" + currentTimeZoneOffsetInHours)).getFullYear();
       }
     }
   },
@@ -143,7 +147,7 @@ var ArticleModel = CurateBaseModel.extend({
   },
   find_doi:  function() {
     var req = this.sync("create", this, {data: {doi: this.get("doi"), year: this.get("publication_date"), title: this.get("title")}, url: API_ROOT + "articles/find_doi"}); //API_ROOT + this.urlRoot
-    var _this = this; 
+    var _this = this;
     req.then(function(data) {
       _this.set(data);
     }, function() {
