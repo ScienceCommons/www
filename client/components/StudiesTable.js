@@ -735,12 +735,16 @@ StudiesTable.modelUpdateViews.default = function(state) {
 };
 StudiesTable.modelUpdateViews.effect_size = function(state) {
   var oldVal = _.first(_.pairs(state[0]));
-  if(oldVal.length > 0) {
+  var prevValue = "";
+  if(oldVal != undefined) {
     oldVal[0] = effectSizeSymbol[oldVal[0]];
+    prevValue = oldVal.join(": ")
+  } else {
+    prevValue = "null"
   }
   var newVal = _.first(_.pairs(state[1]));
   newVal[0] = effectSizeSymbol[newVal[0]];
-  return oldVal.join(": ") + " => " + newVal.join(": ");
+  return prevValue + " => " + newVal.join(": ");
 };
 
 
