@@ -118,7 +118,7 @@ var ArticleModel = CurateBaseModel.extend({
     year: function() {
       var date = this.get("publication_date");
       if (date) {
-        currentTimeZoneOffsetInHours = -(new Date().getTimezoneOffset()/60)
+        var currentTimeZoneOffsetInHours = -(new Date().getTimezoneOffset()/60)
         if(currentTimeZoneOffsetInHours > 0){
           currentTimeZoneOffsetInHours = "+"+currentTimeZoneOffsetInHours
         }

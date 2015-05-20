@@ -274,8 +274,8 @@ StudiesTable.view = function(ctrl) {
   if (ctrl.article.get("studies").length > 0 || ctrl.newStudy()) {
     var header = <header>
       <div className="cell replication_path">Replication path</div>
-      <div className="cell number">Number</div>
-      <div className="cell badges"></div>
+      <div className="cell number">Authors and Study Number</div>
+      <div className="cell badges">Study Components</div>
       <div className="cell independent_variables">Independent Variables</div>
       <div className="cell dependent_variables">Dependent Variables</div>
       <div className="cell n">N <span className="icon icon_person"></span></div>
@@ -300,19 +300,20 @@ StudiesTable.studyView = function(ctrl, study, options) {
   });
 
   var saveButtons = [];
-  if (options.replication) {
-    saveButtons.push(<button type="button" key="unlink" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>);
-  } else {
-    if (options.new || study.hasChanges({include: ["links"]})) {
-      if (study.saving) {
-        saveButtons.push(<button type="button" key="save" className="btn saveStudy" disabled={true} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Saving...</button>);
-      } else {
-        saveButtons = [
-          <button type="button" className="btn saveStudy" key="save" disabled={study.saving} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
-          <button type="button" className="btn discardStudy" key="discard" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
-        ];
-      }
-    } else if (!options.new) {
+  if (options.new || study.hasChanges({include: ["links"]})) {
+    if (study.saving) {
+      saveButtons.push(<button type="button" key="save" className="btn saveStudy" disabled={true} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Saving...</button>);
+    } else {
+      saveButtons = [
+        <button type="button" className="btn saveStudy" key="save" disabled={study.saving} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
+        <button type="button" className="btn discardStudy" key="discard" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
+      ];
+    }
+  }
+  else if (!options.new) {
+    if (options.replication) {
+      saveButtons.push(<button type="button" key="unlink" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>);
+    } else {
       saveButtons = <button type="button" key="delete" className="btn deleteStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
     }
   }
@@ -384,7 +385,7 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
   ctrl.controllers.studyCommentAndEditModal.open(true);
   ctrl.controllers.studyFieldCommentForm.comments = study.get("comments");
 
-  if (ctrl.active().editing && !options.replication) {
+  if (ctrl.active().editing) {
     var inputs;
     if (StudiesTable.modalEditors[field]) {
       inputs = StudiesTable.modalEditors[field].view(ctrl, study);
@@ -441,10 +442,8 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
     var modalContent = <ul className="commentsAndHistory">{_.chain(commentsAndChanges).compact().sortBy('date').pluck('view').value().reverse()}</ul>;
 
     var editButton;
-    if (App.user.canEdit() && !options.replication) {
-      if (ctrl.article.get("id") === study.get("article_id")) {
-        editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
-      }
+    if (App.user.canEdit()) {
+      editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
     }
 
     return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
@@ -463,7 +462,8 @@ function focusConfig(el, isInitialized) {
 }
 
 var ModalLabels = {
-  number: "Number",
+  number: "Authors and Study Number",
+  study_components: "Study Components",
   independent_variables: "Independent Variables",
   dependent_variables: "Dependent Variables",
   n: "Sample Size",
@@ -667,13 +667,13 @@ StudiesTable.cellViews.number = function(ctrl, study) {
     </li>;
   }
 
-  if (ctrl.article.get("id") !== study.get("article_id")) {
-    var year = study.get("year");
-    if (year) {
-      year = "(" + year + ")";
-    }
-    var etAl = <li>{study.etAl(1)} {year}</li>
+
+  var year = study.get("year");
+  if (year) {
+    year = "(" + year + ")";
   }
+  var etAl = <li>{study.etAl(10)} {year}</li>
+
 
   return <ul>
     {etAl}
@@ -735,12 +735,16 @@ StudiesTable.modelUpdateViews.default = function(state) {
 };
 StudiesTable.modelUpdateViews.effect_size = function(state) {
   var oldVal = _.first(_.pairs(state[0]));
-  if(oldVal.length > 0) {
+  var prevValue = "";
+  if(oldVal != undefined) {
     oldVal[0] = effectSizeSymbol[oldVal[0]];
+    prevValue = oldVal.join(": ")
+  } else {
+    prevValue = "null"
   }
   var newVal = _.first(_.pairs(state[1]));
   newVal[0] = effectSizeSymbol[newVal[0]];
-  return oldVal.join(": ") + " => " + newVal.join(": ");
+  return prevValue + " => " + newVal.join(": ");
 };
 
 
