@@ -300,19 +300,20 @@ StudiesTable.studyView = function(ctrl, study, options) {
   });
 
   var saveButtons = [];
-  if (options.replication) {
-    saveButtons.push(<button type="button" key="unlink" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>);
-  } else {
-    if (options.new || study.hasChanges({include: ["links"]})) {
-      if (study.saving) {
-        saveButtons.push(<button type="button" key="save" className="btn saveStudy" disabled={true} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Saving...</button>);
-      } else {
-        saveButtons = [
-          <button type="button" className="btn saveStudy" key="save" disabled={study.saving} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
-          <button type="button" className="btn discardStudy" key="discard" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
-        ];
-      }
-    } else if (!options.new) {
+  if (options.new || study.hasChanges({include: ["links"]})) {
+    if (study.saving) {
+      saveButtons.push(<button type="button" key="save" className="btn saveStudy" disabled={true} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Saving...</button>);
+    } else {
+      saveButtons = [
+        <button type="button" className="btn saveStudy" key="save" disabled={study.saving} onclick={options.new ? ctrl.saveNewStudy : ctrl.saveStudy(study)}>Save</button>,
+        <button type="button" className="btn discardStudy" key="discard" onclick={options.new ? ctrl.discardNewStudy : ctrl.resetStudy(study)}>Discard</button>
+      ];
+    }
+  }
+  else if (!options.new) {
+    if (options.replication) {
+      saveButtons.push(<button type="button" key="unlink" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>);
+    } else {
       saveButtons = <button type="button" key="delete" className="btn deleteStudy" onclick={ctrl.deleteStudy(study)}>Delete</button>;
     }
   }
@@ -384,7 +385,7 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
   ctrl.controllers.studyCommentAndEditModal.open(true);
   ctrl.controllers.studyFieldCommentForm.comments = study.get("comments");
 
-  if (ctrl.active().editing && !options.replication) {
+  if (ctrl.active().editing) {
     var inputs;
     if (StudiesTable.modalEditors[field]) {
       inputs = StudiesTable.modalEditors[field].view(ctrl, study);
@@ -441,10 +442,8 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
     var modalContent = <ul className="commentsAndHistory">{_.chain(commentsAndChanges).compact().sortBy('date').pluck('view').value().reverse()}</ul>;
 
     var editButton;
-    if (App.user.canEdit() && !options.replication) {
-      if (ctrl.article.get("id") === study.get("article_id")) {
-        editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
-      }
+    if (App.user.canEdit()) {
+      editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
     }
 
     return Modal.view(ctrl.controllers.studyCommentAndEditModal, {
