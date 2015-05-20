@@ -19,7 +19,9 @@ var AuthorCollection = CurateBaseCollection.extend({
     }
   },
   authorLastNamesList: function() {
-    return this.pluck("last_name");
+    return this.map(function(model){
+      return model.get('last_name');
+    });
   },
   etAl: function(num) {
     num = num || 1;

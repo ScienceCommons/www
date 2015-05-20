@@ -31,7 +31,7 @@ ArticlePage.controller = function(options) {
   } else {
     this.article = new ArticleModel({id: m.route.param("articleId")});
     this.article.fetch();
-    this.article.get("studies").fetch({data: {replications: true, comments: true, model_updates: true, replication_of: true}});
+    this.article.get("studies").fetch({data: {replications: true, comments: true, model_updates: true, replication_of: true, authors: true}});
     this.article.get("comments").fetch();
     this.editing = m.prop(false);
   }
@@ -42,7 +42,7 @@ ArticlePage.controller = function(options) {
   this.controllers.layout = new Layout.controller(options);
   this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: this.user});
   this.controllers.studiesTable = new StudiesTable.controller({article: article, user: this.user});
-  
+
   this.controllers.tagsList = new PillList.controller({
     editable: this.editing,
     model: this.article,
@@ -114,7 +114,7 @@ ArticlePage.controller = function(options) {
       _this.finding(false);
     }
   };
-  
+
   this.onTabSendToAuthor = function(event) {
       var keyCode = event.keyCode;
       if(keyCode == '9'){
@@ -135,7 +135,7 @@ ArticlePage.controller = function(options) {
         }
       }
   };
-  
+
   this.focusDOI = function(el, isInitialized) {
     if (!isInitialized) {
       document.getElementsByClassName('form_field')[0].focus();
@@ -156,7 +156,7 @@ ArticlePage.controller = function(options) {
 
 ArticlePage.view = function(ctrl) {
   var article = ctrl.article;
-  var content;  
+  var content;
   if (article) {
     document.title = _.compact([
       article.authors().etAl(1),
@@ -190,7 +190,7 @@ ArticlePage.view = function(ctrl) {
           m("button", {type:"button", className:"btn", key:"save", onclick:ctrl.saveClick, disabled:ctrl.saving()}, [ctrl.saving() ? "Saving..." : "Save"]),
           m("button", {type:"button", className:"btn", key:"discard", onclick:ctrl.discardClick, disabled:ctrl.saving()}, ["Discard"]),
         ];
-        findDoiButton = m("button", {type:"button", className:"btn", key:"find", onclick:ctrl.findClick, disabled:ctrl.finding(), onkeydown:ctrl.onTabSendToAuthor}, [ctrl.finding() ? "Finding..." : "Retrieve article metadata"]); 
+        findDoiButton = m("button", {type:"button", className:"btn", key:"find", onclick:ctrl.findClick, disabled:ctrl.finding(), onkeydown:ctrl.onTabSendToAuthor}, [ctrl.finding() ? "Finding..." : "Retrieve article metadata"]);
         doiLabel = (
           m("h3", {className:"label"}, ["DOI:"])
         );
@@ -241,7 +241,7 @@ ArticlePage.view = function(ctrl) {
         errors
       ]);
     }
-    if (ctrl.article.isNew()){ 
+    if (ctrl.article.isNew()){
      content = (
       <div>
         {errorMessage}
@@ -254,16 +254,16 @@ ArticlePage.view = function(ctrl) {
             </div>
             {authorLabel}
             <div className="authors form_field">{authors}</div>
-            
+
             <div className="year">
               {yearLabel}
               <p className="field form_field" placeholder="(Required, YYYY format)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}>{article.get("publication_date").substring(0,4)}</p>
             </div>
-            <div className="title">{titleLabel} 
+            <div className="title">{titleLabel}
               <p className="form_field field" placeholder="(Required)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("title"))}>{article.get("title")}</p>
             </div>
             <div className="journal">
-              {journalLabel}  
+              {journalLabel}
               <p className="form_field field" placeholder="(Optional) If unpublished, leave blank" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("journal_title"))}>{article.get("journal_title")}</p>
             </div>
             {abstractLabel}
@@ -276,7 +276,7 @@ ArticlePage.view = function(ctrl) {
             </div>
             <button type="button" className="btn button_save" onclick={ctrl.saveClick} disabled={ctrl.saving()}>{ctrl.saving() ? "Saving..." : "Save"}</button>
             <button type="button" className="btn button_discard" onclick={ctrl.discardClick} disabled={ctrl.saving()}>{"Discard"}</button>
-            {requireLabel} 
+            {requireLabel}
           </div>
         </div>
       </div>
@@ -334,7 +334,7 @@ ArticlePage.view = function(ctrl) {
             </div>
           </div>
         </div>
-      ); 
+      );
     }
 
   } else {

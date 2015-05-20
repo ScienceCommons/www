@@ -667,13 +667,13 @@ StudiesTable.cellViews.number = function(ctrl, study) {
     </li>;
   }
 
-  if (ctrl.article.get("id") !== study.get("article_id")) {
-    var year = study.get("year");
-    if (year) {
-      year = "(" + year + ")";
-    }
-    var etAl = <li>{study.etAl(1)} {year}</li>
+
+  var year = study.get("year");
+  if (year) {
+    year = "(" + year + ")";
   }
+  var etAl = <li>{study.etAl(10)} {year}</li>
+
 
   return <ul>
     {etAl}
