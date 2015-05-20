@@ -274,8 +274,8 @@ StudiesTable.view = function(ctrl) {
   if (ctrl.article.get("studies").length > 0 || ctrl.newStudy()) {
     var header = <header>
       <div className="cell replication_path">Replication path</div>
-      <div className="cell number">Number</div>
-      <div className="cell badges"></div>
+      <div className="cell number">Authors and Study Number</div>
+      <div className="cell badges">Study Components</div>
       <div className="cell independent_variables">Independent Variables</div>
       <div className="cell dependent_variables">Dependent Variables</div>
       <div className="cell n">N <span className="icon icon_person"></span></div>
@@ -462,7 +462,8 @@ function focusConfig(el, isInitialized) {
 }
 
 var ModalLabels = {
-  number: "Number",
+  number: "Authors and Study Number",
+  study_components: "Study Components",
   independent_variables: "Independent Variables",
   dependent_variables: "Dependent Variables",
   n: "Sample Size",
