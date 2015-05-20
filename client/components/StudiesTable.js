@@ -672,7 +672,7 @@ StudiesTable.cellViews.number = function(ctrl, study) {
   if (year) {
     year = "(" + year + ")";
   }
-  var etAl = <li>{study.etAl(10)} {year}</li>
+  var etAl = <li>{study.etAl(2)} {year}</li>
 
 
   return <ul>
