@@ -289,10 +289,8 @@ ArticlePage.view = function(ctrl) {
             <div className="col span_3_of_4 titleAndAbstract">
               <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("title"))}>{article.get("title")}</h2>
               <div className="year">
-              <h3>Publication Year</h3>
           <p className="field" placeholder="YYYY format" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}>{article.get("publication_date").substring(0,4)}</p>
               </div>
-              <h3>Authors</h3>
               <div className="authors">{authors}</div>
 
               <h3>Abstract</h3>
