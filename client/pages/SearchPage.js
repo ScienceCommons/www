@@ -26,6 +26,12 @@ SearchPage.controller = function(options) {
   }
 };
 
+function route(path) {
+  return function(e) {
+    return m.route(path);
+  };
+};
+
 SearchPage.view = function(ctrl) {
   var results = ctrl.controllers.searchResults.results;
   var content;
@@ -39,6 +45,12 @@ SearchPage.view = function(ctrl) {
           <tr>
             <th>
               {count}
+              <div className="pull_right">
+                <button type="button" className="btn" onclick={route("/articles/new")}>
+                  <span className="glyphicon glyphicon-plus"></span>
+                  <span>Add article</span>
+                </button>
+              </div>
             </th>
           </tr>
         </thead>
