@@ -125,6 +125,12 @@ StudyFinder.articleView = function(ctrl, article) {
   );
 };
 
+function route(path) {
+  return function(e) {
+    return m.route(path);
+  };
+};
+
 StudyFinder.searchView = function(ctrl) {
   var articles = ctrl.matchingArticles;
   var results;
@@ -172,10 +178,15 @@ StudyFinder.searchView = function(ctrl) {
 
   return (
     <form onsubmit={ctrl.runSearch}>
+
       <div className="search">
         <div>Find the article, then pick the study.</div>
         <input placeholder="Find article" type="text" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
         <button type="submit" className="btn">Search</button>
+        <button type="button" className="btn" onclick={route("/articles/new")}>
+          <span className="glyphicon glyphicon-plus"></span>
+          <span>Add article</span>
+        </button>
       </div>
 
       <div className="results">
