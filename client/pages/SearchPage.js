@@ -48,8 +48,9 @@ SearchPage.view = function(ctrl) {
               <div className="pull_right">
                 <button type="button" className="btn" onclick={route("/articles/new")}>
                   <span className="glyphicon glyphicon-plus"></span>
-                  <span>Add article</span>
+                  <span> Add article</span>
                 </button>
+                <span class="glyphicon glyphicon-info-sign tooltip" title="Cannot find an article or replication? Click &quot;Add Article&quot; to add a missing article or replication."></span>
               </div>
             </th>
           </tr>
