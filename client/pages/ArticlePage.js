@@ -140,7 +140,6 @@ ArticlePage.controller = function(options) {
     if (!isInitialized) {
       document.getElementsByClassName('form_field')[0].focus();
     }
-
   };
 
   this.onEnterDoiFind = function(event) {
@@ -319,7 +318,10 @@ ArticlePage.view = function(ctrl) {
           </div>
 
           <div className="section">
-            <h3>Studies and replications</h3>
+            <h3>
+              Studies and replications
+              <span class="glyphicon glyphicon-info-sign tooltip" title="Add original studies of current article by clicking &quot;Add study&quot;. Add a replication study to an original study by clicking the subway_add icon above the corresponding study."></span>
+            </h3>
             {studiesTable}
           </div>
 

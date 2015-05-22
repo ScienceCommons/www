@@ -2,6 +2,7 @@
 
 "use strict";
 require("./FullLayout.scss");
+require("../components/Tooltipster.scss");
 
 var m = require("mithril");
 
@@ -10,6 +11,7 @@ var UserBar = require("../components/UserBar.js");
 var Logo = require("../components/Logo.js");
 var FeedbackForm = require("../components/FeedbackForm.js");
 var Modal = require("../components/Modal.js");
+var Tooltipster = require("../components/Tooltipster.js");
 
 var FullLayout = {};
 

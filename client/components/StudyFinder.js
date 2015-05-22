@@ -104,7 +104,7 @@ StudyFinder.articleView = function(ctrl, article) {
 		 ") "+ parentStudy.get("number")}>
               <span className={replicationActive ? "glyphicon glyphicon-minus" : "glyphicon glyphicon-plus"}></span>
 	      <span className="icon icon_replication"></span>
-	      <span>{studyName}</span>
+	      <span> {studyName}</span>
 	  </button>
         </li>
       );
@@ -183,10 +183,12 @@ StudyFinder.searchView = function(ctrl) {
         <div>Find the article, then pick the study.</div>
         <input placeholder="Find article" type="text" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
         <button type="submit" className="btn">Search</button>
+        <span class="glyphicon glyphicon-info-sign tooltip" title="Find the article containing the replication study, and then click the &quot;Add replication&quot; icon next to the replication study you want to link to the original study. If the article containing the replication is missing, click the &quot;Add Article&quot; button to add a new article; once you’ve added the replication study, return to the original study article to add the replication (this process will be improved in the near future)."></span>
         <button type="button" className="btn" onclick={route("/articles/new")}>
           <span className="glyphicon glyphicon-plus"></span>
-          <span>Add article</span>
+          <span> Add article</span>
         </button>
+        <span class="glyphicon glyphicon-info-sign tooltip" title="Cannot find an article or replication? Click &quot;Add Article&quot; to add a missing article or replication."></span>
       </div>
 
       <div className="results">
