@@ -276,14 +276,14 @@ StudiesTable.view = function(ctrl) {
       <div className="cell replication_path">Replication path</div>
       <div className="cell number">Authors &amp; Study Number</div>
       <div className="cell badges">
-        Study Components
+        Study Components&nbsp;
         <span class="glyphicon glyphicon-info-sign tooltip" title="Link data/syntax, materials, or pre-registration info to a study by clicking on the corresponding icon and clicking &quot;Add a link&quot;."></span>
       </div>
       <div className="cell independent_variables">Independent Variables</div>
       <div className="cell dependent_variables">Dependent Variables</div>
       <div className="cell n">N <span className="icon icon_person"></span></div>
       <div className="cell power">
-        Power
+        Power&nbsp;
         <span class="glyphicon glyphicon-info-sign tooltip" title="Enter the a priori power level to detect an effect size as large (or larger) than in an original study (for replication studies only)."></span>
       </div>
       <div className="cell effect_size">Effect Size</div>
@@ -680,7 +680,7 @@ StudiesTable.cellViews.number = function(ctrl, study) {
   }
   var etAl = <li>{study.etAl(2)} {year}</li>
 
-  if(study.get('id') == undefined && study.get("number").length > 0) {
+  if(study.get('id') == undefined) {
     etAl = <li>{ctrl.article.authors().etAl(2)} ({ctrl.article.get("year")})</li>
   }
 

@@ -243,6 +243,7 @@ ArticlePage.view = function(ctrl) {
     if (ctrl.article.isNew()){
      content = (
       <div>
+        <h2>Add a missing or unpublished article&nbsp;<span class="glyphicon glyphicon-info-sign tooltip" title="For missing published or in press articles, drag-and-drop or copy-and-paste the DOI and hit ENTER or click the &quot;Retrieve article metadata&quot; button to automatically retrieve article metadata. For unpublished articles or articles without a DOI, manually input the Authors, Publication year, and Article title, and click Save."></span></h2>
         {errorMessage}
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
@@ -251,9 +252,13 @@ ArticlePage.view = function(ctrl) {
               <p className="field form_field" placeholder="(Optional) Input DOI &amp; hit Enter" config={ctrl.focusDOI} contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("doi"))} onkeydown={ctrl.onEnterDoiFind}>{article.get("doi")}</p>
               <p className="btn_group button_find">{findDoiButton}</p>
             </div>
-            {authorLabel}
-            <div className="authors form_field">{authors}</div>
-
+            <h3 className="label">
+              <span class="glyphicon glyphicon-info-sign tooltip" title="To add an author, click the &quot;+&quot; icon and start typing the author’s first name and select the relevant author’s name if it already exists. If an author’s name is missing, click &quot;Add a new author&quot; to manually input the author’s first, middle, and last name."></span>&nbsp;
+              Author(s)*:
+            </h3>
+            <div className="authors form_field">
+              {authors}
+            </div>
             <div className="year">
               {yearLabel}
               <p className="field form_field" placeholder="(Required, YYYY format)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}>{article.get("publication_date").substring(0,4)}</p>
@@ -320,7 +325,7 @@ ArticlePage.view = function(ctrl) {
           <div className="section">
             <h3>
               Studies and replications
-              <span class="glyphicon glyphicon-info-sign tooltip" title="Add original studies of current article by clicking &quot;Add study&quot;. Add a replication study to an original study by clicking the subway_add icon above the corresponding study."></span>
+              &nbsp;<span class="glyphicon glyphicon-info-sign tooltip" title="Add original studies of current article by clicking &quot;Add study&quot;. Add a replication study to an original study by clicking the subway_add icon above the corresponding study."></span>
             </h3>
             {studiesTable}
           </div>
