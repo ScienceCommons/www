@@ -243,7 +243,7 @@ ArticlePage.view = function(ctrl) {
     if (ctrl.article.isNew()){
      content = (
       <div>
-        <h2>Add a missing or unpublished article&nbsp;<span class="glyphicon glyphicon-info-sign tooltip" title="For missing published or in press articles, drag-and-drop or copy-and-paste the DOI and hit ENTER or click the &quot;Retrieve article metadata&quot; button to automatically retrieve article metadata. For unpublished articles or articles without a DOI, manually input the Authors, Publication year, and Article title, and click Save."></span></h2>
+        <h2 className="text_center">Add a missing or unpublished article&nbsp;<span class="glyphicon glyphicon-info-sign tooltip" title="For missing published or in press articles, drag-and-drop or copy-and-paste the DOI and hit ENTER or click the &quot;Retrieve article metadata&quot; button to automatically retrieve article metadata. For unpublished articles or articles without a DOI, manually input the Authors, Publication year, and Article title, and click Save."></span></h2>
         {errorMessage}
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
@@ -325,7 +325,8 @@ ArticlePage.view = function(ctrl) {
           <div className="section">
             <h3>
               Studies and replications
-              &nbsp;<span class="glyphicon glyphicon-info-sign tooltip" title="Add original studies of current article by clicking &quot;Add study&quot;. Add a replication study to an original study by clicking the subway_add icon above the corresponding study."></span>
+              &nbsp;
+              <span class="glyphicon glyphicon-info-sign tooltip" title="Add original studies of current article by clicking &quot;Add study&quot;. Add a replication study to an original study by clicking the &lt;span class=&quot;subway_add_icon&quot;&gt;&lt;/span&gt; icon above the corresponding study."></span>
             </h3>
             {studiesTable}
           </div>
