@@ -681,7 +681,7 @@ StudiesTable.cellViews.number = function(ctrl, study) {
 
   var etAl = <li>{study.etAl(2)} {year}</li>
 
-  if(study.get('id') == undefined && study.get("number").length > 0 || study.loaded == true) {
+  if(study.get('id') == undefined || study.loaded == true) {
     etAl = <li>{ctrl.article.authors().etAl(2)} ({ctrl.article.get("year")})</li>
   }
 

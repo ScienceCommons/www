@@ -1332,3 +1332,9 @@ jQuery('body').on('mouseover mouseenter', '.tooltip', function(){
     jQuery(this).tooltipster();
     jQuery(this).tooltipster('show');
 });
+
+jQuery('body').on('mouseover mouseenter', '.tooltip-top', function(){
+    jQuery(this).tooltipster();
+    jQuery(this).tooltipster('option', 'position', 'top');
+    jQuery(this).tooltipster('show');
+});
