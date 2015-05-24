@@ -31,7 +31,7 @@ ArticlePage.controller = function(options) {
   } else {
     this.article = new ArticleModel({id: m.route.param("articleId")});
     this.article.fetch();
-    this.article.get("studies").fetch({data: {replications: true, comments: true, model_updates: true, replication_of: true}});
+    this.article.get("studies").fetch({data: {replications: true, comments: true, model_updates: true, replication_of: true, authors: true}});
     this.article.get("comments").fetch();
     this.editing = m.prop(false);
   }
@@ -42,7 +42,7 @@ ArticlePage.controller = function(options) {
   this.controllers.layout = new Layout.controller(options);
   this.controllers.commentBox = new CommentBox.controller({comments: this.article.get("comments"), user: this.user});
   this.controllers.studiesTable = new StudiesTable.controller({article: article, user: this.user});
-  
+
   this.controllers.tagsList = new PillList.controller({
     editable: this.editing,
     model: this.article,
@@ -114,7 +114,7 @@ ArticlePage.controller = function(options) {
       _this.finding(false);
     }
   };
-  
+
   this.onTabSendToAuthor = function(event) {
       var keyCode = event.keyCode;
       if(keyCode == '9'){
@@ -135,12 +135,11 @@ ArticlePage.controller = function(options) {
         }
       }
   };
-  
+
   this.focusDOI = function(el, isInitialized) {
     if (!isInitialized) {
       document.getElementsByClassName('form_field')[0].focus();
     }
-
   };
 
   this.onEnterDoiFind = function(event) {
@@ -156,7 +155,7 @@ ArticlePage.controller = function(options) {
 
 ArticlePage.view = function(ctrl) {
   var article = ctrl.article;
-  var content;  
+  var content;
   if (article) {
     document.title = _.compact([
       article.authors().etAl(1),
@@ -190,7 +189,7 @@ ArticlePage.view = function(ctrl) {
           m("button", {type:"button", className:"btn", key:"save", onclick:ctrl.saveClick, disabled:ctrl.saving()}, [ctrl.saving() ? "Saving..." : "Save"]),
           m("button", {type:"button", className:"btn", key:"discard", onclick:ctrl.discardClick, disabled:ctrl.saving()}, ["Discard"]),
         ];
-        findDoiButton = m("button", {type:"button", className:"btn", key:"find", onclick:ctrl.findClick, disabled:ctrl.finding(), onkeydown:ctrl.onTabSendToAuthor}, [ctrl.finding() ? "Finding..." : "Retrieve article metadata"]); 
+        findDoiButton = m("button", {type:"button", className:"btn", key:"find", onclick:ctrl.findClick, disabled:ctrl.finding(), onkeydown:ctrl.onTabSendToAuthor}, [ctrl.finding() ? "Finding..." : "Retrieve article metadata"]);
         doiLabel = (
           m("h3", {className:"label"}, ["DOI:"])
         );
@@ -241,9 +240,10 @@ ArticlePage.view = function(ctrl) {
         errors
       ]);
     }
-    if (ctrl.article.isNew()){ 
+    if (ctrl.article.isNew()){
      content = (
       <div>
+        <h2 className="text_center">Add a missing or unpublished article&nbsp;<span class="glyphicon glyphicon-info-sign tooltip" title="For missing published or in press articles, drag-and-drop or copy-and-paste the DOI and hit ENTER or click the &quot;Retrieve article metadata&quot; button to automatically retrieve article metadata. For unpublished articles or articles without a DOI, manually input the Authors, Publication year, and Article title, and click Save."></span></h2>
         {errorMessage}
         <div className="section articleHeader">
           <div className="col span_3_of_4 titleAndAbstract">
@@ -252,18 +252,22 @@ ArticlePage.view = function(ctrl) {
               <p className="field form_field" placeholder="(Optional) Input DOI &amp; hit Enter" config={ctrl.focusDOI} contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("doi"))} onkeydown={ctrl.onEnterDoiFind}>{article.get("doi")}</p>
               <p className="btn_group button_find">{findDoiButton}</p>
             </div>
-            {authorLabel}
-            <div className="authors form_field">{authors}</div>
-            
+            <h3 className="label">
+              <span class="glyphicon glyphicon-info-sign tooltip" title="To add an author, click the &quot;+&quot; icon and start typing the author’s first name and select the relevant author’s name if it already exists. If an author’s name is missing, click &quot;Add a new author&quot; to manually input the author’s first, middle, and last name."></span>&nbsp;
+              Author(s)*:
+            </h3>
+            <div className="authors form_field">
+              {authors}
+            </div>
             <div className="year">
               {yearLabel}
               <p className="field form_field" placeholder="(Required, YYYY format)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}>{article.get("publication_date").substring(0,4)}</p>
             </div>
-            <div className="title">{titleLabel} 
+            <div className="title">{titleLabel}
               <p className="form_field field" placeholder="(Required)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("title"))}>{article.get("title")}</p>
             </div>
             <div className="journal">
-              {journalLabel}  
+              {journalLabel}
               <p className="form_field field" placeholder="(Optional) If unpublished, leave blank" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("journal_title"))}>{article.get("journal_title")}</p>
             </div>
             {abstractLabel}
@@ -276,7 +280,7 @@ ArticlePage.view = function(ctrl) {
             </div>
             <button type="button" className="btn button_save" onclick={ctrl.saveClick} disabled={ctrl.saving()}>{ctrl.saving() ? "Saving..." : "Save"}</button>
             <button type="button" className="btn button_discard" onclick={ctrl.discardClick} disabled={ctrl.saving()}>{"Discard"}</button>
-            {requireLabel} 
+            {requireLabel}
           </div>
         </div>
       </div>
@@ -289,10 +293,8 @@ ArticlePage.view = function(ctrl) {
             <div className="col span_3_of_4 titleAndAbstract">
               <h2 className="articleTitle" placeholder="Title goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("title"))}>{article.get("title")}</h2>
               <div className="year">
-              <h3>Publication Year</h3>
           <p className="field" placeholder="YYYY format" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.customSetter("publication_date",function(x){return x + "-01-01";}))}>{article.get("publication_date").substring(0,4)}</p>
               </div>
-              <h3>Authors</h3>
               <div className="authors">{authors}</div>
 
               <h3>Abstract</h3>
@@ -321,7 +323,11 @@ ArticlePage.view = function(ctrl) {
           </div>
 
           <div className="section">
-            <h3>Studies and replications</h3>
+            <h3>
+              Studies and replications
+              &nbsp;
+              <span class="glyphicon glyphicon-info-sign tooltip-top" title="Add original studies of current article by clicking &quot;Add study&quot;. Add a replication study to an original study by clicking the &lt;span class=&quot;subway_add_icon&quot;&gt;&lt;/span&gt; icon above the corresponding study."></span>
+            </h3>
             {studiesTable}
           </div>
 
@@ -334,7 +340,7 @@ ArticlePage.view = function(ctrl) {
             </div>
           </div>
         </div>
-      ); 
+      );
     }
 
   } else {

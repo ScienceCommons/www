@@ -1,7 +1,6 @@
 @import "../variables.scss";
 
 #ArticlePage {
-
   .StudiesTable .errors > li {
     padding: 0;
   }
@@ -92,4 +91,13 @@
     font-size: 18px;
     width: 100px;
   }
+}
+
+.subway_add_icon {
+  background-image: url("../images/subway_add.png");
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 38px;
+  display: inline-block;
+  vertical-align: top;
 }

@@ -77,7 +77,7 @@ StudyFinder.articleView = function(ctrl, article) {
     if (ctrl.parentStudy && ctrl.parentStudy()) {
       parentReplications = ctrl.parentStudy().get("replications");
     }
-   
+
     var list = studies.map(function(study) {
       var replicationActive = parentReplications && parentReplications.find(
 	function(replication) {
@@ -86,19 +86,25 @@ StudyFinder.articleView = function(ctrl, article) {
       var classes = cx({
         btn: true,
         btn_subtle: true,
-        active: replicationActive 
+        active: replicationActive
       });
-  
+
       var parentStudy = ctrl.parentStudy();
+
+      if(studies.length == 1){
+        var studyName = study.etAl(3) + " (" + study.get("year") + ")";
+      } else {
+        var studyName = study.get("number");
+      }
       return (
         <li>
-          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)} 
-	  title={(replicationActive ? "Remove " : "Add ") + study.etAl(3) + " (" + study.get("year") + ") " + 
+          <button type="button" className={classes} onclick={ctrl.clickStudyButton(study)}
+	  title={(replicationActive ? "Remove " : "Add ") + study.etAl(3) + " (" + study.get("year") + ") " +
 		 study.get("number") + " as a replication of " + parentStudy.etAl(3) + " (" + parentStudy.get("year") +
 		 ") "+ parentStudy.get("number")}>
-              <span className={replicationActive ? "glyphicon glyphicon-minus" : "glyphicon glyphicon-plus"}></span> 
+              <span className={replicationActive ? "glyphicon glyphicon-minus" : "glyphicon glyphicon-plus"}></span>
 	      <span className="icon icon_replication"></span>
-	      <span> {study.get("number")}</span>
+	      <span> {studyName}</span>
 	  </button>
         </li>
       );
@@ -117,6 +123,12 @@ StudyFinder.articleView = function(ctrl, article) {
       {content}
     </div>
   );
+};
+
+function route(path) {
+  return function(e) {
+    return m.route(path);
+  };
 };
 
 StudyFinder.searchView = function(ctrl) {
@@ -166,10 +178,17 @@ StudyFinder.searchView = function(ctrl) {
 
   return (
     <form onsubmit={ctrl.runSearch}>
+
       <div className="search">
         <div>Find the article, then pick the study.</div>
         <input placeholder="Find article" type="text" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
         <button type="submit" className="btn">Search</button>
+        &nbsp;
+        <span class="glyphicon glyphicon-info-sign tooltip" title="Find the article containing the replication study, and then click the &quot;Add replication&quot; icon next to the replication study you want to link to the original study. If the article containing the replication is missing, click the &quot;Add Article&quot; button to add a new article; once you’ve added the replication study, return to the original study article to add the replication (this process will be improved in the near future)."></span>
+        <button type="button" className="btn" onclick={route("/articles/new")}>
+          <span className="glyphicon glyphicon-plus"></span>
+          <span> Add article</span>
+        </button>
       </div>
 
       <div className="results">
