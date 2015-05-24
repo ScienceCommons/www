@@ -10,4 +10,5 @@ before_install:
   - sudo apt-get install fontforge
   - npm install -g grunt grunt-cli
 after_success:
-  - grunt deploy:test_production --force
+  - if [[ "$TRAVIS_BRANCH" == "staging" ]]; then grunt deploy:test_production; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then grunt deploy:production; fi
