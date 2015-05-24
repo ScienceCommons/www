@@ -189,8 +189,6 @@ StudyFinder.searchView = function(ctrl) {
           <span className="glyphicon glyphicon-plus"></span>
           <span> Add article</span>
         </button>
-        &nbsp;
-        <span class="glyphicon glyphicon-info-sign tooltip" title="Cannot find an article or replication? Click &quot;Add Article&quot; to add a missing article or replication."></span>
       </div>
 
       <div className="results">
