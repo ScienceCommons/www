@@ -419,7 +419,7 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
             <li className="Comment">
               <div><span className="pill">Comment</span></div>
               <header>{heading}</header>
-              <p>{comment.get("comment")}</p>
+              <p>{m.trust(comment.get("html_comment"))}</p>
             </li>
           );
           return {date: comment.get("created_at"), view: commentView};
