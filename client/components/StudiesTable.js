@@ -243,14 +243,13 @@ StudiesTable.view = function(ctrl) {
     content = Spinner.view();
   } else {
     var studies = ctrl.article.get("studies").map(function(study) {
-      if (ctrl.expanded()[study.get("id")]) {
-        var replications = study.get("replications").map(function(replication) {
-          return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true, replicationModel: replication, parentStudy: study});
-        });
-        if (replications.length === 0) {
-          ctrl.expanded({});
-        }
+      var replications = study.get("replications").map(function(replication) {
+        return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true, replicationModel: replication, parentStudy: study});
+      });
+      if (replications.length === 0) {
+        ctrl.expanded({});
       }
+
       return [StudiesTable.studyView(ctrl, study), replications];
     });
 
@@ -420,7 +419,7 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
             <li className="Comment">
               <div><span className="pill">Comment</span></div>
               <header>{heading}</header>
-              <p>{comment.get("comment")}</p>
+              <p>{m.trust(comment.get("html_comment"))}</p>
             </li>
           );
           return {date: comment.get("created_at"), view: commentView};

@@ -66,7 +66,7 @@ var StudyModel = CurateBaseModel.extend({
       } else {
         var date = this.get("publication_date");
         if (date) {
-          return (new Date(date)).getFullYear();
+          return date.substring(0,4)
         }
       }
     }

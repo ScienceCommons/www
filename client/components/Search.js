@@ -23,11 +23,19 @@ Search.controller = function(options) {
 
 Search.view = function(ctrl) {
   return (
-    <form onsubmit={ctrl.updateSearch} className={"Search " + ctrl.className}>
-      <input type="text" placeholder="Search for articles" autocomplete="off" size={ctrl.size} value={ctrl.query()} oninput={m.withAttr("value", ctrl.query)} />
-      &nbsp;<span class="glyphicon glyphicon-info-sign tooltip white-big-tooltip" title="Search for published articles (e.g., &quot;&lt;a href=&quot;https://www.curatescience.org/beta/#/query/bargh%20warmth&quot;&gt;Bargh warmth&lt;/a&gt;&quot;) or replications (e.g., &quot;&lt;a href=&quot;https://www.curatescience.org/beta/#/query/pashler%20elderly%20priming&quot;&gt;Pashler elderly priming&lt;/a&gt;&quot;)."></span>
-    </form>
-  );
+      m("form", {onsubmit:ctrl.updateSearch, className:"Search " + ctrl.className}, [
+        m("input", {config:focusConfig, type:"text", id:"search-articles", placeholder:"Search for articles", autocomplete:"off", size:ctrl.size, value:ctrl.query(), oninput:m.withAttr("value", ctrl.query)} ),
+        " ",m("span", {class:"glyphicon glyphicon-info-sign tooltip white-big-tooltip", title:"Search for published articles (e.g., \"<a href=\"https://www.curatescience.org/beta/#/query/bargh%20warmth\">Bargh warmth</a>\") or replications (e.g., \"<a href=\"https://www.curatescience.org/beta/#/query/pashler%20elderly%20priming\">Pashler elderly priming</a>\")."})
+      ])
+    );
 };
+
+function focusConfig(el, isInitialized) {
+  if (!isInitialized) {
+    if(m.route() == "/") {
+      el.focus();
+    }
+  }
+}
 
 module.exports = Search;
