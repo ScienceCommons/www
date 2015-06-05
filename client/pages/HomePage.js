@@ -22,16 +22,34 @@ HomePage.controller = function(options) {
     id: "HomePage",
     header: <a href="/about" className="aboutLink" config={m.route}>What is Curate Science?</a>
   }, options));
-  this.controllers.search= new Search.controller({});
+  this.controllers.search = new Search.controller({});
+
+
+
+  this._limit = 10;
+  this.recentlyAddedArticlesPage    = 1;
+  this.recentlyUpdatedArticlesPage  = 1;
+  var _this = this;
 
   this.recentlyAddedArticles = new ArticleCollection([], {
     url: API_ROOT + "articles/recently_added"
   });
-  this.recentlyAddedArticles.fetch({data: {limit: 5}});
+
+  this.recentlyAddedArticles.fetch({data: {limit: this._limit}});
   this.recentlyCuratedArticles = new ArticleCollection([], {
     url: API_ROOT + "articles/recent"
   });
-  this.recentlyCuratedArticles.fetch({data: {limit: 5}});
+  this.recentlyCuratedArticles.fetch({data: {limit: this._limit}});
+
+  this.nextRecentlyCuratedArticles = function(el) {
+    _this.recentlyUpdatedArticlesPage++;
+    _this.recentlyCuratedArticles.fetch({data: {page: _this.recentlyUpdatedArticlesPage, limit: _this._limit}, add: true});
+  };
+
+  this.nextRecentlyAddedArticles = function(el) {
+    _this.recentlyAddedArticlesPage++;
+    _this.recentlyAddedArticles.fetch({data: {page: _this.recentlyAddedArticlesPage, limit: _this._limit}, add: true});
+  };
 };
 
 HomePage.articleView = function(article) {
@@ -49,19 +67,33 @@ HomePage.articleView = function(article) {
   );
 };
 
+HomePage.loadMore = function(onclick) {
+  return (
+    <button type="button" class="btn" onclick={onclick}>Load more</button>
+  );
+};
+
 HomePage.view = function(ctrl) {
   var recentlyAddedArticlesContent;
+  var recentlyAddedArticlesLoadMore;
   if (ctrl.recentlyAddedArticles.loading) {
     recentlyAddedArticlesContent = Spinner.view();
   } else {
     recentlyAddedArticlesContent = ctrl.recentlyAddedArticles.map(HomePage.articleView);
+    if (ctrl.recentlyAddedArticles.load_more) {
+      recentlyAddedArticlesLoadMore = HomePage.loadMore(ctrl.nextRecentlyAddedArticles);
+    };
   }
 
   var recentlyUpdatedArticlesContent;
+  var recentlyUpdatedArticlesLoadMore;
   if (ctrl.recentlyCuratedArticles.loading) {
     recentlyUpdatedArticlesContent = Spinner.view();
   } else {
     recentlyUpdatedArticlesContent = ctrl.recentlyCuratedArticles.map(HomePage.articleView);
+    if (ctrl.recentlyCuratedArticles.load_more) {
+      recentlyUpdatedArticlesLoadMore = HomePage.loadMore(ctrl.nextRecentlyCuratedArticles);
+    };
   }
 
   var content = (
@@ -74,10 +106,12 @@ HomePage.view = function(ctrl) {
         <div className="col span_1_of_2 articles">
           <h2>Recently Added</h2>
           {recentlyAddedArticlesContent}
+          {recentlyAddedArticlesLoadMore}
         </div>
         <div className="col span_1_of_2 articles">
           <h2>Recently Updated</h2>
           {recentlyUpdatedArticlesContent}
+          {recentlyUpdatedArticlesLoadMore}
         </div>
       </div>
     </div>
