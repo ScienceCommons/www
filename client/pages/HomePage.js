@@ -5,6 +5,7 @@ require("./HomePage.scss");
 
 var _ = require("underscore");
 var m = require("mithril");
+var moment = require("moment");
 
 var OnUnload = require("../utils/OnUnload.js");
 var Layout = require("../layouts/FullLayout.js")
@@ -54,22 +55,30 @@ HomePage.controller = function(options) {
 
 HomePage.articleView = function(article) {
   return (
-    <div className="articleView" onclick={visitArticle(article)} title={article.get("title")}>
-      <div className="title">{article.get("title")}</div>
-      <div className="authors">({article.get("year")}) {article.authors().etAl(3)}</div>
-      <ul className="badges">
-        <li title="Data &amp; Syntax">{Badge.view({badge: "data", active: article.hasBadge("data")})}</li>
-        <li title="Materials">{Badge.view({badge: "materials", active: article.hasBadge("materials")})}</li>
-        <li title="Registration">{Badge.view({badge: "registration", active: article.hasBadge("registration")})}</li>
-        <li title="Disclosure">{Badge.view({badge: "disclosure", active: article.hasBadge("disclosure")})}</li>
-      </ul>
-    </div>
+    [m("div", {className:"articleView", onclick:visitArticle(article), title:article.get("title")}, [
+      m("div", {className:"title"}, [article.get("title")]),
+      m("div", {className:"authors"}, ["(",article.get("year"),") ", article.authors().etAl(3)]),
+      m("ul", {className:"badges"}, [
+        m("li", {title:"Data & Syntax"}, [Badge.view({badge: "data", active: article.hasBadge("data")})]),
+        m("li", {title:"Materials"}, [Badge.view({badge: "materials", active: article.hasBadge("materials")})]),
+        m("li", {title:"Registration"}, [Badge.view({badge: "registration", active: article.hasBadge("registration")})]),
+        m("li", {title:"Disclosure"}, [Badge.view({badge: "disclosure", active: article.hasBadge("disclosure")})])
+      ])
+    ]), HomePage.authorLink(article.get("recent_updated_by_author"), article.get("recent_updated_at"))]
   );
 };
 
+HomePage.authorLink = function(author, date) {
+  if(author.get("id")) {
+    return (
+      m("div", {className:"updatedBy"}, ["Updated by ", m("a", {href:"/authors/"+author.get("id"), config:m.route}, [author.get("fullName")]), " -- ", moment(date).fromNow()])
+    )
+  }
+}
+
 HomePage.loadMore = function(onclick) {
   return (
-    <button type="button" class="btn" onclick={onclick}>Load more</button>
+    m("button", {type:"button", class:"btn", onclick:onclick}, ["Load more"])
   );
 };
 

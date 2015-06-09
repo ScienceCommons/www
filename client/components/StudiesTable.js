@@ -243,11 +243,13 @@ StudiesTable.view = function(ctrl) {
     content = Spinner.view();
   } else {
     var studies = ctrl.article.get("studies").map(function(study) {
-      var replications = study.get("replications").map(function(replication) {
-        return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true, replicationModel: replication, parentStudy: study});
-      });
-      if (replications.length === 0) {
-        ctrl.expanded({});
+      if (!ctrl.expanded()[study.get("id")]) {
+        var replications = study.get("replications").map(function(replication) {
+          return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true, replicationModel: replication, parentStudy: study});
+        });
+        if (replications.length === 0) {
+          ctrl.expanded({});
+        }
       }
 
       return [StudiesTable.studyView(ctrl, study), replications];
@@ -327,7 +329,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
     "study": true,
     "new": options.new,
     "replication": options.replication,
-    "expanded": ctrl.expanded()[study.get("id")],
+    "expanded": !ctrl.expanded()[study.get("id")],
     "active": ctrl.active().study_id === study.get("id")
   });
 
