@@ -4,7 +4,7 @@ This repository is the frontend/client for the [CurateScience](https://www.curat
 
 ## Contributing
 
-Please see the CurateScience [contributing guidelines](https://github.com/ScienceCommons/api/blob/master/CONTRIBUTING.md)
+Please see the CurateScience [contributing guidelines](https://github.com/ScienceCommons/api/blob/master/CONTRIBUTING.md) and set aside an hour or two to study [Mithril](https://lhorie.github.io/mithril/) if you've never worked with it before.
 
 ## Getting started
 
