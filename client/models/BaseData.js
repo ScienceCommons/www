@@ -583,7 +583,7 @@ BaseData.Collection.prototype.fetch = function(options) {
 
   res.then(function(data) {
     _this.loading = false;
-    if(data.length < options.data.limit) {
+    if(options.data && data.length < options.data.limit) {
       _this.load_more = false;
     };
   });

@@ -9,7 +9,8 @@ var ArticleModel = CurateBaseModel.extend({
     "authors_denormalized": {type: "many", collection: require("../collections/AuthorCollection.js")},
     "authors": {type: "many", collection: require("../collections/AuthorCollection.js")},
     "comments": {type: "many", collection: require("../collections/CommentCollection.js"), urlAction: "comments"},
-    "studies": {type: "many", collection: require("../collections/StudyCollection.js"), urlAction: "studies", inverseOf: "article"}
+    "studies": {type: "many", collection: require("../collections/StudyCollection.js"), urlAction: "studies", inverseOf: "article"},
+    "recent_updated_by_author": {type: "one", model: require("./AuthorModel.js")}
   },
   defaults: {
     "title": "",
