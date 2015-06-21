@@ -28,7 +28,6 @@ LoginPage.view = function(ctrl) {
           </div>
         </a>
       </div>
-      <h3>or</h3>
       <div>
         <h3>Beta by invitation only</h3>
       </div>
