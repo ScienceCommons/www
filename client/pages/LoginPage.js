@@ -28,8 +28,17 @@ LoginPage.view = function(ctrl) {
           </div>
         </a>
       </div>
+      <br />
+      <br />
       <div>
-        <h3>Beta by invitation only</h3>
+        <h3>Our Beta is currently by invitation only. Please sign up to be notified when our public Beta is ready.</h3>
+        <form action="http://christianbattista.us7.list-manage.com/subscribe/post?u=d140eca9cfe4a96473dac6ea5&amp;id=fba08af7dd" method="post" target="_blank">
+          <input type="email" value="" ref="email" name="EMAIL" placeholder="Enter email address" size="30" required />
+          <div style={{"position": "absolute", "left": "-5000px"}}>
+            <input type="text" name="b_d140eca9cfe4a96473dac6ea5_fba08af7dd" value="" />
+          </div>
+          <button type="submit" className="btn">Request invite</button>
+        </form>
       </div>
     </div>
   );
