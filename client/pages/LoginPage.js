@@ -35,7 +35,7 @@ LoginPage.view = function(ctrl) {
           <div style={{"position": "absolute", "left": "-5000px"}}>
             <input type="text" name="b_d140eca9cfe4a96473dac6ea5_fba08af7dd" value="" />
           </div>
-          <button type="submit" className="btn">Request invite</button>
+          <button type="submit" className="btn">Sign Up</button>
         </form>
       </div>
     </div>
