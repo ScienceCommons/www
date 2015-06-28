@@ -376,7 +376,7 @@ BaseData.Collection = function(data, options) {
     silent: true
   };
 
-  _.bindAll(this, "reset", "_resetFromServer", "add", "remove", "get", "indexOf");
+  _.bindAll(this, "reset", "_resetFromServer", "_addFromServer", "add", "remove", "get", "indexOf");
   this.reset(data, options);
   this.initialize.apply(this, arguments);
 };
@@ -459,6 +459,13 @@ BaseData.Collection.prototype.reindex = function() {
 
 BaseData.Collection.prototype._resetFromServer = function(data) {
   this.reset(data, {server: true});
+};
+
+BaseData.Collection.prototype._addFromServer = function(data) {
+  _.each(data, function(model) {
+    this.add(model);
+  }, this);
+  this.redraw();
 };
 
 BaseData.Collection.prototype.hasChanges = function() {
@@ -568,14 +575,24 @@ BaseData.Collection.prototype.error = function() {};
 
 BaseData.Collection.prototype.fetch = function(options) {
   options = options || {};
-  this.loading = true;
+  this.loading    = true;
+  this.load_more  = true;
 
   var res = this.sync("read", this, options);
   var _this = this;
-  res.then(function() {
+
+  res.then(function(data) {
     _this.loading = false;
+    if(options.data && data.length < options.data.limit) {
+      _this.load_more = false;
+    };
   });
-  res.then(this._resetFromServer, this.error);
+
+  if(options.add == true) {
+    res.then(this._addFromServer, this.error);
+  } else {
+    res.then(this._resetFromServer, this.error);
+  }
   this.redraw();
   return res;
 };

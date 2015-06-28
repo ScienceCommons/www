@@ -243,7 +243,7 @@ StudiesTable.view = function(ctrl) {
     content = Spinner.view();
   } else {
     var studies = ctrl.article.get("studies").map(function(study) {
-      if (ctrl.expanded()[study.get("id")]) {
+      if (!ctrl.expanded()[study.get("id")]) {
         var replications = study.get("replications").map(function(replication) {
           return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true, replicationModel: replication, parentStudy: study});
         });
@@ -251,6 +251,7 @@ StudiesTable.view = function(ctrl) {
           ctrl.expanded({});
         }
       }
+
       return [StudiesTable.studyView(ctrl, study), replications];
     });
 
@@ -328,7 +329,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
     "study": true,
     "new": options.new,
     "replication": options.replication,
-    "expanded": ctrl.expanded()[study.get("id")],
+    "expanded": !ctrl.expanded()[study.get("id")],
     "active": ctrl.active().study_id === study.get("id")
   });
 
@@ -420,7 +421,7 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
             <li className="Comment">
               <div><span className="pill">Comment</span></div>
               <header>{heading}</header>
-              <p>{comment.get("comment")}</p>
+              <p>{m.trust(comment.get("html_comment"))}</p>
             </li>
           );
           return {date: comment.get("created_at"), view: commentView};
@@ -679,10 +680,10 @@ StudiesTable.cellViews.number = function(ctrl, study) {
     year = "(" + year + ")";
   }
 
-  var etAl = <li>{study.etAl(2)} {year}</li>
+  var etAl = <li>{study.etAl(1)} {year}</li>;
 
   if(study.get('id') == undefined || study.loaded == true) {
-    etAl = <li>{ctrl.article.authors().etAl(2)} ({ctrl.article.get("year")})</li>
+    etAl = <li>{ctrl.article.authors().etAl(2)} ({ctrl.article.get("year")})</li>;
   }
 
   return <ul>

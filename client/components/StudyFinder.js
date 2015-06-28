@@ -177,25 +177,30 @@ StudyFinder.searchView = function(ctrl) {
   }
 
   return (
-    <form onsubmit={ctrl.runSearch}>
+    m("form", {onsubmit:ctrl.runSearch}, [
+      m("div", {className:"search"}, [
+        m("div", ["Find the article, then pick the study."]),
+        m("input", {config:focusConfig, placeholder:"Find article", type:"text", value:ctrl.search(), oninput:m.withAttr("value", ctrl.search)} ),
+        m("button", {type:"submit", className:"btn"}, ["Search"]),
+        " ",
+        m("span", {class:"glyphicon glyphicon-info-sign tooltip", title:"Find the article containing the replication study, and then click the \"Add replication\" icon next to the replication study you want to link to the original study. If the article containing the replication is missing, click the \"Add Article\" button to add a new article; once you’ve added the replication study, return to the original study article to add the replication (this process will be improved in the near future)."}),
+        m("button", {type:"button", className:"btn", onclick:route("/articles/new")}, [
+          m("span", {className:"glyphicon glyphicon-plus"}),
+          m("span", [ " Add article"])
+        ])
+      ]),
 
-      <div className="search">
-        <div>Find the article, then pick the study.</div>
-        <input placeholder="Find article" type="text" value={ctrl.search()} oninput={m.withAttr("value", ctrl.search)} />
-        <button type="submit" className="btn">Search</button>
-        &nbsp;
-        <span class="glyphicon glyphicon-info-sign tooltip" title="Find the article containing the replication study, and then click the &quot;Add replication&quot; icon next to the replication study you want to link to the original study. If the article containing the replication is missing, click the &quot;Add Article&quot; button to add a new article; once you’ve added the replication study, return to the original study article to add the replication (this process will be improved in the near future)."></span>
-        <button type="button" className="btn" onclick={route("/articles/new")}>
-          <span className="glyphicon glyphicon-plus"></span>
-          <span> Add article</span>
-        </button>
-      </div>
-
-      <div className="results">
-        {results}
-      </div>
-    </form>
+      m("div", {className:"results"}, [
+        results
+      ])
+    ])
   );
 };
+
+function focusConfig(el, isInitialized) {
+  if (!isInitialized) {
+    el.focus();
+  }
+}
 
 module.exports = StudyFinder;
