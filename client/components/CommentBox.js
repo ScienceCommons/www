@@ -18,12 +18,20 @@ CommentBox.controller = function(options) {
 };
 
 CommentBox.view = function(ctrl) {
-  return (
-    <div className="CommentBox">
-      {new CommentForm.view(ctrl.controllers.commentForm)}
-      {new CommentList.view(ctrl.controllers.commentList)}
-    </div>
-  );
+  if (ctrl.user){
+    return (
+        <div className="CommentBox">
+        {new CommentForm.view(ctrl.controllers.commentForm)}
+        {new CommentList.view(ctrl.controllers.commentList)}
+        </div>
+    );
+  } else {
+     return (
+        <div className="CommentBox">
+         {new CommentList.view(ctrl.controllers.commentList)}
+        </div>
+    );
+  }
 };
 
 module.exports = CommentBox;
