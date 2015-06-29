@@ -430,7 +430,9 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
           return {date: comment.get("created_at"), view: commentView};
         }
       });
-      var modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
+      if (ctrl.user){
+        var modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
+      }
     }
 
     commentsAndChanges = commentsAndChanges.concat(study.get("model_updates").map(function(model_update) {
@@ -452,7 +454,7 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
     var modalContent = <ul className="commentsAndHistory">{_.chain(commentsAndChanges).compact().sortBy('date').pluck('view').value().reverse()}</ul>;
 
     var editButton;
-    if (App.user.canEdit()) {
+    if (App.user && App.user.canEdit()) {
       editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
     }
 
@@ -602,7 +604,7 @@ function fileDropdown(ctrl, study, type, options) {
             );
           });
 
-          if (App.user.canEdit()) {
+          if (App.user && App.user.canEdit()) {
             var modalEditButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
           }
 
@@ -633,7 +635,7 @@ function fileDropdown(ctrl, study, type, options) {
     </tbody></table>;
   };
 
-  if (App.user.canEdit() && !options.replication) {
+  if (App.user && App.user.canEdit() && !options.replication) {
     var filesFooter = <footer>
       <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a link</button>
     </footer>;
