@@ -173,8 +173,9 @@ ArticlePage.view = function(ctrl) {
       }
     }
 
-    if (ctrl.user.canEdit()) {
+    if (ctrl.user && ctrl.user.canEdit()) {
       var editButtons;
+      var bookmarkButton;
       var findDoiButton;
       var doiLabel;
       var authorLabel;
@@ -220,6 +221,9 @@ ArticlePage.view = function(ctrl) {
           m("button", {type:"button", className:"btn", key:"delete", onclick:ctrl.deleteClick}, ["Delete"]),
         ];
       }
+       bookmarkButton = (
+         <button type="button" key="bookmark" title="Bookmark article" className={"btn bookmark " + (ctrl.user && ctrl.user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={ctrl.user.toggleBookmark("Article", article)}><span className="icon icon_bookmark"></span></button>
+       );
     }
 
     var studiesTable, commentsList;
@@ -304,7 +308,7 @@ ArticlePage.view = function(ctrl) {
             <div className="col span_1_of_4 text_right">
               <div className="btn_group">
                 {editButtons}
-                <button type="button" key="bookmark" title="Bookmark article" className={"btn bookmark " + (ctrl.user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={ctrl.user.toggleBookmark("Article", article)}><span className="icon icon_bookmark"></span></button>
+                {bookmarkButton}
               </div>
 
               <div className="journal">

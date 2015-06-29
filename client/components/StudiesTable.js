@@ -258,7 +258,10 @@ StudiesTable.view = function(ctrl) {
     if (ctrl.newStudy()) {
       studies.push(StudiesTable.studyView(ctrl, ctrl.newStudy(), {new: true}));
     } else {
-      var addStudyButton = <button className="btn addStudy" onclick={ctrl.addStudy}>Add study</button>;
+      var addStudyButton;
+      if (ctrl.user){
+        addStudyButton = <button className="btn addStudy" onclick={ctrl.addStudy}>Add study</button>;
+      }
     }
     content = [<ul className="studies" config={ctrl.studiesConfig}>{_.flatten(studies)}</ul>, addStudyButton];
   }
