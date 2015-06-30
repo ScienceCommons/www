@@ -320,7 +320,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
       ];
     }
   }
-  else if (!options.new) {
+  else if (!options.new && ctrl.user) {
     if (options.replication) {
       saveButtons.push(<button type="button" key="unlink" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>);
     } else {
@@ -379,7 +379,7 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
   </div>
 
   if (field !== "badges" && field !== "replication_path") {
-    cellContents.attrs.onclick = ctrl.toggleModal(study, field, options)
+    cellContents.attrs.onclick = ctrl.toggleModal(study, field, options);
   }
 
 
@@ -486,7 +486,7 @@ var ModalLabels = {
 StudiesTable.cellViews = {};
 
 StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
-  if (!options.replication) {
+  if (!options.replication && ctrl.user) {
     var addReplicationLink = <span class="add_replication" onclick={ctrl.openStudyFinder(study)} title="Add replication"></span>;
   }
 
