@@ -430,8 +430,11 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
           return {date: comment.get("created_at"), view: commentView};
         }
       });
+      var modalFooter;
       if (ctrl.user){
-        var modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
+        modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
+      } else {
+        modalFooter = <div>Please <a href="/beta/#/login">log in</a> to edit or comment</div>;
       }
     }
 
@@ -522,7 +525,7 @@ StudiesTable.cellViews.badges = function(ctrl, study, options) {
   return [
     <ul className={"badges " + (activeBadge ? "active" : "")}>{badges}</ul>,
     dropdown
-  ]
+  ];
 };
 
 StudiesTable.cellViews.handleBadgeClick = function(ctrl, study, badge) {
@@ -635,10 +638,13 @@ function fileDropdown(ctrl, study, type, options) {
     </tbody></table>;
   };
 
+  var filesFooter;
   if (App.user && App.user.canEdit() && !options.replication) {
-    var filesFooter = <footer>
+    filesFooter = <footer>
       <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a link</button>
     </footer>;
+  } else {
+    filesFooter = <footer>Please <a href="/beta/#/login">log in</a> to add a link</footer>;
   }
 
   return <div className="dropdown" config={fileDropdownConfig}>
