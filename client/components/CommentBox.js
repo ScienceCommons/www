@@ -28,6 +28,7 @@ CommentBox.view = function(ctrl) {
   } else {
      return (
         <div className="CommentBox">
+         <div>Please <a href="/beta/#/login">log in</a> to leave a comment</div>
          {new CommentList.view(ctrl.controllers.commentList)}
         </div>
     );
