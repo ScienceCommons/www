@@ -23,7 +23,7 @@ AuthorPage.controller = function(options) {
   this.editing = m.prop(false);
   this.saving = m.prop(false);
 
-  if (m.route.param("authorId") === "new" && this.user.canEdit()) {
+  if (m.route.param("authorId") === "new" && this.user && this.user.canEdit()) {
     this.author = new AuthorModel({});
     this.editing(true);
   } else {
@@ -157,7 +157,7 @@ AuthorPage.view = function(ctrl) {
       );
     }
 
-    if (ctrl.user.canEdit() && !author.markedDuplicate()) {
+    if (ctrl.user && ctrl.user.canEdit() && !author.markedDuplicate()) {
       var editButtons;
       if (ctrl.editing()) {
         editButtons = [
