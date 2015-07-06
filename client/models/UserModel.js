@@ -94,7 +94,7 @@ var UserModel = CurateBaseModel.extend({
     return req;
   },
   logout: function() {
-    return this.sync("read", {}, {url: API_ROOT + "log_out"});
+    return this.sync("read", this, {url: API_ROOT + "log_out"});
   }
 });
 

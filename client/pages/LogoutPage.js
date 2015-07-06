@@ -17,10 +17,10 @@ LogoutPage.controller = function(options) {
 
   options.user.logout().then(function() {
     delete CS.user;
-    m.route("/login");
+    m.route("/");
   }, function() {
     delete CS.user;
-    m.route("/login");
+    m.route("/");
   });
 };
 
