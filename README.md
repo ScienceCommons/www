@@ -1,5 +1,13 @@
-Getting started
-===============
+# CurateScience Client
+
+This repository is the frontend/client for the [CurateScience](https://www.curatescience.org/) application. It's a single-page Javascript app written in the [Mithril Framework](https://lhorie.github.io/mithril/). It uses [Grunt](http://gruntjs.com/) for task running and [webpack](http://webpack.github.io/) to build the app for deployment. 
+
+## Contributing
+
+Please see the CurateScience [contributing guidelines](https://github.com/ScienceCommons/api/blob/master/CONTRIBUTING.md) and set aside an hour or two to study [Mithril](https://lhorie.github.io/mithril/) if you've never worked with it before.
+
+## Getting started
+
 
 Install [node](http://nodejs.org/download/).
 

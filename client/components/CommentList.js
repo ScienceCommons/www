@@ -15,10 +15,10 @@ Comment.view = function(ctrl) {
   if (!comment.get("comments").isEmpty()) {
     var replies = new CommentList.view(ctrl.listController, {comments: comment.get("comments")});
   }
-  if (ctrl.onDelete && (comment.get("owner_id") === ctrl.listController.user.get("id") || ctrl.listController.user.get("admin"))) {
+  if (ctrl.user && ctrl.onDelete && (comment.get("owner_id") === ctrl.listController.user.get("id") || ctrl.listController.user.get("admin"))) {
     var deleteButton = <button type="button" className="btn" onclick={ctrl.onDelete}>Delete</button>;
   }
-  if (ctrl.listController.reply) {
+  if (ctrl.user && ctrl.listController.reply) {
     var replyActive = ctrl.listController.replying() === comment;
     var replyButton = <button type="button" className={"btn " + (replyActive ? "active" : "")} onclick={ctrl.listController.toggleReply(comment)}><span className="icon icon_reply"></span> Reply</button>;
     if (replyActive) {

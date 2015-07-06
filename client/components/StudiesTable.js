@@ -258,7 +258,10 @@ StudiesTable.view = function(ctrl) {
     if (ctrl.newStudy()) {
       studies.push(StudiesTable.studyView(ctrl, ctrl.newStudy(), {new: true}));
     } else {
-      var addStudyButton = <button className="btn addStudy" onclick={ctrl.addStudy}>Add study</button>;
+      var addStudyButton;
+      if (ctrl.user){
+        addStudyButton = <button className="btn addStudy" onclick={ctrl.addStudy}>Add study</button>;
+      }
     }
     content = [<ul className="studies" config={ctrl.studiesConfig}>{_.flatten(studies)}</ul>, addStudyButton];
   }
@@ -317,7 +320,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
       ];
     }
   }
-  else if (!options.new) {
+  else if (!options.new && ctrl.user) {
     if (options.replication) {
       saveButtons.push(<button type="button" key="unlink" className="btn unlinkReplication" onclick={ctrl.unlinkReplication(options.parentStudy, options.replicationModel)}>Unlink</button>);
     } else {
@@ -376,7 +379,7 @@ StudiesTable.studyCellView = function(ctrl, study, field, options) {
   </div>
 
   if (field !== "badges" && field !== "replication_path") {
-    cellContents.attrs.onclick = ctrl.toggleModal(study, field, options)
+    cellContents.attrs.onclick = ctrl.toggleModal(study, field, options);
   }
 
 
@@ -427,7 +430,12 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
           return {date: comment.get("created_at"), view: commentView};
         }
       });
-      var modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
+      var modalFooter;
+      if (ctrl.user){
+        modalFooter = CommentForm.view(ctrl.controllers.studyFieldCommentForm);
+      } else {
+        modalFooter = <div>Please <a href="/beta/#/login">log in</a> to edit or comment</div>;
+      }
     }
 
     commentsAndChanges = commentsAndChanges.concat(study.get("model_updates").map(function(model_update) {
@@ -449,7 +457,7 @@ StudiesTable.studyModalView = function(ctrl, study, field, options) {
     var modalContent = <ul className="commentsAndHistory">{_.chain(commentsAndChanges).compact().sortBy('date').pluck('view').value().reverse()}</ul>;
 
     var editButton;
-    if (App.user.canEdit()) {
+    if (App.user && App.user.canEdit()) {
       editButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
     }
 
@@ -481,7 +489,7 @@ var ModalLabels = {
 StudiesTable.cellViews = {};
 
 StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
-  if (!options.replication) {
+  if (!options.replication && ctrl.user) {
     var addReplicationLink = <span class="add_replication" onclick={ctrl.openStudyFinder(study)} title="Add replication"></span>;
   }
 
@@ -517,7 +525,7 @@ StudiesTable.cellViews.badges = function(ctrl, study, options) {
   return [
     <ul className={"badges " + (activeBadge ? "active" : "")}>{badges}</ul>,
     dropdown
-  ]
+  ];
 };
 
 StudiesTable.cellViews.handleBadgeClick = function(ctrl, study, badge) {
@@ -599,7 +607,7 @@ function fileDropdown(ctrl, study, type, options) {
             );
           });
 
-          if (App.user.canEdit()) {
+          if (App.user && App.user.canEdit()) {
             var modalEditButton = <button type="button" className="btn edit" onclick={ctrl.handleEditClick}><span className="icon icon_edit"></span></button>;
           }
 
@@ -630,10 +638,13 @@ function fileDropdown(ctrl, study, type, options) {
     </tbody></table>;
   };
 
-  if (App.user.canEdit() && !options.replication) {
-    var filesFooter = <footer>
+  var filesFooter;
+  if (App.user && App.user.canEdit() && !options.replication) {
+    filesFooter = <footer>
       <button type="button" className="btn" onclick={addFile(ctrl, study, type)}>Add a link</button>
     </footer>;
+  } else {
+    filesFooter = <footer>Please <a href="/beta/#/login">log in</a> to add a link</footer>;
   }
 
   return <div className="dropdown" config={fileDropdownConfig}>
