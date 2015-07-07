@@ -131,7 +131,18 @@ var ArticleModel = CurateBaseModel.extend({
   },
   hasBadge: function(name) {
     if (this.get("studies").length > 0) {
-      return this.get("studies").all(function(study) { return study.hasBadge(name); });
+        if(this.get("studies").length == 1){
+            return this.get("studies").all(function(study) { return study.hasBadge(name); });
+        }else{
+            var multiChk = false;
+            this.get("studies").each(function(study) {
+                if(study.hasBadge(name)){
+                    multiChk = true;
+                    return true;
+                }
+            });
+            return multiChk;
+        }
     } else {
       return _.contains(this.get("badges"), name);
     }

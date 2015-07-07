@@ -64,6 +64,7 @@
     a {
       color: $blue;
       text-decoration: none;
+      font-weight: bold;
     }
   }
 
@@ -74,5 +75,8 @@
   .articles {
     position: relative;
     min-height: 200px;
+  }
+  button.btn.loadmore{
+      margin-top:10px
   }
 }

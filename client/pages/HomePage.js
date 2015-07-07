@@ -69,16 +69,30 @@ HomePage.articleView = function(article) {
 };
 
 HomePage.authorLink = function(author, date) {
-  if(author.get("id")) {
-    return (
-      m("div", {className:"updatedBy"}, ["Updated by ", m("a", {href:"/authors/"+author.get("id"), config:m.route}, [author.get("fullName")]), " -- ", moment(date).fromNow()])
-    )
-  }
+    if(date != '' && moment(date).fromNow() != 'Invalid date'){
+        if(author.get("id")) {
+            return (
+              m("div", {className:"updatedBy"}, ["Updated by ", m("a", {href:"/authors/"+author.get("id"), config:m.route}, [author.get("fullName")]), " -- ", moment(date).fromNow()])
+            )
+        }else if(author.get("0")){
+            var name = '';
+            for(var i =0; ;i++){
+                if(typeof(author.get(i)) != 'undefined'){
+                    name += author.get(i);
+                }else{
+                    break;
+                }
+            }
+            return (
+              m("div", {className:"updatedBy"}, ["Updated by "+name, " -- ", moment(date).fromNow()])
+            )
+        }
+    }	  
 }
 
 HomePage.loadMore = function(onclick) {
   return (
-    m("button", {type:"button", class:"btn", onclick:onclick}, ["Load More"])
+    m("button", {type:"button", class:"btn loadmore", onclick:onclick}, ["Load More"])
   );
 };
 
