@@ -23,7 +23,7 @@ AuthorPage.controller = function(options) {
   this.editing = m.prop(false);
   this.saving = m.prop(false);
 
-  if (m.route.param("authorId") === "new" && this.user.canEdit()) {
+  if (m.route.param("authorId") === "new" && this.user && this.user.canEdit()) {
     this.author = new AuthorModel({});
     this.editing(true);
   } else {
@@ -157,7 +157,7 @@ AuthorPage.view = function(ctrl) {
       );
     }
 
-    if (ctrl.user.canEdit() && !author.markedDuplicate()) {
+    if (ctrl.user && ctrl.user.canEdit() && !author.markedDuplicate()) {
       var editButtons;
       if (ctrl.editing()) {
         editButtons = [
@@ -196,11 +196,17 @@ AuthorPage.view = function(ctrl) {
       });
     }
 
+    var duplicateButton;
+    if (ctrl.user) {
+        duplicateButton = <button type="button" className="btn" disabled={author.markedDuplicate()} key="markDuplicate" onclick={ctrl.markAsDuplicateClick}>{author.markedDuplicate() ? "Marked" : "Mark"} as duplicate</button>;
+    } else {
+      duplicateButton = "";
+    }
     content = (
       <div>
         <div className="btn_group authorControls">
           {editButtons}
-          <button type="button" className="btn" disabled={author.markedDuplicate()} key="markDuplicate" onclick={ctrl.markAsDuplicateClick}>{author.markedDuplicate() ? "Marked" : "Mark"} as duplicate</button>
+          {duplicateButton}
         </div>
 
         {alerts}
@@ -224,12 +230,19 @@ AuthorPage.view = function(ctrl) {
 };
 
 AuthorPage.articleView = function(article, user) {
+  var bookmarkButton;
+  if (user){
+      bookmarkButton = <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article)}>
+        <span className="icon icon_bookmark"></span>
+      </button>;
+  } else {
+    bookmarkButton = "";
+  }
+
   return <div>
     <header><a href={"/articles/"+article.get("id")} config={m.route}>{article.get("title")}</a></header>
     <div className="authors">
-      <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article)}>
-        <span className="icon icon_bookmark"></span>
-      </button>
+      {bookmarkButton}
       ({article.get("year")}) {article.authors().etAl(3)}
     </div>
   </div>;

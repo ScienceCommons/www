@@ -25,7 +25,13 @@ UserBar.controller = function(options) {
 UserBar.view = function(ctrl) {
   var user = ctrl.user;
   if (!user) {
-    return <ul className="UserBar"/>;
+    return <ul className="UserBar">
+             <li>
+               <div class="Dropdown user">
+                 <button class="btn btn_subtle" type="button" onclick={route("/login")}>Login</button>
+               </div>
+             </li>
+           </ul>;
   }
 
   var extras = [];

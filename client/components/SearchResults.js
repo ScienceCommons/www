@@ -73,6 +73,13 @@ SearchResults.view = function(ctrl) {
 SearchResults.itemViews = {};
 
 SearchResults.itemViews.Article = function(article, user) {
+  var bookmarkButton;
+  if (user){
+    bookmarkButton = (
+        <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article)}>
+          <span className="icon icon_bookmark"></span>
+        </button>);
+  }
   if (article.get("journal_title")) {
     var journalTitle = "- " + article.get("journal_title");
   }
@@ -83,9 +90,7 @@ SearchResults.itemViews.Article = function(article, user) {
         <span className="pill">Article</span>
       </header>
       <div className="authors">
-        <button type="button" className={"btn btn_subtle bookmark " + (user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={user.toggleBookmark("Article", article)}>
-          <span className="icon icon_bookmark"></span>
-        </button>
+        {bookmarkButton}
         ({article.get("year")}) {article.authors().etAl(3)} {journalTitle}
       </div>
     </td>

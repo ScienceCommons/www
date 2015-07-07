@@ -44,11 +44,7 @@ App.showPage = function(pageName) {
       }
     }
 
-    if (!App.user && pageName !== "Login") {
-      this.currentPage = App.pages["Login"];
-      this.controllers.page = new this.currentPage.controller({user: App.user});
-      m.route("/login");
-    } else if (pageName === "Admin" && !App.user.get("admin")) {
+    if (pageName === "Admin" && !App.user.get("admin")) {
       this.currentPage = App.pages["NotFound"];
       this.controllers.page = new this.currentPage.controller({user: App.user});
     } else if (App.user && pageName === "Login") {

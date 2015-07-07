@@ -173,8 +173,9 @@ ArticlePage.view = function(ctrl) {
       }
     }
 
-    if (ctrl.user.canEdit()) {
+    if (ctrl.user && ctrl.user.canEdit()) {
       var editButtons;
+      var bookmarkButton;
       var findDoiButton;
       var doiLabel;
       var authorLabel;
@@ -220,6 +221,9 @@ ArticlePage.view = function(ctrl) {
           m("button", {type:"button", className:"btn", key:"delete", onclick:ctrl.deleteClick}, ["Delete"]),
         ];
       }
+       bookmarkButton = (
+         <button type="button" key="bookmark" title="Bookmark article" className={"btn bookmark " + (ctrl.user && ctrl.user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={ctrl.user.toggleBookmark("Article", article)}><span className="icon icon_bookmark"></span></button>
+       );
     }
 
     var studiesTable, commentsList;
@@ -240,6 +244,14 @@ ArticlePage.view = function(ctrl) {
         errors
       ]);
     }
+
+    var loginLink;
+    if (!ctrl.user){
+      loginLink = (
+        <div>Please <a href="/beta/#/login">log in</a> to add a study</div>
+      );
+    }
+
     if (ctrl.article.isNew()){
      content = (
       <div>
@@ -304,7 +316,7 @@ ArticlePage.view = function(ctrl) {
             <div className="col span_1_of_4 text_right">
               <div className="btn_group">
                 {editButtons}
-                <button type="button" key="bookmark" title="Bookmark article" className={"btn bookmark " + (ctrl.user.hasBookmarked("Article", article.get("id")) ? "active" : "")} onclick={ctrl.user.toggleBookmark("Article", article)}><span className="icon icon_bookmark"></span></button>
+                {bookmarkButton}
               </div>
 
               <div className="journal">
@@ -328,6 +340,7 @@ ArticlePage.view = function(ctrl) {
               &nbsp;
               <span class="glyphicon glyphicon-info-sign tooltip-top" title="Add original studies of current article by clicking &quot;Add study&quot;. Add a replication study to an original study by clicking the &lt;span class=&quot;subway_add_icon&quot;&gt;&lt;/span&gt; icon above the corresponding study."></span>
             </h3>
+            {loginLink}
             {studiesTable}
           </div>
 
@@ -359,14 +372,18 @@ ArticlePage.view = function(ctrl) {
 
 // helpers
 function toggleBookmark(article, user) {
-  return function(e) {
-    var bookmark = user.hasBookmarked("Article", article.get("id"));
-    if (bookmark) {
-      return user.get("bookmarks").remove(bookmark, {sync: true});
-    } else {
-      return user.get("bookmarks").add({bookmarkable_type: "Article", bookmarkable_id: article.get("id")}, {sync: true});
-    }
-  };
+  if (ctrl.user){
+    return function(e) {
+      var bookmark = user.hasBookmarked("Article", article.get("id"));
+      if (bookmark) {
+        return user.get("bookmarks").remove(bookmark, {sync: true});
+      } else {
+        return user.get("bookmarks").add({bookmarkable_type: "Article", bookmarkable_id: article.get("id")}, {sync: true});
+      }
+    };
+  } else {
+    return undefined;
+  }
 };
 
 
