@@ -7,13 +7,13 @@ require("./Spinner.scss");
 var Spinner = {};
 
 Spinner.view = function() {
-  return (
+  return ([
     <ul className="Spinner">
       <li></li>
       <li></li>
       <li></li>
     </ul>
-  );
+  ]);
 };
 
 module.exports = Spinner;
