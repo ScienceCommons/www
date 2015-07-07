@@ -244,6 +244,14 @@ ArticlePage.view = function(ctrl) {
         errors
       ]);
     }
+
+    var loginLink;
+    if (!ctrl.user){
+      loginLink = (
+        <div>Please <a href="/beta/#/login">log in</a> to add a study</div>
+      );
+    }
+
     if (ctrl.article.isNew()){
      content = (
       <div>
@@ -332,6 +340,7 @@ ArticlePage.view = function(ctrl) {
               &nbsp;
               <span class="glyphicon glyphicon-info-sign tooltip-top" title="Add original studies of current article by clicking &quot;Add study&quot;. Add a replication study to an original study by clicking the &lt;span class=&quot;subway_add_icon&quot;&gt;&lt;/span&gt; icon above the corresponding study."></span>
             </h3>
+            {loginLink}
             {studiesTable}
           </div>
 
