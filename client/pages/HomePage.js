@@ -78,32 +78,41 @@ HomePage.authorLink = function(author, date) {
 
 HomePage.loadMore = function(onclick) {
   return (
-    m("button", {type:"button", class:"btn", onclick:onclick}, ["Load more"])
+    m("button", {type:"button", class:"btn", onclick:onclick}, ["Load More"])
   );
 };
 
 HomePage.view = function(ctrl) {
-  var recentlyAddedArticlesContent;
-  var recentlyAddedArticlesLoadMore;
-  if (ctrl.recentlyAddedArticles.loading) {
-    recentlyAddedArticlesContent = Spinner.view();
-  } else {
-    recentlyAddedArticlesContent = ctrl.recentlyAddedArticles.map(HomePage.articleView);
-    if (ctrl.recentlyAddedArticles.load_more) {
-      recentlyAddedArticlesLoadMore = HomePage.loadMore(ctrl.nextRecentlyAddedArticles);
-    };
-  }
+    var recentlyAddedArticlesContent;
+    var recentlyAddedArticlesLoadMore;
 
-  var recentlyUpdatedArticlesContent;
-  var recentlyUpdatedArticlesLoadMore;
-  if (ctrl.recentlyCuratedArticles.loading) {
-    recentlyUpdatedArticlesContent = Spinner.view();
-  } else {
-    recentlyUpdatedArticlesContent = ctrl.recentlyCuratedArticles.map(HomePage.articleView);
-    if (ctrl.recentlyCuratedArticles.load_more) {
-      recentlyUpdatedArticlesLoadMore = HomePage.loadMore(ctrl.nextRecentlyCuratedArticles);
-    };
-  }
+    // Changes for Load More functionality and displaying the loader
+    if(ctrl.recentlyAddedArticles.size() == 0){
+        recentlyAddedArticlesContent = Spinner.view();
+    }else{
+        recentlyAddedArticlesContent = ctrl.recentlyAddedArticles.map(HomePage.articleView);                
+        if(ctrl.recentlyAddedArticles.loading){
+            recentlyAddedArticlesContent.push(Spinner.view());
+        }                
+        if (!ctrl.recentlyAddedArticles.loading && ctrl.recentlyAddedArticles.load_more) {
+            recentlyAddedArticlesLoadMore = HomePage.loadMore(ctrl.nextRecentlyAddedArticles);
+        };
+    }
+
+    var recentlyUpdatedArticlesContent;
+    var recentlyUpdatedArticlesLoadMore;
+    if (ctrl.recentlyCuratedArticles.size() == 0 ) {
+      recentlyUpdatedArticlesContent = Spinner.view();
+    } else {
+        recentlyUpdatedArticlesContent = ctrl.recentlyCuratedArticles.map(HomePage.articleView);
+        if(ctrl.recentlyCuratedArticles.loading){
+            recentlyUpdatedArticlesContent.push(Spinner.view());                    
+        }
+
+        if (!ctrl.recentlyCuratedArticles.loading && ctrl.recentlyCuratedArticles.load_more) {
+            recentlyUpdatedArticlesLoadMore = HomePage.loadMore(ctrl.nextRecentlyCuratedArticles);
+        };
+    }
 
   var content = (
     <div>
