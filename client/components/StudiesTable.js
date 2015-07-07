@@ -489,8 +489,11 @@ var ModalLabels = {
 StudiesTable.cellViews = {};
 
 StudiesTable.cellViews.replication_path = function(ctrl, study, options) {
+  var addReplicationLink;
   if (!options.replication && ctrl.user) {
-    var addReplicationLink = <span class="add_replication" onclick={ctrl.openStudyFinder(study)} title="Add replication"></span>;
+    addReplicationLink = <span class="add_replication" onclick={ctrl.openStudyFinder(study)} title="Add replication"></span>;
+  } else if (!options.replication){
+    addReplicationLink = <span class="add_replication tooltip-top" title="Please <a href='/beta/#/login/'>log in</a> to add a replication"></span>;
   }
 
   var count = study.get("replications").length;
