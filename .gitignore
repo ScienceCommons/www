@@ -44,3 +44,4 @@ build/development/
 build/production/public
 build/production/.git
 npm-debug.log
+client/fonts/
