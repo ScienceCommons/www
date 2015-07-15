@@ -56,7 +56,7 @@ ProfilePage.articlesView = function(user) {
   if (user.get("articles").length === 0) {
     content = (
       <p>
-        You have no articles. You can link articles by searching for them and then requesting to be linked.
+        Articles you have authored and linked to your user account will soon appear here.
       </p>
     );
   } else {
