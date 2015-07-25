@@ -21,7 +21,7 @@ HomePage.controller = function(options) {
   OnUnload(this);
   this.controllers.layout= new Layout.controller(_.extend({
     id: "HomePage",
-    header: <a href="/about" className="aboutLink" config={m.route}>About</a>
+    header: ""
   }, options));
   this.controllers.search = new Search.controller({});
 
