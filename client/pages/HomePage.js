@@ -8,7 +8,7 @@ var m = require("mithril");
 var moment = require("moment");
 
 var OnUnload = require("../utils/OnUnload.js");
-var Layout = require("../layouts/FullLayout.js")
+var Layout = require("../layouts/FullLayout.js");
 var Search = require("../components/Search.js");
 var Spinner = require("../components/Spinner.js");
 var ArticleModel = require("../models/ArticleModel.js");
@@ -21,7 +21,7 @@ HomePage.controller = function(options) {
   OnUnload(this);
   this.controllers.layout= new Layout.controller(_.extend({
     id: "HomePage",
-    header: <a href="/about" className="aboutLink" config={m.route}>What is Curate Science?</a>
+    header: <a href="/about" className="aboutLink" config={m.route}>About</a>
   }, options));
   this.controllers.search = new Search.controller({});
 
