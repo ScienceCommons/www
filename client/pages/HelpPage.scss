@@ -46,13 +46,14 @@
   .faq-item {
       padding: 10px 0px;
       text-align: left;
+      line-height: 30px;
   }
-  .faq-item.question {
+  .question {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
   }
-  .faq-item.answer {
+  .answer {
     padding-left: 20px;
   }
 }
