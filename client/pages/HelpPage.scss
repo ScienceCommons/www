@@ -1,6 +1,17 @@
 #HelpPage {
   box-sizing: border-box;
 
+/*  .page-header::before, .page-header::after {
+    border-top: 1px solid rgba(153, 153, 153, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    content: "";
+    margin: 0px auto;
+    position: absolute;
+    width: 28%;
+    top: 10%;
+  }
+*/
+
   .main-container {
       float: left;
       display: block;
