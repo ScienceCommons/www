@@ -12,6 +12,7 @@ var Logo = require("../components/Logo.js");
 var FeedbackForm = require("../components/FeedbackForm.js");
 var Modal = require("../components/Modal.js");
 var Tooltipster = require("../components/Tooltipster.js");
+var AboutHelpBar = require("../components/AboutHelpBar.js");
 
 var FullLayout = {};
 
@@ -25,6 +26,7 @@ FullLayout.controller = function(options) {
   this.controllers.userBar = new UserBar.controller({user: options.user})
   this.controllers.feedbackModal = new Modal.controller({className: "feedbackModal"});
   this.controllers.feedBackForm = new FeedbackForm.controller({user: this.user});
+  this.controllers.aboutHelpBar = new AboutHelpBar.controller();
 
   var _this = this;
   this.handleFeedbackToggle = function() {
@@ -48,6 +50,7 @@ FullLayout.view = function(ctrl, content) {
   return (
     <div id={ctrl.id} className="page FullLayout">
       <header>
+        <div class="about-help">{new AboutHelpBar.view(ctrl.controllers.aboutHelpBar)}</div>
         {new UserBar.view(ctrl.controllers.userBar)}
         {ctrl.header}
         <a href="/" config={m.route} className="logo">{new Logo.view()}</a>

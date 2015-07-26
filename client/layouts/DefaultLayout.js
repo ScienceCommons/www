@@ -13,6 +13,7 @@ var Logo = require("../components/Logo.js");
 var FeedbackForm = require("../components/FeedbackForm.js");
 var Modal = require("../components/Modal.js");
 var Tooltipster = require("../components/Tooltipster.js");
+var AboutHelpBar = require("../components/AboutHelpBar.js");
 
 var DefaultLayout = {};
 
@@ -26,6 +27,7 @@ DefaultLayout.controller = function(options) {
   this.controllers.search = new Search.controller({query: m.route.param("query")});
   this.controllers.feedbackModal = new Modal.controller({className: "feedbackModal"});
   this.controllers.feedBackForm = new FeedbackForm.controller({user: this.user});
+  this.controllers.aboutHelpBar = new AboutHelpBar.controller();
 
   var _this = this;
   this.handleFeedbackToggle = function() {
@@ -52,6 +54,7 @@ DefaultLayout.view = function(ctrl, content) {
           <tbody>
             <tr>
               <td className="bannerLogo"><a href="/" config={m.route} className="logoLink">{new Logo.view()}</a></td>
+              <td className="bannerAboutHelpBar">{new AboutHelpBar.view(ctrl.controllers.aboutHelpBar)}</td>
               <td className="bannerSearch">{new Search.view(ctrl.controllers.search)}</td>
               <td className="bannerUserBar">{new UserBar.view(ctrl.controllers.userBar)}</td>
             </tr>
