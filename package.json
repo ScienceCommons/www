@@ -12,7 +12,8 @@
         "jquery": "1.11.3",
         "vague-time": "1.1.0",
         "fastclick": "1.0.3",
-        "moment": "2.10.3"
+        "moment": "2.10.3",
+        "autolinker": "0.18.1"
     },
     "devDependencies": {
         "grunt": "0.4.5",
