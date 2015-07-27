@@ -2,7 +2,7 @@
 "use strict";
 
 require("./CommentList.scss");
-
+var Autolinker = require("autolinker");
 var m = require("mithril");
 var _ = require("underscore");
 
@@ -37,7 +37,7 @@ Comment.view = function(ctrl) {
         <h5>{heading}</h5>
       </div>
       <div className="commentContent">
-        <p>{comment.get("comment")}</p>
+        <p>{m.trust(Autolinker.link(comment.get("comment")))}</p>
 
         <div className="btn_group">
           {replyButton}
