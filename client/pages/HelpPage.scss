@@ -1,0 +1,70 @@
+#HelpPage {
+  box-sizing: border-box;
+
+/*  .page-header::before, .page-header::after {
+    border-top: 1px solid rgba(153, 153, 153, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    content: "";
+    margin: 0px auto;
+    position: absolute;
+    width: 28%;
+    top: 10%;
+  }
+*/
+
+  .main-container {
+      float: left;
+      display: block;
+      width: 100%;
+      position: relative;
+  }
+
+  .section {
+      position: relative;
+      overflow: hidden;
+      display: block;
+      float: left;
+      width: 100%;
+  }
+
+  .section.container{
+      padding: 80px 0px 60px;
+      position: relative;
+      z-index: 1;
+  }
+
+  .container {
+      margin-right: auto;
+      margin-left: auto;
+  }
+
+  .wrapper {
+    max-width: 1048px;
+    margin: auto;
+    padding: 0px 20px;
+    clear: both;
+  }
+
+  p {
+    max-width: 800px;
+    padding: 10px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .faq-item {
+      padding: 10px 0px;
+      text-align: left;
+      line-height: 30px;
+  }
+  .question {
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .answer {
+    padding-left: 20px;
+  }
+}

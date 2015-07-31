@@ -4,7 +4,7 @@
 
 var _ = require("underscore");
 var vagueTime = require("vague-time/lib/vagueTime-en");
-
+var Autolinker = require("autolinker");
 var CurateBaseModel = require("./CurateBaseModel.js");
 
 var CommentModel = CurateBaseModel.extend({
@@ -27,7 +27,7 @@ var CommentModel = CurateBaseModel.extend({
     },
     html_comment: function() {
       var comment = this.get("comment").replace(/(?:\r\n|\r|\n)/g, '<br />');
-      comment = convertToLinks(comment);
+      comment = Autolinker.link(comment);
       return comment;
     },
     date: function() {
@@ -66,23 +66,6 @@ var CommentModel = CurateBaseModel.extend({
     return req;
   }
 });
-
-
-function convertToLinks(text) {
-  var replaceText, replacePattern1, replacePattern2, replacedText;
-
-  //URLs starting with http://, https://
-  replacePattern1 = /(\b(https?):\/\/[-A-Z0-9+&amp;@#\/%?=~_|!:,.;]*[-A-Z0-9+&amp;@#\/%=~_|])/ig;
-  replacedText = text.replace(replacePattern1, '<a title="$1" href="$1" target="_blank">$1</a>');
-
-  //URLs starting with "www."
-  replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-  replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
-
-  //returns the text result
-
-  return replacedText;
-}
 
 CommentModel.prototype.relations.comments.model = CommentModel; // had to do this because of self reference
 

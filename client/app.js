@@ -17,6 +17,7 @@ App.pages = {
   Article: require("./pages/ArticlePage.js"),
   Author: require("./pages/AuthorPage.js"),
   Bookmarks: require("./pages/BookmarksPage.js"),
+  Help: require("./pages/HelpPage.js"),
   Home: require("./pages/HomePage.js"),
   Invite: require("./pages/InvitePage.js"),
   Login: require("./pages/LoginPage.js"),
@@ -86,7 +87,8 @@ m.route(document.getElementById("page"), "/not_found", {
   "/bookmarks": App.showPage("Bookmarks"),
   "/logout": App.showPage("Logout"),
   "/signup": App.showPage("Signup"),
-  "/not_found": App.showPage("NotFound")
+  "/not_found": App.showPage("NotFound"),
+  "/help": App.showPage("Help")
 });
 
 module.exports = App;

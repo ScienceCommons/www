@@ -14,7 +14,7 @@ var PillList = require("../components/PillList.js");
 var AuthorList = require("../components/AuthorList.js");
 var StudiesTable = require("../components/StudiesTable.js");
 var CommentBox = require("../components/CommentBox.js");
-
+var Autolinker = require("autolinker");
 var ArticleModel = require("../models/ArticleModel.js");
 var AuthorModel = require("../models/AuthorModel.js");
 
@@ -283,7 +283,7 @@ ArticlePage.view = function(ctrl) {
               <p className="form_field field" placeholder="(Optional) If unpublished, leave blank" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("journal_title"))}>{article.get("journal_title")}</p>
             </div>
             {abstractLabel}
-            <p className="abstract form_field" placeholder="(Optional)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("abstract"))} onkeydown={ctrl.onTabSendToAbstract}>{m.trust(convertToLinks(article.get("abstract")))}</p>
+            <p className="abstract form_field" placeholder="(Optional)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("abstract"))} onkeydown={ctrl.onTabSendToAbstract}>{m.trust(Autolinker.link(article.get("abstract")))}</p>
             <div className="tags" >
               {tagLabel}
               <p className="form_field add_tags">
@@ -310,7 +310,7 @@ ArticlePage.view = function(ctrl) {
               <div className="authors">{authors}</div>
 
               <h3>Abstract</h3>
-              <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("abstract"))}>{m.trust(convertToLinks(article.get("abstract")))}</p>
+              <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("abstract"))}>{m.trust(Autolinker.link(article.get("abstract")))}</p>
             </div>
 
             <div className="col span_1_of_4 text_right">
@@ -385,23 +385,5 @@ function toggleBookmark(article, user) {
     return undefined;
   }
 };
-
-
-function convertToLinks(text) {
-  var replaceText, replacePattern1, replacePattern2, replacedText;
-
-  //URLs starting with http://, https://
-  replacePattern1 = /(\b(https?):\/\/[-A-Z0-9+&amp;@#\/%?=~_|!:,.;]*[-A-Z0-9+&amp;@#\/%=~_|])/ig;
-  replacedText = text.replace(replacePattern1, '<a title="$1" href="$1" target="_blank">$1</a>');
-
-  //URLs starting with "www."
-  replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-  replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
-
-  //returns the text result
-
-  return replacedText;
-}
-
 
 module.exports = ArticlePage;
