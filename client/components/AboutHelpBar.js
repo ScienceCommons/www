@@ -19,8 +19,7 @@ AboutHelpBar.view = function(ctrl){
 
   var dropdownContent = (
     <ul>
-      {routeLi("/help", "How-To")}
-      {routeLi("/help", "FAQ")}
+      {routeLi("/help", "How-To / FAQ")}
       <li>
         <a href="mailto:contact@curatescience.org?Subject=Curate%20Science">Contact</a>
       </li>
