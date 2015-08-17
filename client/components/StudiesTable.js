@@ -211,7 +211,6 @@ StudiesTable.controller = function(opts) {
           study.removeReplication(replicationStudy);
         } else {
           study.addReplication(replicationStudy);
-          _this.controllers.studyFinderModal.open(false);
         }
       }
     }
