@@ -64,18 +64,26 @@ HomePage.articleView = function(article) {
         <li title="Registration">{Badge.view({badge: "registration", active: article.hasBadge("registration")})}</li>
         <li title="Disclosure">{Badge.view({badge: "disclosure", active: article.hasBadge("disclosure")})}</li>
       </ul>
-      <div className="updatedBy">Updated by {article.get("updated_by_name")} -- {moment(article.get("updated_at")).fromNow()}</div>
+      {updatedByLink(article)}
     </div>
   );
 };
 
-HomePage.authorLink = function(author, date) {
-  if(author.get("id")) {
+var updatedByLink = function(article){
+  var date = article.get("updated_at");
+  var name = article.get("updated_by_name");
+  var author_id = article.get("updated_by_author_id");
+  var name_link;
+  if (author_id){
     return (
-      m("div", {className:"updatedBy"}, ["Updated by ", m("a", {href:"/authors/"+author.get("id"), config:m.route}, [author.get("fullName")]), " -- ", moment(date).fromNow()])
-    )
+      <div className="updatedBy">Updated by <a href={"#/authors/" + author_id}>{name}</a> -- {moment(date).fromNow()}</div>
+    );
+  } else {
+    return (
+        <div className="updatedBy">Updated {name ? "by " + name + " --": "" + ""} {moment(date).fromNow()}</div>
+  );
   }
-}
+};
 
 HomePage.loadMore = function(onclick) {
   return (
