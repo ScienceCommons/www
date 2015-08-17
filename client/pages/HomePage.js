@@ -55,16 +55,17 @@ HomePage.controller = function(options) {
 
 HomePage.articleView = function(article) {
   return (
-    [m("div", {className:"articleView", onclick:visitArticle(article), title:article.get("title")}, [
-      m("div", {className:"title"}, [article.get("title")]),
-      m("div", {className:"authors"}, ["(",article.get("year"),") ", article.authors().etAl(3)]),
-      m("ul", {className:"badges"}, [
-        m("li", {title:"Data & Syntax"}, [Badge.view({badge: "data", active: article.hasBadge("data")})]),
-        m("li", {title:"Materials"}, [Badge.view({badge: "materials", active: article.hasBadge("materials")})]),
-        m("li", {title:"Registration"}, [Badge.view({badge: "registration", active: article.hasBadge("registration")})]),
-        m("li", {title:"Disclosure"}, [Badge.view({badge: "disclosure", active: article.hasBadge("disclosure")})])
-      ])
-    ]), HomePage.authorLink(article.get("recent_updated_by_author"), article.get("recent_updated_at"))]
+    <div className="articleView" onclick={visitArticle(article)} title={article.get("title")}>
+      <div className="title">{article.get("title")}</div>
+      <div className="authors">{"(" + article.get("year") + ") " + article.authors().etAl(3)}</div>
+      <ul className="badges">
+        <li title="Data &amp; Syntax">{Badge.view({badge: "data", active: article.hasBadge("data")})}</li>
+        <li title="Materials">{Badge.view({badge: "materials", active: article.hasBadge("materials")})}</li>
+        <li title="Registration">{Badge.view({badge: "registration", active: article.hasBadge("registration")})}</li>
+        <li title="Disclosure">{Badge.view({badge: "disclosure", active: article.hasBadge("disclosure")})}</li>
+      </ul>
+      <div className="updatedBy">Updated by {article.get("updated_by_name")} -- {moment(article.get("updated_at")).fromNow()}</div>
+    </div>
   );
 };
 
