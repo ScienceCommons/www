@@ -25,6 +25,7 @@ StudiesTable.controller = function(opts) {
   this.article = opts.article;
   this.user = opts.user;
   this.active = m.prop({study_id: false, field: false, editing: false, dropdown: false});
+  //replications are now expanded by default, so store off the ones that are collapsed
   this.collapsed = m.prop({}); // study_id's
   this.newStudy = m.prop(false);
   this.edits = m.prop({});
