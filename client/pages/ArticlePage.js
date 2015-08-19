@@ -151,6 +151,12 @@ ArticlePage.controller = function(options) {
       return false;
     }
   };
+
+  this.replaceDivWithBr = function(str){
+    //needed to ensure same line break behavior across firefox, chrome, safari, ie
+    //Firefox adds line breaks as <br> tags in a contenteditable, but others wrap in a <div>
+    return str.replace(/<div>/g, '<br>').replace(/<\/div>/g, '');
+  };
 };
 
 ArticlePage.view = function(ctrl) {
@@ -283,7 +289,7 @@ ArticlePage.view = function(ctrl) {
               <p className="form_field field" placeholder="(Optional) If unpublished, leave blank" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("journal_title"))}>{article.get("journal_title")}</p>
             </div>
             {abstractLabel}
-            <p className="abstract form_field" placeholder="(Optional)" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("abstract"))} onkeydown={ctrl.onTabSendToAbstract}>{m.trust(Autolinker.link(article.get("abstract")))}</p>
+            <p className="abstract form_field" placeholder="(Optional)" contenteditable={ctrl.editing()} oninput={m.withAttr("innerHTML", article.customSetter("abstract", function(s){return ctrl.replaceDivWithBr(s);}))} onkeydown={ctrl.onTabSendToAbstract}>{m.trust(Autolinker.link(article.get("abstract")))}</p>
             <div className="tags" >
               {tagLabel}
               <p className="form_field add_tags">
@@ -310,7 +316,7 @@ ArticlePage.view = function(ctrl) {
               <div className="authors">{authors}</div>
 
               <h3>Abstract</h3>
-              <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("abstract"))}>{m.trust(Autolinker.link(article.get("abstract")))}</p>
+              <p className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerHTML", article.customSetter("abstract", function(s){return ctrl.replaceDivWithBr(s);}))}>{m.trust(Autolinker.link(article.get("abstract")))}</p>
             </div>
 
             <div className="col span_1_of_4 text_right">

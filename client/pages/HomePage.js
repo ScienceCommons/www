@@ -57,7 +57,7 @@ HomePage.articleView = function(article) {
   return (
     <div className="articleView" onclick={visitArticle(article)} title={article.get("title")}>
       <div className="title">{article.get("title")}</div>
-      <div className="authors">{"(" + article.get("year") + ") " + article.authors().etAl(3)}</div>
+      <div className="authors">{"(" + article.get("year") + ") " + (article.authors().length > 0 ? article.authors().etAl(3) : "")}</div>
       <ul className="badges">
         <li title="Data &amp; Syntax">{Badge.view({badge: "data", active: article.hasBadge("data")})}</li>
         <li title="Materials">{Badge.view({badge: "materials", active: article.hasBadge("materials")})}</li>
