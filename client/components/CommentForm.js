@@ -20,7 +20,7 @@ CommentForm.controller = function(options) {
     e.preventDefault();
     var res = _this.comments.add({
       "owner_id": _this.user.get("id"),
-      "comment": _this.body(),
+      "comment": _this.body().replace(/\n/g,"<br>"),
       "anonymous": _this.anonymous(),
       "field": _this.field,
       "name": _this.user.get("fullName"),
@@ -50,7 +50,7 @@ CommentForm.view = function(ctrl) {
       <table>
         <tbody>
           <tr>
-            <td className="commentBodyTextarea"><textarea value={ctrl.body()} oninput={ctrl.handleInput} placeholder="Leave a comment"/></td>
+            <td className="commentBodyTextarea"><textarea value={m.trust(ctrl.body())} oninput={ctrl.handleInput} placeholder="Leave a comment"/></td>
             <td className="commentSubmit">
               <div><button type="submit" className="btn post">Post</button></div>
               <div className="toggleAnonymous">
