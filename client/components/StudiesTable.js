@@ -25,7 +25,8 @@ StudiesTable.controller = function(opts) {
   this.article = opts.article;
   this.user = opts.user;
   this.active = m.prop({study_id: false, field: false, editing: false, dropdown: false});
-  this.expanded = m.prop({}); // study_id's
+  //replications are now expanded by default, so store off the ones that are collapsed
+  this.collapsed = m.prop({}); // study_id's
   this.newStudy = m.prop(false);
   this.edits = m.prop({});
   this.studyFinderStudy = m.prop(false);
@@ -127,10 +128,10 @@ StudiesTable.controller = function(opts) {
   this.toggleExpanded = function(study) {
     return function(e) {
       e.preventDefault();
-      var expanded = _this.expanded();
+      var collapsed = _this.collapsed();
       var id = study.get("id");
-      expanded[id] = !expanded[id];
-      _this.expanded(expanded);
+      collapsed[id] = !collapsed[id];
+      _this.collapsed(collapsed);
     };
   };
 
@@ -211,6 +212,7 @@ StudiesTable.controller = function(opts) {
           study.removeReplication(replicationStudy);
         } else {
           study.addReplication(replicationStudy);
+          _this.collapsed()[study.get("id")] = false;
         }
       }
     }
@@ -238,12 +240,12 @@ StudiesTable.view = function(ctrl) {
     content = Spinner.view();
   } else {
     var studies = ctrl.article.get("studies").map(function(study) {
-      if (!ctrl.expanded()[study.get("id")]) {
+      if (!ctrl.collapsed()[study.get("id")]) {
         var replications = study.get("replications").map(function(replication) {
           return StudiesTable.studyView(ctrl, replication.get("replicating_study"), {replication: true, replicationModel: replication, parentStudy: study});
         });
         if (replications.length === 0) {
-          ctrl.expanded({});
+          ctrl.collapsed()[study.get("id")] = true;
         }
       }
 
@@ -327,7 +329,7 @@ StudiesTable.studyView = function(ctrl, study, options) {
     "study": true,
     "new": options.new,
     "replication": options.replication,
-    "expanded": !ctrl.expanded()[study.get("id")],
+    "expanded": !ctrl.collapsed()[study.get("id")],
     "active": ctrl.active().study_id === study.get("id")
   });
 
