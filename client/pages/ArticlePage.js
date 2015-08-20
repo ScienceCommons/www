@@ -27,7 +27,6 @@ ArticlePage.controller = function(options) {
   if (m.route.param("articleId") === "new" && this.user.canEdit()) {
     this.article = new ArticleModel({});
     this.editing = m.prop(true);
-
   } else {
     this.article = new ArticleModel({id: m.route.param("articleId")});
     this.article.fetch();
@@ -76,6 +75,7 @@ ArticlePage.controller = function(options) {
 
   this.saveClick = function() {
     _this.saving(true);
+    _this.article.attributes.abstract = Autolinker.link(_this.replaceDivWithBr(_this.article.get("abstract")));
     var res = _this.article.save({include: ["authors"]});
     res.then(function() {
       _this.saving(false);
@@ -155,7 +155,7 @@ ArticlePage.controller = function(options) {
   this.replaceDivWithBr = function(str){
     //needed to ensure same line break behavior across firefox, chrome, safari, ie
     //Firefox adds line breaks as <br> tags in a contenteditable, but others wrap in a <div>
-    return str.replace(/<div>/g, '<br>').replace(/<\/div>/g, '');
+    return str.replace(/<div>/g, '<br />').replace(/<\/div>/g, '');
   };
 };
 
@@ -289,7 +289,7 @@ ArticlePage.view = function(ctrl) {
               <p className="form_field field" placeholder="(Optional) If unpublished, leave blank" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("journal_title"))}>{article.get("journal_title")}</p>
             </div>
             {abstractLabel}
-            <div className="abstract form_field" placeholder="(Optional)" contenteditable={ctrl.editing()} oninput={m.withAttr("innerHTML", article.customSetter("abstract", function(s){return ctrl.replaceDivWithBr(s);}))} onkeydown={ctrl.onTabSendToAbstract} innerHTML={m.trust(Autolinker.link(article.get("abstract")))}></div>
+            <div className="abstract form_field" placeholder="(Optional)" contenteditable={ctrl.editing()} oninput={m.withAttr("innerHTML", article.setter("abstract"))} onkeydown={ctrl.onTabSendToAbstract} innerHTML={m.trust(article.get("abstract"))}></div>
             <div className="tags" >
               {tagLabel}
               <p className="form_field add_tags">
@@ -316,7 +316,7 @@ ArticlePage.view = function(ctrl) {
               <div className="authors">{authors}</div>
 
               <h3>Abstract</h3>
-              <div className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerHTML", article.customSetter("abstract", function(s){return ctrl.replaceDivWithBr(s);}))} innerHTML={m.trust(Autolinker.link(article.get("abstract")))}></div>
+              <div className="abstract" placeholder="Abstract goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("innerHTML", article.setter("abstract"))} innerHTML={m.trust(article.get("abstract"))}></div>
             </div>
 
             <div className="col span_1_of_4 text_right">
