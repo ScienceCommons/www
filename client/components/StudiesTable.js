@@ -854,13 +854,21 @@ function runRemoteRScript(file){
                , url: file.get("url")
                , deserialize: function(x){return x;}})
       .then(function(code){
+        var formData = new FormData();
+        formData.append("x", code);
         m.request({  method:"post"
                    , url: "https://public.opencpu.org/ocpu/library/base/R/identity"
-                   , data: {x: code}
+                   , data: formData
+                   , serialize: function(data) {return data;}
                    , deserialize: function(x){return x;}
+                   , config: function(xhr) {
+                     xhr.setRequestHeader("accept","application/json");
+                   }
                   })
         .then(function(res){
           console.log(res);
+        }, function(err){
+          console.log(err);
         });
       });
   };
