@@ -866,7 +866,8 @@ function runRemoteRScript(file){
                    }
                   })
         .then(function(res){
-          console.log(res);
+          var links = res.split('\n');
+          console.log(links);
         }, function(err){
           console.log(err);
         });
