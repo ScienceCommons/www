@@ -624,10 +624,15 @@ function fileDropdown(ctrl, study, type, options) {
       if (numComments > 0) {
         var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
       }
+
+      if (file.get("name").endsWith(".R")){
+        var runRScriptBtn = <button type="button" className="btn" title="Run R Script" onclick={runRemoteRScript(file)}><span className="icon icon_right_arrow"></span></button>;
+      }
       return <tr onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className={fileIsActive ? "active" : ""}>
         <td className="fileName">{file.get("name")}</td>
         <td className="buttons">
           {commentMarker}
+          {runRScriptBtn}
           <button type="button" className="btn" title="Download" onclick={downloadFile(file)}><span className="icon icon_download"></span></button>
         </td>
       </tr>;
@@ -838,6 +843,26 @@ function downloadFile(file) {
     } else {
       window.open("https://" + file.get("url"));
     }
+  };
+}
+
+function runRemoteRScript(file){
+  return function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    m.request({  method:"get"
+               , url: file.get("url")
+               , deserialize: function(x){return x;}})
+      .then(function(code){
+        m.request({  method:"post"
+                   , url: "https://public.opencpu.org/ocpu/library/base/R/identity"
+                   , data: {x: code}
+                   , deserialize: function(x){return x;}
+                  })
+        .then(function(res){
+          console.log(res);
+        });
+      });
   };
 }
 
