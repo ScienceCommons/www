@@ -166,7 +166,7 @@ StudiesTable.controller = function(opts) {
       var active = _this.active();
       active.editing = false;
       _this.active(active);
-      var fileEdits = _this.getEdits(study, "links_"+file.get("id"))
+      var fileEdits = _this.getEdits(study, "links_"+file.get("id"));
       file.set(fileEdits);
     };
   };
@@ -218,8 +218,13 @@ StudiesTable.controller = function(opts) {
     }
   };
 
+  this.handleStudyRAnalysisClick = function(){
+    _this.controllers.studyRAnalysisModal.open(true);
+  };
+
   this.controllers.studyFinderModal = new Modal.controller();
   this.controllers.studyCommentAndEditModal = new Modal.controller();
+  this.controllers.studyRAnalysisModal = new Modal.controller();
   this.controllers.studyFieldCommentForm = new CommentForm.controller({
     user: this.user
   });
@@ -626,10 +631,10 @@ function fileDropdown(ctrl, study, type, options) {
       }
 
       if (file.get("name").endsWith(".R")){
-        var runRScriptBtn = <button type="button" className="btn" title="Run R Script" onclick={runRemoteRScript(file)}><span className="icon icon_right_arrow"></span></button>;
+        var runRScriptBtn = <button type="button" className="btn" title="Run R Script" onclick={ctrl.handleStudyRAnalysisClick}><span className="icon icon_right_arrow"></span></button>;
       }
-      return <tr onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className={fileIsActive ? "active" : ""}>
-        <td className="fileName">{file.get("name")}</td>
+      return <tr className={fileIsActive ? "active" : ""}>
+        <td onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className="fileName">{file.get("name")}</td>
         <td className="buttons">
           {commentMarker}
           {runRScriptBtn}
@@ -652,6 +657,13 @@ function fileDropdown(ctrl, study, type, options) {
     filesFooter = <footer>Please <a href="/beta/#/login">log in</a> to add a link</footer>;
   }
 
+  if (ctrl.controllers.studyRAnalysisModal.open()){
+    var studyRAnalysisModal = Modal.view(ctrl.controllers.studyRAnalysisModal,
+                                         {
+                                           label: "Hi",
+                                           content: Spinner.view()
+                                         });
+  }
   return <div className="dropdown" config={fileDropdownConfig}>
     <header>{BadgeHeaders[type]}</header>
     <div className="body">
@@ -659,6 +671,7 @@ function fileDropdown(ctrl, study, type, options) {
     </div>
     {filesFooter}
     {modal}
+    {studyRAnalysisModal}
   </div>;
 };
 
@@ -846,7 +859,7 @@ function downloadFile(file) {
   };
 }
 
-function runRemoteRScript(file){
+function runRemoteRScript(ctrl, file){
   return function(e){
     e.preventDefault();
     e.stopPropagation();
