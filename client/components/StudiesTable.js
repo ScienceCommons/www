@@ -220,14 +220,16 @@ StudiesTable.controller = function(opts) {
 
   this.rScriptResults = {
     loading: true,
-    results: [],
+    links: [],
+    console: null,
+    graphics: null,
     fetch: function(file){
       this.results = _this.runRemoteRScript(file, function(){this.loading = false;});
     }
   };
 
   this.runRemoteRScript = function(file){
-      console.log("runRemoteRScript called");
+      //TODO: either cache the results of this or null out the result and refetch
       m.request({  method:"get"
                    , url: file.get("url")
                    , deserialize: function(x){return x;}})
@@ -247,7 +249,9 @@ StudiesTable.controller = function(opts) {
             .then(function(res){
               var links = res.split('\n');
               console.log(links);
-              _this.rScriptResults.results = links;
+              var graphicsLink = links.filter(function(str){return str.includes("graphics");})[0];
+              _this.rScriptResults.links = links;
+              _this.rScriptResults.graphics = "http://public.opencpu.org" + graphicsLink + "/png";
               _this.rScriptResults.loading = false;
               m.redraw();
             }, function(err){
@@ -257,7 +261,6 @@ StudiesTable.controller = function(opts) {
   };
 
   this.handleStudyRAnalysisClick = function(file){
-    console.log("handleStudyRAnalysisClick called");
     _this.controllers.studyRAnalysisModal.open(true);
     _this.runRemoteRScript(file);
   };
@@ -701,7 +704,7 @@ function fileDropdown(ctrl, study, type, options) {
   if (ctrl.rScriptResults.loading){
     studyRAnalysisResults = Spinner.view();
   } else {
-    studyRAnalysisResults = "loaded";
+    studyRAnalysisResults = <img src={ctrl.rScriptResults.graphics}></img>;
   }
 
   if (ctrl.controllers.studyRAnalysisModal.open()){
