@@ -239,6 +239,7 @@ StudiesTable.controller = function(opts) {
                        , data: formData
                        , serialize: function(data) {return data;}
                        , deserialize: function(x){return x;}
+                       , background: true
                        , config: function(xhr) {
                          xhr.setRequestHeader("accept","application/json");
                        }
@@ -248,6 +249,7 @@ StudiesTable.controller = function(opts) {
               console.log(links);
               _this.rScriptResults.results = links;
               _this.rScriptResults.loading = false;
+              m.redraw();
             }, function(err){
               console.log(err);
             });
