@@ -15,7 +15,7 @@ var loaded = {};
 var waitingForDependency = [];
 
 var BaseData = {
-  redraw: _.throttle(m.redraw, 16, {leading: false})
+  redraw: _.throttle(m.redraw, 32, {leading: false})
 };
 
 BaseData.Model = function(data, options) {
