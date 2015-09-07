@@ -218,8 +218,46 @@ StudiesTable.controller = function(opts) {
     }
   };
 
-  this.handleStudyRAnalysisClick = function(){
+  this.rScriptResults = {
+    loading: true,
+    results: [],
+    fetch: function(file){
+      this.results = _this.runRemoteRScript(file, function(){this.loading = false;});
+    }
+  };
+
+  this.runRemoteRScript = function(file){
+      console.log("runRemoteRScript called");
+      m.request({  method:"get"
+                   , url: file.get("url")
+                   , deserialize: function(x){return x;}})
+        .then(function(code){
+          var formData = new FormData();
+          formData.append("x", code);
+          m.request({  method:"post"
+                       , url: "https://public.opencpu.org/ocpu/library/base/R/identity"
+                       , data: formData
+                       , serialize: function(data) {return data;}
+                       , deserialize: function(x){return x;}
+                       , config: function(xhr) {
+                         xhr.setRequestHeader("accept","application/json");
+                       }
+                    })
+            .then(function(res){
+              var links = res.split('\n');
+              console.log(links);
+              _this.rScriptResults.results = links;
+              _this.rScriptResults.loading = false;
+            }, function(err){
+              console.log(err);
+            });
+        });
+  };
+
+  this.handleStudyRAnalysisClick = function(file){
+    console.log("handleStudyRAnalysisClick called");
     _this.controllers.studyRAnalysisModal.open(true);
+    _this.runRemoteRScript(file);
   };
 
   this.controllers.studyFinderModal = new Modal.controller();
@@ -631,7 +669,7 @@ function fileDropdown(ctrl, study, type, options) {
       }
 
       if (file.get("name").endsWith(".R")){
-        var runRScriptBtn = <button type="button" className="btn" title="Run R Script" onclick={ctrl.handleStudyRAnalysisClick}><span className="icon icon_right_arrow"></span></button>;
+        var runRScriptBtn = <button type="button" className="btn" title="Run R Script" onclick={function(){ctrl.handleStudyRAnalysisClick(file);}}><span className="icon icon_right_arrow"></span></button>;
       }
       return <tr className={fileIsActive ? "active" : ""}>
         <td onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className="fileName">{file.get("name")}</td>
@@ -657,11 +695,18 @@ function fileDropdown(ctrl, study, type, options) {
     filesFooter = <footer>Please <a href="/beta/#/login">log in</a> to add a link</footer>;
   }
 
+  var studyRAnalysisResults;
+  if (ctrl.rScriptResults.loading){
+    studyRAnalysisResults = Spinner.view();
+  } else {
+    studyRAnalysisResults = "loaded";
+  }
+
   if (ctrl.controllers.studyRAnalysisModal.open()){
     var studyRAnalysisModal = Modal.view(ctrl.controllers.studyRAnalysisModal,
                                          {
-                                           label: "Hi",
-                                           content: Spinner.view()
+                                           label: "R Script Results",
+                                           content: studyRAnalysisResults
                                          });
   }
   return <div className="dropdown" config={fileDropdownConfig}>
@@ -859,34 +904,36 @@ function downloadFile(file) {
   };
 }
 
-function runRemoteRScript(ctrl, file){
+var runRemoteRScript = function(file){
   return function(e){
     e.preventDefault();
     e.stopPropagation();
+    console.log("runRemoteRScript called");
     m.request({  method:"get"
-               , url: file.get("url")
-               , deserialize: function(x){return x;}})
+                 , url: file.get("url")
+                 , deserialize: function(x){return x;}})
       .then(function(code){
         var formData = new FormData();
         formData.append("x", code);
         m.request({  method:"post"
-                   , url: "https://public.opencpu.org/ocpu/library/base/R/identity"
-                   , data: formData
-                   , serialize: function(data) {return data;}
-                   , deserialize: function(x){return x;}
-                   , config: function(xhr) {
-                     xhr.setRequestHeader("accept","application/json");
-                   }
+                     , url: "https://public.opencpu.org/ocpu/library/base/R/identity"
+                     , data: formData
+                     , serialize: function(data) {return data;}
+                     , deserialize: function(x){return x;}
+                     , config: function(xhr) {
+                       xhr.setRequestHeader("accept","application/json");
+                     }
                   })
-        .then(function(res){
-          var links = res.split('\n');
-          console.log(links);
-        }, function(err){
-          console.log(err);
-        });
+          .then(function(res){
+            var links = res.split('\n');
+            console.log(links);
+            return links;
+          }, function(err){
+            console.log(err);
+          });
       });
   };
-}
+};
 
 var effectSizeSymbol = {
   d: "d",
