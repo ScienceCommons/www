@@ -410,12 +410,13 @@ $column_width: 300px;
   }
   textarea#r-source {
       width: 95%;
+      height: 10em;
       margin: 10px;
   }
   div#r-console {
-      margin:10px;
+      margin: 10px;
   }
   div#r-graphics{
-      margin:10px;
+      margin: 10px;
   }
 }
