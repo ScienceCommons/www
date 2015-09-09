@@ -700,6 +700,7 @@ function fileDropdown(ctrl, study, type, options) {
         <td onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className="fileName">{file.get("name")}</td>
         <td className="buttons">
           {commentMarker}
+          {runRScriptBtn}
           <button type="button" className="btn" title="Download" onclick={downloadFile(file)}><span className="icon icon_download"></span></button>
         </td>
       </tr>;
