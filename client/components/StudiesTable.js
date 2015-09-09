@@ -223,13 +223,16 @@ StudiesTable.controller = function(opts) {
     links: [],
     console: null,
     graphics: null,
-    fetch: function(file){
-      this.results = _this.runRemoteRScript(file, function(){this.loading = false;});
-    }
+    source: null
   };
 
   this.runRemoteRScript = function(file){
-      //TODO: either cache the results of this or null out the result and refetch
+      _this.rScriptResults.loading = true;
+      _this.rScriptResults.links = [];
+      _this.rScriptResults.console = null;
+      _this.rScriptResults.source = null;
+      _this.rScriptResults.graphics = null;
+
       m.request({  method:"get"
                    , url: file.get("url")
                    , deserialize: function(x){return x;}})
@@ -248,12 +251,29 @@ StudiesTable.controller = function(opts) {
                     })
             .then(function(res){
               var links = res.split('\n');
-              console.log(links);
               var graphicsLink = links.filter(function(str){return str.includes("graphics");})[0];
+              var consoleLink = links.filter(function(str){return str.includes("console");})[0];
+              var sourceLink = links.filter(function(str){return str.includes("source");})[0];
               _this.rScriptResults.links = links;
               _this.rScriptResults.graphics = "http://public.opencpu.org" + graphicsLink + "/png";
-              _this.rScriptResults.loading = false;
-              m.redraw();
+              m.request({  method: "get"
+                         , url: "https://public.opencpu.org" + sourceLink + "/text"
+                         , deserialize: function(data) {return data;}
+                         , background: true
+              })
+                .then(function(res){
+                  _this.rScriptResults.source = res;
+                });
+              m.request({  method: "get"
+                         , url: "https://public.opencpu.org" + consoleLink + "/text"
+                         , deserialize: function(data) {return data;}
+                         , background: true
+              })
+                .then(function(res){
+                  _this.rScriptResults.console = res;
+                  _this.rScriptResults.loading = false;
+                  m.redraw();
+                });
             }, function(err){
               console.log(err);
             });
@@ -267,7 +287,7 @@ StudiesTable.controller = function(opts) {
 
   this.controllers.studyFinderModal = new Modal.controller();
   this.controllers.studyCommentAndEditModal = new Modal.controller();
-  this.controllers.studyRAnalysisModal = new Modal.controller();
+  this.controllers.studyRAnalysisModal = new Modal.controller({className: "studyRAnalysis"});
   this.controllers.studyFieldCommentForm = new CommentForm.controller({
     user: this.user
   });
@@ -673,7 +693,7 @@ function fileDropdown(ctrl, study, type, options) {
         var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
       }
 
-      if (file.get("name").endsWith(".R")){
+      if (file.get("name").match(/\.r$/i)){
         var runRScriptBtn = <button type="button" className="btn" title="Run R Script" onclick={function(){ctrl.handleStudyRAnalysisClick(file);}}><span className="icon icon_right_arrow"></span></button>;
       }
       return <tr className={fileIsActive ? "active" : ""}>
@@ -704,7 +724,15 @@ function fileDropdown(ctrl, study, type, options) {
   if (ctrl.rScriptResults.loading){
     studyRAnalysisResults = Spinner.view();
   } else {
-    studyRAnalysisResults = <img src={ctrl.rScriptResults.graphics}></img>;
+    studyRAnalysisResults = (
+      <div id="r-script-results">
+        <p>Source:</p>
+        <textarea id="r-source" value={ctrl.rScriptResults.source}></textarea>
+        <p>Console:</p>
+        <div id="r-console">{ctrl.rScriptResults.console}</div>
+        <img id="r-graphics" src={ctrl.rScriptResults.graphics}></img>
+      </div>
+    );
   }
 
   if (ctrl.controllers.studyRAnalysisModal.open()){
@@ -913,7 +941,6 @@ var runRemoteRScript = function(file){
   return function(e){
     e.preventDefault();
     e.stopPropagation();
-    console.log("runRemoteRScript called");
     m.request({  method:"get"
                  , url: file.get("url")
                  , deserialize: function(x){return x;}})
