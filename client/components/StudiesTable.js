@@ -937,36 +937,6 @@ function downloadFile(file) {
   };
 }
 
-var runRemoteRScript = function(file){
-  return function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    m.request({  method:"get"
-                 , url: file.get("url")
-                 , deserialize: function(x){return x;}})
-      .then(function(code){
-        var formData = new FormData();
-        formData.append("x", code);
-        m.request({  method:"post"
-                     , url: "https://public.opencpu.org/ocpu/library/base/R/identity"
-                     , data: formData
-                     , serialize: function(data) {return data;}
-                     , deserialize: function(x){return x;}
-                     , config: function(xhr) {
-                       xhr.setRequestHeader("accept","application/json");
-                     }
-                  })
-          .then(function(res){
-            var links = res.split('\n');
-            console.log(links);
-            return links;
-          }, function(err){
-            console.log(err);
-          });
-      });
-  };
-};
-
 var effectSizeSymbol = {
   d: "d",
   eta: "η",
