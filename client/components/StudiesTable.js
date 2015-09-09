@@ -166,7 +166,7 @@ StudiesTable.controller = function(opts) {
       var active = _this.active();
       active.editing = false;
       _this.active(active);
-      var fileEdits = _this.getEdits(study, "links_"+file.get("id"))
+      var fileEdits = _this.getEdits(study, "links_"+file.get("id"));
       file.set(fileEdits);
     };
   };
@@ -218,8 +218,76 @@ StudiesTable.controller = function(opts) {
     }
   };
 
+  this.rScriptResults = {
+    loading: true,
+    links: [],
+    console: null,
+    graphics: null,
+    source: null
+  };
+
+  this.runRemoteRScript = function(file){
+      _this.rScriptResults.loading = true;
+      _this.rScriptResults.links = [];
+      _this.rScriptResults.console = null;
+      _this.rScriptResults.source = null;
+      _this.rScriptResults.graphics = null;
+
+      m.request({  method:"get"
+                   , url: file.get("url")
+                   , deserialize: function(x){return x;}})
+        .then(function(code){
+          var formData = new FormData();
+          formData.append("x", code);
+          m.request({  method:"post"
+                       , url: "https://public.opencpu.org/ocpu/library/base/R/identity"
+                       , data: formData
+                       , serialize: function(data) {return data;}
+                       , deserialize: function(x){return x;}
+                       , background: true
+                       , config: function(xhr) {
+                         xhr.setRequestHeader("accept","application/json");
+                       }
+                    })
+            .then(function(res){
+              var links = res.split('\n');
+              var graphicsLink = links.filter(function(str){return str.includes("graphics");})[0];
+              var consoleLink = links.filter(function(str){return str.includes("console");})[0];
+              var sourceLink = links.filter(function(str){return str.includes("source");})[0];
+              _this.rScriptResults.links = links;
+              _this.rScriptResults.graphics = "http://public.opencpu.org" + graphicsLink + "/png";
+              m.request({  method: "get"
+                         , url: "https://public.opencpu.org" + sourceLink + "/text"
+                         , deserialize: function(data) {return data;}
+                         , background: true
+              })
+                .then(function(res){
+                  _this.rScriptResults.source = res;
+                });
+              m.request({  method: "get"
+                         , url: "https://public.opencpu.org" + consoleLink + "/text"
+                         , deserialize: function(data) {return data;}
+                         , background: true
+              })
+                .then(function(res){
+                  _this.rScriptResults.console = res;
+                  _this.rScriptResults.loading = false;
+                  m.redraw();
+                });
+            }, function(err){
+              console.log(err);
+            });
+        });
+  };
+
+  this.handleStudyRAnalysisClick = function(file){
+    _this.controllers.studyRAnalysisModal.open(true);
+    _this.runRemoteRScript(file);
+  };
+
   this.controllers.studyFinderModal = new Modal.controller();
   this.controllers.studyCommentAndEditModal = new Modal.controller();
+  this.controllers.studyRAnalysisModal = new Modal.controller({className: "studyRAnalysis"});
   this.controllers.studyFieldCommentForm = new CommentForm.controller({
     user: this.user
   });
@@ -624,8 +692,12 @@ function fileDropdown(ctrl, study, type, options) {
       if (numComments > 0) {
         var commentMarker = <span className="icon icon_comment" title={numComments + (numComments === 1 ? " comment" : " comments")}></span>;
       }
-      return <tr onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className={fileIsActive ? "active" : ""}>
-        <td className="fileName">{file.get("name")}</td>
+
+      if (file.get("name").match(/\.r$/i)){
+        var runRScriptBtn = <button type="button" className="btn" title="Run R Script" onclick={function(){ctrl.handleStudyRAnalysisClick(file);}}><span className="icon icon_right_arrow"></span></button>;
+      }
+      return <tr className={fileIsActive ? "active" : ""}>
+        <td onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className="fileName">{file.get("name")}</td>
         <td className="buttons">
           {commentMarker}
           <button type="button" className="btn" title="Download" onclick={downloadFile(file)}><span className="icon icon_download"></span></button>
@@ -647,6 +719,28 @@ function fileDropdown(ctrl, study, type, options) {
     filesFooter = <footer>Please <a href="/beta/#/login">log in</a> to add a link</footer>;
   }
 
+  var studyRAnalysisResults;
+  if (ctrl.rScriptResults.loading){
+    studyRAnalysisResults = Spinner.view();
+  } else {
+    studyRAnalysisResults = (
+      <div id="r-script-results">
+        <p>Source:</p>
+        <textarea id="r-source" value={ctrl.rScriptResults.source}></textarea>
+        <p>Console:</p>
+        <div id="r-console">{ctrl.rScriptResults.console}</div>
+        <img id="r-graphics" src={ctrl.rScriptResults.graphics}></img>
+      </div>
+    );
+  }
+
+  if (ctrl.controllers.studyRAnalysisModal.open()){
+    var studyRAnalysisModal = Modal.view(ctrl.controllers.studyRAnalysisModal,
+                                         {
+                                           label: "R Script Results",
+                                           content: studyRAnalysisResults
+                                         });
+  }
   return <div className="dropdown" config={fileDropdownConfig}>
     <header>{BadgeHeaders[type]}</header>
     <div className="body">
@@ -654,6 +748,7 @@ function fileDropdown(ctrl, study, type, options) {
     </div>
     {filesFooter}
     {modal}
+    {studyRAnalysisModal}
   </div>;
 };
 
