@@ -673,7 +673,7 @@ function handleBadgeDropdownFileClick(ctrl, study, file) {
   };
 };
 
-StudiesTable.cellViews.number = function(ctrl, study) {
+StudiesTable.cellViews.number = function(ctrl, study, options) {
   if (study.get("replication_of").length > 0) {
     var originalStudy = study.get("replication_of").first().get("study");
     var originalYear = originalStudy.get("year");
@@ -691,10 +691,13 @@ StudiesTable.cellViews.number = function(ctrl, study) {
     year = "(" + year + ")";
   }
 
-  var etAl = <li>{study.etAl(1)} {year}</li>;
-
-  if(study.get('id') == undefined || study.loaded == true) {
-    etAl = <li>{ctrl.article.authors().etAl(2)} ({ctrl.article.get("year")})</li>;
+  var etAl;
+  if (options.replication){
+    etAl = <li><a href={"/#/articles/"+study.get("article_id")}>{study.etAl(1)} {year}</a></li>;
+  } else if(study.get('id') == undefined || study.loaded == true) {
+    etAl = <li><a href={"/#/articles/"+study.get("article_id")}>{ctrl.article.authors().etAl(2)} ({ctrl.article.get("year")})</a></li>;
+  } else {
+    etAl = <li>{study.etAl(1)} {year}</li>;
   }
 
   return <ul>
