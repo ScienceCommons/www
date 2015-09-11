@@ -695,7 +695,7 @@ StudiesTable.cellViews.number = function(ctrl, study, options) {
   if (options.replication){
     etAl = <li><a href={"/#/articles/"+study.get("article_id")}>{study.etAl(1)} {year}</a></li>;
   } else if(study.get('id') == undefined || study.loaded == true) {
-    etAl = <li><a href={"/#/articles/"+study.get("article_id")}>{ctrl.article.authors().etAl(2)} ({ctrl.article.get("year")})</a></li>;
+    etAl = <li>{ctrl.article.authors().etAl(2)} ({ctrl.article.get("year")})</li>;
   } else {
     etAl = <li>{study.etAl(1)} {year}</li>;
   }
