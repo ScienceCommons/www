@@ -143,6 +143,10 @@ $column_width: 300px;
     width: 350px;
     margin-left: 4px;
 
+    &.studyRAnalysis {
+        width: 900px;
+    }
+
     .modalContent {
       .inputs {
         padding: 20px;
@@ -403,5 +407,16 @@ $column_width: 300px;
       padding: 10px;
       margin: 10px
     }
+  }
+  textarea#r-source {
+      width: 95%;
+      height: 10em;
+      margin: 10px;
+  }
+  div#r-console {
+      margin: 10px;
+  }
+  div#r-graphics{
+      margin: 10px;
   }
 }

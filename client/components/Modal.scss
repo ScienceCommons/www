@@ -69,4 +69,13 @@
       border-radius: $btn_radius;
     }
   }
+
+  &.studyRAnalysis {
+    div.modalContent {
+      overflow: auto;
+      max-height: none;
+      min-height: 150px;
+      border-radius: $btn_radius;
+    }
+  }
 }
