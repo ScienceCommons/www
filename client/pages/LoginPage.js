@@ -30,8 +30,8 @@ LoginPage.view = function(ctrl) {
       </div>
       <div>
         <h3>For news and updates about Curate Science, please sign up for our email newsletter below:</h3>
-        <form action="http://christianbattista.us7.list-manage.com/subscribe/post?u=d140eca9cfe4a96473dac6ea5&amp;id=fba08af7dd" method="post" target="_blank">
-          <input type="email" value="" ref="email" name="EMAIL" placeholder="Enter email address" size="30" required />
+        <form action="http://curatescience.us8.list-manage.com/subscribe/post?u=0833383918fc50773891d363a&amp;id=aaad5734e3" method="post" target="_blank">
+          <input type="email" ref="email" name="EMAIL" placeholder="Enter email address" size="30" required />
           <div style={{"position": "absolute", "left": "-5000px"}}>
             <input type="text" name="b_d140eca9cfe4a96473dac6ea5_fba08af7dd" value="" />
           </div>
