@@ -71,8 +71,8 @@ HomePage.articleView = function(article) {
 
 var updatedByLink = function(article){
   var date = article.get("updated_at");
-  var name = article.get("updated_by_name");
-  var author_id = article.get("updated_by_author_id");
+  var name = article.get("updater_name");
+  var author_id = article.get("updater_author_id");
   var name_link;
   if (author_id){
     return (
@@ -80,7 +80,7 @@ var updatedByLink = function(article){
     );
   } else {
     return (
-        <div className="updatedBy">Updated {name ? "by " + name + " --": "" + ""} {moment(date).fromNow()}</div>
+        <div className="updatedBy">Updated by {name ? name + " --": "Anonymous --"} {moment(date).fromNow()}</div>
   );
   }
 };
