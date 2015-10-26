@@ -32,6 +32,7 @@
     "grunt-s3": "0.2.0-alpha.3",
     "grunt-webfont": "0.4.8",
     "grunt-webpack": "^1.0.11",
+    "jest-cli": "^0.6.1",
     "jshint-loader": "0.8.0",
     "load-grunt-tasks": "0.6.0",
     "msx-loader": "0.1.0",
@@ -40,5 +41,14 @@
     "url-loader": "0.5.5",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1"
+  },
+   "jest": {
+    "rootDir": "src",
+    "unmockedModulePathPatterns": []
+  },
+  "scripts": {
+    "start": "gulp",
+    "test": "jest",
+    "test-debug": "node-debug --nodejs --harmony ./node_modules/jest-cli/bin/jest.js"
   }
 }
