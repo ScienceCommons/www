@@ -704,7 +704,7 @@ function fileDropdown(ctrl, study, type, options) {
       }
       return <tr className={fileIsActive ? "active" : ""}>
         <td onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className="fileName">
-          <a href={fileURL}>{file.get("name")}</a>
+          <a href={fileURL} target="_blank">{file.get("name")}</a>
         </td>
         <td className="buttons">
           {commentMarker}
