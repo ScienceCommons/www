@@ -696,12 +696,22 @@ function fileDropdown(ctrl, study, type, options) {
       if (file.get("name").match(/\.r$/i)){
         var runRScriptBtn = <button type="button" className="btn" title="Run R Script" onclick={function(){ctrl.handleStudyRAnalysisClick(file);}}><span className="icon icon_right_arrow"></span></button>;
       }
+      var fileURL;
+      if (file.get("url").match(/^https?:\/\//)) {
+        fileURL = file.get("url");
+      } else {
+        fileURL = "https://" + file.get("url");
+      }
       return <tr className={fileIsActive ? "active" : ""}>
-        <td onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className="fileName">{file.get("name")}</td>
+        <td onclick={handleBadgeDropdownFileClick(ctrl, study, file)} className="fileName">
+          <a href={fileURL} target="_blank">{file.get("name")}</a>
+        </td>
         <td className="buttons">
           {commentMarker}
           {runRScriptBtn}
-          <button type="button" className="btn" title="Download" onclick={downloadFile(file)}><span className="icon icon_download"></span></button>
+          <button type="button" className="btn" title="Download" onclick={downloadFile(file)}>
+            <span className="icon icon_download"></span>
+          </button>
         </td>
       </tr>;
     });
@@ -761,7 +771,6 @@ function fileDropdownConfig(el, isInitialized, context) {
 
 function handleBadgeDropdownFileClick(ctrl, study, file) {
   return function(e) {
-    e.preventDefault();
     var active = ctrl.active();
     active.file = file;
     active.editing = false;
@@ -859,9 +868,9 @@ StudiesTable.modelUpdateViews.effect_size = function(state) {
   var prevValue = "";
   if(oldVal != undefined) {
     oldVal[0] = effectSizeSymbol[oldVal[0]];
-    prevValue = oldVal.join(": ")
+    prevValue = oldVal.join(": ");
   } else {
-    prevValue = "null"
+    prevValue = "null";
   }
   var newVal = _.first(_.pairs(state[1]));
   newVal[0] = effectSizeSymbol[newVal[0]];
