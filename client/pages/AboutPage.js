@@ -26,7 +26,8 @@ AboutPage.view = function(ctrl) {
         Independent verification is facilitated by enabling researchers to (1) link independent replications to original studies (& eventually linking conceptual replication studies meta-analytically), (2) curate available data/syntax to verify reproducibility of results within one’s web browser, and (3) evaluate the interpretation/validity of original and replication results in nuanced ways via in-line comments.
       </p>
       <p>
-        Curate Science incentivizes independent verification by publicly recognizing user contributions on the homepage. Centralizing such activities further motivates independent verification because researchers get the satisfaction of knowing their contributions will benefit other researchers (e.g., once open data are curated, re-analyzing data from different theoretical perspectives is greatly facilitated).</p>
+        Curate Science incentivizes independent verification by publicly recognizing user contributions on the homepage. Centralizing such activities further motivates independent verification because researchers get the satisfaction of knowing their contributions will benefit other researchers (e.g., once open data are curated, re-analyzing data from different theoretical perspectives is greatly facilitated).
+        </p>
       <p>
         For more details about Curate Science, please click <a href="../">here</a>.
       </p>
