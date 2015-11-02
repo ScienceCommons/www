@@ -331,7 +331,7 @@ ArticlePage.view = function(ctrl) {
               </div>
               <div className="doi">
                 <h5>DOI</h5>
-                <p className="field" placeholder="DOI goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("doi"))}>{article.get("doi")}</p>
+                <p className="field" placeholder="DOI goes here" contenteditable={ctrl.editing()} oninput={m.withAttr("textContent", article.setter("doi"))}><a href={"https://dx.doi.org/" + article.get("doi")}>{article.get("doi")}</a></p>
               </div>
               <div className="tags">
                 <h5>Tags</h5>
